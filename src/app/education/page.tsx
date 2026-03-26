@@ -1,172 +1,296 @@
-import { Search, MapPin, Star, Filter } from 'lucide-react';
+'use client';
+
+import { useState } from 'react';
+import { Search, MapPin, Star, Filter, BookOpen, Globe, Building2, User, CheckCircle } from 'lucide-react';
+import { allInstituts, COURSE_LABELS, DEPT_LABELS, type Institut, type CourseType } from '@/data/institutes';
+
+const FORMAT_LABELS = {
+  presentiel: 'Présentiel',
+  distanciel: 'En ligne',
+  hybride: 'Hybride',
+};
+
+const TYPE_LABELS = {
+  'institut': 'Institut',
+  'mosquee': 'Mosquée',
+  'professeur': 'Prof. indép.',
+  'en-ligne': 'En ligne',
+  'cercle': 'Cercle',
+};
+
+const TYPE_COLORS: Record<string, string> = {
+  'institut': '#0d9488',
+  'mosquee': '#6366f1',
+  'professeur': '#f59e0b',
+  'en-ligne': '#3b82f6',
+  'cercle': '#10b981',
+};
+
+const DEPT_OPTIONS = ['Tout', '75', '92', '93', '94', '91', '78', '77', '95', '00'];
+
+const COURSE_FILTERS: { key: CourseType | 'all'; label: string }[] = [
+  { key: 'all', label: 'Tout' },
+  { key: 'coran', label: 'Coran' },
+  { key: 'tajwid', label: 'Tajwid' },
+  { key: 'arabe', label: 'Langue Arabe' },
+  { key: 'sciences-islamiques', label: 'Sciences Islamiques' },
+  { key: 'memorisation', label: 'Hifz' },
+  { key: 'enfants', label: 'Enfants' },
+];
 
 export default function EducationPage() {
+  const [search, setSearch] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState<CourseType | 'all'>('all');
+  const [selectedDept, setSelectedDept] = useState('Tout');
+  const [selectedFormat, setSelectedFormat] = useState<'all' | 'presentiel' | 'distanciel'>('all');
+
+  const filtered = allInstituts.filter(inst => {
+    const q = search.toLowerCase();
+    const matchSearch = !q || inst.name.toLowerCase().includes(q) || inst.city.toLowerCase().includes(q) || inst.tags.some(t => t.toLowerCase().includes(q));
+    const matchCourse = selectedCourse === 'all' || inst.courses.includes(selectedCourse);
+    const matchDept = selectedDept === 'Tout' || inst.department === selectedDept;
+    const matchFormat = selectedFormat === 'all' || inst.format.includes(selectedFormat);
+    return matchSearch && matchCourse && matchDept && matchFormat;
+  });
+
   return (
-    <div className="container" style={{ padding: '2rem 1rem' }}>
-      
+    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
+
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>Éducation & Savoir (Ilm)</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>Trouvez l'institut ou le professeur idéal pour votre apprentissage.</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+          <BookOpen size={28} color="var(--primary-color)" />
+          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Éducation & Savoir — Ilm (عِلْم)</h1>
+        </div>
+        <p style={{ color: 'var(--text-secondary)' }}>
+          {allInstituts.length} instituts, mosquées et professeurs répertoriés en Île-de-France et en ligne.
+        </p>
       </div>
 
       {/* Search & Filters */}
-      <div style={{ 
-        display: 'flex', 
-        gap: '1rem', 
-        marginBottom: '2rem', 
-        flexWrap: 'wrap' 
-      }}>
-        <div style={{ 
-          flex: 1, 
-          position: 'relative', 
-          minWidth: '300px' 
-        }}>
-          <Search size={20} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
-          <input 
-            type="text" 
-            placeholder="Rechercher un cours, un institut, un sujet..." 
-            style={{ 
-              width: '100%', 
-              padding: '0.75rem 1rem 0.75rem 3rem', 
-              borderRadius: '0.5rem', 
-              border: '1px solid var(--border-color)', 
-              fontSize: '1rem',
-              outline: 'none'
-            }} 
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, position: 'relative', minWidth: '260px' }}>
+          <Search size={18} style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
+          <input
+            type="text"
+            placeholder="Rechercher un institut, une ville, un tag..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '0.7rem 1rem 0.7rem 2.75rem',
+              borderRadius: '0.5rem',
+              border: '1px solid var(--border-color)',
+              fontSize: '0.95rem',
+              outline: 'none',
+              boxSizing: 'border-box',
+            }}
           />
         </div>
-        <button className="btn btn-outline" style={{ display: 'flex', gap: '0.5rem' }}>
-          <Filter size={18} /> Filtres
-        </button>
-        <button className="btn btn-primary">Rechercher</button>
+        <select
+          value={selectedDept}
+          onChange={e => setSelectedDept(e.target.value)}
+          style={{ padding: '0.7rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', fontSize: '0.875rem', background: 'white', cursor: 'pointer' }}
+        >
+          {DEPT_OPTIONS.map(d => (
+            <option key={d} value={d}>
+              {d === 'Tout' ? 'Tous les départements' : d === '00' ? 'En ligne' : `${d} — ${DEPT_LABELS[d]}`}
+            </option>
+          ))}
+        </select>
+        <select
+          value={selectedFormat}
+          onChange={e => setSelectedFormat(e.target.value as typeof selectedFormat)}
+          style={{ padding: '0.7rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', fontSize: '0.875rem', background: 'white', cursor: 'pointer' }}
+        >
+          <option value="all">Présentiel & En ligne</option>
+          <option value="presentiel">Présentiel uniquement</option>
+          <option value="distanciel">En ligne uniquement</option>
+        </select>
       </div>
 
-      {/* Categories / Tags */}
+      {/* Course Type Chips */}
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-        {['Tout', 'Coran & Tajwid', 'Langue Arabe', 'Sciences Islamiques', 'Enfants', 'Sœurs', 'En Ligne'].map((tag, i) => (
-          <button key={i} style={{ 
-            padding: '0.5rem 1rem', 
-            borderRadius: '999px', 
-            backgroundColor: i === 0 ? 'var(--primary-color)' : 'transparent',
-            color: i === 0 ? 'white' : 'var(--text-secondary)',
-            border: i === 0 ? 'none' : '1px solid var(--border-color)',
-            fontSize: '0.875rem',
-            whiteSpace: 'nowrap',
-            cursor: 'pointer'
-          }}>
-            {tag}
+        {COURSE_FILTERS.map(cf => (
+          <button
+            key={cf.key}
+            onClick={() => setSelectedCourse(cf.key)}
+            style={{
+              padding: '0.4rem 1rem',
+              borderRadius: '999px',
+              backgroundColor: selectedCourse === cf.key ? 'var(--primary-color)' : 'transparent',
+              color: selectedCourse === cf.key ? 'white' : 'var(--text-secondary)',
+              border: selectedCourse === cf.key ? 'none' : '1px solid var(--border-color)',
+              fontSize: '0.875rem',
+              whiteSpace: 'nowrap',
+              cursor: 'pointer',
+              fontWeight: selectedCourse === cf.key ? 600 : 400,
+            }}
+          >
+            {cf.label}
           </button>
         ))}
       </div>
 
+      {/* Results count */}
+      <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
+        {filtered.length} résultat{filtered.length > 1 ? 's' : ''} trouvé{filtered.length > 1 ? 's' : ''}
+      </p>
+
       {/* Results Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3">
-        
-        {/* Card 1 - Institute */}
-        <EducationCard 
-          imageColor="#dcfce7"
-          category="Institut Physique"
-          title="Institut Al-Ghazali"
-          location="Paris 5ème"
-          rating={4.8}
-          reviews={124}
-          price="$$"
-          description="Cours de théologie et de langue arabe. Programme complet sur 3 ans."
-          tags={['Arabe', 'Théologie', 'Adultes']}
-        />
+      {filtered.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-secondary)' }}>
+          <BookOpen size={48} style={{ margin: '0 auto 1rem', opacity: 0.3 }} />
+          <p>Aucun résultat. Essaie d'autres filtres.</p>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          {filtered.map(inst => (
+            <InstitutCard key={inst.id} inst={inst} />
+          ))}
+        </div>
+      )}
 
-         {/* Card 2 - Online Teacher */}
-         <EducationCard 
-          imageColor="#dbeafe"
-          category="Professeur Indépendant"
-          title="Sheikh Ahmed - Correction Coran"
-          location="En Ligne (Zoom)"
-          rating={5.0}
-          reviews={42}
-          price="$"
-          description="Correction de récitation (Tajwid) personnalisée. Ijaza possible."
-          tags={['Coran', 'Tajwid', 'Privé']}
-        />
-
-        {/* Card 3 */}
-        <EducationCard 
-          imageColor="#fef3c7"
-          category="Institut En Ligne"
-          title="Madrassah An-Nour"
-          location="En Ligne"
-          rating={4.5}
-          reviews={89}
-          price="$$$"
-          description="École en ligne pour enfants et adolescents. Programme ludique."
-          tags={['Enfants', 'Débutant']}
-        />
-
-         {/* Card 4 */}
-         <EducationCard 
-          imageColor="#f3e8ff"
-          category="Cercle d'Étude"
-          title="Halaqa Sœurs - Tafsir"
-          location="Mosquée de Créteil"
-          rating={4.9}
-          reviews={15}
-          price="Gratuit"
-          description="Étude du Tafsir de Juz Amma entre sœurs chaque dimanche."
-          tags={['Sœurs', 'Gratuit', 'Tafsir']}
-        />
-
+      {/* CTA Ajout */}
+      <div style={{
+        marginTop: '3rem',
+        padding: '2rem',
+        borderRadius: '1rem',
+        backgroundColor: 'rgba(13, 148, 136, 0.06)',
+        border: '1px solid rgba(13, 148, 136, 0.2)',
+        textAlign: 'center',
+      }}>
+        <h3 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Vous connaissez un institut non listé ?</h3>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+          Aidez la communauté à trouver les meilleures ressources. Proposez un ajout, c'est collaboratif.
+        </p>
+        <button className="btn btn-primary">Proposer un ajout</button>
       </div>
-
     </div>
   );
 }
 
-const EducationCard = ({ imageColor, category, title, location, rating, reviews, price, description, tags }: any) => (
-  <div className="card" style={{ padding: '0', display: 'flex', flexDirection: 'column', height: '100%' }}>
-    <div style={{ height: '160px', backgroundColor: imageColor, position: 'relative' }}>
-      <div style={{ 
-        position: 'absolute', 
-        top: '1rem', 
-        left: '1rem', 
-        backgroundColor: 'rgba(255,255,255,0.9)', 
-        padding: '0.25rem 0.75rem', 
-        borderRadius: '4px', 
-        fontSize: '0.75rem', 
-        fontWeight: 600,
-        color: 'var(--text-primary)'
-      }}>
-        {category}
-      </div>
-    </div>
-    <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
-        <h3 style={{ fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.3 }}>{title}</h3>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 600 }}>
-          <Star size={14} fill="#f59e0b" color="#f59e0b" /> {rating} <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}>({reviews})</span>
-        </div>
-      </div>
-      
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1rem' }}>
-        <MapPin size={14} /> {location} • {price}
-      </div>
+// ============================================================
+// Composant carte Institut
+// ============================================================
+function InstitutCard({ inst }: { inst: Institut }) {
+  const typeColor = TYPE_COLORS[inst.type] || '#6b7280';
 
-      <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.5, flex: 1 }}>
-        {description}
-      </p>
+  return (
+    <div className="card" style={{ padding: 0, display: 'flex', flexDirection: 'column', height: '100%', position: 'relative' }}>
 
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-        {tags.map((tag: string, i: number) => (
-          <span key={i} style={{ 
-            backgroundColor: '#f5f5f4', 
-            padding: '0.25rem 0.5rem', 
-            borderRadius: '4px', 
-            fontSize: '0.75rem', 
-            color: 'var(--text-secondary)' 
+      {/* Header coloré */}
+      <div style={{
+        height: '8px',
+        backgroundColor: typeColor,
+        borderRadius: '0.75rem 0.75rem 0 0',
+      }} />
+
+      <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+
+        {/* Badges top */}
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+          <span style={{
+            backgroundColor: typeColor + '15',
+            color: typeColor,
+            padding: '0.2rem 0.6rem',
+            borderRadius: '4px',
+            fontSize: '0.75rem',
+            fontWeight: 600,
           }}>
-            {tag}
+            {TYPE_LABELS[inst.type]}
           </span>
-        ))}
+          {inst.format.map(f => (
+            <span key={f} style={{
+              backgroundColor: '#f5f5f4',
+              color: 'var(--text-secondary)',
+              padding: '0.2rem 0.6rem',
+              borderRadius: '4px',
+              fontSize: '0.75rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.25rem',
+            }}>
+              {f === 'distanciel' ? <Globe size={11} /> : <Building2 size={11} />}
+              {FORMAT_LABELS[f]}
+            </span>
+          ))}
+          {inst.verified && (
+            <span style={{ marginLeft: 'auto', color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', fontWeight: 600 }}>
+              <CheckCircle size={13} /> Vérifié
+            </span>
+          )}
+        </div>
+
+        {/* Nom */}
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.4rem', lineHeight: 1.3 }}>
+          {inst.name}
+        </h3>
+
+        {/* Localisation */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', fontSize: '0.825rem', marginBottom: '0.75rem' }}>
+          <MapPin size={13} />
+          {inst.city}{inst.department !== '00' && ` (${inst.department})`}
+        </div>
+
+        {/* Description */}
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: 1.55, flex: 1 }}>
+          {inst.description}
+        </p>
+
+        {/* Cours proposés */}
+        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+          {inst.courses.slice(0, 4).map(c => (
+            <span key={c} style={{
+              backgroundColor: '#f5f5f4',
+              padding: '0.2rem 0.5rem',
+              borderRadius: '4px',
+              fontSize: '0.72rem',
+              color: 'var(--text-secondary)',
+            }}>
+              {COURSE_LABELS[c]}
+            </span>
+          ))}
+          {inst.courses.length > 4 && (
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', padding: '0.2rem 0' }}>
+              +{inst.courses.length - 4}
+            </span>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.75rem', borderTop: '1px solid var(--border-color)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+            {inst.rating ? (
+              <>
+                <Star size={13} fill="#f59e0b" color="#f59e0b" />
+                <span style={{ fontSize: '0.825rem', fontWeight: 600 }}>{inst.rating}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>(nouveau)</span>
+              </>
+            ) : (
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Pas encore noté</span>
+            )}
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {inst.website && (
+              <a href={inst.website} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ fontSize: '0.775rem', padding: '0.35rem 0.75rem' }}>
+                Site web
+              </a>
+            )}
+            {inst.phone && (
+              <a href={`tel:${inst.phone}`} className="btn btn-primary" style={{ fontSize: '0.775rem', padding: '0.35rem 0.75rem' }}>
+                Appeler
+              </a>
+            )}
+            {!inst.website && !inst.phone && (
+              <button className="btn btn-outline" style={{ fontSize: '0.775rem', padding: '0.35rem 0.75rem' }}>
+                Laisser un avis
+              </button>
+            )}
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-);
+  );
+}
