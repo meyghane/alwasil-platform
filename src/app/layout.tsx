@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Navigation from '@/components/Navigation';
+import ChatBot from '@/components/ChatBot';
 
 export const metadata: Metadata = {
   title: 'Al-Wasil Platform',
@@ -29,6 +30,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <ChatBot />
       </body>
     </html>
   );
