@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, MapPin, Star, Filter, BookOpen, Globe, Building2, User, CheckCircle } from 'lucide-react';
-import { allInstituts, COURSE_LABELS, DEPT_LABELS, type Institut, type CourseType } from '@/data/institutes';
+import { Search, MapPin, Star, BookOpen, Globe, Building2, CheckCircle } from 'lucide-react';
+import { allInstituts, COURSE_LABELS, type Institut, type CourseType } from '@/data/institutes';
+import DeptFilter from '@/components/DeptFilter';
 
 const FORMAT_LABELS = {
   presentiel: 'Présentiel',
@@ -25,8 +26,6 @@ const TYPE_COLORS: Record<string, string> = {
   'en-ligne': '#3b82f6',
   'cercle': '#10b981',
 };
-
-const DEPT_OPTIONS = ['Tout', '75', '92', '93', '94', '91', '78', '77', '95', '00'];
 
 const COURSE_FILTERS: { key: CourseType | 'all'; label: string }[] = [
   { key: 'all', label: 'Tout' },
@@ -67,46 +66,51 @@ export default function EducationPage() {
         </p>
       </div>
 
-      {/* Search & Filters */}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-        <div style={{ flex: 1, position: 'relative', minWidth: '260px' }}>
-          <Search size={18} style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
-          <input
-            type="text"
-            placeholder="Rechercher un institut, une ville, un tag..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
+      {/* Search bar */}
+      <div style={{ position: 'relative', marginBottom: '1.25rem' }}>
+        <Search size={18} style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
+        <input
+          type="text"
+          placeholder="Rechercher un institut, une ville, un tag..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '0.75rem 1rem 0.75rem 2.75rem',
+            borderRadius: '0.5rem',
+            border: '1px solid var(--border-color)',
+            fontSize: '0.95rem',
+            outline: 'none',
+            boxSizing: 'border-box',
+          }}
+        />
+      </div>
+
+      {/* Filtre département */}
+      <div style={{ marginBottom: '1.25rem' }}>
+        <DeptFilter value={selectedDept} onChange={setSelectedDept} />
+      </div>
+
+      {/* Format chips */}
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
+        {(['all', 'presentiel', 'distanciel'] as const).map(f => (
+          <button
+            key={f}
+            onClick={() => setSelectedFormat(f)}
             style={{
-              width: '100%',
-              padding: '0.7rem 1rem 0.7rem 2.75rem',
-              borderRadius: '0.5rem',
-              border: '1px solid var(--border-color)',
-              fontSize: '0.95rem',
-              outline: 'none',
-              boxSizing: 'border-box',
+              padding: '0.4rem 1rem',
+              borderRadius: '999px',
+              border: selectedFormat === f ? '2px solid #6366f1' : '1.5px solid var(--border-color)',
+              backgroundColor: selectedFormat === f ? '#6366f1' : 'white',
+              color: selectedFormat === f ? 'white' : 'var(--text-secondary)',
+              fontSize: '0.82rem',
+              fontWeight: selectedFormat === f ? 700 : 400,
+              cursor: 'pointer',
             }}
-          />
-        </div>
-        <select
-          value={selectedDept}
-          onChange={e => setSelectedDept(e.target.value)}
-          style={{ padding: '0.7rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', fontSize: '0.875rem', background: 'white', cursor: 'pointer' }}
-        >
-          {DEPT_OPTIONS.map(d => (
-            <option key={d} value={d}>
-              {d === 'Tout' ? 'Tous les départements' : d === '00' ? 'En ligne' : `${d} — ${DEPT_LABELS[d]}`}
-            </option>
-          ))}
-        </select>
-        <select
-          value={selectedFormat}
-          onChange={e => setSelectedFormat(e.target.value as typeof selectedFormat)}
-          style={{ padding: '0.7rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', fontSize: '0.875rem', background: 'white', cursor: 'pointer' }}
-        >
-          <option value="all">Présentiel & En ligne</option>
-          <option value="presentiel">Présentiel uniquement</option>
-          <option value="distanciel">En ligne uniquement</option>
-        </select>
+          >
+            {f === 'all' ? '📍 Tout' : f === 'presentiel' ? '🏛️ Présentiel' : '💻 En ligne'}
+          </button>
+        ))}
       </div>
 
       {/* Course Type Chips */}
