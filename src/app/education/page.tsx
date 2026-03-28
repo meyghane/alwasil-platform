@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Search, MapPin, Star, BookOpen, Globe, Building2, CheckCircle } from 'lucide-react';
 import { allInstituts, COURSE_LABELS, type Institut, type CourseType } from '@/data/institutes';
 import DeptFilter from '@/components/DeptFilter';
@@ -168,7 +169,7 @@ export default function EducationPage() {
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
           Aidez la communauté à trouver les meilleures ressources. Proposez un ajout, c'est collaboratif.
         </p>
-        <button className="btn btn-primary">Proposer un ajout</button>
+        <Link href="/contact?type=general" className="btn btn-primary" style={{ textDecoration: 'none' }}>Proposer un ajout</Link>
       </div>
     </div>
   );
@@ -287,9 +288,9 @@ function InstitutCard({ inst }: { inst: Institut }) {
               </a>
             )}
             {!inst.website && !inst.phone && (
-              <button className="btn btn-outline" style={{ fontSize: '0.775rem', padding: '0.35rem 0.75rem' }}>
+              <Link href="/contact?type=general" className="btn btn-outline" style={{ fontSize: '0.775rem', padding: '0.35rem 0.75rem', textDecoration: 'none' }}>
                 Laisser un avis
-              </button>
+              </Link>
             )}
           </div>
         </div>

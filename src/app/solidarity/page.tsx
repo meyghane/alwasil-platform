@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import {
   HandHeart, ExternalLink, Search, MapPin, Heart,
   Globe, Users, Plane, Building2, Phone,
@@ -440,8 +441,8 @@ export default function SolidarityPage() {
           Référencie-la gratuitement pour toucher toute la communauté.
         </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="btn btn-primary">Proposer une cagnotte</button>
-          <button className="btn btn-outline">Proposer une initiative</button>
+          <Link href="/contact?type=cagnotte" className="btn btn-primary" style={{ textDecoration: 'none' }}>Proposer une cagnotte</Link>
+          <Link href="/contact?type=initiative" className="btn btn-outline" style={{ textDecoration: 'none' }}>Proposer une initiative</Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Heart, ExternalLink, Search, MapPin, Star, Video, Phone, Globe, CheckCircle } from 'lucide-react';
 import { psyProfiles, hijamaProfiles, roqyaProfiles } from '@/data/sante';
 import DeptFilter from '@/components/DeptFilter';
@@ -187,7 +188,7 @@ export default function SantePage() {
           <div style={{ marginTop: '2.5rem', padding: '1.5rem', borderRadius: '1rem', backgroundColor: 'rgba(236,72,153,0.05)', border: '1px solid rgba(236,72,153,0.2)', textAlign: 'center' }}>
             <h3 style={{ fontWeight: 600, marginBottom: '0.4rem' }}>Vous êtes praticien·ne ?</h3>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>Référencez-vous gratuitement pour être visible de la communauté.</p>
-            <button className="btn btn-primary" style={{ backgroundColor: ACCENT }}>Ajouter mon profil</button>
+            <Link href="/contact?type=general" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Ajouter mon profil</Link>
           </div>
         </>
       )}

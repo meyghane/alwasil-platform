@@ -47,12 +47,12 @@ const Navigation = () => {
 
           {/* Right Actions */}
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-            <button className="btn btn-outline nav-desktop" style={{ fontSize: '0.875rem', padding: '0.5rem 0.75rem', color: '#1c1917', borderColor: '#e7e5e4', backgroundColor: 'white' }}>
+            <Link href="/connexion" className="btn btn-outline nav-desktop" style={{ fontSize: '0.875rem', padding: '0.5rem 0.75rem', color: '#1c1917', borderColor: '#e7e5e4', backgroundColor: 'white', textDecoration: 'none' }}>
               Connexion
-            </button>
-            <button className="btn btn-primary nav-desktop" style={{ fontSize: '0.875rem' }}>
+            </Link>
+            <Link href="/connexion" className="btn btn-primary nav-desktop" style={{ fontSize: '0.875rem', textDecoration: 'none' }}>
               S&apos;inscrire
-            </button>
+            </Link>
             {/* Burger mobile */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -92,12 +92,12 @@ const Navigation = () => {
               </Link>
             ))}
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
-              <button style={{ flex: 1, padding: '0.625rem', border: '1px solid #e7e5e4', borderRadius: '8px', backgroundColor: 'white', color: '#1c1917', fontWeight: 500, cursor: 'pointer', fontSize: '0.9rem' }}>
+              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', border: '1px solid #e7e5e4', borderRadius: '8px', backgroundColor: 'white', color: '#1c1917', fontWeight: 500, cursor: 'pointer', fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>
                 Connexion
-              </button>
-              <button style={{ flex: 1, padding: '0.625rem', backgroundColor: '#0d9488', border: 'none', borderRadius: '8px', color: 'white', fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem' }}>
+              </Link>
+              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', backgroundColor: '#0d9488', border: 'none', borderRadius: '8px', color: 'white', fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>
                 S&apos;inscrire
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import {
   Briefcase, ExternalLink, Search, MapPin, Users,
   Star, CheckCircle, Clock,
@@ -280,7 +281,7 @@ export default function JobsPage() {
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginBottom: '1rem' }}>
               Publiez votre offre gratuitement et touchez des talents de la communauté.
             </p>
-            <button className="btn btn-primary">Publier une offre</button>
+            <Link href="/contact?type=offre-emploi" className="btn btn-primary" style={{ textDecoration: 'none' }}>Publier une offre</Link>
           </div>
         </>
       )}
@@ -350,7 +351,7 @@ export default function JobsPage() {
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginBottom: '1rem' }}>
               Partagez votre profil et recevez des opportunités de la communauté.
             </p>
-            <button className="btn btn-primary">Ajouter mon profil</button>
+            <Link href="/contact?type=profil-emploi" className="btn btn-primary" style={{ textDecoration: 'none' }}>Ajouter mon profil</Link>
           </div>
         </>
       )}
@@ -391,7 +392,7 @@ export default function JobsPage() {
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#f59e0b', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: 700, textDecoration: 'none' }}>
               Rejoindre le CMN <ExternalLink size={14} />
             </a>
-            <button className="btn btn-outline">En savoir plus</button>
+            <Link href="/contact?type=offre-emploi" className="btn btn-outline" style={{ textDecoration: 'none' }}>En savoir plus</Link>
           </div>
 
           <div style={{ marginTop: '2.5rem', padding: '1.5rem', borderRadius: '1rem', backgroundColor: '#f9fafb', border: '1px solid var(--border-color)' }}>
@@ -402,7 +403,7 @@ export default function JobsPage() {
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: 1.6 }}>
               Publiez votre offre directement dans la communauté CMN × Al-Wasil pour toucher des talents qualifiés et fiables.
             </p>
-            <button className="btn btn-primary">Publier via CMN</button>
+            <Link href="/contact?type=offre-emploi" className="btn btn-primary" style={{ textDecoration: 'none' }}>Publier via CMN</Link>
           </div>
         </div>
       )}

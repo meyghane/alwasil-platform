@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { ShieldCheck, ExternalLink, Search, ChevronDown, ChevronUp, AlertTriangle, Scale, FileText, Phone } from 'lucide-react';
 
 // ============================================================
@@ -656,9 +657,9 @@ export default function JusticePage() {
           Proposez une question à ajouter dans la FAQ ou prenez contact avec un avocat de confiance.
         </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="btn btn-primary" style={{ backgroundColor: '#8b5cf6', borderColor: '#8b5cf6' }}>
+          <Link href="/contact?type=question-juridique" className="btn btn-primary" style={{ backgroundColor: '#8b5cf6', borderColor: '#8b5cf6', textDecoration: 'none' }}>
             Proposer une question
-          </button>
+          </Link>
           <a href="https://www.defenseurdesdroits.fr" target="_blank" rel="noopener noreferrer" className="btn btn-outline"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none' }}>
             Défenseur des droits <ExternalLink size={13} />

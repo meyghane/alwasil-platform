@@ -26,17 +26,17 @@ const SECTIONS = [
     links: [
       { href: '/justice', label: '⚖️ Justice & Droits' },
       { href: '/annonceurs', label: '📣 Annonceurs' },
-      { href: '#', label: '💡 Proposer une initiative' },
-      { href: '#', label: '✉️ Newsletter' },
+      { href: '/contact?type=initiative', label: '💡 Proposer une initiative' },
+      { href: '/contact?type=general', label: '✉️ Newsletter' },
     ],
   },
   {
     title: 'Légal',
     links: [
-      { href: '#', label: 'Confidentialité & RGPD' },
-      { href: '#', label: 'Conditions d\'utilisation' },
-      { href: '#', label: 'Nous contacter' },
-      { href: '#', label: 'Mentions légales' },
+      { href: '/legal#confidentialite', label: 'Confidentialité & RGPD' },
+      { href: '/legal#cgu', label: 'Conditions d\'utilisation' },
+      { href: '/contact', label: 'Nous contacter' },
+      { href: '/legal#mentions', label: 'Mentions légales' },
     ],
   },
 ];

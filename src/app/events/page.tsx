@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Search, Calendar, MapPin, Clock, ExternalLink, Plus } from 'lucide-react';
 import {
   allEvents,
@@ -76,9 +77,9 @@ export default function EventsPage() {
               </p>
             </div>
           </div>
-          <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Link href="/contact?type=evenement" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
             <Plus size={16} /> Proposer un événement
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -207,7 +208,7 @@ export default function EventsPage() {
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
           Référencez-le gratuitement pour toucher toute la communauté d'Île-de-France.
         </p>
-        <button className="btn btn-primary">Ajouter mon événement</button>
+        <Link href="/contact?type=evenement" className="btn btn-primary" style={{ textDecoration: 'none' }}>Ajouter mon événement</Link>
       </div>
     </div>
   );

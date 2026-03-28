@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Waves, MapPin, Clock, Search, AlertTriangle, CheckCircle, ExternalLink, Phone } from 'lucide-react';
 import { piscines, type PiscineType } from '@/data/piscines';
 import DeptFilter from '@/components/DeptFilter';
@@ -199,8 +200,8 @@ export default function PiscinesPage() {
           Aidez la communauté ! Signalez une piscine ou corrigez une info incorrecte.
         </p>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="btn btn-primary" style={{ backgroundColor: ACCENT }}>Signaler une piscine</button>
-          <button className="btn btn-outline">Corriger une info</button>
+          <Link href="/contact?type=piscine" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Signaler une piscine</Link>
+          <Link href="/contact?type=correction" className="btn btn-outline" style={{ textDecoration: 'none' }}>Corriger une info</Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { BookOpen, ExternalLink, Search, MapPin, Star, Globe, Phone, Clock, Package, Truck } from 'lucide-react';
 import {
   librairies,
@@ -239,8 +240,8 @@ export default function LibrairiePage() {
           Signalez-la en quelques clics. Vous gérez une librairie ? Réclamez votre fiche gratuitement.
         </p>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button className="btn btn-primary" style={{ backgroundColor: ACCENT }}>Signaler une librairie</button>
-          <button className="btn btn-outline">Je gère cette librairie</button>
+          <Link href="/contact?type=librairie" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Signaler une librairie</Link>
+          <Link href="/contact?type=revendiquer-librairie" className="btn btn-outline" style={{ textDecoration: 'none' }}>Je gère cette librairie</Link>
         </div>
       </div>
     </div>

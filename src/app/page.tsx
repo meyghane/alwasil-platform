@@ -126,9 +126,9 @@ export default function Home() {
           <a href="#sections" className="btn btn-primary" style={{ padding: '0.75rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none' }}>
             Explorer les ressources →
           </a>
-          <button className="btn btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem' }}>
+          <Link href="/contact?type=initiative" className="btn btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem', textDecoration: 'none' }}>
             Proposer une initiative
-          </button>
+          </Link>
         </div>
       </section>
 
