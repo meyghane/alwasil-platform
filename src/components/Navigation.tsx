@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, Calendar, HandHeart, Briefcase, ShieldCheck, User, Heart, Plane, Menu, X } from 'lucide-react';
+import { BookOpen, Calendar, HandHeart, Briefcase, ShieldCheck, User, Heart, Plane, Menu, X, Library } from 'lucide-react';
 
 const NAV_LINKS = [
   { href: '/education', icon: <BookOpen size={17} />, label: 'Éducation' },
@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: '/solidarity', icon: <HandHeart size={17} />, label: 'Solidarité' },
   { href: '/jobs', icon: <Briefcase size={17} />, label: 'Emploi' },
   { href: '/sante', icon: <Heart size={17} />, label: 'Santé' },
+  { href: '/librairies', icon: <Library size={17} />, label: 'Librairies' },
   { href: '/hajj', icon: <Plane size={17} />, label: 'Hajj & Omra' },
   { href: '/justice', icon: <ShieldCheck size={17} />, label: 'Justice' },
 ];
