@@ -10,18 +10,7 @@
   --card-bg: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 12, 10, 9; /* stone-950 */
-    --background-end-rgb: 0, 0, 0;
-    --primary-color: #14b8a6; /* teal-500 */
-    --text-primary: #fafaf9; /* stone-50 */
-    --text-secondary: #a8a29e; /* stone-400 */
-    --border-color: #292524; /* stone-800 */
-    --card-bg: #1c1917; /* stone-900 */
-  }
-}
+/* Dark mode désactivé volontairement — design toujours en light mode */
 
 * {
   box-sizing: border-box;
