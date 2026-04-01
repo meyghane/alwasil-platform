@@ -1,166 +1,332 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
 import { Search, Calendar, MapPin, Clock, ExternalLink, Plus } from 'lucide-react';
-import type { Evenement } from '@/lib/sheets';
+import {
+  allEvents,
+  EVENT_CATEGORY_LABELS,
+  EVENT_CATEGORY_COLORS,
+  type Event,
+  type EventCategory,
+} from '@/data/events';
 import DeptFilter from '@/components/DeptFilter';
 
-const CATEGORIES = [
-  { key: 'all', label: 'Tout' }, { key: 'conference', label: 'Conférence' },
-  { key: 'maraude', label: 'Maraude' }, { key: 'cours', label: 'Cours' },
-  { key: 'iftar', label: 'Iftar' }, { key: 'webinaire', label: 'Webinaire' },
-  { key: 'jeunesse', label: 'Jeunesse' }, { key: 'collecte', label: 'Collecte' },
+const CATEGORIES: { key: EventCategory | 'all'; label: string }[] = [
+  { key: 'all', label: 'Tout' },
+  { key: 'conference', label: 'Conférence' },
+  { key: 'maraude', label: 'Maraude' },
+  { key: 'cours', label: 'Cours' },
+  { key: 'iftar', label: 'Iftar' },
+  { key: 'webinaire', label: 'Webinaire' },
+  { key: 'jeunesse', label: 'Jeunesse' },
+  { key: 'collecte', label: 'Collecte' },
 ];
-
-const CATEGORY_LABELS: Record<string, string> = {
-  conference: 'Conférence', maraude: 'Maraude', cours: 'Cours / Formation',
-  iftar: 'Iftar solidaire', webinaire: 'Webinaire', jeunesse: 'Jeunesse',
-  famille: 'Famille', collecte: 'Collecte', autre: 'Autre',
-};
-
-const CATEGORY_COLORS: Record<string, string> = {
-  conference: '#6366f1', maraude: '#ef4444', cours: '#0d9488',
-  iftar: '#f59e0b', webinaire: '#3b82f6', jeunesse: '#10b981',
-  famille: '#ec4899', collecte: '#f97316', autre: '#6b7280',
-};
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
   return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
-function groupByDate(events: Evenement[]): Record<string, Evenement[]> {
-  return events.reduce((acc, e) => {
-    const key = e.date_debut.split('T')[0];
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(e);
-    return acc;
-  }, {} as Record<string, Evenement[]>);
+function isUpcoming(iso: string): boolean {
+  return new Date(iso) >= new Date(new Date().toDateString());
 }
 
-function EventCard({ e }: { e: Evenement }) {
-  const color = CATEGORY_COLORS[e.categorie] || '#6b7280';
+export default function EventsPage() {
+  const [search, setSearch] = useState('');
+  const [selectedDept, setSelectedDept] = useState('Tout');
+  const [selectedCategory, setSelectedCategory] = useState<EventCategory | 'all'>('all');
+  const [showPast, setShowPast] = useState(false);
+
+  const filtered = allEvents.filter(ev => {
+    const q = search.toLowerCase();
+    const matchSearch = !q ||
+      ev.title.toLowerCase().includes(q) ||
+      ev.city.toLowerCase().includes(q) ||
+      ev.organizer.toLowerCase().includes(q) ||
+      ev.tags.some(t => t.toLowerCase().includes(q));
+    const matchDept = selectedDept === 'Tout' || ev.department === selectedDept;
+    const matchCat = selectedCategory === 'all' || ev.category === selectedCategory;
+    const matchTime = showPast ? true : isUpcoming(ev.date);
+    return matchSearch && matchDept && matchCat && matchTime;
+  });
+
+  // Trier par date croissante
+  const sorted = [...filtered].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  // Grouper par date
+  const grouped: Record<string, Event[]> = {};
+  sorted.forEach(ev => {
+    const key = ev.date;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(ev);
+  });
+
   return (
-    <div style={{ background: 'white', borderLeft: `4px solid ${color}`, borderRadius: '0 12px 12px 0', border: `1px solid #e5e7eb`, borderLeftColor: color, padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
-      <div style={{ flex: 1 }}>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-          <span style={{ background: color, color: 'white', padding: '2px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600 }}>
-            {CATEGORY_LABELS[e.categorie] || e.categorie}
-          </span>
-          <span style={{ background: e.format === 'enligne' ? '#dbeafe' : '#f3f4f6', color: e.format === 'enligne' ? '#1d4ed8' : '#374151', padding: '2px 10px', borderRadius: 20, fontSize: 12 }}>
-            {e.format === 'enligne' ? '🖥 En ligne' : '📍 Présentiel'}
-          </span>
-          {e.gratuit
-            ? <span style={{ background: '#dcfce7', color: '#15803d', padding: '2px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600 }}>Gratuit</span>
-            : e.prix && <span style={{ background: '#fef9c3', color: '#854d0e', padding: '2px 10px', borderRadius: 20, fontSize: 12 }}>{e.prix}</span>
-          }
-        </div>
-        <h3 style={{ fontWeight: 700, fontSize: 18, margin: '0 0 6px', color: '#111' }}>{e.titre}</h3>
-        {e.description && <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.6, margin: '0 0 10px' }}>{e.description}</p>}
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', color: '#6b7280', fontSize: 13 }}>
-          {(e.heure_debut || e.heure_fin) && (
-            <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <Clock size={13} /> {e.heure_debut}{e.heure_fin ? ` → ${e.heure_fin}` : ''}
-            </span>
-          )}
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <MapPin size={13} /> {e.lieu || e.ville}{e.departement ? `, ${e.ville} (${e.departement})` : ''}
-          </span>
-          {e.organisateur && <span>Par <strong>{e.organisateur}</strong></span>}
-        </div>
-        {e.tags.length > 0 && (
-          <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
-            {e.tags.map(t => <span key={t} style={{ color: '#6b7280', fontSize: 12 }}>#{t}</span>)}
+    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
+
+      {/* Header */}
+      <div style={{ marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Calendar size={28} color="var(--primary-color)" />
+            <div>
+              <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Événements — Liqa (لِقَاء)</h1>
+              <p style={{ color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                {allEvents.filter(e => isUpcoming(e.date)).length} événements à venir en Île-de-France et en ligne.
+              </p>
+            </div>
           </div>
-        )}
+          <Link href="/contact?type=evenement" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
+            <Plus size={16} /> Proposer un événement
+          </Link>
+        </div>
       </div>
-      {e.url_inscription && (
-        <a href={e.url_inscription} target="_blank" rel="noopener noreferrer"
-          style={{ background: '#0d9488', color: 'white', padding: '10px 18px', borderRadius: 10, fontSize: 14, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 6 }}>
-          S&apos;inscrire <ExternalLink size={13} />
-        </a>
+
+      {/* Search */}
+      <div style={{ position: 'relative', marginBottom: '1.25rem' }}>
+        <Search size={18} style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
+        <input
+          type="text"
+          placeholder="Rechercher un événement, une ville, un organisateur..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '0.75rem 1rem 0.75rem 2.75rem',
+            borderRadius: '0.5rem',
+            border: '1px solid var(--border-color)',
+            fontSize: '0.95rem',
+            outline: 'none',
+            boxSizing: 'border-box',
+          }}
+        />
+      </div>
+
+      {/* Filtre département */}
+      <div style={{ marginBottom: '1.25rem' }}>
+        <DeptFilter value={selectedDept} onChange={setSelectedDept} />
+      </div>
+
+      {/* Catégories */}
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+        {CATEGORIES.map(cat => {
+          const color = cat.key !== 'all' ? EVENT_CATEGORY_COLORS[cat.key] : 'var(--primary-color)';
+          const isActive = selectedCategory === cat.key;
+          return (
+            <button
+              key={cat.key}
+              onClick={() => setSelectedCategory(cat.key)}
+              style={{
+                padding: '0.4rem 1rem',
+                borderRadius: '999px',
+                border: isActive ? `2px solid ${color}` : '1.5px solid var(--border-color)',
+                backgroundColor: isActive ? color : 'white',
+                color: isActive ? 'white' : 'var(--text-secondary)',
+                fontSize: '0.82rem',
+                fontWeight: isActive ? 700 : 400,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              {cat.label}
+            </button>
+          );
+        })}
+        <button
+          onClick={() => setShowPast(!showPast)}
+          style={{
+            marginLeft: 'auto',
+            padding: '0.4rem 1rem',
+            borderRadius: '999px',
+            border: '1.5px solid var(--border-color)',
+            backgroundColor: showPast ? '#f5f5f4' : 'white',
+            color: 'var(--text-secondary)',
+            fontSize: '0.82rem',
+            cursor: 'pointer',
+          }}
+        >
+          {showPast ? 'Masquer passés' : 'Voir événements passés'}
+        </button>
+      </div>
+
+      {/* Résultats */}
+      {sorted.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-secondary)' }}>
+          <Calendar size={48} style={{ margin: '0 auto 1rem', opacity: 0.3 }} />
+          <p>Aucun événement pour ces filtres.</p>
+          <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Essaie un autre département ou une autre catégorie.</p>
+        </div>
+      ) : (
+        <div>
+          {Object.entries(grouped).map(([date, events]) => (
+            <div key={date} style={{ marginBottom: '2rem' }}>
+              {/* Séparateur de date */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                marginBottom: '1rem',
+              }}>
+                <div style={{
+                  backgroundColor: 'var(--primary-color)',
+                  color: 'white',
+                  borderRadius: '8px',
+                  padding: '0.4rem 0.9rem',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                  textTransform: 'capitalize',
+                }}>
+                  {formatDate(date)}
+                </div>
+                <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-color)' }} />
+              </div>
+
+              {/* Cartes du jour */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+                {events.map(ev => (
+                  <EventCard key={ev.id} event={ev} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       )}
+
+      {/* CTA */}
+      <div style={{
+        marginTop: '3rem',
+        padding: '2rem',
+        borderRadius: '1rem',
+        backgroundColor: 'rgba(13, 148, 136, 0.06)',
+        border: '1px solid rgba(13, 148, 136, 0.2)',
+        textAlign: 'center',
+      }}>
+        <h3 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Vous organisez un événement ?</h3>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+          Référencez-le gratuitement pour toucher toute la communauté d'Île-de-France.
+        </p>
+        <Link href="/contact?type=evenement" className="btn btn-primary" style={{ textDecoration: 'none' }}>Ajouter mon événement</Link>
+      </div>
     </div>
   );
 }
 
-export default function EventsPage() {
-  const [events, setEvents] = useState<Evenement[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [search, setSearch] = useState('');
-  const [selectedCat, setSelectedCat] = useState('all');
-  const [selectedDept, setSelectedDept] = useState('Tout');
-
-  useEffect(() => {
-    fetch('/api/evenements')
-      .then(r => r.json())
-      .then(d => { setEvents(d.data || []); setLoading(false); })
-      .catch(() => { setError('Impossible de charger les événements.'); setLoading(false); });
-  }, []);
-
-  const filtered = events.filter(e => {
-    const q = search.toLowerCase();
-    const matchSearch = !q || e.titre.toLowerCase().includes(q) || e.organisateur.toLowerCase().includes(q) || e.ville.toLowerCase().includes(q);
-    const matchCat = selectedCat === 'all' || e.categorie === selectedCat;
-    const matchDept = selectedDept === 'Tout' || e.departement === selectedDept;
-    return matchSearch && matchCat && matchDept;
-  });
-
-  const grouped = groupByDate(filtered);
-  const sortedDates = Object.keys(grouped).sort();
+// ============================================================
+// Composant carte événement
+// ============================================================
+function EventCard({ event }: { event: Event }) {
+  const color = EVENT_CATEGORY_COLORS[event.category];
+  const past = !isUpcoming(event.date);
 
   return (
-    <main style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 24px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 }}>
-        <div>
-          <h1 style={{ fontSize: 32, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Calendar size={32} color="#f59e0b" /> Événements — Liqa (لِقَاء)
-          </h1>
-          <p style={{ color: '#6b7280', marginTop: 8 }}>
-            {loading ? 'Chargement...' : `${filtered.length} événement${filtered.length > 1 ? 's' : ''} à venir`}
-          </p>
+    <div className="card" style={{
+      padding: 0,
+      display: 'flex',
+      overflow: 'hidden',
+      opacity: past ? 0.65 : 1,
+      flexDirection: 'row',
+    }}>
+      {/* Bande couleur gauche */}
+      <div style={{ width: '5px', backgroundColor: color, flexShrink: 0 }} />
+
+      <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+
+        {/* Badges top */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <span style={{
+            backgroundColor: color + '18',
+            color: color,
+            padding: '0.15rem 0.6rem',
+            borderRadius: '4px',
+            fontSize: '0.72rem',
+            fontWeight: 700,
+          }}>
+            {EVENT_CATEGORY_LABELS[event.category]}
+          </span>
+          <span style={{
+            backgroundColor: event.format === 'enligne' ? '#dbeafe' : '#f5f5f4',
+            color: event.format === 'enligne' ? '#2563eb' : 'var(--text-secondary)',
+            padding: '0.15rem 0.6rem',
+            borderRadius: '4px',
+            fontSize: '0.72rem',
+          }}>
+            {event.format === 'enligne' ? '💻 En ligne' : '📍 Présentiel'}
+          </span>
+          <span style={{
+            backgroundColor: event.isFree ? '#dcfce7' : '#fef3c7',
+            color: event.isFree ? '#16a34a' : '#b45309',
+            padding: '0.15rem 0.6rem',
+            borderRadius: '4px',
+            fontSize: '0.72rem',
+            fontWeight: 600,
+          }}>
+            {event.isFree ? 'Gratuit' : event.price}
+          </span>
+          {past && (
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginLeft: 'auto' }}>Passé</span>
+          )}
         </div>
-        <a href="mailto:al-wasil@hotmail.com?subject=Proposer un événement"
-          style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#0d9488', color: 'white', padding: '12px 20px', borderRadius: 12, textDecoration: 'none', fontWeight: 600, fontSize: 14 }}>
-          <Plus size={16} /> Proposer un événement
-        </a>
+
+        {/* Titre */}
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, lineHeight: 1.3, margin: 0 }}>
+          {event.title}
+        </h3>
+
+        {/* Description */}
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+          {event.description}
+        </p>
+
+        {/* Infos pratiques */}
+        <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            <Clock size={13} color={color} />
+            {event.timeStart}{event.timeEnd ? ` → ${event.timeEnd}` : ''}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            <MapPin size={13} color={color} />
+            {event.location}, <strong>{event.city}</strong>
+            {event.department !== '00' && <span style={{ color: color, fontWeight: 600 }}> ({event.department})</span>}
+          </div>
+          <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            Par <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{event.organizer}</span>
+          </div>
+        </div>
+
+        {/* Tags */}
+        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+          {event.tags.map(tag => (
+            <span key={tag} style={{
+              backgroundColor: '#f5f5f4',
+              color: 'var(--text-secondary)',
+              padding: '0.15rem 0.5rem',
+              borderRadius: '4px',
+              fontSize: '0.72rem',
+            }}>
+              #{tag}
+            </span>
+          ))}
+        </div>
+
       </div>
 
-      {/* Recherche */}
-      <div style={{ position: 'relative', marginBottom: 24 }}>
-        <Search size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
-        <input type="text" placeholder="Rechercher un événement, une ville, un organisateur..." value={search} onChange={e => setSearch(e.target.value)}
-          style={{ width: '100%', padding: '14px 16px 14px 46px', border: '1px solid #e5e7eb', borderRadius: 12, fontSize: 15, outline: 'none', boxSizing: 'border-box' }} />
-      </div>
-
-      {/* Filtres */}
-      <DeptFilter selected={selectedDept} onChange={setSelectedDept} />
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '16px 0 32px' }}>
-        {CATEGORIES.map(c => (
-          <button key={c.key} onClick={() => setSelectedCat(c.key)}
-            style={{ padding: '8px 18px', borderRadius: 24, border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 14, background: selectedCat === c.key ? '#f59e0b' : '#f3f4f6', color: selectedCat === c.key ? 'white' : '#374151' }}>
-            {c.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Contenu */}
-      {loading && <p style={{ textAlign: 'center', color: '#9ca3af', padding: 48 }}>Chargement des événements...</p>}
-      {error && <p style={{ textAlign: 'center', color: '#ef4444', padding: 48 }}>{error}</p>}
-      {!loading && !error && filtered.length === 0 && (
-        <p style={{ textAlign: 'center', color: '#9ca3af', padding: 48 }}>Aucun événement trouvé.</p>
+      {/* Bouton inscription */}
+      {event.registrationUrl && !past && (
+        <div style={{ display: 'flex', alignItems: 'center', padding: '1.25rem 1rem', borderLeft: '1px solid var(--border-color)' }}>
+          <a
+            href={event.registrationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', whiteSpace: 'nowrap' }}
+          >
+            S'inscrire <ExternalLink size={13} />
+          </a>
+        </div>
       )}
-      {!loading && !error && sortedDates.map(date => (
-        <div key={date} style={{ marginBottom: 32 }}>
-          <div style={{ background: '#0d9488', color: 'white', display: 'inline-block', padding: '6px 18px', borderRadius: 20, fontWeight: 700, fontSize: 15, marginBottom: 16 }}>
-            {formatDate(date)}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {grouped[date].map(e => <EventCard key={e.id} e={e} />)}
-          </div>
-        </div>
-      ))}
-    </main>
+    </div>
   );
 }
