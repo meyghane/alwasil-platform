@@ -6,7 +6,7 @@ const SECTIONS = [
   {
     title: 'Ressources',
     links: [
-      { href: '/education', label: '📚 Éducation & Cours' },
+      { href: '/education', label: '📚 Apprentissage & Cours' },
       { href: '/events', label: '📅 Événements' },
       { href: '/solidarity', label: '🤲 Solidarité & Cagnottes' },
       { href: '/librairies', label: '📖 Librairies islamiques' },
