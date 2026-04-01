@@ -12,6 +12,7 @@ const NAV: NavGroup[] = [
     label: 'Apprendre',
     items: [
       { href: '/education', icon: <BookOpen size={16} />, label: 'Apprentissage', desc: 'Cours, instituts, arabe, Coran' },
+      { href: '/guide', icon: <Library size={16} />, label: 'Mes Premiers Pas', desc: 'Les bases de l\'islam pour débuter' },
       { href: '/librairies', icon: <Library size={16} />, label: 'Librairies', desc: 'Librairies islamiques en France' },
     ],
   },
