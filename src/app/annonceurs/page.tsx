@@ -110,11 +110,30 @@ const ANNONCEURS_CIBLES = [
 export default function AnnonceursPage() {
   const [formData, setFormData] = useState({ nom: '', email: '', organisation: '', format: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: intégrer un service d'envoi d'email (Resend, EmailJS, etc.)
-    setSent(true);
+    setLoading(true);
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'annonceur',
+          fields: {
+            Nom: formData.nom,
+            Email: formData.email,
+            Organisation: formData.organisation || '—',
+            Format: formData.format || '—',
+            Message: formData.message,
+          },
+        }),
+      });
+    } finally {
+      setLoading(false);
+      setSent(true);
+    }
   }
 
   return (
@@ -328,8 +347,8 @@ export default function AnnonceursPage() {
                 placeholder="Décrivez votre produit/service, vos objectifs, votre budget indicatif…"
                 style={{ width: '100%', padding: '0.65rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', fontSize: '0.9rem', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
             </div>
-            <button type="submit" className="btn btn-primary" style={{ padding: '0.75rem', fontSize: '0.95rem', fontWeight: 700 }}>
-              Envoyer ma demande →
+            <button type="submit" disabled={loading} className="btn btn-primary" style={{ padding: '0.75rem', fontSize: '0.95rem', fontWeight: 700, opacity: loading ? 0.7 : 1 }}>
+              {loading ? 'Envoi en cours…' : 'Envoyer ma demande →'}
             </button>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
               Tous les annonceurs sont soumis à validation. Nous refusons tout contenu contraire aux valeurs islamiques.

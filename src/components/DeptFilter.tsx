@@ -17,11 +17,11 @@ const DEPTS = [
 ];
 
 type Props = {
-  value: string;
+  selected: string;
   onChange: (dept: string) => void;
 };
 
-export default function DeptFilter({ value, onChange }: Props) {
+export default function DeptFilter({ selected, onChange }: Props) {
   return (
     <div>
       <p style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -33,7 +33,7 @@ export default function DeptFilter({ value, onChange }: Props) {
         flexWrap: 'wrap',
       }}>
         {DEPTS.map(dept => {
-          const isActive = value === dept.code;
+          const isActive = selected === dept.code;
           return (
             <button
               key={dept.code}

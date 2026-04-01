@@ -250,6 +250,8 @@ function ContactForm() {
 
   const [values, setValues] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [sujetAutre, setSujetAutre] = useState('');
 
   useEffect(() => { setValues({}); setSent(false); setSujetAutre(''); }, [type]);
@@ -263,10 +265,23 @@ function ContactForm() {
     }
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: connecter à Formspree / Resend
-    setSent(true);
+    setSending(true);
+    setError('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, fields: { ...values, sujet_precision: sujetAutre || undefined } }),
+      });
+      if (!res.ok) throw new Error('Erreur serveur');
+      setSent(true);
+    } catch {
+      setError('Une erreur est survenue. Réessaie ou écris-nous directement.');
+    } finally {
+      setSending(false);
+    }
   }
 
   const ACCENT = config.color;
@@ -400,9 +415,12 @@ function ContactForm() {
             </div>
           ))}
 
-          <button type="submit" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: ACCENT, color: 'white', border: 'none', padding: '0.875rem', borderRadius: '0.75rem', fontSize: '0.95rem', fontWeight: 700, cursor: 'pointer', marginTop: '0.5rem' }}>
-            <Send size={16} /> Envoyer ma demande
+          <button type="submit" disabled={sending} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: sending ? '#9ca3af' : ACCENT, color: 'white', border: 'none', padding: '0.875rem', borderRadius: '0.75rem', fontSize: '0.95rem', fontWeight: 700, cursor: sending ? 'not-allowed' : 'pointer', marginTop: '0.5rem' }}>
+            <Send size={16} /> {sending ? 'Envoi en cours…' : 'Envoyer ma demande'}
           </button>
+          {error && (
+            <p style={{ fontSize: '0.82rem', color: '#ef4444', textAlign: 'center' }}>{error}</p>
+          )}
           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
             Vos données sont utilisées uniquement pour traiter votre demande. Aucune revente.
           </p>

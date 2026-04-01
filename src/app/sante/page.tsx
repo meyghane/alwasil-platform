@@ -3,20 +3,22 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Heart, ExternalLink, Search, MapPin, Star, Video, Phone, Globe, CheckCircle } from 'lucide-react';
-import { psyProfiles, hijamaProfiles, roqyaProfiles } from '@/data/sante';
+import { psyProfiles, hijamaProfiles, roqyaProfiles, medicalProfiles } from '@/data/sante';
 import DeptFilter from '@/components/DeptFilter';
 
-type Tab = 'psy' | 'hijama' | 'roqya';
+type Tab = 'psy' | 'hijama' | 'roqya' | 'medical';
 
 const TABS: { key: Tab; label: string; count: number }[] = [
   { key: 'psy', label: '🧠 Psychologues & Thérapeutes', count: psyProfiles.length },
   { key: 'hijama', label: '🩸 Hijama', count: hijamaProfiles.length },
   { key: 'roqya', label: '📖 Roqya', count: roqyaProfiles.length },
+  { key: 'medical', label: '🤰 Sage-femmes & Médecins', count: medicalProfiles.length },
 ];
 
 const ACCENT = '#ec4899'; // rose-500 — couleur santé
 const HIJAMA_COLOR = '#dc2626';
 const ROQYA_COLOR = '#7c3aed';
+const MEDICAL_COLOR = '#0891b2'; // cyan-600
 
 function StarRating({ rating, reviews }: { rating?: number; reviews?: number }) {
   if (!rating) return null;
@@ -35,6 +37,7 @@ export default function SantePage() {
   const [deptFilter, setDeptFilter] = useState('Tout');
   const [visioOnly, setVisioOnly] = useState(false);
   const [femmeOnly, setFemmeOnly] = useState(false);
+  const [sfFilter, setSfFilter] = useState<'tous' | 'sage-femme' | 'medecin'>('tous');
 
   const filteredPsy = psyProfiles.filter(p => {
     const q = search.toLowerCase();
@@ -59,7 +62,17 @@ export default function SantePage() {
       (!q || r.name.toLowerCase().includes(q) || r.tags.some(t => t.includes(q)));
   });
 
-  const accentColor = tab === 'psy' ? ACCENT : tab === 'hijama' ? HIJAMA_COLOR : ROQYA_COLOR;
+  const filteredMedical = medicalProfiles.filter(m => {
+    const q = search.toLowerCase();
+    const typeMatch = sfFilter === 'tous' || (sfFilter === 'sage-femme' && m.secteurMedical === 'sage-femme') || (sfFilter === 'medecin' && m.secteurMedical !== 'sage-femme');
+    return typeMatch &&
+      (deptFilter === 'Tout' || m.department === deptFilter) &&
+      (!visioOnly || m.visio) &&
+      (!femmeOnly || m.gender === 'f') &&
+      (!q || m.name.toLowerCase().includes(q) || m.specialites.some(s => s.toLowerCase().includes(q)) || m.tags.some(t => t.includes(q)));
+  });
+
+  const accentColor = tab === 'psy' ? ACCENT : tab === 'hijama' ? HIJAMA_COLOR : tab === 'medical' ? MEDICAL_COLOR : ROQYA_COLOR;
 
   return (
     <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
@@ -71,7 +84,7 @@ export default function SantePage() {
           <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Santé — Shifa (شِفَاء)</h1>
         </div>
         <p style={{ color: 'var(--text-secondary)' }}>
-          Praticiens de confiance orientés communauté : psychologues, hijama et roqya char&apos;iyya.
+          Praticiens de confiance orientés communauté : psychologues, hijama, roqya char&apos;iyya, sage-femmes et médecins.
         </p>
       </div>
 
@@ -162,18 +175,25 @@ export default function SantePage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  {p.website && (
-                    <a href={p.website} target="_blank" rel="noopener noreferrer"
-                      style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: ACCENT, color: 'white', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none' }}>
-                      Prendre RDV <ExternalLink size={12} />
-                    </a>
-                  )}
-                  {p.contact && (
+                  {p.website ? (
+                    <>
+                      <a href={p.website} target="_blank" rel="noopener noreferrer"
+                        style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: ACCENT, color: 'white', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none' }}>
+                        Prendre RDV <ExternalLink size={12} />
+                      </a>
+                      {p.contact && (
+                        <a href={`tel:${p.contact}`}
+                          style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', border: '1px solid var(--border-color)', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
+                          <Phone size={13} />
+                        </a>
+                      )}
+                    </>
+                  ) : p.contact ? (
                     <a href={`tel:${p.contact}`}
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', border: '1px solid var(--border-color)', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
-                      <Phone size={13} />
+                      style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: ACCENT, color: 'white', padding: '0.55rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.88rem', fontWeight: 700, textDecoration: 'none' }}>
+                      <Phone size={15} /> Appeler
                     </a>
-                  )}
+                  ) : null}
                 </div>
               </div>
             ))}
@@ -256,6 +276,100 @@ export default function SantePage() {
                 </div>
               </div>
             ))}
+          </div>
+        </>
+      )}
+
+      {/* ─── SAGE-FEMMES & MÉDECINS ─── */}
+      {tab === 'medical' && (
+        <>
+          <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(8,145,178,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: `3px solid ${MEDICAL_COLOR}` }}>
+            🤰 Sage-femmes et médecins sensibilisés aux enjeux des femmes et familles musulmanes : suivi de grossesse, gynécologie, Ramadan avec pathologies chroniques, respect du voile et de la pudeur.
+          </div>
+
+          {/* Sous-filtre sage-femme / médecin */}
+          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
+            {([['tous', 'Tous (5)'], ['sage-femme', '🤰 Sage-femmes (3)'], ['medecin', '🩺 Médecins (2)']] as const).map(([key, label]) => (
+              <button key={key} onClick={() => setSfFilter(key)}
+                style={{ padding: '0.4rem 1rem', borderRadius: '999px', border: `1.5px solid ${sfFilter === key ? MEDICAL_COLOR : 'var(--border-color)'}`, backgroundColor: sfFilter === key ? MEDICAL_COLOR : 'transparent', color: sfFilter === key ? 'white' : 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: sfFilter === key ? 700 : 400, cursor: 'pointer' }}>
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))', gap: '1.25rem' }}>
+            {filteredMedical.map(m => (
+              <div key={m.id} className="card" style={{ padding: '1.25rem' }}>
+                <div style={{ display: 'flex', gap: '0.875rem', marginBottom: '0.875rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '46px', height: '46px', borderRadius: '50%', backgroundColor: `${MEDICAL_COLOR}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.35rem', flexShrink: 0 }}>
+                    {m.secteurMedical === 'sage-femme' ? '🤰' : '🩺'}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{ fontWeight: 700, fontSize: '0.95rem', margin: 0, lineHeight: 1.2 }}>{m.name}</p>
+                    <p style={{ fontSize: '0.78rem', color: MEDICAL_COLOR, fontWeight: 600, margin: '0.1rem 0' }}>{m.title}</p>
+                    <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.3rem' }}>
+                      <StarRating rating={m.rating} reviews={m.reviews} />
+                      {m.conventionné && (
+                        <span style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}>✅ Conventionné S{m.secteur}</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.55, marginBottom: '0.75rem' }}>{m.description}</p>
+
+                <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
+                  {m.specialites.map(s => (
+                    <span key={s} style={{ backgroundColor: `${MEDICAL_COLOR}12`, color: MEDICAL_COLOR, padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600 }}>{s}</span>
+                  ))}
+                </div>
+
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.2rem', marginBottom: '0.875rem' }}>
+                  <span><MapPin size={11} style={{ display: 'inline' }} /> {m.location}</span>
+                  <span style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                    {m.visio && <span style={{ color: '#3b82f6' }}><Video size={11} style={{ display: 'inline' }} /> Visio OK</span>}
+                    {m.arabophone && <span>🗣️ Arabophone</span>}
+                    {m.accepteVoile && <span style={{ color: '#0891b2' }}>🧕 Cadre respectueux</span>}
+                    {m.tariف && <span style={{ color: '#10b981', fontWeight: 600 }}>💰 {m.tariف}</span>}
+                  </span>
+                  <span>🌐 {m.langues.join(' · ')}</span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  {m.website ? (
+                    <>
+                      <a href={m.website} target="_blank" rel="noopener noreferrer"
+                        style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: MEDICAL_COLOR, color: 'white', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none' }}>
+                        Prendre RDV <ExternalLink size={12} />
+                      </a>
+                      {m.contact && (
+                        <a href={`tel:${m.contact}`}
+                          style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', border: '1px solid var(--border-color)', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
+                          <Phone size={13} />
+                        </a>
+                      )}
+                    </>
+                  ) : m.contact ? (
+                    <a href={`tel:${m.contact}`}
+                      style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: MEDICAL_COLOR, color: 'white', padding: '0.55rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.88rem', fontWeight: 700, textDecoration: 'none' }}>
+                      <Phone size={15} /> Appeler
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filteredMedical.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
+              <p>Aucun profil ne correspond à votre recherche.</p>
+            </div>
+          )}
+
+          <div style={{ marginTop: '2.5rem', padding: '1.5rem', borderRadius: '1rem', backgroundColor: 'rgba(8,145,178,0.05)', border: `1px solid rgba(8,145,178,0.2)`, textAlign: 'center' }}>
+            <h3 style={{ fontWeight: 600, marginBottom: '0.4rem' }}>Vous êtes sage-femme ou médecin ?</h3>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>Référencez-vous gratuitement pour être visible de la communauté.</p>
+            <Link href="/contact?type=general" className="btn btn-primary" style={{ backgroundColor: MEDICAL_COLOR, textDecoration: 'none' }}>Ajouter mon profil</Link>
           </div>
         </>
       )}

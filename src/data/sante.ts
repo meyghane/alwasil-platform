@@ -1,4 +1,4 @@
-export type SanteSector = 'psy' | 'hijama' | 'roqya' | 'medecin' | 'dietetique';
+export type SanteSector = 'psy' | 'hijama' | 'roqya' | 'medecin' | 'sage-femme' | 'dietetique';
 export type ConsultMode = 'presentiel' | 'visio' | 'both';
 
 export type PraticienPsy = {
@@ -81,6 +81,8 @@ export const psyProfiles: PraticienPsy[] = [
     muslimFocus: true,
     arabophone: true,
     gender: 'f',
+    contact: '+33 6 12 34 56 78',
+    website: 'https://www.doctolib.fr',
     tags: ['TCC', 'anxiété', 'double-culture', 'identité', 'trauma'],
     rating: 4.9,
     reviews: 42,
@@ -102,6 +104,8 @@ export const psyProfiles: PraticienPsy[] = [
     muslimFocus: true,
     arabophone: true,
     gender: 'm',
+    contact: '+33 6 23 45 67 89',
+    website: 'https://www.doctolib.fr',
     tags: ['coaching', 'couple', 'stress', 'homme', 'confiance'],
     rating: 4.7,
     reviews: 28,
@@ -122,6 +126,7 @@ export const psyProfiles: PraticienPsy[] = [
     muslimFocus: true,
     arabophone: true,
     gender: 'f',
+    contact: '+33 6 34 56 78 90',
     tags: ['enfants', 'ados', 'TDA-H', 'scolaire', '91'],
     rating: 4.8,
     reviews: 19,
@@ -143,6 +148,8 @@ export const psyProfiles: PraticienPsy[] = [
     muslimFocus: true,
     arabophone: true,
     gender: 'm',
+    contact: '+33 1 48 96 12 34',
+    website: 'https://www.doctolib.fr',
     tags: ['psychiatre', 'remboursé', 'dépression', 'médication', '93'],
     rating: 4.6,
     reviews: 55,
@@ -163,6 +170,8 @@ export const psyProfiles: PraticienPsy[] = [
     muslimFocus: true,
     arabophone: true,
     gender: 'f',
+    contact: '+33 6 45 67 89 01',
+    website: 'https://www.doctolib.fr',
     tags: ['EMDR', 'trauma', 'femmes', 'violence', 'deuil', 'lyon'],
     rating: 5.0,
     reviews: 14,
@@ -183,6 +192,8 @@ export const psyProfiles: PraticienPsy[] = [
     muslimFocus: true,
     arabophone: true,
     gender: 'm',
+    contact: '+33 6 56 78 90 12',
+    website: 'https://www.doctolib.fr',
     tags: ['couple', 'mariage', 'divorce', 'famille', 'marseille'],
     rating: 4.8,
     reviews: 31,
@@ -266,6 +277,155 @@ export const hijamaProfiles: PraticienHijama[] = [
     disponibilité: 'Sur RDV — délai 1 semaine',
     instagram: '#',
     tags: ['domicile', 'île-de-france', 'femmes', 'déplacement'],
+  },
+];
+
+// ─── SAGE-FEMMES & MÉDECINS ──────────────────────────────────
+
+export type PraticienMedical = {
+  id: string;
+  name: string;
+  title: string; // Sage-femme, Médecin généraliste, Gynécologue...
+  secteurMedical: 'sage-femme' | 'medecin-generaliste' | 'gynecologue' | 'kine' | 'dentiste' | 'infirmiere';
+  specialites: string[];
+  langues: string[];
+  location: string;
+  department: string;
+  visio: boolean;
+  tariف?: string;
+  conventionné: boolean;
+  secteur?: '1' | '2' | '3' | 'non-conventionné';
+  description: string;
+  gender: 'f' | 'm';
+  arabophone: boolean;
+  accepteVoile: boolean; // cabinet respectueux, personnel féminin si possible
+  muslimFocus: boolean;
+  contact?: string;
+  website?: string;
+  tags: string[];
+  rating?: number;
+  reviews?: number;
+};
+
+export const medicalProfiles: PraticienMedical[] = [
+  {
+    id: 'med1',
+    name: 'Karima Haddad',
+    title: 'Sage-femme libérale',
+    secteurMedical: 'sage-femme',
+    specialites: ['Suivi de grossesse', 'Préparation à l\'accouchement', 'Post-partum', 'Allaitement'],
+    langues: ['Français', 'Arabe'],
+    location: 'Saint-Denis (93)',
+    department: '93',
+    visio: true,
+    tariف: 'Remboursé Sécu (secteur 1)',
+    conventionné: true,
+    secteur: '1',
+    description: 'Sage-femme libérale accompagnant les femmes musulmanes avec bienveillance et respect de leurs valeurs. Suivi personnalisé grossesse, préparation à l\'accouchement, accompagnement allaitement. Consulte en hidjab.',
+    gender: 'f',
+    arabophone: true,
+    accepteVoile: true,
+    muslimFocus: true,
+    contact: '+33 6 11 22 33 44',
+    website: 'https://www.doctolib.fr',
+    tags: ['grossesse', 'accouchement', 'allaitement', 'remboursé', '93', 'sage-femme'],
+    rating: 4.9,
+    reviews: 38,
+  },
+  {
+    id: 'med2',
+    name: 'Fatima Zerrouk',
+    title: 'Sage-femme — spécialiste post-partum',
+    secteurMedical: 'sage-femme',
+    specialites: ['Post-partum', 'Baby blues', 'Rééducation périnéale', 'Contraception naturelle'],
+    langues: ['Français', 'Arabe', 'Kabyle'],
+    location: 'Aubervilliers (93)',
+    department: '93',
+    visio: false,
+    tariف: 'Remboursé Sécu',
+    conventionné: true,
+    secteur: '1',
+    description: 'Sage-femme spécialisée dans le post-partum et l\'accompagnement des jeunes mamans. Sensibilisée au contexte culturel et religieux : discuter contraception halal, allaitement pendant le Ramadan, dépression post-partum.',
+    gender: 'f',
+    arabophone: true,
+    accepteVoile: true,
+    muslimFocus: true,
+    contact: '+33 6 22 33 44 55',
+    tags: ['post-partum', 'rééducation', 'périnéale', 'baby-blues', '93'],
+    rating: 4.8,
+    reviews: 22,
+  },
+  {
+    id: 'med3',
+    name: 'Leila Mansouri',
+    title: 'Sage-femme — accompagnement global',
+    secteurMedical: 'sage-femme',
+    specialites: ['Suivi gynécologique', 'Frottis', 'Contraception', 'Grossesse', 'Ménopause'],
+    langues: ['Français', 'Arabe'],
+    location: 'Évry-Courcouronnes (91)',
+    department: '91',
+    visio: true,
+    tariف: 'Remboursé Sécu + dépassements possibles',
+    conventionné: true,
+    secteur: '1',
+    description: 'Sage-femme assurant un suivi gynécologique complet pour les femmes qui préfèrent éviter un médecin homme. Frottis, contraception, grossesse, ménopause : tout dans un cadre sécurisé et bienveillant.',
+    gender: 'f',
+    arabophone: true,
+    accepteVoile: true,
+    muslimFocus: true,
+    contact: '+33 6 33 44 55 66',
+    website: 'https://www.doctolib.fr',
+    tags: ['gynécologie', 'contraception', 'frottis', '91', 'suivi-complet'],
+    rating: 4.7,
+    reviews: 15,
+  },
+  {
+    id: 'med4',
+    name: 'Dr Samira Benkhaled',
+    title: 'Médecin généraliste',
+    secteurMedical: 'medecin-generaliste',
+    specialites: ['Médecine générale', 'Diabète', 'Nutrition', 'Suivi femmes'],
+    langues: ['Français', 'Arabe', 'Anglais'],
+    location: 'Clichy-sous-Bois (93)',
+    department: '93',
+    visio: false,
+    tariف: '26.50€ (secteur 1 — remboursé)',
+    conventionné: true,
+    secteur: '1',
+    description: 'Médecin généraliste sensibilisée aux enjeux de santé des populations musulmanes : jeûne du Ramadan avec pathologies chroniques, nutrition halal, discussions de santé en accord avec les valeurs religieuses.',
+    gender: 'f',
+    arabophone: true,
+    accepteVoile: true,
+    muslimFocus: true,
+    contact: '+33 1 43 12 34 56',
+    website: 'https://www.doctolib.fr',
+    tags: ['généraliste', 'ramadan', 'diabète', 'nutrition', '93', 'remboursé'],
+    rating: 4.8,
+    reviews: 67,
+  },
+  {
+    id: 'med5',
+    name: 'Dr Youssef Laaribi',
+    title: 'Médecin généraliste',
+    secteurMedical: 'medecin-generaliste',
+    specialites: ['Médecine générale', 'Santé mentale', 'Addictologie', 'Médecine du sport'],
+    langues: ['Français', 'Arabe', 'Tamazight'],
+    location: 'Marseille 13e',
+    department: '13',
+    visio: true,
+    tariف: '26.50€ (secteur 1 — remboursé)',
+    conventionné: true,
+    secteur: '1',
+    description: 'Médecin généraliste à l\'écoute, comprenant les contraintes culturelles et religieuses. Accompagnement déstigmatisant sur la santé mentale, les addictions, les problèmes liés au jeûne ou à l\'alimentation halal.',
+    gender: 'm',
+    arabophone: true,
+    accepteVoile: true,
+    muslimFocus: true,
+    contact: '+33 4 91 23 45 67',
+    website: 'https://www.doctolib.fr',
+    tags: ['généraliste', 'visio', 'addictologie', 'santé-mentale', 'marseille'],
+    rating: 4.6,
+    reviews: 44,
   },
 ];
 
