@@ -1,16 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/scrape-events",
-      "schedule": "0 7 * * *"
-    },
-    {
-      "path": "/api/cron/scrape-jobs",
-      "schedule": "0 8 * * *"
-    },
-    {
-      "path": "/api/cron/scrape-cagnottes",
-      "schedule": "0 9 * * *"
-    }
-  ]
-}
+{}
