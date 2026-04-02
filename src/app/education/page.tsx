@@ -38,11 +38,22 @@ const COURSE_FILTERS: { key: CourseType | 'all'; label: string }[] = [
   { key: 'enfants', label: 'Enfants' },
 ];
 
+type TypeFilter = 'all' | 'institut' | 'mosquee' | 'professeur' | 'en-ligne';
+
+const TYPE_FILTERS: { key: TypeFilter; label: string }[] = [
+  { key: 'all', label: 'Tous' },
+  { key: 'institut', label: '🏛️ Institut' },
+  { key: 'mosquee', label: '🕌 Mosquée' },
+  { key: 'professeur', label: '👤 Prof. particulier' },
+  { key: 'en-ligne', label: '💻 En ligne' },
+];
+
 export default function EducationPage() {
   const [search, setSearch] = useState('');
   const [selectedCourse, setSelectedCourse] = useState<CourseType | 'all'>('all');
   const [selectedDept, setSelectedDept] = useState('Tout');
   const [selectedFormat, setSelectedFormat] = useState<'all' | 'presentiel' | 'distanciel'>('all');
+  const [selectedType, setSelectedType] = useState<TypeFilter>('all');
 
   const filtered = allInstituts.filter(inst => {
     const q = search.toLowerCase();
@@ -50,7 +61,8 @@ export default function EducationPage() {
     const matchCourse = selectedCourse === 'all' || inst.courses.includes(selectedCourse);
     const matchDept = selectedDept === 'Tout' || inst.department === selectedDept;
     const matchFormat = selectedFormat === 'all' || inst.format.includes(selectedFormat);
-    return matchSearch && matchCourse && matchDept && matchFormat;
+    const matchType = selectedType === 'all' || inst.type === selectedType || (selectedType === 'en-ligne' && (inst.type === 'en-ligne' || inst.format.includes('distanciel')));
+    return matchSearch && matchCourse && matchDept && matchFormat && matchType;
   });
 
   return (
@@ -60,7 +72,7 @@ export default function EducationPage() {
       <div style={{ marginBottom: '2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
           <BookOpen size={28} color="var(--primary-color)" />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Éducation & Savoir — Ilm (عِلْم)</h1>
+          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Apprentissage — Ilm (عِلْم)</h1>
         </div>
         <p style={{ color: 'var(--text-secondary)' }}>
           {allInstituts.length} instituts, mosquées et professeurs répertoriés en Île-de-France et en ligne.
@@ -90,6 +102,24 @@ export default function EducationPage() {
       {/* Filtre département */}
       <div style={{ marginBottom: '1.25rem' }}>
         <DeptFilter value={selectedDept} onChange={setSelectedDept} />
+      </div>
+
+      {/* Filtre Type */}
+      <div style={{ marginBottom: '1.25rem' }}>
+        <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Type</p>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {TYPE_FILTERS.map(t => (
+            <button key={t.key} onClick={() => setSelectedType(t.key)} style={{
+              padding: '0.4rem 1rem', borderRadius: '999px',
+              border: selectedType === t.key ? '2px solid #0d9488' : '1.5px solid var(--border-color)',
+              backgroundColor: selectedType === t.key ? '#0d9488' : 'white',
+              color: selectedType === t.key ? 'white' : 'var(--text-secondary)',
+              fontSize: '0.82rem', fontWeight: selectedType === t.key ? 700 : 400, cursor: 'pointer',
+            }}>
+              {t.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Format chips */}

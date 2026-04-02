@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { BookOpen, Calendar, HandHeart, Briefcase, ShieldCheck, Heart, Plane, Menu, X, Library, ChevronDown, Waves, MapPin } from 'lucide-react';
+import { BookOpen, Calendar, HandHeart, Briefcase, ShieldCheck, Heart, Plane, Menu, X, Library, ChevronDown, Waves, MapPin, PenLine } from 'lucide-react';
 
 type NavItem = { href: string; icon: React.ReactNode; label: string; desc?: string };
 type NavGroup = { label: string; items: NavItem[] } | { href: string; icon: React.ReactNode; label: string };
@@ -14,6 +14,7 @@ const NAV: NavGroup[] = [
       { href: '/education', icon: <BookOpen size={16} />, label: 'Apprentissage', desc: 'Cours, instituts, arabe, Coran' },
       { href: '/guide', icon: <Library size={16} />, label: 'Mes Premiers Pas', desc: 'Les bases de l\'islam pour débuter' },
       { href: '/librairies', icon: <Library size={16} />, label: 'Librairies', desc: 'Librairies islamiques en France' },
+      { href: '/blog', icon: <PenLine size={16} />, label: 'Blog', desc: 'Guides pratiques, droits, bons plans' },
     ],
   },
   {

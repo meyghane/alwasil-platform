@@ -437,6 +437,74 @@ const yvelines: Institut[] = [
 ];
 
 // ============================================================
+// GRANDS INSTITUTS FRANCE (IDF + national)
+// ============================================================
+const grandsInstituts: Institut[] = [
+  {
+    id: 'oussoul-eddine',
+    name: 'Oussoul Eddine',
+    type: 'institut',
+    address: 'Île-de-France + En ligne',
+    city: 'Paris / En ligne',
+    department: '75',
+    website: 'https://oussoul-eddine.fr',
+    courses: ['sciences-islamiques', 'aqida', 'fiqh', 'arabe', 'coran', 'hadith', 'sirah', 'tafsir'],
+    audience: ['hommes', 'femmes'],
+    format: ['presentiel', 'distanciel'],
+    description: 'Institut islamique français très reconnu, fondé par des étudiants en sciences islamiques. Formation structurée par niveaux (initiation → avancé) en présentiel et en ligne. Cours de sciences islamiques, arabe, Coran. Forte présence en Île-de-France.',
+    tags: ['diplômant', 'sciences islamiques', 'arabe', 'IDF', 'en ligne', 'hybride', 'reconnu'],
+    rating: 4.8,
+    reviewCount: 0,
+    verified: true,
+    featured: true,
+  },
+  {
+    id: 'ifi-paris',
+    name: 'IFI — Institut de Formation à l\'Islam',
+    type: 'institut',
+    address: 'Paris',
+    city: 'Paris',
+    department: '75',
+    website: 'https://ifi-paris.fr',
+    courses: ['sciences-islamiques', 'arabe', 'fiqh', 'aqida', 'tafsir'],
+    audience: ['hommes', 'femmes'],
+    format: ['presentiel', 'distanciel'],
+    description: 'Institut parisien proposant des formations en sciences islamiques et langue arabe. Programme structuré, intervenants qualifiés. Cours en présentiel à Paris et à distance.',
+    tags: ['Paris', 'sciences islamiques', 'arabe', 'formation'],
+    verified: false,
+    featured: true,
+  },
+  {
+    id: 'dar-al-iman',
+    name: 'Dar Al-Iman — Institut',
+    type: 'institut',
+    address: 'Île-de-France',
+    city: 'Paris / IDF',
+    department: '75',
+    courses: ['coran', 'tajwid', 'arabe', 'sciences-islamiques', 'memorisation'],
+    audience: ['hommes', 'femmes', 'enfants'],
+    format: ['presentiel', 'distanciel'],
+    description: 'Institut proposant des cours de Coran, Tajwid, mémorisation et arabe. Cours enfants et adultes, en présentiel et en ligne.',
+    tags: ['IDF', 'Coran', 'mémorisation', 'enfants', 'adultes'],
+    verified: false,
+  },
+  {
+    id: 'ribat-al-asr',
+    name: 'Ribat Al-\'Asr',
+    type: 'institut',
+    address: 'Île-de-France',
+    city: 'IDF',
+    department: '93',
+    courses: ['sciences-islamiques', 'arabe', 'aqida', 'fiqh', 'tafsir', 'hadith'],
+    audience: ['hommes', 'femmes'],
+    format: ['presentiel', 'distanciel'],
+    description: 'Institut islamique actif en Seine-Saint-Denis et en ligne. Programme de sciences islamiques pour adultes, plusieurs niveaux disponibles.',
+    tags: ['93', 'sciences islamiques', 'en ligne'],
+    verified: false,
+  },
+];
+
+// ============================================================
 // EN LIGNE (France entière)
 // ============================================================
 const enligne: Institut[] = [
@@ -556,6 +624,7 @@ const enligne: Institut[] = [
 // EXPORT GLOBAL
 // ============================================================
 export const allInstituts: Institut[] = [
+  ...grandsInstituts,
   ...paris,
   ...hautsDeScine,
   ...hautsDeSeineExtra,
