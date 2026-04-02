@@ -179,9 +179,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.25rem' }}>Articles liés</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', backgroundColor: '#e5e7eb', borderRadius: '12px', overflow: 'hidden' }}>
             {related.map(a => (
-              <Link key={a.slug} href={`/blog/${a.slug}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', padding: '1rem 1.25rem', backgroundColor: 'white', textDecoration: 'none' }}
-                onMouseOver={e => (e.currentTarget.style.backgroundColor = '#f9fafb')}
-                onMouseOut={e => (e.currentTarget.style.backgroundColor = 'white')}>
+              <Link key={a.slug} href={`/blog/${a.slug}`} className="blog-related-link" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', padding: '1rem 1.25rem', backgroundColor: 'white', textDecoration: 'none', transition: 'background 0.1s' }}>
                 <div>
                   <span style={{ backgroundColor: a.categoryColor, color: 'white', padding: '0.1rem 0.5rem', borderRadius: '3px', fontSize: '0.65rem', fontWeight: 700, marginRight: '0.5rem' }}>{a.category}</span>
                   <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#111827' }}>{a.title}</span>
@@ -190,6 +188,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </Link>
             ))}
           </div>
+          <style>{`.blog-related-link:hover { background-color: #f9fafb !important; }`}</style>
         </section>
       )}
     </div>

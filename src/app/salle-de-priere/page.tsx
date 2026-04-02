@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { MapPin, Star, Droplets, Clock, ChevronRight, Plus, Search, Heart, Bell, Navigation2, ShieldCheck, X } from 'lucide-react';
+import { MapPin, Star, Droplets, Clock, Plus, Search, Heart, Bell, Navigation2, ShieldCheck, X, MessageCircle, Send } from 'lucide-react';
 import {
   espacesPriere,
   PRIERE_LABELS,
@@ -111,9 +111,23 @@ function EspaceCard({
   distance?: number;
 }) {
   const typeColor = TYPE_COLORS[espace.type];
-  const dispoSelected = selectedPriere !== 'toutes' ? espace.prieres[selectedPriere] : null;
-  const [reserved, setReserved] = useState(false);
   const confidence = getConfidenceScore(espace);
+
+  // Prière sélectionnée SUR la carte (indépendant du filtre global)
+  const [cardPriere, setCardPriere] = useState<Priere | null>(
+    selectedPriere !== 'toutes' ? selectedPriere : null
+  );
+  useEffect(() => {
+    if (selectedPriere !== 'toutes') setCardPriere(selectedPriere);
+  }, [selectedPriere]);
+
+  const dispo = cardPriere ? espace.prieres[cardPriere] : null;
+
+  // Message inline
+  const [contactOpen, setContactOpen] = useState(false);
+  const [msgSent, setMsgSent] = useState(false);
+  const [msgText, setMsgText] = useState('');
+  const availablePrieres = PRIERES.filter(p => espace.prieres[p] !== null);
 
   return (
     <div className="card" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -129,7 +143,6 @@ function EspaceCard({
         <span style={{ position: 'absolute', top: '0.65rem', left: '0.65rem', backgroundColor: typeColor, color: 'white', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}>
           {TYPE_LABELS[espace.type]}
         </span>
-        {/* Favori button */}
         <button
           onClick={() => onToggleFavorite(espace.id)}
           style={{ position: 'absolute', top: '0.65rem', right: '0.65rem', background: isFavorite ? '#ec4899' : 'rgba(255,255,255,0.85)', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.15s', backdropFilter: 'blur(4px)' }}
@@ -153,6 +166,7 @@ function EspaceCard({
 
       {/* Content */}
       <div style={{ padding: '1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+
         {/* Host + rating + confiance */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem' }}>
           <div>
@@ -184,22 +198,52 @@ function EspaceCard({
           </span>
         </div>
 
-        {/* Prières disponibles */}
+        {/* ── Sélecteur de prière sur la carte ── */}
         <div>
           <p style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
-            Prières disponibles
+            Choisir une prière
           </p>
-          <PrieresPills espace={espace} selectedPriere={selectedPriere} genre={genre} />
+          <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+            {PRIERES.map(p => {
+              const d = espace.prieres[p];
+              const isSelected = cardPriere === p;
+              if (!d) return (
+                <span key={p} style={{ padding: '0.25rem 0.55rem', borderRadius: '6px', fontSize: '0.7rem', backgroundColor: '#f5f5f4', color: '#c4b5a5', fontWeight: 500, cursor: 'not-allowed' }}>
+                  {PRIERE_LABELS[p]}
+                </span>
+              );
+              const libresH = d.placesH - d.reservesH;
+              const libresF = d.placesF - d.reservesF;
+              const hasSpace = genre === 'femmes' ? libresF > 0 : genre === 'hommes' ? libresH > 0 : (libresH > 0 || libresF > 0);
+              return (
+                <button
+                  key={p}
+                  onClick={() => setCardPriere(isSelected ? null : p)}
+                  title={`${PRIERE_LABELS[p]} · ${HORAIRES_PARIS[p]}`}
+                  style={{
+                    padding: '0.25rem 0.55rem', borderRadius: '6px', fontSize: '0.7rem', fontWeight: isSelected ? 700 : 500, cursor: 'pointer', transition: 'all 0.12s',
+                    border: isSelected ? `2px solid ${TEAL}` : `1px solid ${hasSpace ? '#bbf7d0' : '#fecaca'}`,
+                    backgroundColor: isSelected ? TEAL : hasSpace ? '#f0fdf4' : '#fff1f2',
+                    color: isSelected ? 'white' : hasSpace ? GREEN : '#dc2626',
+                  }}>
+                  {PRIERE_LABELS[p]}
+                  <span style={{ opacity: 0.75, marginLeft: '0.2rem' }}>· {HORAIRES_PARIS[p]}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Places pour la prière sélectionnée */}
-        {dispoSelected && (
+        {/* ── Places H/F pour la prière sélectionnée sur la carte ── */}
+        {dispo ? (
           <div style={{ backgroundColor: '#f0fdfa', borderRadius: '10px', padding: '0.75rem' }}>
             <p style={{ fontSize: '0.7rem', fontWeight: 700, color: TEAL, marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              {selectedPriere !== 'toutes' ? `${PRIERE_LABELS[selectedPriere]} · ${HORAIRES_PARIS[selectedPriere]}` : 'Places disponibles'}
+              {cardPriere && `${PRIERE_LABELS[cardPriere]} · ${HORAIRES_PARIS[cardPriere]}`}
             </p>
+
+            {/* Hommes */}
             {genre !== 'femmes' && (() => {
-              const libres = dispoSelected.placesH - dispoSelected.reservesH;
+              const libres = dispo.placesH - dispo.reservesH;
               return (
                 <div style={{ marginBottom: genre !== 'hommes' ? '0.6rem' : 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem' }}>
@@ -209,15 +253,17 @@ function EspaceCard({
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-                    {Array.from({ length: dispoSelected.placesH }).map((_, i) => (
-                      <div key={i} style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: i < dispoSelected.reservesH ? '#dc2626' : GREEN, opacity: i < dispoSelected.reservesH ? 0.8 : 1 }} title={i < dispoSelected.reservesH ? 'Réservé' : 'Libre'} />
+                    {Array.from({ length: dispo.placesH }).map((_, i) => (
+                      <div key={i} style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: i < dispo.reservesH ? '#dc2626' : GREEN, opacity: i < dispo.reservesH ? 0.7 : 1 }} title={i < dispo.reservesH ? 'Réservé' : 'Libre'} />
                     ))}
                   </div>
                 </div>
               );
             })()}
+
+            {/* Femmes */}
             {genre !== 'hommes' && (() => {
-              const libres = dispoSelected.placesF - dispoSelected.reservesF;
+              const libres = dispo.placesF - dispo.reservesF;
               return (
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem' }}>
@@ -227,32 +273,101 @@ function EspaceCard({
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-                    {Array.from({ length: dispoSelected.placesF }).map((_, i) => (
-                      <div key={i} style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: i < dispoSelected.reservesF ? '#dc2626' : '#db2777', opacity: i < dispoSelected.reservesF ? 0.5 : 0.85 }} title={i < dispoSelected.reservesF ? 'Réservé' : 'Libre'} />
+                    {Array.from({ length: dispo.placesF }).map((_, i) => (
+                      <div key={i} style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: i < dispo.reservesF ? '#dc2626' : '#db2777', opacity: i < dispo.reservesF ? 0.5 : 0.85 }} title={i < dispo.reservesF ? 'Réservé' : 'Libre'} />
                     ))}
                   </div>
                 </div>
               );
             })()}
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'flex', gap: '0.75rem' }}>
+            <p style={{ fontSize: '0.63rem', color: 'var(--text-secondary)', marginTop: '0.4rem', display: 'flex', gap: '0.75rem' }}>
               <span>🟢 Libre</span><span style={{ opacity: 0.5 }}>🔴 Réservé</span>
+            </p>
+          </div>
+        ) : (
+          <div style={{ backgroundColor: '#fafaf9', borderRadius: '10px', padding: '0.6rem 0.875rem', border: '1px dashed #d6d3d1', textAlign: 'center' }}>
+            <p style={{ fontSize: '0.75rem', color: '#a8a29e', margin: 0 }}>
+              ☝️ Sélectionne une prière pour voir les places H/F disponibles
             </p>
           </div>
         )}
 
-        {/* CTA */}
-        {reserved ? (
-          <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.6rem 1rem', backgroundColor: '#f0fdf4', border: `1px solid ${GREEN}40`, color: GREEN, borderRadius: '8px', fontSize: '0.875rem', fontWeight: 700 }}>
-            ✓ Demande envoyée — l&apos;hôte va confirmer
-          </div>
+        {/* ── CTA : message inline ── */}
+        {!msgSent ? (
+          <>
+            <button
+              onClick={() => setContactOpen(!contactOpen)}
+              style={{
+                marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+                padding: '0.6rem 1rem',
+                backgroundColor: contactOpen ? '#f0fdfa' : TEAL,
+                color: contactOpen ? TEAL : 'white',
+                border: contactOpen ? `2px solid ${TEAL}` : 'none',
+                borderRadius: '8px', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer', transition: 'all 0.15s',
+              }}>
+              <MessageCircle size={15} />
+              {contactOpen ? 'Annuler' : `Contacter ${espace.prenom}`}
+            </button>
+
+            {contactOpen && (
+              <div style={{ backgroundColor: '#f8fafc', borderRadius: '10px', padding: '1rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                <p style={{ fontSize: '0.78rem', fontWeight: 700, margin: 0, color: '#1c1917' }}>
+                  Message à {espace.prenom} · Hôte
+                </p>
+
+                {/* Sélection prière dans le form */}
+                <div>
+                  <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>Pour quelle prière ?</p>
+                  <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+                    {availablePrieres.map(p => (
+                      <button key={p} onClick={() => setCardPriere(p)} style={{
+                        padding: '0.2rem 0.55rem', borderRadius: '5px', fontSize: '0.7rem', cursor: 'pointer', transition: 'all 0.12s', fontWeight: cardPriere === p ? 700 : 400,
+                        border: cardPriere === p ? `2px solid ${TEAL}` : '1px solid var(--border-color)',
+                        backgroundColor: cardPriere === p ? TEAL : 'white',
+                        color: cardPriere === p ? 'white' : 'var(--text-secondary)',
+                      }}>
+                        {PRIERE_LABELS[p]} <span style={{ opacity: 0.8 }}>· {HORAIRES_PARIS[p]}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <textarea
+                  value={msgText}
+                  onChange={e => setMsgText(e.target.value)}
+                  placeholder={`Salam, je souhaite prier${cardPriere ? ` le ${PRIERE_LABELS[cardPriere]}` : ''} chez vous. Est-ce disponible ?`}
+                  rows={2}
+                  style={{ width: '100%', padding: '0.5rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.82rem', resize: 'none', outline: 'none', boxSizing: 'border-box', lineHeight: 1.4 }}
+                />
+
+                <button
+                  onClick={() => { if (msgText.trim() || cardPriere) setMsgSent(true); else setMsgSent(true); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+                    padding: '0.6rem', backgroundColor: GREEN, color: 'white',
+                    border: 'none', borderRadius: '8px', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer', transition: 'opacity 0.15s',
+                  }}
+                  onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
+                  onMouseOut={e => (e.currentTarget.style.opacity = '1')}>
+                  <Send size={14} /> Envoyer le message
+                </button>
+
+                <p style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', textAlign: 'center', margin: 0 }}>
+                  L&apos;adresse exacte sera communiquée après confirmation de l&apos;hôte
+                </p>
+              </div>
+            )}
+          </>
         ) : (
-          <Link href="/connexion"
-            onClick={e => { e.preventDefault(); setReserved(true); }}
-            style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.6rem 1rem', backgroundColor: TEAL, color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '0.875rem', transition: 'opacity 0.15s' }}
-            onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
-            onMouseOut={e => (e.currentTarget.style.opacity = '1')}>
-            Réserver une place <ChevronRight size={15} />
-          </Link>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '1rem', backgroundColor: '#f0fdf4', border: `1px solid ${GREEN}40`, borderRadius: '10px', textAlign: 'center' }}>
+            <span style={{ fontSize: '1.5rem' }}>✓</span>
+            <p style={{ fontWeight: 700, color: GREEN, fontSize: '0.9rem', margin: 0 }}>
+              Message envoyé à {espace.prenom}
+            </p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>
+              Réponse sous 1h en général · l&apos;adresse t&apos;est communiquée après confirmation
+            </p>
+          </div>
         )}
       </div>
     </div>
