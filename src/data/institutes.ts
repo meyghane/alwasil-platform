@@ -447,7 +447,7 @@ const grandsInstituts: Institut[] = [
     address: 'Île-de-France + En ligne',
     city: 'Paris / En ligne',
     department: '75',
-    website: 'https://oussoul-eddine.fr',
+    website: 'https://www.oussoul-eddine.fr/',
     courses: ['sciences-islamiques', 'aqida', 'fiqh', 'arabe', 'coran', 'hadith', 'sirah', 'tafsir'],
     audience: ['hommes', 'femmes'],
     format: ['presentiel', 'distanciel'],
