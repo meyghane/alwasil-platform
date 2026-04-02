@@ -16,7 +16,6 @@ const CATEGORIES: { key: EventCategory | 'all'; label: string }[] = [
   { key: 'all', label: 'Tout' },
   { key: 'conference', label: 'Conférence' },
   { key: 'maraude', label: 'Maraude' },
-  { key: 'cours', label: 'Cours' },
   { key: 'iftar', label: 'Iftar' },
   { key: 'webinaire', label: 'Webinaire' },
   { key: 'jeunesse', label: 'Jeunesse' },
@@ -82,6 +81,12 @@ export default function EventsPage() {
           </Link>
         </div>
       </div>
+
+      {/* Bannière cours → Apprentissage */}
+      <Link href="/education" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', backgroundColor: '#f0fdfa', border: '1px solid #99f6e4', borderRadius: '0.5rem', textDecoration: 'none', color: '#0d9488', fontSize: '0.875rem', fontWeight: 500, marginBottom: '1.25rem' }}>
+        <span>📚</span>
+        <span>Vous cherchez des <strong>cours d'arabe, Coran ou sciences islamiques</strong> ? Rendez-vous dans <strong>Apprentissage →</strong></span>
+      </Link>
 
       {/* Search */}
       <div style={{ position: 'relative', marginBottom: '1.25rem' }}>
