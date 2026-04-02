@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { BookOpen, Calendar, HandHeart, Briefcase, ShieldCheck, Heart, Plane, Menu, X, Library, ChevronDown } from 'lucide-react';
+import { BookOpen, Calendar, HandHeart, Briefcase, ShieldCheck, Heart, Plane, Menu, X, Library, ChevronDown, Waves, MapPin } from 'lucide-react';
 
 type NavItem = { href: string; icon: React.ReactNode; label: string; desc?: string };
 type NavGroup = { label: string; items: NavItem[] } | { href: string; icon: React.ReactNode; label: string };
@@ -21,12 +21,14 @@ const NAV: NavGroup[] = [
     items: [
       { href: '/events', icon: <Calendar size={16} />, label: 'Événements', desc: 'Conférences, portes ouvertes, iftar' },
       { href: '/solidarity', icon: <HandHeart size={16} />, label: 'Solidarité', desc: 'Cagnottes, maraudes, associations' },
+      { href: '/salle-de-priere', icon: <MapPin size={16} />, label: 'Where Salat', desc: 'Trouve un espace de prière près de toi' },
     ],
   },
   {
     label: 'Services',
     items: [
       { href: '/sante', icon: <Heart size={16} />, label: 'Santé', desc: 'Psy, hijama, sage-femmes, médecins' },
+      { href: '/piscines', icon: <Waves size={16} />, label: 'Piscines Burkini', desc: 'Créneaux burkini en Île-de-France' },
       { href: '/jobs', icon: <Briefcase size={16} />, label: 'Emploi', desc: 'Offres voile OK, prière acceptée' },
       { href: '/justice', icon: <ShieldCheck size={16} />, label: 'Justice', desc: 'Droits, discrimination, ressources' },
     ],
