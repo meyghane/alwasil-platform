@@ -132,41 +132,68 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Where Salat — Feature highlight ──────────────────── */}
-      <section style={{ marginBottom: '3.5rem' }}>
-        <div style={{ borderRadius: '1.5rem', overflow: 'hidden', background: 'linear-gradient(135deg, #052e16 0%, #14532d 60%, #166534 100%)', color: 'white', padding: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+      {/* ── Where Salat — Projet distinct mis en avant ────────── */}
+      <section style={{ marginBottom: '4rem' }}>
+        {/* Label projet distinct */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+          <div style={{ height: '1px', flex: 1, backgroundColor: '#e7e5e4' }} />
+          <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.1em', whiteSpace: 'nowrap' }}>Projet complémentaire</span>
+          <div style={{ height: '1px', flex: 1, backgroundColor: '#e7e5e4' }} />
+        </div>
+
+        <div style={{ borderRadius: '1.75rem', overflow: 'hidden', background: 'linear-gradient(135deg, #052e16 0%, #14532d 55%, #065f46 100%)', color: 'white', padding: '3rem 2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', alignItems: 'center', boxShadow: '0 20px 60px rgba(5,46,22,0.35)' }}>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#16a34a', borderRadius: '999px', padding: '0.3rem 0.9rem', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1rem' }}>
-              <span>🕌</span> Nouvelle feature
+            {/* Marque Where Salat */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+              <div style={{ width: '44px', height: '44px', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0 }}>
+                🕌
+              </div>
+              <div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: 1 }}>Where Salat</div>
+                <div style={{ fontSize: '0.7rem', opacity: 0.6, letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: '2px' }}>by Al-Wasil</div>
+              </div>
             </div>
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '0.75rem' }}>
-              Where Salat
-            </h2>
-            <p style={{ fontSize: '1rem', lineHeight: 1.6, opacity: 0.9, marginBottom: '1.5rem', maxWidth: '420px' }}>
-              Des particuliers et commerçants ouvrent leur espace pour que tu puisses prier à l&apos;heure, partout en IDF. <strong>Gratuit. FissabiliLlah.</strong>
+
+            <p style={{ fontSize: '1.05rem', lineHeight: 1.65, opacity: 0.92, marginBottom: '1.5rem', maxWidth: '400px' }}>
+              Des particuliers et commerçants ouvrent leur espace pour que tu puisses prier à l&apos;heure, partout en IDF.<br />
+              <strong style={{ color: '#86efac' }}>Gratuit. FissabiliLlah.</strong>
             </p>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
-              {['🏠 Chez des particuliers', '🛍️ Dans des commerces', '🙋 Réservation simple', '🚿 Ablutions indiquées'].map(f => (
-                <span key={f} style={{ fontSize: '0.8rem', backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: '999px', padding: '0.3rem 0.75rem', fontWeight: 500 }}>{f}</span>
+
+            <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+              {[
+                { icon: '🏠', label: 'Chez des particuliers' },
+                { icon: '🛍️', label: 'Dans des commerces' },
+                { icon: '🚿', label: 'Ablutions indiquées' },
+                { icon: '🙋', label: 'Réservation en 1 clic' },
+              ].map(f => (
+                <span key={f.label} style={{ fontSize: '0.78rem', backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '999px', padding: '0.3rem 0.8rem', fontWeight: 500 }}>
+                  {f.icon} {f.label}
+                </span>
               ))}
             </div>
-            <Link href="/salle-de-priere" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#16a34a', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.95rem', transition: 'opacity 0.15s' }}
-              onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
-              onMouseOut={e => (e.currentTarget.style.opacity = '1')}>
-              Trouver un espace <ArrowRight size={16} />
-            </Link>
+
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <Link href="/salle-de-priere" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', color: 'white', padding: '0.8rem 1.75rem', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.95rem', boxShadow: '0 4px 15px rgba(22,163,74,0.4)' }}>
+                Trouver un espace <ArrowRight size={16} />
+              </Link>
+              <Link href="/salle-de-priere?mode=propose" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '10px', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>
+                Proposer mon espace
+              </Link>
+            </div>
           </div>
+
+          {/* Mini-cartes aperçu */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
-              { prenom: 'Yassine', quartier: 'Belleville, Paris 20e', places: '2 places restantes', priere: 'Dhohr 13h52', dispo: true },
-              { prenom: 'Karima', quartier: 'Gennevilliers, 92', places: '4 places restantes', priere: 'Asr 17h18', dispo: true },
-              { prenom: 'Nadia', quartier: 'Sarcelles, 95', places: '1 place restante', priere: 'Maghrib 20h41', dispo: true },
-              { prenom: 'Rachid', quartier: 'La Défense, 92', places: 'Complet', priere: 'Dhohr 13h52', dispo: false },
+              { prenom: 'Yassine', quartier: 'Belleville — Paris 20e', places: '2 places libres', priere: 'Dhohr · 13h52', dispo: true },
+              { prenom: 'Karima', quartier: 'Gennevilliers — 92', places: '4 places libres', priere: 'Asr · 17h18', dispo: true },
+              { prenom: 'Nadia', quartier: 'Sarcelles — 95', places: '1 place libre', priere: 'Maghrib · 20h41', dispo: true },
+              { prenom: 'Rachid', quartier: 'La Défense — 92', places: 'Complet', priere: 'Dhohr · 13h52', dispo: false },
             ].map(e => (
-              <div key={e.prenom} style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '10px', padding: '0.875rem', border: '1px solid rgba(255,255,255,0.1)' }}>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.25rem' }}>{e.prenom}</div>
-                <div style={{ fontSize: '0.7rem', opacity: 0.7, marginBottom: '0.4rem' }}>{e.quartier}</div>
-                <div style={{ fontSize: '0.7rem', opacity: 0.75, marginBottom: '0.35rem' }}>🕐 {e.priere}</div>
+              <div key={e.prenom} style={{ backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: '12px', padding: '1rem', border: `1px solid ${e.dispo ? 'rgba(134,239,172,0.2)' : 'rgba(252,165,165,0.2)'}` }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.2rem' }}>{e.prenom}</div>
+                <div style={{ fontSize: '0.68rem', opacity: 0.6, marginBottom: '0.35rem' }}>{e.quartier}</div>
+                <div style={{ fontSize: '0.68rem', opacity: 0.7, marginBottom: '0.4rem' }}>🕐 {e.priere}</div>
                 <div style={{ fontSize: '0.72rem', fontWeight: 700, color: e.dispo ? '#86efac' : '#fca5a5' }}>
                   {e.dispo ? `✓ ${e.places}` : `✗ ${e.places}`}
                 </div>

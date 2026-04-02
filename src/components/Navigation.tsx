@@ -22,7 +22,6 @@ const NAV: NavGroup[] = [
     items: [
       { href: '/events', icon: <Calendar size={16} />, label: 'Événements', desc: 'Conférences, portes ouvertes, iftar' },
       { href: '/solidarity', icon: <HandHeart size={16} />, label: 'Solidarité', desc: 'Cagnottes, maraudes, associations' },
-      { href: '/salle-de-priere', icon: <MapPin size={16} />, label: 'Where Salat', desc: 'Trouve un espace de prière près de toi' },
     ],
   },
   {
@@ -120,6 +119,10 @@ export default function Navigation() {
 
           {/* Right */}
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            {/* Where Salat — bouton standalone dégradé */}
+            <Link href="/salle-de-priere" className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1rem', borderRadius: '8px', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', color: 'white', fontWeight: 700, fontSize: '0.82rem', textDecoration: 'none', boxShadow: '0 1px 6px rgba(13,148,136,0.35)', whiteSpace: 'nowrap', letterSpacing: '0.01em' }}>
+              <span style={{ fontSize: '0.9rem' }}>🕌</span> Where Salat
+            </Link>
             <Link href="/connexion" className="btn btn-outline nav-desktop" style={{ fontSize: '0.875rem', padding: '0.5rem 0.75rem', color: '#1c1917', borderColor: '#e7e5e4', backgroundColor: 'white', textDecoration: 'none' }}>
               Connexion
             </Link>
@@ -171,7 +174,11 @@ export default function Navigation() {
                 </div>
               );
             })}
-            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.75rem' }}>
+            {/* Where Salat mobile */}
+            <Link href="/salle-de-priere" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', borderRadius: '10px', color: 'white', fontWeight: 700, fontSize: '1rem', textDecoration: 'none', marginTop: '0.5rem' }}>
+              <span>🕌</span> Where Salat
+            </Link>
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
               <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', border: '1px solid #e7e5e4', borderRadius: '8px', backgroundColor: 'white', color: '#1c1917', fontWeight: 500, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>Connexion</Link>
               <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', backgroundColor: TEAL, borderRadius: '8px', color: 'white', fontWeight: 600, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>S&apos;inscrire</Link>
             </div>
