@@ -200,8 +200,18 @@ export default function SantePage() {
           </div>
 
           {filteredPsy.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
-              <p>Aucun profil ne correspond à votre recherche.</p>
+            <div style={{ textAlign: 'center', padding: '3rem 1.5rem', color: 'var(--text-secondary)' }}>
+              <p style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>Aucun profil trouvé</p>
+              <p style={{ fontSize: '0.85rem', marginBottom: '1.25rem' }}>Essaie de retirer le filtre département ou genre.</p>
+              <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button onClick={() => { setSearch(''); setDeptFilter('Tout'); setVisioOnly(false); setFemmeOnly(false); }}
+                  style={{ padding: '0.45rem 1rem', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'white', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', color: 'var(--text-primary)' }}>
+                  ✕ Effacer les filtres
+                </button>
+                <Link href="/contact?type=general" style={{ padding: '0.45rem 1rem', borderRadius: '8px', backgroundColor: ACCENT, color: 'white', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                  Référencer un praticien
+                </Link>
+              </div>
             </div>
           )}
 
@@ -361,8 +371,18 @@ export default function SantePage() {
           </div>
 
           {filteredMedical.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
-              <p>Aucun profil ne correspond à votre recherche.</p>
+            <div style={{ textAlign: 'center', padding: '3rem 1.5rem', color: 'var(--text-secondary)' }}>
+              <p style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>Aucun profil trouvé</p>
+              <p style={{ fontSize: '0.85rem', marginBottom: '1.25rem' }}>Essaie de changer le département ou de retirer un filtre.</p>
+              <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button onClick={() => { setSearch(''); setDeptFilter('Tout'); setVisioOnly(false); setFemmeOnly(false); setSfFilter('tous'); }}
+                  style={{ padding: '0.45rem 1rem', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'white', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', color: 'var(--text-primary)' }}>
+                  ✕ Effacer les filtres
+                </button>
+                <Link href="/contact?type=general" style={{ padding: '0.45rem 1rem', borderRadius: '8px', backgroundColor: MEDICAL_COLOR, color: 'white', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                  Référencer un praticien
+                </Link>
+              </div>
             </div>
           )}
 

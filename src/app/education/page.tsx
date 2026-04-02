@@ -54,6 +54,9 @@ export default function EducationPage() {
   const [selectedDept, setSelectedDept] = useState('Tout');
   const [selectedFormat, setSelectedFormat] = useState<'all' | 'presentiel' | 'distanciel'>('all');
   const [selectedType, setSelectedType] = useState<TypeFilter>('all');
+  const [showAdvanced, setShowAdvanced] = useState(false);
+
+  const isFiltered = selectedType !== 'all' || selectedFormat !== 'all';
 
   const deptCounts: Record<string, number> = {};
   allInstituts.forEach(inst => {
@@ -109,45 +112,68 @@ export default function EducationPage() {
         <DeptFilter value={selectedDept} onChange={setSelectedDept} counts={deptCounts} />
       </div>
 
-      {/* Filtre Type */}
-      <div style={{ marginBottom: '1.25rem' }}>
-        <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Type</p>
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-          {TYPE_FILTERS.map(t => (
-            <button key={t.key} onClick={() => setSelectedType(t.key)} style={{
-              padding: '0.4rem 1rem', borderRadius: '999px',
-              border: selectedType === t.key ? '2px solid #0d9488' : '1.5px solid var(--border-color)',
-              backgroundColor: selectedType === t.key ? '#0d9488' : 'white',
-              color: selectedType === t.key ? 'white' : 'var(--text-secondary)',
-              fontSize: '0.82rem', fontWeight: selectedType === t.key ? 700 : 400, cursor: 'pointer',
-            }}>
-              {t.label}
-            </button>
-          ))}
-        </div>
+      {/* Bouton filtres avancés */}
+      <div style={{ marginBottom: '1rem' }}>
+        <button
+          onClick={() => setShowAdvanced(!showAdvanced)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: '0.4rem',
+            padding: '0.4rem 1rem', borderRadius: '999px',
+            border: isFiltered ? '2px solid #0d9488' : '1.5px solid var(--border-color)',
+            backgroundColor: isFiltered ? '#f0fdfa' : 'white',
+            color: isFiltered ? '#0d9488' : 'var(--text-secondary)',
+            fontSize: '0.82rem', fontWeight: isFiltered ? 700 : 400, cursor: 'pointer',
+          }}>
+          {showAdvanced ? '▲' : '▼'} Filtres avancés
+          {isFiltered && <span style={{ backgroundColor: '#0d9488', color: 'white', borderRadius: '999px', padding: '0.05rem 0.4rem', fontSize: '0.65rem', fontWeight: 800 }}>actifs</span>}
+        </button>
       </div>
 
-      {/* Format chips */}
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
-        {(['all', 'presentiel', 'distanciel'] as const).map(f => (
-          <button
-            key={f}
-            onClick={() => setSelectedFormat(f)}
-            style={{
-              padding: '0.4rem 1rem',
-              borderRadius: '999px',
-              border: selectedFormat === f ? '2px solid #6366f1' : '1.5px solid var(--border-color)',
-              backgroundColor: selectedFormat === f ? '#6366f1' : 'white',
-              color: selectedFormat === f ? 'white' : 'var(--text-secondary)',
-              fontSize: '0.82rem',
-              fontWeight: selectedFormat === f ? 700 : 400,
-              cursor: 'pointer',
-            }}
-          >
-            {f === 'all' ? '📍 Tout' : f === 'presentiel' ? '🏛️ Présentiel' : '💻 En ligne'}
-          </button>
-        ))}
-      </div>
+      {showAdvanced && (
+        <div style={{ backgroundColor: '#f9fafb', borderRadius: '12px', padding: '1rem', marginBottom: '1.25rem', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {/* Filtre Type */}
+          <div>
+            <p style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Type</p>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {TYPE_FILTERS.map(t => (
+                <button key={t.key} onClick={() => setSelectedType(t.key)} style={{
+                  padding: '0.35rem 0.875rem', borderRadius: '999px',
+                  border: selectedType === t.key ? '2px solid #0d9488' : '1.5px solid var(--border-color)',
+                  backgroundColor: selectedType === t.key ? '#0d9488' : 'white',
+                  color: selectedType === t.key ? 'white' : 'var(--text-secondary)',
+                  fontSize: '0.82rem', fontWeight: selectedType === t.key ? 700 : 400, cursor: 'pointer',
+                }}>
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Format chips */}
+          <div>
+            <p style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Format</p>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {(['all', 'presentiel', 'distanciel'] as const).map(f => (
+                <button key={f} onClick={() => setSelectedFormat(f)} style={{
+                  padding: '0.35rem 0.875rem', borderRadius: '999px',
+                  border: selectedFormat === f ? '2px solid #6366f1' : '1.5px solid var(--border-color)',
+                  backgroundColor: selectedFormat === f ? '#6366f1' : 'white',
+                  color: selectedFormat === f ? 'white' : 'var(--text-secondary)',
+                  fontSize: '0.82rem', fontWeight: selectedFormat === f ? 700 : 400, cursor: 'pointer',
+                }}>
+                  {f === 'all' ? '📍 Tout' : f === 'presentiel' ? '🏛️ Présentiel' : '💻 En ligne'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {isFiltered && (
+            <button onClick={() => { setSelectedType('all'); setSelectedFormat('all'); }} style={{ alignSelf: 'flex-start', fontSize: '0.75rem', color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600, padding: 0 }}>
+              ✕ Réinitialiser les filtres avancés
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Course Type Chips */}
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>

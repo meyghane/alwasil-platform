@@ -132,6 +132,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Grid sections ────────────────────────────────────── */}
+      <section id="sections" style={{ marginBottom: '5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+          {SECTIONS.map(s => (
+            <SectionCard key={s.href} {...s} />
+          ))}
+        </div>
+      </section>
+
+      {/* ── Stats strip ──────────────────────────────────────── */}
+      <section style={{ marginBottom: '5rem', padding: '2rem', borderRadius: '1.25rem', background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)', color: 'white' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.5rem', textAlign: 'center' }}>
+          {[
+            { value: '10', label: 'Sections', sub: 'et ça grandit' },
+            { value: '8', label: 'Piscines burkini', sub: 'Île-de-France' },
+            { value: '10', label: 'Librairies', sub: 'référencées' },
+            { value: '8', label: 'Packages Hajj', sub: 'à comparer' },
+          ].map(stat => (
+            <div key={stat.label}>
+              <p style={{ fontSize: '2rem', fontWeight: 800, margin: 0, lineHeight: 1 }}>{stat.value}</p>
+              <p style={{ fontSize: '0.88rem', fontWeight: 700, margin: '0.2rem 0 0.1rem', opacity: 0.95 }}>{stat.label}</p>
+              <p style={{ fontSize: '0.72rem', opacity: 0.7, margin: 0 }}>{stat.sub}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Where Salat — Projet distinct mis en avant ────────── */}
       <section style={{ marginBottom: '4rem' }}>
         {/* Label projet distinct */}
@@ -200,33 +227,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── Grid sections ────────────────────────────────────── */}
-      <section id="sections" style={{ marginBottom: '5rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
-          {SECTIONS.map(s => (
-            <SectionCard key={s.href} {...s} />
-          ))}
-        </div>
-      </section>
-
-      {/* ── Stats strip ──────────────────────────────────────── */}
-      <section style={{ marginBottom: '5rem', padding: '2rem', borderRadius: '1.25rem', background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)', color: 'white' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.5rem', textAlign: 'center' }}>
-          {[
-            { value: '10', label: 'Sections', sub: 'et ça grandit' },
-            { value: '8', label: 'Piscines burkini', sub: 'Île-de-France' },
-            { value: '10', label: 'Librairies', sub: 'référencées' },
-            { value: '8', label: 'Packages Hajj', sub: 'à comparer' },
-          ].map(stat => (
-            <div key={stat.label}>
-              <p style={{ fontSize: '2rem', fontWeight: 800, margin: 0, lineHeight: 1 }}>{stat.value}</p>
-              <p style={{ fontSize: '0.88rem', fontWeight: 700, margin: '0.2rem 0 0.1rem', opacity: 0.95 }}>{stat.label}</p>
-              <p style={{ fontSize: '0.72rem', opacity: 0.7, margin: 0 }}>{stat.sub}</p>
-            </div>
-          ))}
         </div>
       </section>
 

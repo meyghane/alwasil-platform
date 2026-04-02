@@ -1,0 +1,6169 @@
+[
+  {
+    "row": 3,
+    "id_osm": "340247284",
+    "nom": "Mosquée Philippe Grenier",
+    "ville": "Pontarlier",
+    "code_postal": "25300"
+  },
+  {
+    "row": 4,
+    "id_osm": "476278241",
+    "nom": "Mosquée Niya",
+    "ville": "Romainville",
+    "code_postal": "93230"
+  },
+  {
+    "row": 6,
+    "id_osm": "672114819",
+    "nom": "Mosquée",
+    "ville": "Le Mée-sur-Seine",
+    "code_postal": "77350"
+  },
+  {
+    "row": 7,
+    "id_osm": "730688632",
+    "nom": "Mosquée de Persan",
+    "ville": "Persan",
+    "code_postal": "95340"
+  },
+  {
+    "row": 8,
+    "id_osm": "881090108",
+    "nom": "Mosquée 'Ali Ibn Al Khattab",
+    "ville": "Paris",
+    "code_postal": "75010"
+  },
+  {
+    "row": 9,
+    "id_osm": "881308332",
+    "nom": "Mosquée de Paris 15ème",
+    "ville": "Paris",
+    "code_postal": "75015"
+  },
+  {
+    "row": 10,
+    "id_osm": "886032807",
+    "nom": "Mosquée",
+    "ville": "Lesparre-Médoc",
+    "code_postal": "33340"
+  },
+  {
+    "row": 11,
+    "id_osm": "886080780",
+    "nom": "Mosquée de Talence",
+    "ville": "Talence",
+    "code_postal": "33400"
+  },
+  {
+    "row": 12,
+    "id_osm": "889283814",
+    "nom": "Masjid Annour",
+    "ville": "Strasbourg",
+    "code_postal": "67200"
+  },
+  {
+    "row": 13,
+    "id_osm": "925150448",
+    "nom": "Mosquée",
+    "ville": "Chambéry",
+    "code_postal": "73000"
+  },
+  {
+    "row": 14,
+    "id_osm": "943327433",
+    "nom": "Masjid Ibn-Badiss",
+    "ville": "Orléans",
+    "code_postal": "45000"
+  },
+  {
+    "row": 15,
+    "id_osm": "965055668",
+    "nom": "A.U.M.I \"Nour\"",
+    "ville": "Vénissieux",
+    "code_postal": "69200"
+  },
+  {
+    "row": 16,
+    "id_osm": "965055684",
+    "nom": "Es-Sunna",
+    "ville": "Vénissieux",
+    "code_postal": "69200"
+  },
+  {
+    "row": 17,
+    "id_osm": "966115424",
+    "nom": "Association Islamique de Brignais Abou Bakr",
+    "ville": "Brignais",
+    "code_postal": "69530"
+  },
+  {
+    "row": 18,
+    "id_osm": "966121399",
+    "nom": "Bilal",
+    "ville": "Vénissieux",
+    "code_postal": "69200"
+  },
+  {
+    "row": 19,
+    "id_osm": "966603552",
+    "nom": "El Hijra",
+    "ville": "Vichy",
+    "code_postal": "3200"
+  },
+  {
+    "row": 20,
+    "id_osm": "966609251",
+    "nom": "Centre Culturel Islamique de Moulins",
+    "ville": "Moulins",
+    "code_postal": "3000"
+  },
+  {
+    "row": 21,
+    "id_osm": "966623100",
+    "nom": "Association pour la Connaissance de l'Islam",
+    "ville": "Tarare",
+    "code_postal": "69170"
+  },
+  {
+    "row": 22,
+    "id_osm": "971922421",
+    "nom": "Al Kheyr",
+    "ville": "Dijon",
+    "code_postal": "21000"
+  },
+  {
+    "row": 23,
+    "id_osm": "971922473",
+    "nom": "Mosquée Er-Rahma",
+    "ville": "Châteauroux",
+    "code_postal": "36000"
+  },
+  {
+    "row": 24,
+    "id_osm": "1068931988",
+    "nom": "Association du Centre Culturel Marocain",
+    "ville": "Saint-Claude",
+    "code_postal": "39200"
+  },
+  {
+    "row": 25,
+    "id_osm": "1310624734",
+    "nom": "Mosquée Nour el Mohamadi",
+    "ville": "Bordeaux",
+    "code_postal": "33000"
+  },
+  {
+    "row": 26,
+    "id_osm": "1310649550",
+    "nom": "Masjîd de la Fraternité",
+    "ville": "Aubervilliers",
+    "code_postal": "93300"
+  },
+  {
+    "row": 27,
+    "id_osm": "1317777512",
+    "nom": "Mosquée de l'association des musulmans d'Allonnes",
+    "ville": "Allonnes",
+    "code_postal": "72700"
+  },
+  {
+    "row": 28,
+    "id_osm": "1459105491",
+    "nom": "Mosquée AT-Taqwa",
+    "ville": "Marseille",
+    "code_postal": "13002"
+  },
+  {
+    "row": 29,
+    "id_osm": "1482551750",
+    "nom": "La Grande Mosquée de la Sounna",
+    "ville": "Marseille",
+    "code_postal": "13003"
+  },
+  {
+    "row": 30,
+    "id_osm": "1496572632",
+    "nom": "Mosquée Bilal",
+    "ville": "Laxou",
+    "code_postal": "54520"
+  },
+  {
+    "row": 31,
+    "id_osm": "1504613681",
+    "nom": "Mosquée",
+    "ville": "Villeneuve-Saint-Georges",
+    "code_postal": "94190"
+  },
+  {
+    "row": 32,
+    "id_osm": "1782805239",
+    "nom": "Mosquée de Bordeaux",
+    "ville": "Bordeaux",
+    "code_postal": "33800"
+  },
+  {
+    "row": 33,
+    "id_osm": "1785987577",
+    "nom": "Mosquée",
+    "ville": "Évian-les-Bains",
+    "code_postal": "74500"
+  },
+  {
+    "row": 34,
+    "id_osm": "2102266907",
+    "nom": "Mosquée",
+    "ville": "Honfleur",
+    "code_postal": "14600"
+  },
+  {
+    "row": 36,
+    "id_osm": "2352370439",
+    "nom": "lieu de prière",
+    "ville": "Saint-Étienne",
+    "code_postal": "42000"
+  },
+  {
+    "row": 37,
+    "id_osm": "2409691300",
+    "nom": "Association culturelle Islamique",
+    "ville": "Belley",
+    "code_postal": "1300"
+  },
+  {
+    "row": 38,
+    "id_osm": "2419929966",
+    "nom": "Mosquée du sillon de Bretagne",
+    "ville": "Saint-Herblain",
+    "code_postal": "44800"
+  },
+  {
+    "row": 39,
+    "id_osm": "2591253029",
+    "nom": "Union des Organisations Islamiques de France",
+    "ville": "La Courneuve",
+    "code_postal": "93120"
+  },
+  {
+    "row": 40,
+    "id_osm": "2757989574",
+    "nom": "Abdoulmajid",
+    "ville": "Paris",
+    "code_postal": "75018"
+  },
+  {
+    "row": 41,
+    "id_osm": "2758048825",
+    "nom": "Mosquée A Daawa",
+    "ville": "Paris",
+    "code_postal": "75019"
+  },
+  {
+    "row": 42,
+    "id_osm": "2845158157",
+    "nom": "Salle de prière de Châtillon",
+    "ville": "Châtillon",
+    "code_postal": "92320"
+  },
+  {
+    "row": 43,
+    "id_osm": "2851757131",
+    "nom": "Mosquée de Noisy",
+    "ville": "Bry-sur-Marne",
+    "code_postal": "93160"
+  },
+  {
+    "row": 46,
+    "id_osm": "2851874968",
+    "nom": "Mosquée des Abeilles",
+    "ville": "Levallois-Perret",
+    "code_postal": "92532"
+  },
+  {
+    "row": 47,
+    "id_osm": "3114359242",
+    "nom": "Mosquée",
+    "ville": "Villeurbanne",
+    "code_postal": "69100"
+  },
+  {
+    "row": 48,
+    "id_osm": "3142167124",
+    "nom": "Mosquée turque",
+    "ville": "Bruyères",
+    "code_postal": "88600"
+  },
+  {
+    "row": 49,
+    "id_osm": "3173159710",
+    "nom": "Mosquée de l'Union",
+    "ville": "Montpellier",
+    "code_postal": "34000"
+  },
+  {
+    "row": 55,
+    "id_osm": "3279098376",
+    "nom": "Mosquée de Wingles",
+    "ville": "Wingles",
+    "code_postal": "62410"
+  },
+  {
+    "row": 56,
+    "id_osm": "3360104857",
+    "nom": "Masjid Alrahmen",
+    "ville": "Paris",
+    "code_postal": "75013"
+  },
+  {
+    "row": 57,
+    "id_osm": "3360104858",
+    "nom": "Association Islamique en France",
+    "ville": "Paris",
+    "code_postal": "75011"
+  },
+  {
+    "row": 58,
+    "id_osm": "3481534880",
+    "nom": "Mosquée Sidna Nuh",
+    "ville": "Dugny",
+    "code_postal": "93440"
+  },
+  {
+    "row": 59,
+    "id_osm": "3513961332",
+    "nom": "Mosqué El Imane",
+    "ville": "Marseille",
+    "code_postal": "13003"
+  },
+  {
+    "row": 60,
+    "id_osm": "3843467306",
+    "nom": "Mosquée",
+    "ville": "Nogent-le-Rotrou",
+    "code_postal": "28400"
+  },
+  {
+    "row": 61,
+    "id_osm": "3844510404",
+    "nom": "Mosquée Omar",
+    "ville": "Dreux",
+    "code_postal": "28100"
+  },
+  {
+    "row": 62,
+    "id_osm": "3860947592",
+    "nom": "Ibn Omaïr",
+    "ville": "La Chapelle-Saint-Luc",
+    "code_postal": "10600"
+  },
+  {
+    "row": 64,
+    "id_osm": "3932433843",
+    "nom": "Mosquée du Foyer",
+    "ville": "Montpellier",
+    "code_postal": "34080"
+  },
+  {
+    "row": 65,
+    "id_osm": "3968445662",
+    "nom": "Mosquée",
+    "ville": "Mont-de-Marsan",
+    "code_postal": "40000"
+  },
+  {
+    "row": 66,
+    "id_osm": "4110196118",
+    "nom": "Mosquée Arrhama",
+    "ville": "Avignon",
+    "code_postal": "84000"
+  },
+  {
+    "row": 67,
+    "id_osm": "4130830048",
+    "nom": "Mosquée de Font Vert",
+    "ville": "Marseille",
+    "code_postal": "13014"
+  },
+  {
+    "row": 68,
+    "id_osm": "4137253290",
+    "nom": "Mosquée de Fresnes",
+    "ville": "Fresnes",
+    "code_postal": "94260"
+  },
+  {
+    "row": 69,
+    "id_osm": "4139363389",
+    "nom": "Association Culturelle Islamique de la Charente-Maritime",
+    "ville": "La Rochelle",
+    "code_postal": "17000"
+  },
+  {
+    "row": 70,
+    "id_osm": "4144969227",
+    "nom": "Mosquée des Saintes Maries",
+    "ville": "Toulon",
+    "code_postal": "83100"
+  },
+  {
+    "row": 71,
+    "id_osm": "4235436558",
+    "nom": "Mosquée",
+    "ville": "Saint-Étienne",
+    "code_postal": "42000"
+  },
+  {
+    "row": 72,
+    "id_osm": "4325246914",
+    "nom": "Mosquée",
+    "ville": "Aix-les-Bains",
+    "code_postal": "73100"
+  },
+  {
+    "row": 73,
+    "id_osm": "4351523173",
+    "nom": "Mosquée Nasr",
+    "ville": "Tarascon-sur-Ariège",
+    "code_postal": "9400"
+  },
+  {
+    "row": 74,
+    "id_osm": "4352513993",
+    "nom": "Mosquée",
+    "ville": "Toulouse",
+    "code_postal": "31100"
+  },
+  {
+    "row": 76,
+    "id_osm": "4398502348",
+    "nom": "Mosquée",
+    "ville": "Montigny-le-Bretonneux",
+    "code_postal": "78180"
+  },
+  {
+    "row": 78,
+    "id_osm": "4474863843",
+    "nom": "Mosquée Al Amal",
+    "ville": "Wattignies",
+    "code_postal": "59139"
+  },
+  {
+    "row": 79,
+    "id_osm": "4547008433",
+    "nom": "Mosquée de l'Estaque",
+    "ville": "Marseille",
+    "code_postal": "13016"
+  },
+  {
+    "row": 81,
+    "id_osm": "4723658471",
+    "nom": "Mosquée",
+    "ville": "Mouans-Sartoux",
+    "code_postal": "6370"
+  },
+  {
+    "row": 82,
+    "id_osm": "4788720049",
+    "nom": "Mosquée Bilal",
+    "ville": "Neuville-sur-Saône",
+    "code_postal": "69250"
+  },
+  {
+    "row": 83,
+    "id_osm": "4825119096",
+    "nom": "Mosquée de Chaville",
+    "ville": "Chaville",
+    "code_postal": "92370"
+  },
+  {
+    "row": 84,
+    "id_osm": "4940449352",
+    "nom": "Mosquée de Bouzignac",
+    "ville": "Tours",
+    "code_postal": "37000"
+  },
+  {
+    "row": 85,
+    "id_osm": "4940449353",
+    "nom": "Mosquée de Joué-lès-Tours",
+    "ville": "Joué-lès-Tours",
+    "code_postal": "37300"
+  },
+  {
+    "row": 86,
+    "id_osm": "5109203897",
+    "nom": "Mosquée Salam",
+    "ville": "Suresnes",
+    "code_postal": "92150"
+  },
+  {
+    "row": 87,
+    "id_osm": "5302916125",
+    "nom": "Mosquée Bilal",
+    "ville": "Clichy-sous-Bois",
+    "code_postal": "93390"
+  },
+  {
+    "row": 88,
+    "id_osm": "5310854726",
+    "nom": "Mosquée Al-Fath",
+    "ville": "Vandœuvre-lès-Nancy",
+    "code_postal": "54500"
+  },
+  {
+    "row": 89,
+    "id_osm": "5313127344",
+    "nom": "Mosquée de la Tour-du-Pin",
+    "ville": "La Tour-du-Pin",
+    "code_postal": "38110"
+  },
+  {
+    "row": 91,
+    "id_osm": "5548288172",
+    "nom": "Mosquée",
+    "ville": "Marseille",
+    "code_postal": "13001"
+  },
+  {
+    "row": 92,
+    "id_osm": "5581294821",
+    "nom": "Association mosquée de Montrouge",
+    "ville": "Montrouge",
+    "code_postal": "92120"
+  },
+  {
+    "row": 93,
+    "id_osm": "5744609515",
+    "nom": "Mosquée de Saint-Lô",
+    "ville": "Saint-Lô",
+    "code_postal": "50000"
+  },
+  {
+    "row": 94,
+    "id_osm": "5993664558",
+    "nom": "Khalid Ibn Walid",
+    "ville": "Paris",
+    "code_postal": "75018"
+  },
+  {
+    "row": 95,
+    "id_osm": "6192592598",
+    "nom": "Salle de Prière (mosquée)",
+    "ville": "Herblay-sur-Seine",
+    "code_postal": "95220"
+  },
+  {
+    "row": 96,
+    "id_osm": "6259836331",
+    "nom": "Salle de Prière",
+    "ville": "Paris",
+    "code_postal": "75018"
+  },
+  {
+    "row": 97,
+    "id_osm": "6398287185",
+    "nom": "Mosquée",
+    "ville": "Beauvais",
+    "code_postal": "60000"
+  },
+  {
+    "row": 98,
+    "id_osm": "6431079092",
+    "nom": "Mosquée",
+    "ville": "Saint-Étienne",
+    "code_postal": "42100"
+  },
+  {
+    "row": 99,
+    "id_osm": "6905792161",
+    "nom": "Mosquée",
+    "ville": "Angers",
+    "code_postal": "49000"
+  },
+  {
+    "row": 100,
+    "id_osm": "6905792162",
+    "nom": "Salle de prière",
+    "ville": "Angers",
+    "code_postal": "49100"
+  },
+  {
+    "row": 101,
+    "id_osm": "7068944885",
+    "nom": "Mosquée La miséricorde",
+    "ville": "Montpellier",
+    "code_postal": "34080"
+  },
+  {
+    "row": 102,
+    "id_osm": "7090511585",
+    "nom": "Mosquée Mosaab Ibn Umaïr",
+    "ville": "Lyon",
+    "code_postal": "69007"
+  },
+  {
+    "row": 103,
+    "id_osm": "7102163286",
+    "nom": "Mosquée",
+    "ville": "Beauvais",
+    "code_postal": "60000"
+  },
+  {
+    "row": 105,
+    "id_osm": "7405926308",
+    "nom": "Mesjid Arrahma",
+    "ville": "Perpignan",
+    "code_postal": "66000"
+  },
+  {
+    "row": 106,
+    "id_osm": "7442489921",
+    "nom": "Association Salama",
+    "ville": "Jœuf",
+    "code_postal": "54240"
+  },
+  {
+    "row": 107,
+    "id_osm": "7772005385",
+    "nom": "Mosquée El Amine",
+    "ville": "Nice",
+    "code_postal": "6100"
+  },
+  {
+    "row": 108,
+    "id_osm": "7779371537",
+    "nom": "Al Rahma",
+    "ville": "Vichy",
+    "code_postal": "3200"
+  },
+  {
+    "row": 110,
+    "id_osm": "8085677704",
+    "nom": "Association Culturelle l'Ouverture",
+    "ville": "Saint-Étienne",
+    "code_postal": "42000"
+  },
+  {
+    "row": 111,
+    "id_osm": "8143052750",
+    "nom": "Mosquée",
+    "ville": "Le Havre",
+    "code_postal": "76610"
+  },
+  {
+    "row": 112,
+    "id_osm": "8267095440",
+    "nom": "Mosquée",
+    "ville": "Moirans",
+    "code_postal": "38430"
+  },
+  {
+    "row": 113,
+    "id_osm": "8300776165",
+    "nom": "Mosquée de l'Association pour la Fraternité et la Tolérance",
+    "ville": "Romainville",
+    "code_postal": "93230"
+  },
+  {
+    "row": 114,
+    "id_osm": "8489279280",
+    "nom": "Mosquée",
+    "ville": "Auterive",
+    "code_postal": "31190"
+  },
+  {
+    "row": 115,
+    "id_osm": "8836194924",
+    "nom": "Association musulmane",
+    "ville": "Poligny",
+    "code_postal": "39800"
+  },
+  {
+    "row": 116,
+    "id_osm": "9055245053",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 117,
+    "id_osm": "9055404680",
+    "nom": "Mosquée",
+    "ville": "Marseille",
+    "code_postal": "13003"
+  },
+  {
+    "row": 118,
+    "id_osm": "9150014176",
+    "nom": "Amicale des Algériens de France",
+    "ville": "Vaulx-en-Velin",
+    "code_postal": "69120"
+  },
+  {
+    "row": 121,
+    "id_osm": "10038129967",
+    "nom": "Mosquée",
+    "ville": "Le Mée-sur-Seine",
+    "code_postal": "77350"
+  },
+  {
+    "row": 122,
+    "id_osm": "10038129968",
+    "nom": "Mosquée",
+    "ville": "Le Mée-sur-Seine",
+    "code_postal": "77350"
+  },
+  {
+    "row": 123,
+    "id_osm": "10079343785",
+    "nom": "Mosquée el Fajr",
+    "ville": "Saint-Céré",
+    "code_postal": "46400"
+  },
+  {
+    "row": 124,
+    "id_osm": "10134971717",
+    "nom": "Mosquée de Castillon-La-Bataille",
+    "ville": "Castillon-la-Bataille",
+    "code_postal": "33350"
+  },
+  {
+    "row": 125,
+    "id_osm": "10199034130",
+    "nom": "Mosquée Al Maarouf",
+    "ville": "Pézenas",
+    "code_postal": "34120"
+  },
+  {
+    "row": 126,
+    "id_osm": "10296813419",
+    "nom": "Union des affaires culturelles Turco-Islamiques de Strasbourg",
+    "ville": "Strasbourg",
+    "code_postal": "67200"
+  },
+  {
+    "row": 127,
+    "id_osm": "10296813420",
+    "nom": "DİTİB Strasbourg",
+    "ville": "Strasbourg",
+    "code_postal": "67200"
+  },
+  {
+    "row": 128,
+    "id_osm": "10305896455",
+    "nom": "Mosquée El Qalam",
+    "ville": "Grenoble",
+    "code_postal": "38000"
+  },
+  {
+    "row": 129,
+    "id_osm": "10690572374",
+    "nom": "Mosquée",
+    "ville": "Pouzauges",
+    "code_postal": "85700"
+  },
+  {
+    "row": 130,
+    "id_osm": "10727228862",
+    "nom": "Mosquée Thann Süleyman Gazi Camii",
+    "ville": "Thann",
+    "code_postal": "68800"
+  },
+  {
+    "row": 131,
+    "id_osm": "10753025809",
+    "nom": "Mosquée",
+    "ville": "Miramas",
+    "code_postal": "13140"
+  },
+  {
+    "row": 132,
+    "id_osm": "10814575653",
+    "nom": "Mosquée",
+    "ville": "Metz",
+    "code_postal": "57070"
+  },
+  {
+    "row": 133,
+    "id_osm": "10819161013",
+    "nom": "Mosquée",
+    "ville": "Orange",
+    "code_postal": "84100"
+  },
+  {
+    "row": 134,
+    "id_osm": "10846743202",
+    "nom": "Mosquée Alfath",
+    "ville": "Soyaux",
+    "code_postal": "16800"
+  },
+  {
+    "row": 135,
+    "id_osm": "10876215139",
+    "nom": "Association des musulmans d'Oloron",
+    "ville": "Oloron-Sainte-Marie",
+    "code_postal": "64400"
+  },
+  {
+    "row": 136,
+    "id_osm": "11119851739",
+    "nom": "Mosquée de Bourganeuf",
+    "ville": "Bourganeuf",
+    "code_postal": "23400"
+  },
+  {
+    "row": 139,
+    "id_osm": "11171046689",
+    "nom": "As Sakina",
+    "ville": "Caluire-et-Cuire",
+    "code_postal": "69300"
+  },
+  {
+    "row": 140,
+    "id_osm": "11288832247",
+    "nom": "Mosquée des bonnes œuvres",
+    "ville": "Saint-Nazaire",
+    "code_postal": "44600"
+  },
+  {
+    "row": 142,
+    "id_osm": "11360951456",
+    "nom": "Mosquée Essalam",
+    "ville": "Frontignan",
+    "code_postal": "34110"
+  },
+  {
+    "row": 144,
+    "id_osm": "11465398758",
+    "nom": "Salle de prière",
+    "ville": "Stains",
+    "code_postal": "93240"
+  },
+  {
+    "row": 145,
+    "id_osm": "11465731214",
+    "nom": "Mosquée du Neuhof",
+    "ville": "Strasbourg",
+    "code_postal": "67100"
+  },
+  {
+    "row": 146,
+    "id_osm": "11575879158",
+    "nom": "Mosquée de Lorient",
+    "ville": "Lorient",
+    "code_postal": "56100"
+  },
+  {
+    "row": 149,
+    "id_osm": "11724688365",
+    "nom": "Ibn-abd-al-barr",
+    "ville": "Tourcoing",
+    "code_postal": "59200"
+  },
+  {
+    "row": 150,
+    "id_osm": "11767279581",
+    "nom": "El feth",
+    "ville": "Grenoble",
+    "code_postal": "38000"
+  },
+  {
+    "row": 151,
+    "id_osm": "11840505519",
+    "nom": "Mosquée",
+    "ville": "Dembeni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 152,
+    "id_osm": "11840505520",
+    "nom": "Mosquée du Vendredi",
+    "ville": "Dembeni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 153,
+    "id_osm": "11941464930",
+    "nom": "Mosquée de Sophia Antipolis",
+    "ville": "Valbonne",
+    "code_postal": "6560"
+  },
+  {
+    "row": 154,
+    "id_osm": "11942279586",
+    "nom": "Mosquée Ennour",
+    "ville": "Saint-Priest",
+    "code_postal": "69800"
+  },
+  {
+    "row": 156,
+    "id_osm": "12115074916",
+    "nom": "Ty Salam",
+    "ville": "Saint-Martin-des-Champs",
+    "code_postal": "29600"
+  },
+  {
+    "row": 159,
+    "id_osm": "12291728309",
+    "nom": "Mosquée At-Taqwa",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 160,
+    "id_osm": "12294603573",
+    "nom": "Mosquée Ramadan",
+    "ville": "Échirolles",
+    "code_postal": "38130"
+  },
+  {
+    "row": 161,
+    "id_osm": "12294653549",
+    "nom": "Masjid Abou Bakr",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 162,
+    "id_osm": "12294663569",
+    "nom": "Mosquée As-Sounnah Village Olympique",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 163,
+    "id_osm": "12294685752",
+    "nom": "Masjid At Tawhid",
+    "ville": "Le Pont-de-Claix",
+    "code_postal": "38800"
+  },
+  {
+    "row": 164,
+    "id_osm": "12294685754",
+    "nom": "Mosquée Capuche",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 165,
+    "id_osm": "12294692274",
+    "nom": "Grande Mosquée d'Échirolles",
+    "ville": "Échirolles",
+    "code_postal": "38130"
+  },
+  {
+    "row": 166,
+    "id_osm": "12294735094",
+    "nom": "Mosquée Salam",
+    "ville": "Échirolles",
+    "code_postal": "38130"
+  },
+  {
+    "row": 167,
+    "id_osm": "12420469879",
+    "nom": "Mosquée MARIAM",
+    "ville": "Marseille",
+    "code_postal": "13015"
+  },
+  {
+    "row": 168,
+    "id_osm": "12605197972",
+    "nom": "Mosquée El-Forqane",
+    "ville": "Montreuil",
+    "code_postal": "93100"
+  },
+  {
+    "row": 169,
+    "id_osm": "12658223401",
+    "nom": "Mosquée",
+    "ville": "Annecy",
+    "code_postal": "74000"
+  },
+  {
+    "row": 170,
+    "id_osm": "12676142090",
+    "nom": "Mosquée de la Miséricorde",
+    "ville": "Ris-Orangis",
+    "code_postal": "91130"
+  },
+  {
+    "row": 171,
+    "id_osm": "12696220585",
+    "nom": "Mosquée",
+    "ville": "Mantes-la-Jolie",
+    "code_postal": "78200"
+  },
+  {
+    "row": 172,
+    "id_osm": "12715374244",
+    "nom": "mosquée du bosquet",
+    "ville": "Marseille",
+    "code_postal": "13011"
+  },
+  {
+    "row": 173,
+    "id_osm": "12730329459",
+    "nom": "Mosquée AL IMANE",
+    "ville": "Strasbourg",
+    "code_postal": "67200"
+  },
+  {
+    "row": 174,
+    "id_osm": "12751611019",
+    "nom": "Mosquée de la Ciotat",
+    "ville": "La Ciotat",
+    "code_postal": "13600"
+  },
+  {
+    "row": 175,
+    "id_osm": "12751739298",
+    "nom": "Mosquée des Grands Carmes",
+    "ville": "Marseille",
+    "code_postal": "13002"
+  },
+  {
+    "row": 177,
+    "id_osm": "12758067486",
+    "nom": "Mosquée de la Paix",
+    "ville": "Metz",
+    "code_postal": "57000"
+  },
+  {
+    "row": 178,
+    "id_osm": "12770121533",
+    "nom": "Salle de prière de Talence",
+    "ville": "Talence",
+    "code_postal": "33400"
+  },
+  {
+    "row": 179,
+    "id_osm": "12786452801",
+    "nom": "Mosque selimiye",
+    "ville": "Strasbourg",
+    "code_postal": "67100"
+  },
+  {
+    "row": 180,
+    "id_osm": "12830373766",
+    "nom": "Grande Mosquée de Châteauroux",
+    "ville": "Châteauroux",
+    "code_postal": "36000"
+  },
+  {
+    "row": 182,
+    "id_osm": "12919278131",
+    "nom": "Mosquée Dar Al Arqam",
+    "ville": "Strasbourg",
+    "code_postal": "67100"
+  },
+  {
+    "row": 183,
+    "id_osm": "12919306546",
+    "nom": "Mosquée SALAM",
+    "ville": "Strasbourg",
+    "code_postal": "67200"
+  },
+  {
+    "row": 184,
+    "id_osm": "12999106720",
+    "nom": "Mosquée Al-Amel",
+    "ville": "Neuilly-Plaisance",
+    "code_postal": "93360"
+  },
+  {
+    "row": 185,
+    "id_osm": "13048769818",
+    "nom": "Mosquée",
+    "ville": "Égly",
+    "code_postal": "91520"
+  },
+  {
+    "row": 186,
+    "id_osm": "13089011496",
+    "nom": "Beyt'ou salam",
+    "ville": "Loudéac",
+    "code_postal": "22600"
+  },
+  {
+    "row": 187,
+    "id_osm": "13174310979",
+    "nom": "Anwaar e Madina",
+    "ville": "Paris",
+    "code_postal": "75020"
+  },
+  {
+    "row": 188,
+    "id_osm": "13197905084",
+    "nom": "Mosquée Bilal",
+    "ville": "Saint-Étienne",
+    "code_postal": "42100"
+  },
+  {
+    "row": 189,
+    "id_osm": "13245826216",
+    "nom": "Mosquée",
+    "ville": "Meulan-en-Yvelines",
+    "code_postal": "78250"
+  },
+  {
+    "row": 190,
+    "id_osm": "13252891738",
+    "nom": "Ibadat Khana Yassine",
+    "ville": "Saint-Denis",
+    "code_postal": "97400"
+  },
+  {
+    "row": 191,
+    "id_osm": "13256503019",
+    "nom": "Mosquée",
+    "ville": "Meaux",
+    "code_postal": "77100"
+  },
+  {
+    "row": 192,
+    "id_osm": "13288190534",
+    "nom": "Mosquée de l'Union des Musulmans de Carrières",
+    "ville": "Carrières-sous-Poissy",
+    "code_postal": "78955"
+  },
+  {
+    "row": 194,
+    "id_osm": "13378888982",
+    "nom": "Ditib mosquée selimiye",
+    "ville": "Montfermeil",
+    "code_postal": "93370"
+  },
+  {
+    "row": 195,
+    "id_osm": "13380932942",
+    "nom": "Mosquée",
+    "ville": "Sélestat",
+    "code_postal": "67600"
+  },
+  {
+    "row": 196,
+    "id_osm": "13401599301",
+    "nom": "mosquée",
+    "ville": "Arles",
+    "code_postal": "13200"
+  },
+  {
+    "row": 197,
+    "id_osm": "13449000756",
+    "nom": "Mosquée",
+    "ville": "Souillac",
+    "code_postal": "46200"
+  },
+  {
+    "row": 198,
+    "id_osm": "13481497009",
+    "nom": "Mosquée des louanges",
+    "ville": "Montfermeil",
+    "code_postal": "93370"
+  },
+  {
+    "row": 199,
+    "id_osm": "13618101857",
+    "nom": "Abou Bakr",
+    "ville": "Creil",
+    "code_postal": "60100"
+  },
+  {
+    "row": 201,
+    "id_osm": "35137655",
+    "nom": "Mosquée Turque de la Communauté Islamique du Milli Görüs",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 202,
+    "id_osm": "35914119",
+    "nom": "Mosquée de Tours",
+    "ville": "Tours",
+    "code_postal": "37000"
+  },
+  {
+    "row": 205,
+    "id_osm": "40469207",
+    "nom": "Mosquée Al Fateh",
+    "ville": "Strasbourg",
+    "code_postal": "67000"
+  },
+  {
+    "row": 206,
+    "id_osm": "40524286",
+    "nom": "Mosquée",
+    "ville": "Strasbourg",
+    "code_postal": "67000"
+  },
+  {
+    "row": 207,
+    "id_osm": "40802292",
+    "nom": "Mosquée Lumiere et Piété",
+    "ville": "Nîmes",
+    "code_postal": "30900"
+  },
+  {
+    "row": 208,
+    "id_osm": "40985962",
+    "nom": "Mosquée AL IMANE",
+    "ville": "Strasbourg",
+    "code_postal": "67000"
+  },
+  {
+    "row": 209,
+    "id_osm": "41335223",
+    "nom": "Mosquée Abu Hurayra",
+    "ville": "Grenoble",
+    "code_postal": "38000"
+  },
+  {
+    "row": 211,
+    "id_osm": "42520735",
+    "nom": "Mosquée Sunna",
+    "ville": "Brest",
+    "code_postal": "29200"
+  },
+  {
+    "row": 214,
+    "id_osm": "43104956",
+    "nom": "Mosquée de Saint-Dié-des-Vosges",
+    "ville": "Saint-Dié-des-Vosges",
+    "code_postal": "88100"
+  },
+  {
+    "row": 215,
+    "id_osm": "43328195",
+    "nom": "Mosquée Ibn Badis",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 216,
+    "id_osm": "43658347",
+    "nom": "Mosquée (Association Semerkand)",
+    "ville": "Strasbourg",
+    "code_postal": "67100"
+  },
+  {
+    "row": 217,
+    "id_osm": "43729456",
+    "nom": "Mosquée de Pont-de-Beauvoisin",
+    "ville": "Le Pont-de-Beauvoisin",
+    "code_postal": "38480"
+  },
+  {
+    "row": 218,
+    "id_osm": "44460457",
+    "nom": "Mosquée",
+    "ville": "Aulnay-sous-Bois",
+    "code_postal": "93600"
+  },
+  {
+    "row": 219,
+    "id_osm": "44531906",
+    "nom": "Moquée de Bisccheim",
+    "ville": "Bischheim",
+    "code_postal": "67800"
+  },
+  {
+    "row": 220,
+    "id_osm": "47614263",
+    "nom": "Mosquée Al-Amal",
+    "ville": "Colmar",
+    "code_postal": "68000"
+  },
+  {
+    "row": 221,
+    "id_osm": "47933763",
+    "nom": "Mosquée Masjid Al-Barraka",
+    "ville": "Saint-Laurent-en-Grandvaux",
+    "code_postal": "39150"
+  },
+  {
+    "row": 223,
+    "id_osm": "49902649",
+    "nom": "Association socioculturelle des peuples européens",
+    "ville": "Colmar",
+    "code_postal": "68000"
+  },
+  {
+    "row": 224,
+    "id_osm": "49906396",
+    "nom": "Communauté islamique du Milli Görüs",
+    "ville": "Colmar",
+    "code_postal": "68000"
+  },
+  {
+    "row": 226,
+    "id_osm": "51811974",
+    "nom": "Association Sportive et Culturelle de la Jeunesse Turque de Colmar",
+    "ville": "Colmar",
+    "code_postal": "68000"
+  },
+  {
+    "row": 227,
+    "id_osm": "52024563",
+    "nom": "Mosquée Ennassiha",
+    "ville": "Colmar",
+    "code_postal": "68000"
+  },
+  {
+    "row": 228,
+    "id_osm": "54370215",
+    "nom": "Mosquée Salman Al-Farissi",
+    "ville": "Le Mans",
+    "code_postal": "72100"
+  },
+  {
+    "row": 229,
+    "id_osm": "56535136",
+    "nom": "Mosquée Ibrahim Al-Khalil",
+    "ville": "Nîmes",
+    "code_postal": "30000"
+  },
+  {
+    "row": 230,
+    "id_osm": "58307709",
+    "nom": "Mosquée EN-Nour",
+    "ville": "Dijon",
+    "code_postal": "21000"
+  },
+  {
+    "row": 231,
+    "id_osm": "59123269",
+    "nom": "Mosquée de Moissac",
+    "ville": "Moissac",
+    "code_postal": "82200"
+  },
+  {
+    "row": 232,
+    "id_osm": "61425631",
+    "nom": "Mosquée de Teisseire",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 234,
+    "id_osm": "62078719",
+    "nom": "Mosquée Tawhid",
+    "ville": "Toulouse",
+    "code_postal": "31000"
+  },
+  {
+    "row": 236,
+    "id_osm": "62347595",
+    "nom": "Mosquée Badr Eddine",
+    "ville": "Lyon",
+    "code_postal": "69008"
+  },
+  {
+    "row": 238,
+    "id_osm": "62393895",
+    "nom": "Association d'Unification Islamique",
+    "ville": "Villeneuve-la-Garenne",
+    "code_postal": "92390"
+  },
+  {
+    "row": 239,
+    "id_osm": "62573199",
+    "nom": "Association Musulmane des Pyrénées-Atlantiques",
+    "ville": "Orthez",
+    "code_postal": "64300"
+  },
+  {
+    "row": 240,
+    "id_osm": "62630386",
+    "nom": "Mosquée Khadija",
+    "ville": "Auxerre",
+    "code_postal": "89000"
+  },
+  {
+    "row": 242,
+    "id_osm": "62882886",
+    "nom": "Mosquée de Pau",
+    "ville": "Pau",
+    "code_postal": "64000"
+  },
+  {
+    "row": 243,
+    "id_osm": "63212789",
+    "nom": "Salle de Prière La Villette",
+    "ville": "Paris",
+    "code_postal": "75019"
+  },
+  {
+    "row": 244,
+    "id_osm": "63300316",
+    "nom": "Mosquée El-Fattah",
+    "ville": "Saint-Etienne",
+    "code_postal": "42000"
+  },
+  {
+    "row": 245,
+    "id_osm": "63326227",
+    "nom": "Grande Mosquée Mohammed VI de Saint-Étienne",
+    "ville": "Saint-Étienne",
+    "code_postal": "42000"
+  },
+  {
+    "row": 246,
+    "id_osm": "63431985",
+    "nom": "Centre Culturel Musulman",
+    "ville": "Sannois",
+    "code_postal": "95110"
+  },
+  {
+    "row": 247,
+    "id_osm": "63638391",
+    "nom": "Mosquée Omar bn El Khattab",
+    "ville": "Paris",
+    "code_postal": "75011"
+  },
+  {
+    "row": 248,
+    "id_osm": "63655614",
+    "nom": "Mosquée Falah",
+    "ville": "Cachan",
+    "code_postal": "94230"
+  },
+  {
+    "row": 249,
+    "id_osm": "63851536",
+    "nom": "Mosquée",
+    "ville": "Oloron-Sainte-Marie",
+    "code_postal": "64400"
+  },
+  {
+    "row": 250,
+    "id_osm": "63963553",
+    "nom": "Mosquée",
+    "ville": "Gennevilliers",
+    "code_postal": "92230"
+  },
+  {
+    "row": 251,
+    "id_osm": "63968927",
+    "nom": "Grande Mosquée de Toulouse",
+    "ville": "Toulouse",
+    "code_postal": "31400"
+  },
+  {
+    "row": 252,
+    "id_osm": "64248636",
+    "nom": "Mosquée",
+    "ville": "Tulle",
+    "code_postal": "19000"
+  },
+  {
+    "row": 253,
+    "id_osm": "64412234",
+    "nom": "Mosquée",
+    "ville": "Villejuif",
+    "code_postal": "94800"
+  },
+  {
+    "row": 254,
+    "id_osm": "64420620",
+    "nom": "Mosquée",
+    "ville": "Villejuif",
+    "code_postal": "94800"
+  },
+  {
+    "row": 255,
+    "id_osm": "64489946",
+    "nom": "Mosquée Kouba",
+    "ville": "Le Port",
+    "code_postal": "97420"
+  },
+  {
+    "row": 256,
+    "id_osm": "64665950",
+    "nom": "El Mouhsinin",
+    "ville": "Rouen",
+    "code_postal": "76000"
+  },
+  {
+    "row": 257,
+    "id_osm": "64790253",
+    "nom": "Mosquée Kheir-Ul-Masadid",
+    "ville": "Le Port",
+    "code_postal": "97420"
+  },
+  {
+    "row": 258,
+    "id_osm": "64930572",
+    "nom": "Mosquée El Oulfa",
+    "ville": "Lyon",
+    "code_postal": "69007"
+  },
+  {
+    "row": 260,
+    "id_osm": "65087881",
+    "nom": "Mosquée Al Fath",
+    "ville": "Bourges",
+    "code_postal": "18000"
+  },
+  {
+    "row": 261,
+    "id_osm": "65113873",
+    "nom": "Association Culturelle et Islamique des Turques de la Sarthe",
+    "ville": "Le Mans",
+    "code_postal": "72100"
+  },
+  {
+    "row": 262,
+    "id_osm": "65291112",
+    "nom": "Mosquée d'Agen",
+    "ville": "Agen",
+    "code_postal": "47000"
+  },
+  {
+    "row": 263,
+    "id_osm": "65474715",
+    "nom": "Mosquée de la Paix",
+    "ville": "Auch",
+    "code_postal": "32000"
+  },
+  {
+    "row": 264,
+    "id_osm": "65530100",
+    "nom": "Mosquée",
+    "ville": "Cognac",
+    "code_postal": "16100"
+  },
+  {
+    "row": 265,
+    "id_osm": "65565438",
+    "nom": "Masjid AsSunna",
+    "ville": "Le Mans",
+    "code_postal": "72100"
+  },
+  {
+    "row": 266,
+    "id_osm": "65613178",
+    "nom": "Mosquée Chafeite",
+    "ville": "Le Port",
+    "code_postal": "97420"
+  },
+  {
+    "row": 267,
+    "id_osm": "65659742",
+    "nom": "La Mosquée",
+    "ville": "Saint-Dizier",
+    "code_postal": "52100"
+  },
+  {
+    "row": 268,
+    "id_osm": "66167931",
+    "nom": "Mosquée",
+    "ville": "Bras-Panon",
+    "code_postal": "97412"
+  },
+  {
+    "row": 270,
+    "id_osm": "66651709",
+    "nom": "Mosquée Khaled ibn El Walid",
+    "ville": "Givors",
+    "code_postal": "69700"
+  },
+  {
+    "row": 271,
+    "id_osm": "66736449",
+    "nom": "Mosquée Assalam",
+    "ville": "Clermont-Ferrand",
+    "code_postal": "63100"
+  },
+  {
+    "row": 272,
+    "id_osm": "67106440",
+    "nom": "Association Saintaise du Culte Musulman",
+    "ville": "Saintes",
+    "code_postal": "17100"
+  },
+  {
+    "row": 273,
+    "id_osm": "67330457",
+    "nom": "Grande Mosquée de Clermont",
+    "ville": "Clermont-Ferrand",
+    "code_postal": "63100"
+  },
+  {
+    "row": 274,
+    "id_osm": "67483216",
+    "nom": "Association Musulmane de Pierre Bénite",
+    "ville": "Oullins-Pierre-Bénite",
+    "code_postal": "69310"
+  },
+  {
+    "row": 275,
+    "id_osm": "67644378",
+    "nom": "Attâyab-ul-Massâdid",
+    "ville": "Saint-Pierre",
+    "code_postal": "97410"
+  },
+  {
+    "row": 276,
+    "id_osm": "67647609",
+    "nom": "Mosquée Attâyab-ul-Massâdid",
+    "ville": "Saint-Pierre",
+    "code_postal": "97410"
+  },
+  {
+    "row": 277,
+    "id_osm": "67697495",
+    "nom": "Mosquée",
+    "ville": "Marseille",
+    "code_postal": "13001"
+  },
+  {
+    "row": 278,
+    "id_osm": "67708159",
+    "nom": "Mosquée Tahara",
+    "ville": "Marseille",
+    "code_postal": "13001"
+  },
+  {
+    "row": 279,
+    "id_osm": "67711100",
+    "nom": "Mosquée Al-Wahda",
+    "ville": "Jeumont",
+    "code_postal": "59460"
+  },
+  {
+    "row": 280,
+    "id_osm": "67716436",
+    "nom": "Mosquée Khalid Ibn Al Walid",
+    "ville": "Marseille",
+    "code_postal": "13002"
+  },
+  {
+    "row": 281,
+    "id_osm": "67772253",
+    "nom": "Mosquée Essalam",
+    "ville": "Laval",
+    "code_postal": "53000"
+  },
+  {
+    "row": 282,
+    "id_osm": "67949236",
+    "nom": "El Rahma",
+    "ville": "Aubenas",
+    "code_postal": "7200"
+  },
+  {
+    "row": 284,
+    "id_osm": "68687894",
+    "nom": "Mosquée de la Guidance",
+    "ville": "Millau",
+    "code_postal": "12100"
+  },
+  {
+    "row": 286,
+    "id_osm": "69738698",
+    "nom": "Mosquée de Decazeville",
+    "ville": "Decazeville",
+    "code_postal": "12300"
+  },
+  {
+    "row": 287,
+    "id_osm": "69783462",
+    "nom": "Mosquée de Fréjus",
+    "ville": "Fréjus",
+    "code_postal": "83600"
+  },
+  {
+    "row": 288,
+    "id_osm": "69841657",
+    "nom": "Mosquée Badr",
+    "ville": "Soissons",
+    "code_postal": "2200"
+  },
+  {
+    "row": 290,
+    "id_osm": "70325235",
+    "nom": "Mosquée de Guebwiller",
+    "ville": "Guebwiller",
+    "code_postal": "68500"
+  },
+  {
+    "row": 291,
+    "id_osm": "70345133",
+    "nom": "Mosquée Al Ihsan d'Argenteuil",
+    "ville": "Argenteuil",
+    "code_postal": "95100"
+  },
+  {
+    "row": 293,
+    "id_osm": "70551607",
+    "nom": "Grande Mosquée de Limoges",
+    "ville": "Limoges",
+    "code_postal": "87100"
+  },
+  {
+    "row": 294,
+    "id_osm": "70785311",
+    "nom": "Mosquée d'Asnières",
+    "ville": "Asnières-sur-Seine",
+    "code_postal": "92600"
+  },
+  {
+    "row": 295,
+    "id_osm": "70882714",
+    "nom": "Mosquée",
+    "ville": "Flers",
+    "code_postal": "61100"
+  },
+  {
+    "row": 296,
+    "id_osm": "71137011",
+    "nom": "Mosquée Essalam",
+    "ville": "Le Havre",
+    "code_postal": "76610"
+  },
+  {
+    "row": 297,
+    "id_osm": "71342490",
+    "nom": "Mosquée de Palaiseau",
+    "ville": "Palaiseau",
+    "code_postal": "91120"
+  },
+  {
+    "row": 298,
+    "id_osm": "71474766",
+    "nom": "Mosquée",
+    "ville": "Cayenne",
+    "code_postal": "97300"
+  },
+  {
+    "row": 299,
+    "id_osm": "71717645",
+    "nom": "Mosquée de Clamart",
+    "ville": "Clamart",
+    "code_postal": "92140"
+  },
+  {
+    "row": 302,
+    "id_osm": "72368185",
+    "nom": "Mosquée",
+    "ville": "Besançon",
+    "code_postal": "25000"
+  },
+  {
+    "row": 303,
+    "id_osm": "72606162",
+    "nom": "Mosquée",
+    "ville": "Besançon",
+    "code_postal": "25000"
+  },
+  {
+    "row": 304,
+    "id_osm": "72762951",
+    "nom": "Mosquée Turque",
+    "ville": "Migennes",
+    "code_postal": "89400"
+  },
+  {
+    "row": 305,
+    "id_osm": "72892225",
+    "nom": "Mosquée",
+    "ville": "Troyes",
+    "code_postal": "10000"
+  },
+  {
+    "row": 306,
+    "id_osm": "72916256",
+    "nom": "EL Fath",
+    "ville": "Troyes",
+    "code_postal": "10000"
+  },
+  {
+    "row": 307,
+    "id_osm": "73101582",
+    "nom": "Mosquée Badr",
+    "ville": "Louviers",
+    "code_postal": "27400"
+  },
+  {
+    "row": 308,
+    "id_osm": "73114961",
+    "nom": "Assoc Ligue amicale des cultures et de recherche scientifique",
+    "ville": "Pantin",
+    "code_postal": "93500"
+  },
+  {
+    "row": 309,
+    "id_osm": "73130720",
+    "nom": "Hamza",
+    "ville": "Troyes",
+    "code_postal": "10000"
+  },
+  {
+    "row": 310,
+    "id_osm": "73136505",
+    "nom": "Imam Ali",
+    "ville": "Troyes",
+    "code_postal": "10000"
+  },
+  {
+    "row": 311,
+    "id_osm": "73758069",
+    "nom": "Mosquée de Pont-Saint-Esprit",
+    "ville": "Pont-Saint-Esprit",
+    "code_postal": "30130"
+  },
+  {
+    "row": 312,
+    "id_osm": "74249521",
+    "nom": "Mosquée As-Salam",
+    "ville": "Toulouse",
+    "code_postal": "31100"
+  },
+  {
+    "row": 313,
+    "id_osm": "74252135",
+    "nom": "Mosquée turque",
+    "ville": "Toulouse",
+    "code_postal": "31100"
+  },
+  {
+    "row": 314,
+    "id_osm": "74292525",
+    "nom": "Mosquée Aicha",
+    "ville": "Montpellier",
+    "code_postal": "34070"
+  },
+  {
+    "row": 315,
+    "id_osm": "74340222",
+    "nom": "aslamin",
+    "ville": "Guerlédan",
+    "code_postal": "22530"
+  },
+  {
+    "row": 316,
+    "id_osm": "74405062",
+    "nom": "Essalam",
+    "ville": "Montélimar",
+    "code_postal": "26200"
+  },
+  {
+    "row": 317,
+    "id_osm": "74627120",
+    "nom": "Centre socio-culturel des Musulmans de Versailles",
+    "ville": "Versailles",
+    "code_postal": "78000"
+  },
+  {
+    "row": 318,
+    "id_osm": "74798847",
+    "nom": "Mosquée",
+    "ville": "Compiègne",
+    "code_postal": "60200"
+  },
+  {
+    "row": 321,
+    "id_osm": "75042405",
+    "nom": "Mosquée Amah",
+    "ville": "Le Havre",
+    "code_postal": "76600"
+  },
+  {
+    "row": 323,
+    "id_osm": "75398222",
+    "nom": "Mosquée En-Nour",
+    "ville": "Montpellier",
+    "code_postal": "34000"
+  },
+  {
+    "row": 324,
+    "id_osm": "76003418",
+    "nom": "Mosquée Avicenne",
+    "ville": "Montpellier",
+    "code_postal": "34080"
+  },
+  {
+    "row": 325,
+    "id_osm": "76332365",
+    "nom": "Mosquée",
+    "ville": "Toulouse",
+    "code_postal": "31200"
+  },
+  {
+    "row": 326,
+    "id_osm": "76343859",
+    "nom": "Mosquée",
+    "ville": "Vendôme",
+    "code_postal": "41100"
+  },
+  {
+    "row": 332,
+    "id_osm": "76696504",
+    "nom": "Mosquée Okba",
+    "ville": "Nanterre",
+    "code_postal": "92000"
+  },
+  {
+    "row": 334,
+    "id_osm": "77494312",
+    "nom": "Mosquée Es-Salam",
+    "ville": "Lille",
+    "code_postal": "59000"
+  },
+  {
+    "row": 336,
+    "id_osm": "77630593",
+    "nom": "Mosquée",
+    "ville": "Stains",
+    "code_postal": "93240"
+  },
+  {
+    "row": 337,
+    "id_osm": "77784343",
+    "nom": "Al Hidjra",
+    "ville": "Montluçon",
+    "code_postal": "3100"
+  },
+  {
+    "row": 338,
+    "id_osm": "78095120",
+    "nom": "Mosquée De Saint-Brieuc",
+    "ville": "Saint-Brieuc",
+    "code_postal": "22000"
+  },
+  {
+    "row": 339,
+    "id_osm": "78156942",
+    "nom": "Mosquée de Miribel",
+    "ville": "Miribel",
+    "code_postal": "1700"
+  },
+  {
+    "row": 340,
+    "id_osm": "78416671",
+    "nom": "Mosquée",
+    "ville": "Tourcoing",
+    "code_postal": "59200"
+  },
+  {
+    "row": 341,
+    "id_osm": "78417045",
+    "nom": "Mosquée Othman Ibn 'Afane",
+    "ville": "Tourcoing",
+    "code_postal": "59200"
+  },
+  {
+    "row": 342,
+    "id_osm": "78454420",
+    "nom": "Mosquée",
+    "ville": "Colombes",
+    "code_postal": "92700"
+  },
+  {
+    "row": 343,
+    "id_osm": "78536514",
+    "nom": "Mosquée d'Orange",
+    "ville": "Orange",
+    "code_postal": "84100"
+  },
+  {
+    "row": 345,
+    "id_osm": "79147500",
+    "nom": "Mosquée An Nour",
+    "ville": "Ivry-sur-Seine",
+    "code_postal": "94200"
+  },
+  {
+    "row": 346,
+    "id_osm": "79174102",
+    "nom": "Mosquée",
+    "ville": "Belfort",
+    "code_postal": "90000"
+  },
+  {
+    "row": 347,
+    "id_osm": "79229490",
+    "nom": "Mosquée de Saint-Fons",
+    "ville": "Saint-Fons",
+    "code_postal": "69190"
+  },
+  {
+    "row": 348,
+    "id_osm": "79364782",
+    "nom": "Mosquée de Libourne",
+    "ville": "Libourne",
+    "code_postal": "33500"
+  },
+  {
+    "row": 351,
+    "id_osm": "79762669",
+    "nom": "Mosquée Kuba",
+    "ville": "Belfort",
+    "code_postal": "90000"
+  },
+  {
+    "row": 352,
+    "id_osm": "80136907",
+    "nom": "Association cultuelle musulmane de la Potennerie",
+    "ville": "Roubaix",
+    "code_postal": "59100"
+  },
+  {
+    "row": 353,
+    "id_osm": "80146908",
+    "nom": "Mosquée Arrahma",
+    "ville": "Tourcoing",
+    "code_postal": "59200"
+  },
+  {
+    "row": 354,
+    "id_osm": "80288796",
+    "nom": "Mosquée Sunna",
+    "ville": "Vénissieux",
+    "code_postal": "69200"
+  },
+  {
+    "row": 355,
+    "id_osm": "80388554",
+    "nom": "Mosquée",
+    "ville": "Vénissieux",
+    "code_postal": "69200"
+  },
+  {
+    "row": 356,
+    "id_osm": "80389590",
+    "nom": "Mosquée Al Forqane",
+    "ville": "Vénissieux",
+    "code_postal": "69200"
+  },
+  {
+    "row": 357,
+    "id_osm": "80658365",
+    "nom": "Moubarak Mosquée",
+    "ville": "Saint-Prix",
+    "code_postal": "95390"
+  },
+  {
+    "row": 358,
+    "id_osm": "80682341",
+    "nom": "Mosquée",
+    "ville": "Dole",
+    "code_postal": "39100"
+  },
+  {
+    "row": 359,
+    "id_osm": "80734731",
+    "nom": "Ass salafi Fajr al nida",
+    "ville": "Rennes",
+    "code_postal": "35200"
+  },
+  {
+    "row": 360,
+    "id_osm": "80742079",
+    "nom": "Centre Culturel Islamique du Blosne",
+    "ville": "Rennes",
+    "code_postal": "35200"
+  },
+  {
+    "row": 361,
+    "id_osm": "80825980",
+    "nom": "Mosquée DITIB Les Abrets-en-Dauphiné",
+    "ville": "Les Abrets en Dauphiné",
+    "code_postal": "38490"
+  },
+  {
+    "row": 362,
+    "id_osm": "80860987",
+    "nom": "Centre culturel islamique",
+    "ville": "Rennes",
+    "code_postal": "35000"
+  },
+  {
+    "row": 363,
+    "id_osm": "81144808",
+    "nom": "Mosquée de Villetaneuse",
+    "ville": "Villetaneuse",
+    "code_postal": "93430"
+  },
+  {
+    "row": 364,
+    "id_osm": "81216722",
+    "nom": "Mosquée Ibnou Sina",
+    "ville": "Rennes",
+    "code_postal": "35000"
+  },
+  {
+    "row": 365,
+    "id_osm": "81552830",
+    "nom": "Grande Mosquée de Perpignan",
+    "ville": "Perpignan",
+    "code_postal": "66000"
+  },
+  {
+    "row": 367,
+    "id_osm": "81744074",
+    "nom": "Mosquée",
+    "ville": "Aix-les-Bains",
+    "code_postal": "73100"
+  },
+  {
+    "row": 368,
+    "id_osm": "81888019",
+    "nom": "Mosquée",
+    "ville": "Vimoutiers",
+    "code_postal": "61120"
+  },
+  {
+    "row": 369,
+    "id_osm": "82051481",
+    "nom": "Mosquée Al Fath",
+    "ville": "Évreux",
+    "code_postal": "27000"
+  },
+  {
+    "row": 370,
+    "id_osm": "82067920",
+    "nom": "Mosquée Assalam",
+    "ville": "Évreux",
+    "code_postal": "27000"
+  },
+  {
+    "row": 371,
+    "id_osm": "82843774",
+    "nom": "Mosquée Nur Muhammed Camii",
+    "ville": "Lons-le-Saunier",
+    "code_postal": "39000"
+  },
+  {
+    "row": 372,
+    "id_osm": "82845477",
+    "nom": "Mosquée As-Salaam",
+    "ville": "Lons-le-Saunier",
+    "code_postal": "39000"
+  },
+  {
+    "row": 374,
+    "id_osm": "83470293",
+    "nom": "Mosquée Arrahma",
+    "ville": "Cholet",
+    "code_postal": "49300"
+  },
+  {
+    "row": 376,
+    "id_osm": "83751903",
+    "nom": "ESSOUNNA",
+    "ville": "Avignon",
+    "code_postal": "84000"
+  },
+  {
+    "row": 377,
+    "id_osm": "83787896",
+    "nom": "Mosquée En-Nour",
+    "ville": "Avignon",
+    "code_postal": "84000"
+  },
+  {
+    "row": 379,
+    "id_osm": "84124082",
+    "nom": "Mosquée",
+    "ville": "Noisy-le-Sec",
+    "code_postal": "93130"
+  },
+  {
+    "row": 380,
+    "id_osm": "84188910",
+    "nom": "Mosquée",
+    "ville": "Bondy",
+    "code_postal": "93140"
+  },
+  {
+    "row": 381,
+    "id_osm": "84264036",
+    "nom": "Mosquée Essalam",
+    "ville": "Châtellerault",
+    "code_postal": "86100"
+  },
+  {
+    "row": 382,
+    "id_osm": "84285300",
+    "nom": "Mosquée",
+    "ville": "Le Blanc-Mesnil",
+    "code_postal": "93150"
+  },
+  {
+    "row": 383,
+    "id_osm": "84291198",
+    "nom": "Mosquée",
+    "ville": "Le Blanc-Mesnil",
+    "code_postal": "93150"
+  },
+  {
+    "row": 384,
+    "id_osm": "84296446",
+    "nom": "Mosquée Arrahma",
+    "ville": "Nantes",
+    "code_postal": "44300"
+  },
+  {
+    "row": 385,
+    "id_osm": "84399753",
+    "nom": "Mosquée",
+    "ville": "Lille",
+    "code_postal": "59000"
+  },
+  {
+    "row": 386,
+    "id_osm": "84402253",
+    "nom": "Mosquée Assounna",
+    "ville": "Lille",
+    "code_postal": "59000"
+  },
+  {
+    "row": 387,
+    "id_osm": "84455398",
+    "nom": "Mosquée de Drancy",
+    "ville": "Drancy",
+    "code_postal": "93700"
+  },
+  {
+    "row": 388,
+    "id_osm": "84838054",
+    "nom": "Mosquée Al Houda",
+    "ville": "Illzach",
+    "code_postal": "68110"
+  },
+  {
+    "row": 391,
+    "id_osm": "85087432",
+    "nom": "Association Culturelle Des Travailleurs Turcs",
+    "ville": "Lille",
+    "code_postal": "59800"
+  },
+  {
+    "row": 393,
+    "id_osm": "85361099",
+    "nom": "Association d'entraide des travailleurs franco-turcs de Rennes",
+    "ville": "Noyal-Châtillon-sur-Seiche",
+    "code_postal": "35230"
+  },
+  {
+    "row": 394,
+    "id_osm": "85755733",
+    "nom": "Mosquée Fathi",
+    "ville": "Nantes",
+    "code_postal": "44100"
+  },
+  {
+    "row": 395,
+    "id_osm": "86078252",
+    "nom": "Mosquée",
+    "ville": "Miramas",
+    "code_postal": "13140"
+  },
+  {
+    "row": 396,
+    "id_osm": "86097397",
+    "nom": "Abdallah",
+    "ville": "La Roche-sur-Yon",
+    "code_postal": "85000"
+  },
+  {
+    "row": 397,
+    "id_osm": "86363386",
+    "nom": "Mosquée",
+    "ville": "Le Puy-en-Velay",
+    "code_postal": "43000"
+  },
+  {
+    "row": 398,
+    "id_osm": "86386639",
+    "nom": "El Asr",
+    "ville": "Antony",
+    "code_postal": "92160"
+  },
+  {
+    "row": 399,
+    "id_osm": "86506805",
+    "nom": "Lieu de culte",
+    "ville": "Le Chambon-Feugerolles",
+    "code_postal": "42500"
+  },
+  {
+    "row": 400,
+    "id_osm": "88250986",
+    "nom": "Mosquée Othman",
+    "ville": "Reims",
+    "code_postal": "51100"
+  },
+  {
+    "row": 401,
+    "id_osm": "88743210",
+    "nom": "Mosquée",
+    "ville": "Yutz",
+    "code_postal": "57970"
+  },
+  {
+    "row": 402,
+    "id_osm": "88917682",
+    "nom": "Mosquée",
+    "ville": "Thionville",
+    "code_postal": "57100"
+  },
+  {
+    "row": 403,
+    "id_osm": "90387543",
+    "nom": "Ar-Rahma",
+    "ville": "Behren-lès-Forbach",
+    "code_postal": "57460"
+  },
+  {
+    "row": 404,
+    "id_osm": "90390239",
+    "nom": "Mosquée",
+    "ville": "Behren-lès-Forbach",
+    "code_postal": "57460"
+  },
+  {
+    "row": 405,
+    "id_osm": "90416134",
+    "nom": "Mosquée Al-Ihsan",
+    "ville": "Villiers-sur-Marne",
+    "code_postal": "94350"
+  },
+  {
+    "row": 406,
+    "id_osm": "90715075",
+    "nom": "Mosquée El-Mansour",
+    "ville": "Reims",
+    "code_postal": "51100"
+  },
+  {
+    "row": 407,
+    "id_osm": "91004261",
+    "nom": "Mosquée Al-Islah",
+    "ville": "Villiers-sur-Marne",
+    "code_postal": "94350"
+  },
+  {
+    "row": 408,
+    "id_osm": "91170145",
+    "nom": "Mosquée",
+    "ville": "Châteauneuf-sur-Loire",
+    "code_postal": "45110"
+  },
+  {
+    "row": 410,
+    "id_osm": "91951454",
+    "nom": "Mosquée",
+    "ville": "Valréas",
+    "code_postal": "84600"
+  },
+  {
+    "row": 411,
+    "id_osm": "92041450",
+    "nom": "Mosquée de Narbonne",
+    "ville": "Narbonne",
+    "code_postal": "11100"
+  },
+  {
+    "row": 412,
+    "id_osm": "92108516",
+    "nom": "Grande Mosquée de Narbonne",
+    "ville": "Narbonne",
+    "code_postal": "11100"
+  },
+  {
+    "row": 413,
+    "id_osm": "92235052",
+    "nom": "Mosquée",
+    "ville": "Crépy-en-Valois",
+    "code_postal": "60800"
+  },
+  {
+    "row": 414,
+    "id_osm": "92294275",
+    "nom": "Association de la Mosquée et du Centre Islamique de Reims",
+    "ville": "Reims",
+    "code_postal": "51100"
+  },
+  {
+    "row": 415,
+    "id_osm": "92569291",
+    "nom": "Dar Es-Salam",
+    "ville": "Aubagne",
+    "code_postal": "13400"
+  },
+  {
+    "row": 417,
+    "id_osm": "94283195",
+    "nom": "Mosquée",
+    "ville": "Quimper",
+    "code_postal": "29000"
+  },
+  {
+    "row": 418,
+    "id_osm": "94283779",
+    "nom": "Mosquée Essalaam - Centre culturel",
+    "ville": "Quimper",
+    "code_postal": "29000"
+  },
+  {
+    "row": 419,
+    "id_osm": "94937889",
+    "nom": "Centre Culturel Islamique de Martinique",
+    "ville": "Fort-de-France",
+    "code_postal": "97200"
+  },
+  {
+    "row": 420,
+    "id_osm": "95000955",
+    "nom": "Mosquée Mevlana",
+    "ville": "Nantes",
+    "code_postal": "44100"
+  },
+  {
+    "row": 421,
+    "id_osm": "95216015",
+    "nom": "Mosquée",
+    "ville": "Héricourt",
+    "code_postal": "70400"
+  },
+  {
+    "row": 422,
+    "id_osm": "95455290",
+    "nom": "Mosquée El Hijra",
+    "ville": "Farébersviller",
+    "code_postal": "57450"
+  },
+  {
+    "row": 423,
+    "id_osm": "96243425",
+    "nom": "Mosquée",
+    "ville": "Saint-Gaudens",
+    "code_postal": "31800"
+  },
+  {
+    "row": 424,
+    "id_osm": "96755630",
+    "nom": "Aicha mosquée",
+    "ville": "NANTES",
+    "code_postal": "44100"
+  },
+  {
+    "row": 425,
+    "id_osm": "98753079",
+    "nom": "Mosquée Arrahma",
+    "ville": "Istres",
+    "code_postal": "13800"
+  },
+  {
+    "row": 426,
+    "id_osm": "99517433",
+    "nom": "Mosquée",
+    "ville": "Florange",
+    "code_postal": "57190"
+  },
+  {
+    "row": 427,
+    "id_osm": "99635651",
+    "nom": "Mosquée",
+    "ville": "Givet",
+    "code_postal": "8600"
+  },
+  {
+    "row": 428,
+    "id_osm": "100365798",
+    "nom": "Mosquée de Salon-de-Provence",
+    "ville": "Salon-de-Provence",
+    "code_postal": "13300"
+  },
+  {
+    "row": 430,
+    "id_osm": "100795754",
+    "nom": "Mosquée d'Épinal",
+    "ville": "Épinal",
+    "code_postal": "88000"
+  },
+  {
+    "row": 431,
+    "id_osm": "100800135",
+    "nom": "Mosquée Al Madina Al Mounawara",
+    "ville": "Épinal",
+    "code_postal": "88000"
+  },
+  {
+    "row": 432,
+    "id_osm": "101045571",
+    "nom": "Mosquée",
+    "ville": "Vauréal",
+    "code_postal": "95490"
+  },
+  {
+    "row": 433,
+    "id_osm": "102193469",
+    "nom": "Mosquée Bilal",
+    "ville": "Waziers",
+    "code_postal": "59119"
+  },
+  {
+    "row": 435,
+    "id_osm": "102365766",
+    "nom": "Mosquée",
+    "ville": "Sully-sur-Loire",
+    "code_postal": "45600"
+  },
+  {
+    "row": 437,
+    "id_osm": "102448060",
+    "nom": "Mosquée",
+    "ville": "Saint-Ouen-l'Aumône",
+    "code_postal": "95310"
+  },
+  {
+    "row": 438,
+    "id_osm": "102824171",
+    "nom": "Mosquée Anoussra",
+    "ville": "Chartres",
+    "code_postal": "28000"
+  },
+  {
+    "row": 439,
+    "id_osm": "102838990",
+    "nom": "Mosquée At-Tawba",
+    "ville": "Flers-en-Escrebieux",
+    "code_postal": "59128"
+  },
+  {
+    "row": 441,
+    "id_osm": "103687826",
+    "nom": "Mosquée Al Fourqane (Le Discernement)",
+    "ville": "Valence",
+    "code_postal": "26000"
+  },
+  {
+    "row": 442,
+    "id_osm": "103723473",
+    "nom": "Mosquée de Taverny",
+    "ville": "Taverny",
+    "code_postal": "95150"
+  },
+  {
+    "row": 443,
+    "id_osm": "104756336",
+    "nom": "Mosquée St Benoît",
+    "ville": "Saint-Benoît",
+    "code_postal": "97470"
+  },
+  {
+    "row": 444,
+    "id_osm": "104914981",
+    "nom": "Mosquée Errahma",
+    "ville": "Méricourt",
+    "code_postal": "62680"
+  },
+  {
+    "row": 446,
+    "id_osm": "105100295",
+    "nom": "Mosquée",
+    "ville": "Liévin",
+    "code_postal": "62800"
+  },
+  {
+    "row": 447,
+    "id_osm": "105344621",
+    "nom": "Mosquée En-Nour",
+    "ville": "Roost-Warendin",
+    "code_postal": "59286"
+  },
+  {
+    "row": 448,
+    "id_osm": "105423701",
+    "nom": "Mosquée d'Auby",
+    "ville": "Auby",
+    "code_postal": "59950"
+  },
+  {
+    "row": 451,
+    "id_osm": "105524114",
+    "nom": "Mosquée Al Fath",
+    "ville": "Avion",
+    "code_postal": "62210"
+  },
+  {
+    "row": 452,
+    "id_osm": "105541081",
+    "nom": "Mosquée Badr",
+    "ville": "Avion",
+    "code_postal": "62210"
+  },
+  {
+    "row": 453,
+    "id_osm": "105729651",
+    "nom": "Mosquée Essalam",
+    "ville": "Fontenay-sous-Bois",
+    "code_postal": "94120"
+  },
+  {
+    "row": 458,
+    "id_osm": "108640778",
+    "nom": "Mosquée Abou Bakr",
+    "ville": "Fresnes-sur-Escaut",
+    "code_postal": "59970"
+  },
+  {
+    "row": 461,
+    "id_osm": "109515445",
+    "nom": "Mosquée Al Amine",
+    "ville": "Champigny-sur-Marne",
+    "code_postal": "94500"
+  },
+  {
+    "row": 462,
+    "id_osm": "109797280",
+    "nom": "Mosquée",
+    "ville": "Belley",
+    "code_postal": "1300"
+  },
+  {
+    "row": 464,
+    "id_osm": "110600531",
+    "nom": "Association Cultuelle Marocaine de Chambéry",
+    "ville": "Chambéry",
+    "code_postal": "73000"
+  },
+  {
+    "row": 466,
+    "id_osm": "111035797",
+    "nom": "Mosquée des Coudreaux",
+    "ville": "Chelles",
+    "code_postal": "77500"
+  },
+  {
+    "row": 467,
+    "id_osm": "111654481",
+    "nom": "Mosquée AN NOUR",
+    "ville": "Châlons-en-Champagne",
+    "code_postal": "51000"
+  },
+  {
+    "row": 468,
+    "id_osm": "111655882",
+    "nom": "CIMG Chambéry",
+    "ville": "Barberaz",
+    "code_postal": "73000"
+  },
+  {
+    "row": 469,
+    "id_osm": "111825622",
+    "nom": "Mosquée de Poitiers",
+    "ville": "Poitiers",
+    "code_postal": "86000"
+  },
+  {
+    "row": 470,
+    "id_osm": "112067805",
+    "nom": "Centre Musulman de Meaux",
+    "ville": "Meaux",
+    "code_postal": "77100"
+  },
+  {
+    "row": 471,
+    "id_osm": "112111619",
+    "nom": "Mosquée",
+    "ville": "Cherbourg-en-Cotentin",
+    "code_postal": "50130"
+  },
+  {
+    "row": 472,
+    "id_osm": "112248923",
+    "nom": "Mosquée",
+    "ville": "Savigny-le-Temple",
+    "code_postal": "77176"
+  },
+  {
+    "row": 473,
+    "id_osm": "112292975",
+    "nom": "Association Culturelle Musulmane Ozoirienne",
+    "ville": "Ozoir-la-Ferrière",
+    "code_postal": "77330"
+  },
+  {
+    "row": 474,
+    "id_osm": "112363995",
+    "nom": "Mosquée El Nour",
+    "ville": "Melun",
+    "code_postal": "77000"
+  },
+  {
+    "row": 475,
+    "id_osm": "113076222",
+    "nom": "Mosquée al Salam",
+    "ville": "Dammarie-les-Lys",
+    "code_postal": "77190"
+  },
+  {
+    "row": 476,
+    "id_osm": "113197025",
+    "nom": "Mosquée de Champs-sur-Marne",
+    "ville": "Champs-sur-Marne",
+    "code_postal": "77420"
+  },
+  {
+    "row": 478,
+    "id_osm": "116638942",
+    "nom": "Mosquée Bendida",
+    "ville": "Vaulx-en-Velin",
+    "code_postal": "69120"
+  },
+  {
+    "row": 480,
+    "id_osm": "117098190",
+    "nom": "Mosquée As Salam",
+    "ville": "Sainte-Marie-aux-Mines",
+    "code_postal": "68160"
+  },
+  {
+    "row": 481,
+    "id_osm": "117247907",
+    "nom": "Mosquée de Décines Charpieu",
+    "ville": "Décines-Charpieu",
+    "code_postal": "69150"
+  },
+  {
+    "row": 482,
+    "id_osm": "118734726",
+    "nom": "Mosquée Bilal",
+    "ville": "Blois",
+    "code_postal": "41000"
+  },
+  {
+    "row": 485,
+    "id_osm": "119070461",
+    "nom": "Mosquée",
+    "ville": "Saint-Louis",
+    "code_postal": "97450"
+  },
+  {
+    "row": 486,
+    "id_osm": "119103835",
+    "nom": "Mosquée Eyüp Sultan",
+    "ville": "Vénissieux",
+    "code_postal": "69200"
+  },
+  {
+    "row": 487,
+    "id_osm": "119197682",
+    "nom": "Mosquée Attaqwa de Saint-Chamond",
+    "ville": "Saint-Chamond",
+    "code_postal": "42400"
+  },
+  {
+    "row": 488,
+    "id_osm": "119199158",
+    "nom": "Mosquée de la communauté islamique Millî Görüş",
+    "ville": "Saint-Chamond",
+    "code_postal": "42400"
+  },
+  {
+    "row": 489,
+    "id_osm": "119233553",
+    "nom": "Mosquée turque",
+    "ville": "Ifs",
+    "code_postal": "14123"
+  },
+  {
+    "row": 490,
+    "id_osm": "120002966",
+    "nom": "Mosquée",
+    "ville": "Bourgoin-Jallieu",
+    "code_postal": "38300"
+  },
+  {
+    "row": 491,
+    "id_osm": "120366057",
+    "nom": "Mosquée Essalam",
+    "ville": "Chauny",
+    "code_postal": "2300"
+  },
+  {
+    "row": 492,
+    "id_osm": "120891409",
+    "nom": "Mosquée",
+    "ville": "Draguignan",
+    "code_postal": "83300"
+  },
+  {
+    "row": 493,
+    "id_osm": "121570366",
+    "nom": "Mosquée",
+    "ville": "Chalon-sur-Saône",
+    "code_postal": "71100"
+  },
+  {
+    "row": 494,
+    "id_osm": "121591778",
+    "nom": "Mosquée El-Fath",
+    "ville": "Chalon-sur-Saône",
+    "code_postal": "71100"
+  },
+  {
+    "row": 496,
+    "id_osm": "122324515",
+    "nom": "Mosquée Omar Ibn al Khattab",
+    "ville": "Tarbes",
+    "code_postal": "65000"
+  },
+  {
+    "row": 497,
+    "id_osm": "122539581",
+    "nom": "Mosquée",
+    "ville": "Redon",
+    "code_postal": "35600"
+  },
+  {
+    "row": 498,
+    "id_osm": "123352943",
+    "nom": "Mosquée de Rillieux-la-Pape",
+    "ville": "Rillieux-la-Pape",
+    "code_postal": "69140"
+  },
+  {
+    "row": 499,
+    "id_osm": "124614978",
+    "nom": "Mosquée de Roanne",
+    "ville": "Roanne",
+    "code_postal": "42300"
+  },
+  {
+    "row": 501,
+    "id_osm": "124662517",
+    "nom": "Mosquée",
+    "ville": "Orléans",
+    "code_postal": "45000"
+  },
+  {
+    "row": 502,
+    "id_osm": "124667060",
+    "nom": "Mosquée",
+    "ville": "Orléans",
+    "code_postal": "45000"
+  },
+  {
+    "row": 503,
+    "id_osm": "124876246",
+    "nom": "Mosquée Omar",
+    "ville": "Bron",
+    "code_postal": "69500"
+  },
+  {
+    "row": 505,
+    "id_osm": "125688678",
+    "nom": "Mosquée El Houda",
+    "ville": "Lyon",
+    "code_postal": "69005"
+  },
+  {
+    "row": 506,
+    "id_osm": "126313974",
+    "nom": "Mosquée",
+    "ville": "Vernon",
+    "code_postal": "27200"
+  },
+  {
+    "row": 507,
+    "id_osm": "126974479",
+    "nom": "Mosquée Abou Bakr Sidiq",
+    "ville": "Angers",
+    "code_postal": "49100"
+  },
+  {
+    "row": 508,
+    "id_osm": "127508371",
+    "nom": "Mosquée du Pont des Chèvres",
+    "ville": "Bourg-en-Bresse",
+    "code_postal": "1000"
+  },
+  {
+    "row": 509,
+    "id_osm": "127516481",
+    "nom": "Mosquée",
+    "ville": "Bourg-en-Bresse",
+    "code_postal": "1000"
+  },
+  {
+    "row": 512,
+    "id_osm": "130766602",
+    "nom": "Mosquée",
+    "ville": "Le Tampon",
+    "code_postal": "97430"
+  },
+  {
+    "row": 513,
+    "id_osm": "131293940",
+    "nom": "Mosquée des Ulis",
+    "ville": "Les Ulis",
+    "code_postal": "91940"
+  },
+  {
+    "row": 515,
+    "id_osm": "131719365",
+    "nom": "Mosquée",
+    "ville": "Montmagny",
+    "code_postal": "95360"
+  },
+  {
+    "row": 516,
+    "id_osm": "132349253",
+    "nom": "Mosquée turque de Mâcon",
+    "ville": "Mâcon",
+    "code_postal": "71000"
+  },
+  {
+    "row": 517,
+    "id_osm": "132363555",
+    "nom": "Mosquée",
+    "ville": "Lure",
+    "code_postal": "70200"
+  },
+  {
+    "row": 518,
+    "id_osm": "132492474",
+    "nom": "Mosquée",
+    "ville": "Les Mureaux",
+    "code_postal": "78130"
+  },
+  {
+    "row": 521,
+    "id_osm": "133274173",
+    "nom": "Mosquée El Fath",
+    "ville": "Béziers",
+    "code_postal": "34500"
+  },
+  {
+    "row": 522,
+    "id_osm": "133455732",
+    "nom": "Mosquée Errahma",
+    "ville": "Béziers",
+    "code_postal": "34500"
+  },
+  {
+    "row": 523,
+    "id_osm": "133514583",
+    "nom": "Mosquée Annour",
+    "ville": "Yerres",
+    "code_postal": "91330"
+  },
+  {
+    "row": 524,
+    "id_osm": "134953045",
+    "nom": "Mosquée du Preux",
+    "ville": "Saint-Herblain",
+    "code_postal": "44800"
+  },
+  {
+    "row": 525,
+    "id_osm": "135608457",
+    "nom": "Mosquée",
+    "ville": "Sainte-Geneviève-des-Bois",
+    "code_postal": "91700"
+  },
+  {
+    "row": 526,
+    "id_osm": "135810797",
+    "nom": "Mosquée de la Nuit du Destin",
+    "ville": "Sète",
+    "code_postal": "34200"
+  },
+  {
+    "row": 527,
+    "id_osm": "135881720",
+    "nom": "Mosquee Hamza",
+    "ville": "Vienne",
+    "code_postal": "38200"
+  },
+  {
+    "row": 528,
+    "id_osm": "136659728",
+    "nom": "Mosquée",
+    "ville": "Béthune",
+    "code_postal": "62400"
+  },
+  {
+    "row": 529,
+    "id_osm": "136798597",
+    "nom": "La Mosquée Bleue",
+    "ville": "Villefranche-sur-Saône",
+    "code_postal": "69400"
+  },
+  {
+    "row": 530,
+    "id_osm": "136804850",
+    "nom": "At-Taqwa",
+    "ville": "Villefranche-sur-Saône",
+    "code_postal": "69400"
+  },
+  {
+    "row": 531,
+    "id_osm": "136805553",
+    "nom": "Mosquée El-Houda",
+    "ville": "Villefranche-sur-Saône",
+    "code_postal": "69400"
+  },
+  {
+    "row": 532,
+    "id_osm": "136810922",
+    "nom": "Mosquée",
+    "ville": "Aulnay-sous-Bois",
+    "code_postal": "93600"
+  },
+  {
+    "row": 533,
+    "id_osm": "138084953",
+    "nom": "Mosquée Turque de Compiègne",
+    "ville": "Compiègne",
+    "code_postal": "60200"
+  },
+  {
+    "row": 535,
+    "id_osm": "139981256",
+    "nom": "Mosquée Badr",
+    "ville": "Amiens",
+    "code_postal": "80080"
+  },
+  {
+    "row": 536,
+    "id_osm": "139983519",
+    "nom": "Mosquée El Feth",
+    "ville": "Amiens",
+    "code_postal": "80000"
+  },
+  {
+    "row": 537,
+    "id_osm": "140011141",
+    "nom": "Mosquée du 19",
+    "ville": "Amiens",
+    "code_postal": "80080"
+  },
+  {
+    "row": 538,
+    "id_osm": "140025337",
+    "nom": "Mosquée Al Mohssinine",
+    "ville": "Amiens",
+    "code_postal": "80000"
+  },
+  {
+    "row": 539,
+    "id_osm": "140245957",
+    "nom": "Mosquée Annour",
+    "ville": "Amiens",
+    "code_postal": "80000"
+  },
+  {
+    "row": 540,
+    "id_osm": "140911983",
+    "nom": "Mosquée",
+    "ville": "Tremblay-en-France",
+    "code_postal": "93290"
+  },
+  {
+    "row": 542,
+    "id_osm": "141666476",
+    "nom": "Mosquée de Jarny",
+    "ville": "Jarny",
+    "code_postal": "54800"
+  },
+  {
+    "row": 543,
+    "id_osm": "142132467",
+    "nom": "Mosquée Kuba",
+    "ville": "Villefontaine",
+    "code_postal": "38090"
+  },
+  {
+    "row": 544,
+    "id_osm": "142353526",
+    "nom": "Mosquée",
+    "ville": "Saint-Joseph",
+    "code_postal": "97480"
+  },
+  {
+    "row": 545,
+    "id_osm": "142823061",
+    "nom": "Mosquée",
+    "ville": "Pithiviers",
+    "code_postal": "45300"
+  },
+  {
+    "row": 546,
+    "id_osm": "143316431",
+    "nom": "Mosquée d'Orly",
+    "ville": "Orly",
+    "code_postal": "94310"
+  },
+  {
+    "row": 547,
+    "id_osm": "143873078",
+    "nom": "Mosquée Zaïd",
+    "ville": "Bethoncourt",
+    "code_postal": "25200"
+  },
+  {
+    "row": 550,
+    "id_osm": "144251925",
+    "nom": "Mosquée Annour",
+    "ville": "Arras",
+    "code_postal": "62000"
+  },
+  {
+    "row": 551,
+    "id_osm": "144255750",
+    "nom": "Salle de prière",
+    "ville": "Arras",
+    "code_postal": "62000"
+  },
+  {
+    "row": 553,
+    "id_osm": "144955949",
+    "nom": "Centre Clémence",
+    "ville": "Mulhouse",
+    "code_postal": "68200"
+  },
+  {
+    "row": 556,
+    "id_osm": "146530620",
+    "nom": "Mosquée de Villepinte",
+    "ville": "Villepinte",
+    "code_postal": "93420"
+  },
+  {
+    "row": 558,
+    "id_osm": "146741423",
+    "nom": "Mosquée",
+    "ville": "Dax",
+    "code_postal": "40100"
+  },
+  {
+    "row": 559,
+    "id_osm": "146795091",
+    "nom": "Mosquée El-Imane",
+    "ville": "Maubeuge",
+    "code_postal": "59600"
+  },
+  {
+    "row": 561,
+    "id_osm": "147316250",
+    "nom": "Mosquée",
+    "ville": "Saint-Denis",
+    "code_postal": "97400"
+  },
+  {
+    "row": 562,
+    "id_osm": "147666064",
+    "nom": "Anjuman E. Saifee",
+    "ville": "Sainte-Marie",
+    "code_postal": "97438"
+  },
+  {
+    "row": 563,
+    "id_osm": "148249759",
+    "nom": "Mosquée Koba",
+    "ville": "Mulhouse",
+    "code_postal": "68200"
+  },
+  {
+    "row": 564,
+    "id_osm": "148723568",
+    "nom": "mosquée",
+    "ville": "Vaulx-en-Velin",
+    "code_postal": "69120"
+  },
+  {
+    "row": 565,
+    "id_osm": "149412662",
+    "nom": "Mosquée",
+    "ville": "Blénod-lès-Pont-à-Mousson",
+    "code_postal": "54700"
+  },
+  {
+    "row": 566,
+    "id_osm": "150415701",
+    "nom": "Mosquée de Gisors",
+    "ville": "Gisors",
+    "code_postal": "27140"
+  },
+  {
+    "row": 567,
+    "id_osm": "150964753",
+    "nom": "Mosquée El Mouhsinine",
+    "ville": "Beaugency",
+    "code_postal": "45190"
+  },
+  {
+    "row": 568,
+    "id_osm": "151771572",
+    "nom": "Grande Mosquée de Strasbourg",
+    "ville": "Strasbourg",
+    "code_postal": "67100"
+  },
+  {
+    "row": 570,
+    "id_osm": "152574582",
+    "nom": "Mosquée de Saumur",
+    "ville": "Saumur",
+    "code_postal": "49400"
+  },
+  {
+    "row": 571,
+    "id_osm": "153338000",
+    "nom": "Mosquée de Puteaux",
+    "ville": "Puteaux",
+    "code_postal": "92800"
+  },
+  {
+    "row": 572,
+    "id_osm": "154391164",
+    "nom": "Mosquée du Grand Parc",
+    "ville": "Bordeaux",
+    "code_postal": "33300"
+  },
+  {
+    "row": 573,
+    "id_osm": "154577898",
+    "nom": "Mosquée En-Nasr",
+    "ville": "Marseille",
+    "code_postal": "13010"
+  },
+  {
+    "row": 574,
+    "id_osm": "155589029",
+    "nom": "Mosquée",
+    "ville": "Marmande",
+    "code_postal": "47200"
+  },
+  {
+    "row": 575,
+    "id_osm": "155969646",
+    "nom": "Mosquée Fatih",
+    "ville": "Châlette-sur-Loing",
+    "code_postal": "45120"
+  },
+  {
+    "row": 576,
+    "id_osm": "155969769",
+    "nom": "Mosquée",
+    "ville": "Châlette-sur-Loing",
+    "code_postal": "45120"
+  },
+  {
+    "row": 578,
+    "id_osm": "155979364",
+    "nom": "Mosquée",
+    "ville": "Châlette-sur-Loing",
+    "code_postal": "45120"
+  },
+  {
+    "row": 579,
+    "id_osm": "159025373",
+    "nom": "Mosquée Er-Rahma",
+    "ville": "Oyonnax",
+    "code_postal": "1100"
+  },
+  {
+    "row": 580,
+    "id_osm": "159441630",
+    "nom": "Mosquée de Villers-Cotterêts",
+    "ville": "Villers-Cotterêts",
+    "code_postal": "2600"
+  },
+  {
+    "row": 581,
+    "id_osm": "159768876",
+    "nom": "Mosquée de Château-Thierry",
+    "ville": "Château-Thierry",
+    "code_postal": "2400"
+  },
+  {
+    "row": 582,
+    "id_osm": "159949243",
+    "nom": "Mosquée",
+    "ville": "Saint-Leu",
+    "code_postal": "97436"
+  },
+  {
+    "row": 584,
+    "id_osm": "161361847",
+    "nom": "Mosquée des Garennes",
+    "ville": "Mantes-la-Jolie",
+    "code_postal": "78200"
+  },
+  {
+    "row": 585,
+    "id_osm": "161364503",
+    "nom": "Grande Mosquée de Mantes-la-Jolie",
+    "ville": "Mantes-la-Jolie",
+    "code_postal": "78200"
+  },
+  {
+    "row": 586,
+    "id_osm": "162658925",
+    "nom": "Ahmadiyya Epernay",
+    "ville": "Epernay",
+    "code_postal": "51200"
+  },
+  {
+    "row": 587,
+    "id_osm": "162799520",
+    "nom": "Mosquée d'Égly",
+    "ville": "Égly",
+    "code_postal": "91520"
+  },
+  {
+    "row": 588,
+    "id_osm": "163645239",
+    "nom": "Mosquée",
+    "ville": "Hérouville-Saint-Clair",
+    "code_postal": "14200"
+  },
+  {
+    "row": 589,
+    "id_osm": "163996588",
+    "nom": "Mosquée",
+    "ville": "Montbrison",
+    "code_postal": "42600"
+  },
+  {
+    "row": 590,
+    "id_osm": "166831908",
+    "nom": "Mosquée",
+    "ville": "Saint-Omer",
+    "code_postal": "62500"
+  },
+  {
+    "row": 592,
+    "id_osm": "167434241",
+    "nom": "Mosquée",
+    "ville": "Mérignac",
+    "code_postal": "33700"
+  },
+  {
+    "row": 593,
+    "id_osm": "168753879",
+    "nom": "Mosquée",
+    "ville": "Locminé",
+    "code_postal": "56500"
+  },
+  {
+    "row": 595,
+    "id_osm": "170251113",
+    "nom": "Mosquée",
+    "ville": "Ugine",
+    "code_postal": "73400"
+  },
+  {
+    "row": 596,
+    "id_osm": "170743016",
+    "nom": "Masjid As-Salam (Mosquée de la Paix)",
+    "ville": "Vitry-le-François",
+    "code_postal": "51300"
+  },
+  {
+    "row": 597,
+    "id_osm": "174053259",
+    "nom": "Mosquée",
+    "ville": "Marckolsheim",
+    "code_postal": "67390"
+  },
+  {
+    "row": 598,
+    "id_osm": "175745506",
+    "nom": "Mosquée",
+    "ville": "Nérac",
+    "code_postal": "47600"
+  },
+  {
+    "row": 599,
+    "id_osm": "178000150",
+    "nom": "Mosquée As-Salam",
+    "ville": "Mulhouse",
+    "code_postal": "68200"
+  },
+  {
+    "row": 600,
+    "id_osm": "178362998",
+    "nom": "Mosquée Mahdi",
+    "ville": "Hurtigheim",
+    "code_postal": "67117"
+  },
+  {
+    "row": 601,
+    "id_osm": "179883926",
+    "nom": "Mosquée Errahmane",
+    "ville": "Lodève",
+    "code_postal": "34700"
+  },
+  {
+    "row": 602,
+    "id_osm": "180029325",
+    "nom": "Mosquée An'Nour",
+    "ville": "Elbeuf",
+    "code_postal": "76500"
+  },
+  {
+    "row": 603,
+    "id_osm": "182569097",
+    "nom": "Mosquée",
+    "ville": "Dreux",
+    "code_postal": "28100"
+  },
+  {
+    "row": 605,
+    "id_osm": "182684736",
+    "nom": "Mosquée",
+    "ville": "Dreux",
+    "code_postal": "28100"
+  },
+  {
+    "row": 606,
+    "id_osm": "182757039",
+    "nom": "Mosquée de la Tabellionne - Masjid Ad-Dawatou ilaLLah",
+    "ville": "Vernouillet",
+    "code_postal": "28500"
+  },
+  {
+    "row": 608,
+    "id_osm": "184303606",
+    "nom": "Mosquée",
+    "ville": "Auneau-Bleury-Saint-Symphorien",
+    "code_postal": "28700"
+  },
+  {
+    "row": 611,
+    "id_osm": "191962434",
+    "nom": "Mosquée Al-Fath",
+    "ville": "Pauillac",
+    "code_postal": "33250"
+  },
+  {
+    "row": 613,
+    "id_osm": "194403561",
+    "nom": "Mosquée AlQuds",
+    "ville": "Denain",
+    "code_postal": "59220"
+  },
+  {
+    "row": 615,
+    "id_osm": "194597866",
+    "nom": "Mosquée de Wallers",
+    "ville": "Wallers",
+    "code_postal": "59135"
+  },
+  {
+    "row": 616,
+    "id_osm": "194627192",
+    "nom": "Mosquée",
+    "ville": "Audincourt",
+    "code_postal": "25400"
+  },
+  {
+    "row": 617,
+    "id_osm": "194766708",
+    "nom": "Salle de prière",
+    "ville": "Anzin",
+    "code_postal": "59410"
+  },
+  {
+    "row": 618,
+    "id_osm": "194882278",
+    "nom": "Mosquée de Saint-Amand-les-Eaux",
+    "ville": "Saint-Amand-les-Eaux",
+    "code_postal": "59230"
+  },
+  {
+    "row": 619,
+    "id_osm": "195062654",
+    "nom": "Mosquée d'Haveluy",
+    "ville": "Haveluy",
+    "code_postal": "59255"
+  },
+  {
+    "row": 622,
+    "id_osm": "199294862",
+    "nom": "Mosquée An Nour",
+    "ville": "Cambrai",
+    "code_postal": "59400"
+  },
+  {
+    "row": 623,
+    "id_osm": "200067742",
+    "nom": "Mosquée",
+    "ville": "Limay",
+    "code_postal": "78520"
+  },
+  {
+    "row": 624,
+    "id_osm": "200338379",
+    "nom": "Mosquée de Montbéliard",
+    "ville": "Montbéliard",
+    "code_postal": "25200"
+  },
+  {
+    "row": 625,
+    "id_osm": "200917388",
+    "nom": "Mosquée Rahma",
+    "ville": "Condé-sur-l'Escaut",
+    "code_postal": "59163"
+  },
+  {
+    "row": 626,
+    "id_osm": "200920571",
+    "nom": "Mosquée Souna",
+    "ville": "Condé-sur-l'Escaut",
+    "code_postal": "59163"
+  },
+  {
+    "row": 627,
+    "id_osm": "201439803",
+    "nom": "Mosquée d'Escautpont",
+    "ville": "Escautpont",
+    "code_postal": "59278"
+  },
+  {
+    "row": 628,
+    "id_osm": "201529707",
+    "nom": "Mosquée de Ar Rahma",
+    "ville": "Cambrai",
+    "code_postal": "59400"
+  },
+  {
+    "row": 629,
+    "id_osm": "202475728",
+    "nom": "Mosquée Annour",
+    "ville": "La Chapelle-Saint-Mesmin",
+    "code_postal": "45380"
+  },
+  {
+    "row": 630,
+    "id_osm": "205101714",
+    "nom": "mosquée Khadidja de La Grand-Combe",
+    "ville": "La Grand-Combe",
+    "code_postal": "30110"
+  },
+  {
+    "row": 631,
+    "id_osm": "207607851",
+    "nom": "Mosquée",
+    "ville": "Champagnole",
+    "code_postal": "39300"
+  },
+  {
+    "row": 633,
+    "id_osm": "211251788",
+    "nom": "Mosquée",
+    "ville": "Chambéry",
+    "code_postal": "73000"
+  },
+  {
+    "row": 634,
+    "id_osm": "211495706",
+    "nom": "Grande Mosquée de Gien",
+    "ville": "Gien",
+    "code_postal": "45500"
+  },
+  {
+    "row": 635,
+    "id_osm": "218372683",
+    "nom": "Mosquée",
+    "ville": "Castelsarrasin",
+    "code_postal": "82100"
+  },
+  {
+    "row": 636,
+    "id_osm": "219270334",
+    "nom": "Mosquée Nour",
+    "ville": "Beuvrages",
+    "code_postal": "59192"
+  },
+  {
+    "row": 637,
+    "id_osm": "219647608",
+    "nom": "Mosquée de Quièvrechain An'Nour",
+    "ville": "Quiévrechain",
+    "code_postal": "59920"
+  },
+  {
+    "row": 638,
+    "id_osm": "219648242",
+    "nom": "Mosquée El Fath",
+    "ville": "Quiévrechain",
+    "code_postal": "59920"
+  },
+  {
+    "row": 639,
+    "id_osm": "224423899",
+    "nom": "Mosquée",
+    "ville": "Chanteloup-les-Vignes",
+    "code_postal": "78570"
+  },
+  {
+    "row": 640,
+    "id_osm": "226657485",
+    "nom": "Grande Mosquée de Montigny-lès-Cormeilles",
+    "ville": "Montigny-lès-Cormeilles",
+    "code_postal": "95370"
+  },
+  {
+    "row": 641,
+    "id_osm": "228996920",
+    "nom": "Mosquée El-Feth",
+    "ville": "Saint-Louis",
+    "code_postal": "68300"
+  },
+  {
+    "row": 642,
+    "id_osm": "231912250",
+    "nom": "Mosquée",
+    "ville": "Ensisheim",
+    "code_postal": "68190"
+  },
+  {
+    "row": 643,
+    "id_osm": "233623470",
+    "nom": "Mosquée Assalam",
+    "ville": "Nantes",
+    "code_postal": "44300"
+  },
+  {
+    "row": 644,
+    "id_osm": "234721432",
+    "nom": "Mosquée",
+    "ville": "Brétigny-sur-Orge",
+    "code_postal": "91220"
+  },
+  {
+    "row": 646,
+    "id_osm": "235242648",
+    "nom": "Mosquée",
+    "ville": "Labruguière",
+    "code_postal": "81290"
+  },
+  {
+    "row": 647,
+    "id_osm": "236760602",
+    "nom": "Mosquée du Vendredi",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 650,
+    "id_osm": "239902550",
+    "nom": "Mosquée de Beautor",
+    "ville": "Beautor",
+    "code_postal": "2800"
+  },
+  {
+    "row": 651,
+    "id_osm": "240377813",
+    "nom": "Mosquée Turque",
+    "ville": "Montereau-Fault-Yonne",
+    "code_postal": "77130"
+  },
+  {
+    "row": 655,
+    "id_osm": "242772267",
+    "nom": "Mosquée du Zodiaque",
+    "ville": "Annonay",
+    "code_postal": "7100"
+  },
+  {
+    "row": 657,
+    "id_osm": "244803712",
+    "nom": "Mosquée Assalam",
+    "ville": "Sablé-sur-Sarthe",
+    "code_postal": "72300"
+  },
+  {
+    "row": 658,
+    "id_osm": "245935798",
+    "nom": "Mosquée de la Robertsau",
+    "ville": "Strasbourg",
+    "code_postal": "67000"
+  },
+  {
+    "row": 659,
+    "id_osm": "246759205",
+    "nom": "Mosquée Fathi",
+    "ville": "Saint-Jean-de-la-Ruelle",
+    "code_postal": "45140"
+  },
+  {
+    "row": 660,
+    "id_osm": "247427263",
+    "nom": "Mosquée",
+    "ville": "Dembéni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 661,
+    "id_osm": "247427266",
+    "nom": "Mosquée",
+    "ville": "Dembéni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 662,
+    "id_osm": "248123702",
+    "nom": "Mosquée de Massy",
+    "ville": "Massy",
+    "code_postal": "91300"
+  },
+  {
+    "row": 663,
+    "id_osm": "252065047",
+    "nom": "Salle de prière",
+    "ville": "Guer",
+    "code_postal": "56380"
+  },
+  {
+    "row": 664,
+    "id_osm": "258207547",
+    "nom": "Mosquée",
+    "ville": "Mer",
+    "code_postal": "41500"
+  },
+  {
+    "row": 665,
+    "id_osm": "262205748",
+    "nom": "Mosquée",
+    "ville": "Garges-lès-Gonesse",
+    "code_postal": "95140"
+  },
+  {
+    "row": 666,
+    "id_osm": "262206031",
+    "nom": "Mosquée",
+    "ville": "Garges-lès-Gonesse",
+    "code_postal": "95140"
+  },
+  {
+    "row": 667,
+    "id_osm": "262206032",
+    "nom": "Mosquée",
+    "ville": "Garges-lès-Gonesse",
+    "code_postal": "95140"
+  },
+  {
+    "row": 668,
+    "id_osm": "264382808",
+    "nom": "Mosquée",
+    "ville": "Lorgues",
+    "code_postal": "83510"
+  },
+  {
+    "row": 669,
+    "id_osm": "266276395",
+    "nom": "Mosquée",
+    "ville": "Contrexéville",
+    "code_postal": "88140"
+  },
+  {
+    "row": 670,
+    "id_osm": "269282834",
+    "nom": "Mosquée Hamza",
+    "ville": "Garges-lès-Gonesse",
+    "code_postal": "95140"
+  },
+  {
+    "row": 671,
+    "id_osm": "269285417",
+    "nom": "Mosquée",
+    "ville": "Garges-lès-Gonesse",
+    "code_postal": "95140"
+  },
+  {
+    "row": 672,
+    "id_osm": "273809121",
+    "nom": "Mosquée Mohammed Akhif",
+    "ville": "Châteaubriant",
+    "code_postal": "44110"
+  },
+  {
+    "row": 673,
+    "id_osm": "280925146",
+    "nom": "Mosquée",
+    "ville": "Pierrelatte",
+    "code_postal": "26700"
+  },
+  {
+    "row": 674,
+    "id_osm": "282562056",
+    "nom": "Mosquée",
+    "ville": "L'Aigle",
+    "code_postal": "61300"
+  },
+  {
+    "row": 675,
+    "id_osm": "295615662",
+    "nom": "Mosquée de Charly-sur-Marne",
+    "ville": "Charly-sur-Marne",
+    "code_postal": "2310"
+  },
+  {
+    "row": 676,
+    "id_osm": "295665940",
+    "nom": "Mosquée de Meung sur Loire",
+    "ville": "Meung-sur-Loire",
+    "code_postal": "45130"
+  },
+  {
+    "row": 677,
+    "id_osm": "296332437",
+    "nom": "Mosquée du Mont",
+    "ville": "Belfort",
+    "code_postal": "90000"
+  },
+  {
+    "row": 678,
+    "id_osm": "300396134",
+    "nom": "El houda",
+    "ville": "Saint-Martin-le-Vinoux",
+    "code_postal": "38950"
+  },
+  {
+    "row": 679,
+    "id_osm": "304403758",
+    "nom": "Mosquée Er-Rahma",
+    "ville": "Fresnoy-le-Grand",
+    "code_postal": "2230"
+  },
+  {
+    "row": 680,
+    "id_osm": "304528032",
+    "nom": "Mosquée",
+    "ville": "Ferrières-sur-Ariège",
+    "code_postal": "9000"
+  },
+  {
+    "row": 681,
+    "id_osm": "307186321",
+    "nom": "Mosquée de Bourg-en-Bresse",
+    "ville": "Bourg-en-Bresse",
+    "code_postal": "1000"
+  },
+  {
+    "row": 682,
+    "id_osm": "307655343",
+    "nom": "Mosquée El-Irshad",
+    "ville": "Garges-lès-Gonesse",
+    "code_postal": "95140"
+  },
+  {
+    "row": 683,
+    "id_osm": "309830416",
+    "nom": "AFMV Le Pavillon",
+    "ville": "Villiers le bel",
+    "code_postal": "95400"
+  },
+  {
+    "row": 684,
+    "id_osm": "315316288",
+    "nom": "Association Culturelle Turque de Tours",
+    "ville": "Tours",
+    "code_postal": "37000"
+  },
+  {
+    "row": 685,
+    "id_osm": "316549243",
+    "nom": "Grande Mosquée de Tours",
+    "ville": "Tours",
+    "code_postal": "37000"
+  },
+  {
+    "row": 686,
+    "id_osm": "317037377",
+    "nom": "Mosquée Es-Sunna",
+    "ville": "Roubaix",
+    "code_postal": "59100"
+  },
+  {
+    "row": 687,
+    "id_osm": "318183640",
+    "nom": "Mosquée Arrahma",
+    "ville": "Denain",
+    "code_postal": "59220"
+  },
+  {
+    "row": 688,
+    "id_osm": "318341589",
+    "nom": "Mosquée de Valenciennes",
+    "ville": "Valenciennes",
+    "code_postal": "59300"
+  },
+  {
+    "row": 690,
+    "id_osm": "319252733",
+    "nom": "Mosquée Khalid Ibn Walid",
+    "ville": "Ostricourt",
+    "code_postal": "59162"
+  },
+  {
+    "row": 693,
+    "id_osm": "320104233",
+    "nom": "Mosquée Nour",
+    "ville": "Montigny-en-Ostrevent",
+    "code_postal": "59182"
+  },
+  {
+    "row": 694,
+    "id_osm": "321204213",
+    "nom": "Mosquée En-Nour",
+    "ville": "Harnes",
+    "code_postal": "62440"
+  },
+  {
+    "row": 695,
+    "id_osm": "326000478",
+    "nom": "Mosquée Annour",
+    "ville": "Moissy-Cramayel",
+    "code_postal": "77550"
+  },
+  {
+    "row": 696,
+    "id_osm": "326998288",
+    "nom": "Mosquée Arrahma",
+    "ville": "Coulommiers",
+    "code_postal": "77120"
+  },
+  {
+    "row": 697,
+    "id_osm": "338176584",
+    "nom": "Grande Mosquée Imam Malik",
+    "ville": "Saint-Denis",
+    "code_postal": "93200"
+  },
+  {
+    "row": 698,
+    "id_osm": "340000486",
+    "nom": "Centre Iqraa",
+    "ville": "Cannes",
+    "code_postal": "6150"
+  },
+  {
+    "row": 699,
+    "id_osm": "340447663",
+    "nom": "Mosquée",
+    "ville": "Blois",
+    "code_postal": "41000"
+  },
+  {
+    "row": 700,
+    "id_osm": "353797673",
+    "nom": "Mosquée Assounah",
+    "ville": "Orléans",
+    "code_postal": "45000"
+  },
+  {
+    "row": 701,
+    "id_osm": "355311712",
+    "nom": "Mosquée",
+    "ville": "Sarcelles",
+    "code_postal": "95200"
+  },
+  {
+    "row": 702,
+    "id_osm": "355314885",
+    "nom": "Mosquée",
+    "ville": "Sarcelles",
+    "code_postal": "95200"
+  },
+  {
+    "row": 704,
+    "id_osm": "357880413",
+    "nom": "Mosquée de Briare",
+    "ville": "Briare",
+    "code_postal": "45250"
+  },
+  {
+    "row": 705,
+    "id_osm": "358482021",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Bandrélé",
+    "code_postal": "97660"
+  },
+  {
+    "row": 706,
+    "id_osm": "360245288",
+    "nom": "Mosquée du Vendredi",
+    "ville": "M'Tsapere",
+    "code_postal": "97600"
+  },
+  {
+    "row": 707,
+    "id_osm": "367567798",
+    "nom": "Mosquée des Turcs",
+    "ville": "Nantes",
+    "code_postal": "44100"
+  },
+  {
+    "row": 708,
+    "id_osm": "370459478",
+    "nom": "Institut Ibn Badis",
+    "ville": "Nanterre",
+    "code_postal": "92000"
+  },
+  {
+    "row": 709,
+    "id_osm": "372690758",
+    "nom": "Mosquée Alwahda",
+    "ville": "Clermont-Ferrand",
+    "code_postal": "63100"
+  },
+  {
+    "row": 710,
+    "id_osm": "376223329",
+    "nom": "Mosquée",
+    "ville": "Fleury-les-Aubrais",
+    "code_postal": "45400"
+  },
+  {
+    "row": 711,
+    "id_osm": "376398476",
+    "nom": "Mosquée Annour (Orléans Sud)",
+    "ville": "Orléans",
+    "code_postal": "45100"
+  },
+  {
+    "row": 713,
+    "id_osm": "380682516",
+    "nom": "Assounah",
+    "ville": "Dreux",
+    "code_postal": "28100"
+  },
+  {
+    "row": 714,
+    "id_osm": "380768353",
+    "nom": "Assalam",
+    "ville": "Mainvilliers",
+    "code_postal": "28300"
+  },
+  {
+    "row": 715,
+    "id_osm": "388880476",
+    "nom": "Mosquée As-Sounnah",
+    "ville": "Amiens",
+    "code_postal": "80090"
+  },
+  {
+    "row": 716,
+    "id_osm": "389190114",
+    "nom": "Mosquée Chekkar",
+    "ville": "Amiens",
+    "code_postal": "80080"
+  },
+  {
+    "row": 717,
+    "id_osm": "390090677",
+    "nom": "Grande mosquée Averroes",
+    "ville": "Montpellier",
+    "code_postal": "34080"
+  },
+  {
+    "row": 718,
+    "id_osm": "393509022",
+    "nom": "Grande Mosquée de Reims",
+    "ville": "Reims",
+    "code_postal": "51100"
+  },
+  {
+    "row": 719,
+    "id_osm": "394960391",
+    "nom": "Mosquée Lazérévouni",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 720,
+    "id_osm": "398987552",
+    "nom": "Mosquée",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 721,
+    "id_osm": "399098799",
+    "nom": "Mosquée Masjid al-Oumma",
+    "ville": "Montreuil",
+    "code_postal": "93100"
+  },
+  {
+    "row": 722,
+    "id_osm": "399099319",
+    "nom": "Mosquée El-Houda",
+    "ville": "Lille",
+    "code_postal": "59000"
+  },
+  {
+    "row": 723,
+    "id_osm": "400021698",
+    "nom": "Ass Culturelle Fraternité De Pantin",
+    "ville": "Pantin",
+    "code_postal": "93500"
+  },
+  {
+    "row": 724,
+    "id_osm": "400809499",
+    "nom": "Mosquée Mesjed Ennour",
+    "ville": "Le Havre",
+    "code_postal": "76620"
+  },
+  {
+    "row": 726,
+    "id_osm": "407549088",
+    "nom": "Mosquée Da'wa",
+    "ville": "Roubaix",
+    "code_postal": "59100"
+  },
+  {
+    "row": 727,
+    "id_osm": "413197321",
+    "nom": "Mosquée de Montagnac",
+    "ville": "Montagnac",
+    "code_postal": "34530"
+  },
+  {
+    "row": 730,
+    "id_osm": "421360973",
+    "nom": "Mosquée de Bobigny",
+    "ville": "Bobigny",
+    "code_postal": "93000"
+  },
+  {
+    "row": 731,
+    "id_osm": "424352196",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 732,
+    "id_osm": "424352625",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 733,
+    "id_osm": "424355230",
+    "nom": "Mosquée de vendredi",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 734,
+    "id_osm": "424355242",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 735,
+    "id_osm": "424355275",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 736,
+    "id_osm": "427207483",
+    "nom": "Mosquée du foyer",
+    "ville": "Pantin",
+    "code_postal": "93500"
+  },
+  {
+    "row": 737,
+    "id_osm": "433227787",
+    "nom": "Mosquée Othman Ibn Affan",
+    "ville": "Villeparisis",
+    "code_postal": "77270"
+  },
+  {
+    "row": 739,
+    "id_osm": "449806185",
+    "nom": "Mosquée",
+    "ville": "Meyzieu",
+    "code_postal": "69330"
+  },
+  {
+    "row": 740,
+    "id_osm": "454193676",
+    "nom": "Mosquée",
+    "ville": "Saint-André",
+    "code_postal": "97440"
+  },
+  {
+    "row": 741,
+    "id_osm": "454624147",
+    "nom": "Al Fourqane la cayolle",
+    "ville": "Marseille",
+    "code_postal": "13009"
+  },
+  {
+    "row": 742,
+    "id_osm": "460033028",
+    "nom": "Mosquée Maryam",
+    "ville": "Caen",
+    "code_postal": "14000"
+  },
+  {
+    "row": 743,
+    "id_osm": "472363518",
+    "nom": "Mosquée de Roissy-en-Brie",
+    "ville": "Roissy-en-Brie",
+    "code_postal": "77680"
+  },
+  {
+    "row": 744,
+    "id_osm": "474692729",
+    "nom": "Mosquée Et-Tawba",
+    "ville": "Lyon",
+    "code_postal": "69009"
+  },
+  {
+    "row": 745,
+    "id_osm": "481448203",
+    "nom": "Mosquée de Hapandzo",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 746,
+    "id_osm": "486600337",
+    "nom": "Mosquée",
+    "ville": "Bussy-Saint-Georges",
+    "code_postal": "77600"
+  },
+  {
+    "row": 748,
+    "id_osm": "488664049",
+    "nom": "Mosquée de Hautepierre",
+    "ville": "Strasbourg",
+    "code_postal": "67200"
+  },
+  {
+    "row": 749,
+    "id_osm": "494291401",
+    "nom": "Mosquée",
+    "ville": "Saint-Girons",
+    "code_postal": "9200"
+  },
+  {
+    "row": 750,
+    "id_osm": "500380544",
+    "nom": "Mosquée de Bron",
+    "ville": "Bron",
+    "code_postal": "69500"
+  },
+  {
+    "row": 751,
+    "id_osm": "511066870",
+    "nom": "Mosquée de Bischwiller",
+    "ville": "Bischwiller",
+    "code_postal": "67240"
+  },
+  {
+    "row": 752,
+    "id_osm": "526552097",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 753,
+    "id_osm": "570784311",
+    "nom": "Association culturelle franco-turque de Toul",
+    "ville": "Toul",
+    "code_postal": "54200"
+  },
+  {
+    "row": 754,
+    "id_osm": "571482485",
+    "nom": "Mosquée de Tonnerre",
+    "ville": "Tonnerre",
+    "code_postal": "89700"
+  },
+  {
+    "row": 755,
+    "id_osm": "573113425",
+    "nom": "Mosquée Arrayane",
+    "ville": "Vannes",
+    "code_postal": "56000"
+  },
+  {
+    "row": 756,
+    "id_osm": "575548786",
+    "nom": "Mosquée",
+    "ville": "Bourgoin-Jallieu",
+    "code_postal": "38300"
+  },
+  {
+    "row": 759,
+    "id_osm": "603062984",
+    "nom": "Mosquée",
+    "ville": "Lavelanet",
+    "code_postal": "9300"
+  },
+  {
+    "row": 760,
+    "id_osm": "612618507",
+    "nom": "Mosquée",
+    "ville": "Ambert",
+    "code_postal": "63600"
+  },
+  {
+    "row": 761,
+    "id_osm": "616064632",
+    "nom": "Mosquée de Maévantana",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 762,
+    "id_osm": "616088182",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 763,
+    "id_osm": "616102555",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 764,
+    "id_osm": "616809276",
+    "nom": "Grande Mosquée de Saint-Ouen Al Hashimi",
+    "ville": "Saint-Ouen-sur-Seine",
+    "code_postal": "93400"
+  },
+  {
+    "row": 765,
+    "id_osm": "617429833",
+    "nom": "Mosquée du Mirail",
+    "ville": "Toulouse",
+    "code_postal": "31100"
+  },
+  {
+    "row": 766,
+    "id_osm": "619720530",
+    "nom": "Association Culturelle Mosqué Turque",
+    "ville": "Annemasse",
+    "code_postal": "74100"
+  },
+  {
+    "row": 767,
+    "id_osm": "621836924",
+    "nom": "Mosquée Othmane Ibn Affane",
+    "ville": "Mantes-la-Jolie",
+    "code_postal": "78200"
+  },
+  {
+    "row": 769,
+    "id_osm": "649219189",
+    "nom": "Mosquée de Lognes",
+    "ville": "Lognes",
+    "code_postal": "77185"
+  },
+  {
+    "row": 770,
+    "id_osm": "651687264",
+    "nom": "Centre interculturel de Décines",
+    "ville": "Décines-Charpieu",
+    "code_postal": "69150"
+  },
+  {
+    "row": 771,
+    "id_osm": "651687265",
+    "nom": "Mosquée",
+    "ville": "Décines-Charpieu",
+    "code_postal": "69150"
+  },
+  {
+    "row": 772,
+    "id_osm": "654694081",
+    "nom": "Mosquée Arrahma",
+    "ville": "Port-Saint-Louis-du-Rhône",
+    "code_postal": "13230"
+  },
+  {
+    "row": 773,
+    "id_osm": "670220346",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 774,
+    "id_osm": "670900030",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 775,
+    "id_osm": "671080655",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 776,
+    "id_osm": "671080656",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 777,
+    "id_osm": "672404289",
+    "nom": "Mosquée de Lieusaint",
+    "ville": "Lieusaint",
+    "code_postal": "77127"
+  },
+  {
+    "row": 778,
+    "id_osm": "672453197",
+    "nom": "Mosquée Turque de Cholet",
+    "ville": "Cholet",
+    "code_postal": "49300"
+  },
+  {
+    "row": 779,
+    "id_osm": "672626026",
+    "nom": "Mosquée de M'Tsagnougni",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 780,
+    "id_osm": "682084946",
+    "nom": "Mosquée",
+    "ville": "Le Pontet",
+    "code_postal": "84130"
+  },
+  {
+    "row": 783,
+    "id_osm": "689441433",
+    "nom": "Mosquée de Nour",
+    "ville": "Jouy-le-Moutier",
+    "code_postal": "95280"
+  },
+  {
+    "row": 784,
+    "id_osm": "691712255",
+    "nom": "Mosquée des Boullereaux",
+    "ville": "Champigny-sur-Marne",
+    "code_postal": "94500"
+  },
+  {
+    "row": 785,
+    "id_osm": "699841038",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 787,
+    "id_osm": "708017651",
+    "nom": "Mosquée",
+    "ville": "Luxeuil-les-Bains",
+    "code_postal": "70300"
+  },
+  {
+    "row": 788,
+    "id_osm": "708599509",
+    "nom": "Mosquée de la Convalescence",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 789,
+    "id_osm": "712453834",
+    "nom": "Mosquée",
+    "ville": "Longwy",
+    "code_postal": "54400"
+  },
+  {
+    "row": 790,
+    "id_osm": "721631472",
+    "nom": "Mosquée Masjid Assalam",
+    "ville": "Aulnay-sous-Bois",
+    "code_postal": "93600"
+  },
+  {
+    "row": 792,
+    "id_osm": "731083981",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 793,
+    "id_osm": "732594044",
+    "nom": "Mosquée Errahma",
+    "ville": "Grande-Synthe",
+    "code_postal": "59760"
+  },
+  {
+    "row": 794,
+    "id_osm": "743688058",
+    "nom": "Mosquée Ar-Rahman",
+    "ville": "La Possession",
+    "code_postal": "97419"
+  },
+  {
+    "row": 795,
+    "id_osm": "746920533",
+    "nom": "Mosquée",
+    "ville": "Athis-Mons",
+    "code_postal": "91200"
+  },
+  {
+    "row": 796,
+    "id_osm": "752850355",
+    "nom": "Mosquée",
+    "ville": "Malakoff",
+    "code_postal": "92240"
+  },
+  {
+    "row": 797,
+    "id_osm": "754907049",
+    "nom": "Mosquée",
+    "ville": "Pamandzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 798,
+    "id_osm": "754907415",
+    "nom": "Mosquée de Sandravoingue",
+    "ville": "Pamandzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 799,
+    "id_osm": "754907928",
+    "nom": "Mosquée",
+    "ville": "Pamandzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 800,
+    "id_osm": "754908018",
+    "nom": "Mosquée",
+    "ville": "Pamandzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 801,
+    "id_osm": "754908046",
+    "nom": "Grande Mosquée de Pamandzi",
+    "ville": "Pamandzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 802,
+    "id_osm": "754909620",
+    "nom": "Mosquée de lavigie",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 803,
+    "id_osm": "754910064",
+    "nom": "Mosquée de Mouzdalifa",
+    "ville": "Labattoir",
+    "code_postal": "97610"
+  },
+  {
+    "row": 804,
+    "id_osm": "754911359",
+    "nom": "Mosquée",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 805,
+    "id_osm": "754911514",
+    "nom": "Mosquée",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 806,
+    "id_osm": "754911662",
+    "nom": "Mosquée",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 807,
+    "id_osm": "754911763",
+    "nom": "Mosquée",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 808,
+    "id_osm": "754911773",
+    "nom": "Mosquée",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 809,
+    "id_osm": "755368477",
+    "nom": "Mosquée",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 810,
+    "id_osm": "755368701",
+    "nom": "Mosquée de Majiméouni",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 811,
+    "id_osm": "755368748",
+    "nom": "Mosquée de M'Bouanatsa",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 812,
+    "id_osm": "755369200",
+    "nom": "Mosquée du Golf",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 813,
+    "id_osm": "755369777",
+    "nom": "Mosquée du vendredi",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 814,
+    "id_osm": "755369894",
+    "nom": "Mosquée de vendredi",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 815,
+    "id_osm": "755370289",
+    "nom": "Mosquée",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 816,
+    "id_osm": "755370879",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 817,
+    "id_osm": "756178788",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 818,
+    "id_osm": "756179408",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 819,
+    "id_osm": "756503531",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 820,
+    "id_osm": "756522337",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 821,
+    "id_osm": "756556679",
+    "nom": "Mosquée de vendredi",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 822,
+    "id_osm": "756900137",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 823,
+    "id_osm": "757309940",
+    "nom": "Mosquée",
+    "ville": "Dembeni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 824,
+    "id_osm": "757863055",
+    "nom": "Mosquée de Dembéni",
+    "ville": "Dembéni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 825,
+    "id_osm": "757863106",
+    "nom": "Mosquée du vendredi",
+    "ville": "Dembéni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 826,
+    "id_osm": "758113740",
+    "nom": "Mosquée",
+    "ville": "Dembéni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 827,
+    "id_osm": "758169643",
+    "nom": "Mosquée Magnassini",
+    "ville": "Dembéni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 828,
+    "id_osm": "758524301",
+    "nom": "Mosquée",
+    "ville": "Koungou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 829,
+    "id_osm": "760496817",
+    "nom": "Mosquée",
+    "ville": "Koungou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 830,
+    "id_osm": "760497105",
+    "nom": "Mosquée",
+    "ville": "Koungou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 831,
+    "id_osm": "760891996",
+    "nom": "Mosquée",
+    "ville": "Mtsamboro",
+    "code_postal": "97630"
+  },
+  {
+    "row": 832,
+    "id_osm": "761724090",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Mtsamboro",
+    "code_postal": "97630"
+  },
+  {
+    "row": 833,
+    "id_osm": "762019167",
+    "nom": "Mosquée de Ambato",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 834,
+    "id_osm": "762790696",
+    "nom": "Maison de la paix",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 835,
+    "id_osm": "762790765",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 836,
+    "id_osm": "762791083",
+    "nom": "Mosquée de vendredi",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 837,
+    "id_osm": "762791981",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 838,
+    "id_osm": "762792142",
+    "nom": "Mosquée Masdjidil Razzak",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 839,
+    "id_osm": "762792306",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 840,
+    "id_osm": "762792453",
+    "nom": "Mosqué Digo",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 841,
+    "id_osm": "762792574",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 842,
+    "id_osm": "767823891",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 843,
+    "id_osm": "767824132",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 844,
+    "id_osm": "772697138",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 845,
+    "id_osm": "772721259",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 846,
+    "id_osm": "775002743",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 847,
+    "id_osm": "776818276",
+    "nom": "Grande mosquée de Vaulx-en-Velin",
+    "ville": "Vaulx-en-Velin",
+    "code_postal": "69120"
+  },
+  {
+    "row": 849,
+    "id_osm": "780473666",
+    "nom": "Mosquée",
+    "ville": "Athis-Mons",
+    "code_postal": "91200"
+  },
+  {
+    "row": 850,
+    "id_osm": "780898207",
+    "nom": "Mosquée",
+    "ville": "Laval",
+    "code_postal": "53000"
+  },
+  {
+    "row": 851,
+    "id_osm": "797698397",
+    "nom": "Mosquée Assalam",
+    "ville": "Argenteuil",
+    "code_postal": "95100"
+  },
+  {
+    "row": 852,
+    "id_osm": "798961512",
+    "nom": "Mosquée",
+    "ville": "La Seyne-sur-Mer",
+    "code_postal": "83500"
+  },
+  {
+    "row": 853,
+    "id_osm": "806473298",
+    "nom": "Mosquée",
+    "ville": "Lucé",
+    "code_postal": "28110"
+  },
+  {
+    "row": 854,
+    "id_osm": "806473309",
+    "nom": "Mouhsinine",
+    "ville": "Lucé",
+    "code_postal": "28110"
+  },
+  {
+    "row": 855,
+    "id_osm": "806473310",
+    "nom": "Mosquée",
+    "ville": "Lucé",
+    "code_postal": "28110"
+  },
+  {
+    "row": 856,
+    "id_osm": "806473311",
+    "nom": "Mosquée",
+    "ville": "Lucé",
+    "code_postal": "28110"
+  },
+  {
+    "row": 857,
+    "id_osm": "810491922",
+    "nom": "Mosquée",
+    "ville": "Goussainville",
+    "code_postal": "95190"
+  },
+  {
+    "row": 858,
+    "id_osm": "812678420",
+    "nom": "Mosquée Tabligh",
+    "ville": "Hombourg-Haut",
+    "code_postal": "57470"
+  },
+  {
+    "row": 859,
+    "id_osm": "822880312",
+    "nom": "Mosquée",
+    "ville": "Les Andelys",
+    "code_postal": "27700"
+  },
+  {
+    "row": 860,
+    "id_osm": "828054581",
+    "nom": "Mosquée",
+    "ville": "Kani Keli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 861,
+    "id_osm": "828097327",
+    "nom": "Mosquée de Passi-Kéli",
+    "ville": "Kani Keli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 862,
+    "id_osm": "828852146",
+    "nom": "Mosquée",
+    "ville": "Kani Keli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 863,
+    "id_osm": "831355139",
+    "nom": "Mosquée Centrale de Lapani",
+    "ville": "Bandrélé",
+    "code_postal": "97660"
+  },
+  {
+    "row": 864,
+    "id_osm": "832685904",
+    "nom": "Ancienne Mosquée de Vendredi",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 865,
+    "id_osm": "833158022",
+    "nom": "Mosqué de vendredi, Tsimkoura",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 866,
+    "id_osm": "833889490",
+    "nom": "Mosquée de Vendredi de Chirongui",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 867,
+    "id_osm": "836224609",
+    "nom": "Mosquée Al Fath",
+    "ville": "Évreux",
+    "code_postal": "27000"
+  },
+  {
+    "row": 868,
+    "id_osm": "836429879",
+    "nom": "Mosquée Assounna",
+    "ville": "Dreux",
+    "code_postal": "28100"
+  },
+  {
+    "row": 869,
+    "id_osm": "837772594",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 870,
+    "id_osm": "838278268",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 871,
+    "id_osm": "838293109",
+    "nom": "Mosquée de Banfrani domoeli",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 872,
+    "id_osm": "838510435",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 873,
+    "id_osm": "840560733",
+    "nom": "Mosquée",
+    "ville": "Perpignan",
+    "code_postal": "66000"
+  },
+  {
+    "row": 874,
+    "id_osm": "843650769",
+    "nom": "Mosquée de Décasé",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 875,
+    "id_osm": "843651442",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 876,
+    "id_osm": "843652001",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 877,
+    "id_osm": "843652141",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 878,
+    "id_osm": "843652181",
+    "nom": "Mosquée du vendredi",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 879,
+    "id_osm": "843652892",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 880,
+    "id_osm": "843653006",
+    "nom": "Mosquée de Tsingoni",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 881,
+    "id_osm": "843653117",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 882,
+    "id_osm": "843653641",
+    "nom": "Mosquée de Tsingoni",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 883,
+    "id_osm": "843654166",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 885,
+    "id_osm": "856353173",
+    "nom": "Mosquée",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 886,
+    "id_osm": "856353174",
+    "nom": "Mosquée",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 887,
+    "id_osm": "859453657",
+    "nom": "Mosquée El Fath ACMH",
+    "ville": "Haguenau",
+    "code_postal": "67500"
+  },
+  {
+    "row": 888,
+    "id_osm": "860868131",
+    "nom": "Mosquée Eyüp Sultan Roubaix",
+    "ville": "Roubaix",
+    "code_postal": "59100"
+  },
+  {
+    "row": 889,
+    "id_osm": "866064131",
+    "nom": "Mosquée Islah",
+    "ville": "Pantin",
+    "code_postal": "93500"
+  },
+  {
+    "row": 890,
+    "id_osm": "866890407",
+    "nom": "Mosquée",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 891,
+    "id_osm": "893920815",
+    "nom": "El-Hidaya",
+    "ville": "Roussillon",
+    "code_postal": "38150"
+  },
+  {
+    "row": 892,
+    "id_osm": "899406343",
+    "nom": "Mosquée de Rosny",
+    "ville": "Rosny-sous-Bois",
+    "code_postal": "93110"
+  },
+  {
+    "row": 893,
+    "id_osm": "899621998",
+    "nom": "Mosquée El-Mominine",
+    "ville": "Maubeuge",
+    "code_postal": "59600"
+  },
+  {
+    "row": 894,
+    "id_osm": "901708670",
+    "nom": "Mosquée de Saint-Jean de Braye",
+    "ville": "Saint-Jean-de-Braye",
+    "code_postal": "45800"
+  },
+  {
+    "row": 895,
+    "id_osm": "902110281",
+    "nom": "Mosquée de l'Union",
+    "ville": "Sin-le-Noble",
+    "code_postal": "59450"
+  },
+  {
+    "row": 896,
+    "id_osm": "906070447",
+    "nom": "Mosquée de Malamani",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 897,
+    "id_osm": "906852696",
+    "nom": "Mosquée Noor",
+    "ville": "Auxerre",
+    "code_postal": "89000"
+  },
+  {
+    "row": 898,
+    "id_osm": "910643552",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Acoua",
+    "code_postal": "97630"
+  },
+  {
+    "row": 899,
+    "id_osm": "910745315",
+    "nom": "Ancienne Mosquée de vendredi",
+    "ville": "Canton d'Acoua",
+    "code_postal": "97630"
+  },
+  {
+    "row": 900,
+    "id_osm": "910805157",
+    "nom": "Mosquée",
+    "ville": "Canton d'Acoua",
+    "code_postal": "97630"
+  },
+  {
+    "row": 901,
+    "id_osm": "912476116",
+    "nom": "Mosquée Zaouiani",
+    "ville": "Canton d'Acoua",
+    "code_postal": "97630"
+  },
+  {
+    "row": 903,
+    "id_osm": "916326176",
+    "nom": "Mosquée de Tchansira",
+    "ville": "Canton d'Acoua",
+    "code_postal": "97630"
+  },
+  {
+    "row": 904,
+    "id_osm": "932346621",
+    "nom": "Mosquée de Tsingoni",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 905,
+    "id_osm": "938483755",
+    "nom": "Mosquée",
+    "ville": "Acoua",
+    "code_postal": ""
+  },
+  {
+    "row": 906,
+    "id_osm": "942624777",
+    "nom": "Mosquée Dignité",
+    "ville": "Colombes",
+    "code_postal": "92700"
+  },
+  {
+    "row": 907,
+    "id_osm": "952413288",
+    "nom": "Grande Mosquée de Gennevilliers",
+    "ville": "Gennevilliers",
+    "code_postal": "92230"
+  },
+  {
+    "row": 908,
+    "id_osm": "958476388",
+    "nom": "Mosquée",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 909,
+    "id_osm": "965221021",
+    "nom": "Mosquée de vendredi",
+    "ville": "Chirongui",
+    "code_postal": "97620"
+  },
+  {
+    "row": 910,
+    "id_osm": "966817079",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 911,
+    "id_osm": "968389702",
+    "nom": "Mosquée de M'Tsangamboua",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 912,
+    "id_osm": "968896735",
+    "nom": "Mosquée turque",
+    "ville": "Angers",
+    "code_postal": "49000"
+  },
+  {
+    "row": 913,
+    "id_osm": "970349623",
+    "nom": "Mosqué de vendredi",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 914,
+    "id_osm": "972273290",
+    "nom": "Mosquée de Kadjiftchéni Bandraboua",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 915,
+    "id_osm": "973017958",
+    "nom": "Mosqué de Cavani Bandraboua",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 916,
+    "id_osm": "973108033",
+    "nom": "Mosqué de Niambo",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 917,
+    "id_osm": "975021326",
+    "nom": "Mosquée Turque Eyyub-Sultan",
+    "ville": "Strasbourg",
+    "code_postal": "67100"
+  },
+  {
+    "row": 918,
+    "id_osm": "975586069",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 919,
+    "id_osm": "977480363",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 920,
+    "id_osm": "978144227",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 921,
+    "id_osm": "978661296",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 922,
+    "id_osm": "978721362",
+    "nom": "El Rahma",
+    "ville": "Sevran",
+    "code_postal": "93270"
+  },
+  {
+    "row": 923,
+    "id_osm": "980006389",
+    "nom": "Mosquée",
+    "ville": "Bandrele",
+    "code_postal": "97660"
+  },
+  {
+    "row": 924,
+    "id_osm": "982888858",
+    "nom": "Mosquée de vendredi",
+    "ville": "Dembeni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 925,
+    "id_osm": "983623651",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Bandrélé",
+    "code_postal": "97660"
+  },
+  {
+    "row": 926,
+    "id_osm": "990839675",
+    "nom": "Mosquée du Vendredi",
+    "ville": "Bandrélé",
+    "code_postal": "97660"
+  },
+  {
+    "row": 927,
+    "id_osm": "992716549",
+    "nom": "Mosquée du Vendredi",
+    "ville": "Kani Keli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 928,
+    "id_osm": "993653088",
+    "nom": "Mosquée Cavani",
+    "ville": "Kani Kéli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 929,
+    "id_osm": "994891948",
+    "nom": "Mosquée",
+    "ville": "Kéli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 930,
+    "id_osm": "996214132",
+    "nom": "Mosque de Choungui",
+    "ville": "Kani Kéli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 931,
+    "id_osm": "997480622",
+    "nom": "Mosquée",
+    "ville": "Clermont-Ferrand",
+    "code_postal": "63100"
+  },
+  {
+    "row": 932,
+    "id_osm": "1000780625",
+    "nom": "Mosquée de Mangajou",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 933,
+    "id_osm": "1001979134",
+    "nom": "Mosquée de vendredi",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 934,
+    "id_osm": "1002043804",
+    "nom": "Mosquée Aksemseddin",
+    "ville": "Trélazé",
+    "code_postal": "49800"
+  },
+  {
+    "row": 935,
+    "id_osm": "1002069401",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 936,
+    "id_osm": "1006494943",
+    "nom": "Mosquée de vendredi",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 937,
+    "id_osm": "1011010120",
+    "nom": "An-Nour - مسجد",
+    "ville": "Creil",
+    "code_postal": "60100"
+  },
+  {
+    "row": 938,
+    "id_osm": "1011408959",
+    "nom": "Mosquée Vendredi de Iloni",
+    "ville": "Dembeni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 939,
+    "id_osm": "1011635445",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 940,
+    "id_osm": "1013021672",
+    "nom": "Mosquée",
+    "ville": "Narbonne",
+    "code_postal": "11100"
+  },
+  {
+    "row": 941,
+    "id_osm": "1013170117",
+    "nom": "Mosquée Al Mohcinine",
+    "ville": "Is-sur-Tille",
+    "code_postal": "21120"
+  },
+  {
+    "row": 943,
+    "id_osm": "1018261832",
+    "nom": "Grande mosquée de Saint-Chamond",
+    "ville": "Saint-Chamond",
+    "code_postal": "42400"
+  },
+  {
+    "row": 944,
+    "id_osm": "1018707933",
+    "nom": "Madrasse Imam Chafioun",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 945,
+    "id_osm": "1018775307",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 946,
+    "id_osm": "1020952576",
+    "nom": "Mosquée Jourdani",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 947,
+    "id_osm": "1021048077",
+    "nom": "Mosquée",
+    "ville": "Koungou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 949,
+    "id_osm": "1035039582",
+    "nom": "Mevlana Cami",
+    "ville": "Gien",
+    "code_postal": "45500"
+  },
+  {
+    "row": 950,
+    "id_osm": "1035805448",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 951,
+    "id_osm": "1044548422",
+    "nom": "El Mouhcinine",
+    "ville": "Canteleu",
+    "code_postal": "76380"
+  },
+  {
+    "row": 952,
+    "id_osm": "1051211415",
+    "nom": "Mosquée",
+    "ville": "Nessadiou",
+    "code_postal": ""
+  },
+  {
+    "row": 953,
+    "id_osm": "1052515812",
+    "nom": "Mosquée",
+    "ville": "Bandraboua",
+    "code_postal": "97650"
+  },
+  {
+    "row": 954,
+    "id_osm": "1056844394",
+    "nom": "Mosquée",
+    "ville": "Saint-Martin-de-Crau",
+    "code_postal": "13310"
+  },
+  {
+    "row": 955,
+    "id_osm": "1057111964",
+    "nom": "Mosquée de Montauban",
+    "ville": "Montauban",
+    "code_postal": "82000"
+  },
+  {
+    "row": 956,
+    "id_osm": "1058108037",
+    "nom": "Grande Mosquée de Villiers Le Bel",
+    "ville": "Villiers-le-Bel",
+    "code_postal": "95400"
+  },
+  {
+    "row": 957,
+    "id_osm": "1066578290",
+    "nom": "Mosquée El-Nour",
+    "ville": "Carcassonne",
+    "code_postal": "11000"
+  },
+  {
+    "row": 958,
+    "id_osm": "1071675143",
+    "nom": "Mosquée",
+    "ville": "Kani Kéli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 960,
+    "id_osm": "1080922860",
+    "nom": "Grande mosquée de Carcassonne",
+    "ville": "Carcassonne",
+    "code_postal": "11000"
+  },
+  {
+    "row": 961,
+    "id_osm": "1110559262",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 962,
+    "id_osm": "1112252273",
+    "nom": "Mosquée Émir-Abdelkader",
+    "ville": "Nanterre",
+    "code_postal": "92000"
+  },
+  {
+    "row": 963,
+    "id_osm": "1122270554",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 964,
+    "id_osm": "1134315582",
+    "nom": "Mosquée des Jeunes",
+    "ville": "Kani Kéli",
+    "code_postal": "97625"
+  },
+  {
+    "row": 965,
+    "id_osm": "1135063003",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 966,
+    "id_osm": "1137229739",
+    "nom": "Minaret",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 967,
+    "id_osm": "1137229740",
+    "nom": "Mosquée",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 968,
+    "id_osm": "1138315367",
+    "nom": "Minaret",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 970,
+    "id_osm": "1145078280",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 971,
+    "id_osm": "1150161050",
+    "nom": "Minaret",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 972,
+    "id_osm": "1157409560",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 973,
+    "id_osm": "1158554993",
+    "nom": "Mosquée",
+    "ville": "Combs-la-Ville",
+    "code_postal": "77380"
+  },
+  {
+    "row": 974,
+    "id_osm": "1163559609",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 977,
+    "id_osm": "1171321386",
+    "nom": "Mosquée",
+    "ville": "Port-de-Bouc",
+    "code_postal": "13110"
+  },
+  {
+    "row": 978,
+    "id_osm": "1179584568",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 979,
+    "id_osm": "1180445132",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 980,
+    "id_osm": "1182175783",
+    "nom": "Mosquée Camicaz",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 981,
+    "id_osm": "1185061459",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 982,
+    "id_osm": "1187795804",
+    "nom": "Mosquée",
+    "ville": "Riorges",
+    "code_postal": "42153"
+  },
+  {
+    "row": 983,
+    "id_osm": "1190179814",
+    "nom": "Mosquée Mhajoujou",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 984,
+    "id_osm": "1191482389",
+    "nom": "Abou Bakr",
+    "ville": "Perpignan",
+    "code_postal": "66000"
+  },
+  {
+    "row": 985,
+    "id_osm": "1194303632",
+    "nom": "Mosquée El Maghfira",
+    "ville": "Nevers",
+    "code_postal": "58000"
+  },
+  {
+    "row": 986,
+    "id_osm": "1197529267",
+    "nom": "Mosquée Nour",
+    "ville": "Paris",
+    "code_postal": "75012"
+  },
+  {
+    "row": 987,
+    "id_osm": "1199999263",
+    "nom": "Mosquée",
+    "ville": "Canton d'Acoua",
+    "code_postal": "97630"
+  },
+  {
+    "row": 988,
+    "id_osm": "1211885269",
+    "nom": "Mosquée Yavuz Sultan Selim",
+    "ville": "Rumilly",
+    "code_postal": "74150"
+  },
+  {
+    "row": 989,
+    "id_osm": "1219701938",
+    "nom": "Mosquée de la Paix",
+    "ville": "Corbeil-Essonnes",
+    "code_postal": "91100"
+  },
+  {
+    "row": 990,
+    "id_osm": "1225085485",
+    "nom": "Mosquée de Gignac",
+    "ville": "Gignac",
+    "code_postal": "34150"
+  },
+  {
+    "row": 991,
+    "id_osm": "1232427797",
+    "nom": "Minaret",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 992,
+    "id_osm": "1235190787",
+    "nom": "Mosquée du Neuhof",
+    "ville": "Strasbourg",
+    "code_postal": "67100"
+  },
+  {
+    "row": 993,
+    "id_osm": "1238785407",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 994,
+    "id_osm": "1240555010",
+    "nom": "Mosquée Selahaddin Eyyubi",
+    "ville": "Val-de-Reuil",
+    "code_postal": "27100"
+  },
+  {
+    "row": 995,
+    "id_osm": "1244140404",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 996,
+    "id_osm": "1245003813",
+    "nom": "Mosquée",
+    "ville": "M'Tsangamouji",
+    "code_postal": "97650"
+  },
+  {
+    "row": 997,
+    "id_osm": "1266552703",
+    "nom": "Mosquée At-Tawba",
+    "ville": "Grenoble",
+    "code_postal": "38100"
+  },
+  {
+    "row": 998,
+    "id_osm": "1282476261",
+    "nom": "Mosquée",
+    "ville": "Creil",
+    "code_postal": "60100"
+  },
+  {
+    "row": 999,
+    "id_osm": "1290014771",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1000,
+    "id_osm": "1292900664",
+    "nom": "Mosquée Décazé Iloni",
+    "ville": "Dembéni",
+    "code_postal": "97660"
+  },
+  {
+    "row": 1001,
+    "id_osm": "1300227494",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1002,
+    "id_osm": "1300236641",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1003,
+    "id_osm": "1301132522",
+    "nom": "Mosquée de vendredi",
+    "ville": "Koungou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 1004,
+    "id_osm": "1307791356",
+    "nom": "Mosquée de Longoni",
+    "ville": "Koungou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 1005,
+    "id_osm": "1308750615",
+    "nom": "Mosquée Mangabé",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1006,
+    "id_osm": "1309203489",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1008,
+    "id_osm": "1319622114",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1009,
+    "id_osm": "1324609049",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1010,
+    "id_osm": "1329772911",
+    "nom": "Mosquée",
+    "ville": "Vernon",
+    "code_postal": "27200"
+  },
+  {
+    "row": 1011,
+    "id_osm": "1339435135",
+    "nom": "Minaret",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1012,
+    "id_osm": "1343080654",
+    "nom": "Mosquée",
+    "ville": "Mamoudzou",
+    "code_postal": "97600"
+  },
+  {
+    "row": 1013,
+    "id_osm": "1343152198",
+    "nom": "Mosquée du Lotissement",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 1014,
+    "id_osm": "1343530902",
+    "nom": "Mosquée",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 1015,
+    "id_osm": "1351773914",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1016,
+    "id_osm": "1352292903",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1017,
+    "id_osm": "1352315609",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1018,
+    "id_osm": "1352316037",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1019,
+    "id_osm": "1352316667",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1020,
+    "id_osm": "1352316765",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1021,
+    "id_osm": "1352317831",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1022,
+    "id_osm": "1357534218",
+    "nom": "Mosquée El Nour",
+    "ville": "Boissy-Saint-Léger",
+    "code_postal": "94470"
+  },
+  {
+    "row": 1023,
+    "id_osm": "1359071228",
+    "nom": "Mosquée du Pavé Neuf",
+    "ville": "Noisy-le-Grand",
+    "code_postal": "93160"
+  },
+  {
+    "row": 1025,
+    "id_osm": "1374274985",
+    "nom": "Mosquée",
+    "ville": "Villiers-le-Bel",
+    "code_postal": "95400"
+  },
+  {
+    "row": 1026,
+    "id_osm": "1376045556",
+    "nom": "Mosquée de st andré",
+    "ville": "Saint-André-de-Cubzac",
+    "code_postal": "33240"
+  },
+  {
+    "row": 1027,
+    "id_osm": "1378322888",
+    "nom": "Mosquée",
+    "ville": "Sada",
+    "code_postal": "97640"
+  },
+  {
+    "row": 1028,
+    "id_osm": "1388212036",
+    "nom": "Minaret",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1029,
+    "id_osm": "1390016303",
+    "nom": "Association cultuelle et culturelle des musulmans de Faverges",
+    "ville": "Faverges-Seythenex",
+    "code_postal": "74210"
+  },
+  {
+    "row": 1030,
+    "id_osm": "1391615881",
+    "nom": "Mosquée de Vendredi",
+    "ville": "Bouéni",
+    "code_postal": "97620"
+  },
+  {
+    "row": 1031,
+    "id_osm": "1409481923",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1032,
+    "id_osm": "1410861270",
+    "nom": "Mosquée",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1033,
+    "id_osm": "1427929745",
+    "nom": "Mosquée Quartier Pauvre",
+    "ville": "Chiconi",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1034,
+    "id_osm": "1431207736",
+    "nom": "Mosquée",
+    "ville": "Strasbourg",
+    "code_postal": "67000"
+  },
+  {
+    "row": 1035,
+    "id_osm": "1431207737",
+    "nom": "Mosquée",
+    "ville": "Strasbourg",
+    "code_postal": "67000"
+  },
+  {
+    "row": 1036,
+    "id_osm": "1432574376",
+    "nom": "Mosquée-Ziara de Polé",
+    "ville": "Dzaoudzi",
+    "code_postal": "97615"
+  },
+  {
+    "row": 1038,
+    "id_osm": "1450459273",
+    "nom": "Mosquée de Hawala",
+    "ville": "Tsingoni",
+    "code_postal": "97680"
+  },
+  {
+    "row": 1039,
+    "id_osm": "1451142495",
+    "nom": "Mosquée",
+    "ville": "Ouangani",
+    "code_postal": "97670"
+  },
+  {
+    "row": 1040,
+    "id_osm": "1477390661",
+    "nom": "Mosquée",
+    "ville": "Domérat",
+    "code_postal": "3410"
+  },
+  {
+    "row": 1041,
+    "id_osm": "1481990224",
+    "nom": "Mosquée",
+    "ville": "Ecquevilly",
+    "code_postal": "78920"
+  }
+]

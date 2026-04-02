@@ -127,7 +127,7 @@ export default function Navigation() {
               Connexion
             </Link>
             <Link href="/connexion" className="btn btn-primary nav-desktop" style={{ fontSize: '0.875rem', textDecoration: 'none' }}>
-              S&apos;inscrire
+              Rejoindre la bêta
             </Link>
             <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn"
               style={{ background: 'none', border: '1px solid #e7e5e4', borderRadius: '8px', padding: '0.4rem', cursor: 'pointer', color: '#1c1917', display: 'flex', alignItems: 'center' }}
@@ -180,7 +180,7 @@ export default function Navigation() {
             </Link>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
               <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', border: '1px solid #e7e5e4', borderRadius: '8px', backgroundColor: 'white', color: '#1c1917', fontWeight: 500, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>Connexion</Link>
-              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', backgroundColor: TEAL, borderRadius: '8px', color: 'white', fontWeight: 600, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>S&apos;inscrire</Link>
+              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', backgroundColor: TEAL, borderRadius: '8px', color: 'white', fontWeight: 600, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>Rejoindre la bêta</Link>
             </div>
           </div>
         </div>

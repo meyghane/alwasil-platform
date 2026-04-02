@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { ArrowLeft, Clock, Calendar, ExternalLink } from 'lucide-react';
 import { getArticleBySlug, articles, type ArticleBlock } from '@/data/blog-articles';
+import ReadingProgress from '@/components/ReadingProgress';
 
 export async function generateStaticParams() {
   return articles.map(a => ({ slug: a.slug }));
@@ -132,6 +133,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const related = articles.filter(a => a.slug !== slug && (a.category === article.category || a.tags.some(t => article.tags.includes(t)))).slice(0, 3);
 
   return (
+    <>
+    <ReadingProgress />
     <div className="container" style={{ padding: '2rem 1rem', maxWidth: '780px' }}>
 
       {/* Breadcrumb */}
@@ -192,5 +195,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         </section>
       )}
     </div>
+    </>
   );
 }

@@ -126,8 +126,32 @@ function EspaceCard({
   // Message inline
   const [contactOpen, setContactOpen] = useState(false);
   const [msgSent, setMsgSent] = useState(false);
+  const [msgSending, setMsgSending] = useState(false);
   const [msgText, setMsgText] = useState('');
   const availablePrieres = PRIERES.filter(p => espace.prieres[p] !== null);
+
+  async function handleSend() {
+    setMsgSending(true);
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'where-salat',
+          fields: {
+            'Hôte': espace.prenom,
+            'Lieu': `${espace.quartier}, ${espace.ville} (${espace.department})`,
+            'Prière': cardPriere ? `${PRIERE_LABELS[cardPriere]} · ${HORAIRES_PARIS[cardPriere]}` : 'Non précisée',
+            'Message': msgText || '(Aucun message)',
+          },
+        }),
+      });
+    } catch { /* Continue même si erreur réseau */ }
+    finally {
+      setMsgSending(false);
+      setMsgSent(true);
+    }
+  }
 
   return (
     <div className="card" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -341,15 +365,15 @@ function EspaceCard({
                 />
 
                 <button
-                  onClick={() => { if (msgText.trim() || cardPriere) setMsgSent(true); else setMsgSent(true); }}
+                  onClick={handleSend}
+                  disabled={msgSending}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
                     padding: '0.6rem', backgroundColor: GREEN, color: 'white',
-                    border: 'none', borderRadius: '8px', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer', transition: 'opacity 0.15s',
-                  }}
-                  onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
-                  onMouseOut={e => (e.currentTarget.style.opacity = '1')}>
-                  <Send size={14} /> Envoyer le message
+                    border: 'none', borderRadius: '8px', fontWeight: 700, fontSize: '0.875rem',
+                    cursor: msgSending ? 'not-allowed' : 'pointer', opacity: msgSending ? 0.7 : 1, transition: 'opacity 0.15s',
+                  }}>
+                  <Send size={14} /> {msgSending ? 'Envoi…' : 'Envoyer le message'}
                 </button>
 
                 <p style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', textAlign: 'center', margin: 0 }}>

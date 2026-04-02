@@ -267,10 +267,19 @@ export default function JobsPage() {
             ))}
 
             {filteredOffers.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
-                <Briefcase size={40} style={{ marginBottom: '1rem', opacity: 0.3 }} />
-                <p>Aucune offre ne correspond à vos critères.</p>
-                <p style={{ fontSize: '0.85rem' }}>Essayez de réduire vos filtres.</p>
+              <div style={{ textAlign: 'center', padding: '3rem 1.5rem', color: 'var(--text-secondary)', gridColumn: '1 / -1' }}>
+                <Briefcase size={40} style={{ opacity: 0.2, display: 'block', margin: '0 auto 1rem' }} />
+                <p style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '1rem', marginBottom: '0.35rem' }}>Aucune offre trouvée</p>
+                <p style={{ fontSize: '0.85rem', marginBottom: '1.25rem' }}>Essaie d&apos;élargir ta recherche ou de changer de secteur.</p>
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <button onClick={() => { setSearch(''); setSectorFilter('all'); setFriendlyFilter('all'); setDeptFilter('Tout'); setRemoteOnly(false); }}
+                    style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'white', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', color: 'var(--text-primary)' }}>
+                    ✕ Effacer tous les filtres
+                  </button>
+                  <Link href="/contact?type=offre-emploi" style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', backgroundColor: '#10b981', color: 'white', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                    + Publier une offre
+                  </Link>
+                </div>
               </div>
             )}
           </div>
