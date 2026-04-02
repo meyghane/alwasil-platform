@@ -147,11 +147,51 @@ function EspaceCard({ espace, selectedPriere, genre }: { espace: EspacePriere; s
 
         {/* Places pour la prière sélectionnée */}
         {dispoSelected && (
-          <div style={{ backgroundColor: '#f0fdfa', borderRadius: '8px', padding: '0.6rem 0.75rem' }}>
-            <p style={{ fontSize: '0.7rem', fontWeight: 600, color: TEAL, marginBottom: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Places — {selectedPriere !== 'toutes' ? `${PRIERE_LABELS[selectedPriere]} · ${HORAIRES_PARIS[selectedPriere]}` : ''}
+          <div style={{ backgroundColor: '#f0fdfa', borderRadius: '10px', padding: '0.75rem' }}>
+            <p style={{ fontSize: '0.7rem', fontWeight: 700, color: TEAL, marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              {selectedPriere !== 'toutes' ? `${PRIERE_LABELS[selectedPriere]} · ${HORAIRES_PARIS[selectedPriere]}` : 'Places disponibles'}
             </p>
-            <PlacesBar dispo={dispoSelected} genre={genre} />
+            {/* Hommes */}
+            {genre !== 'femmes' && (() => {
+              const libres = dispoSelected.placesH - dispoSelected.reservesH;
+              return (
+                <div style={{ marginBottom: genre !== 'hommes' ? '0.6rem' : 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>♂ Hommes</span>
+                    <span style={{ fontSize: '0.78rem', fontWeight: 700, color: libres > 0 ? '#16a34a' : '#dc2626' }}>
+                      {libres > 0 ? `${libres} place${libres > 1 ? 's' : ''} libre${libres > 1 ? 's' : ''}` : 'Complet'}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                    {Array.from({ length: dispoSelected.placesH }).map((_, i) => (
+                      <div key={i} style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: i < dispoSelected.reservesH ? '#dc2626' : '#16a34a', opacity: i < dispoSelected.reservesH ? 0.8 : 1 }} title={i < dispoSelected.reservesH ? 'Réservé' : 'Libre'} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+            {/* Femmes */}
+            {genre !== 'hommes' && (() => {
+              const libres = dispoSelected.placesF - dispoSelected.reservesF;
+              return (
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>♀ Femmes</span>
+                    <span style={{ fontSize: '0.78rem', fontWeight: 700, color: libres > 0 ? '#16a34a' : '#dc2626' }}>
+                      {libres > 0 ? `${libres} place${libres > 1 ? 's' : ''} libre${libres > 1 ? 's' : ''}` : 'Complet'}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                    {Array.from({ length: dispoSelected.placesF }).map((_, i) => (
+                      <div key={i} style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: i < dispoSelected.reservesF ? '#dc2626' : '#db2777', opacity: i < dispoSelected.reservesF ? 0.5 : 0.85 }} title={i < dispoSelected.reservesF ? 'Réservé' : 'Libre'} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+            <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'flex', gap: '0.75rem' }}>
+              <span>🟢 Libre</span><span style={{ opacity: 0.5 }}>🔴 Réservé</span>
+            </p>
           </div>
         )}
 

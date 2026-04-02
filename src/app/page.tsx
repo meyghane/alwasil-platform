@@ -132,6 +132,50 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Where Salat — Feature highlight ──────────────────── */}
+      <section style={{ marginBottom: '3.5rem' }}>
+        <div style={{ borderRadius: '1.5rem', overflow: 'hidden', background: 'linear-gradient(135deg, #052e16 0%, #14532d 60%, #166534 100%)', color: 'white', padding: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#16a34a', borderRadius: '999px', padding: '0.3rem 0.9rem', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+              <span>🕌</span> Nouvelle feature
+            </div>
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '0.75rem' }}>
+              Where Salat
+            </h2>
+            <p style={{ fontSize: '1rem', lineHeight: 1.6, opacity: 0.9, marginBottom: '1.5rem', maxWidth: '420px' }}>
+              Des particuliers et commerçants ouvrent leur espace pour que tu puisses prier à l&apos;heure, partout en IDF. <strong>Gratuit. Fissabililah.</strong>
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
+              {['🏠 Chez des particuliers', '🛍️ Dans des commerces', '🙋 Réservation simple', '🚿 Ablutions indiquées'].map(f => (
+                <span key={f} style={{ fontSize: '0.8rem', backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: '999px', padding: '0.3rem 0.75rem', fontWeight: 500 }}>{f}</span>
+              ))}
+            </div>
+            <Link href="/salle-de-priere" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#16a34a', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.95rem', transition: 'opacity 0.15s' }}
+              onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
+              onMouseOut={e => (e.currentTarget.style.opacity = '1')}>
+              Trouver un espace <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+            {[
+              { prenom: 'Yassine', quartier: 'Belleville, Paris 20e', places: '2 places restantes', priere: 'Dhohr 13h52', dispo: true },
+              { prenom: 'Karima', quartier: 'Gennevilliers, 92', places: '4 places restantes', priere: 'Asr 17h18', dispo: true },
+              { prenom: 'Nadia', quartier: 'Sarcelles, 95', places: '1 place restante', priere: 'Maghrib 20h41', dispo: true },
+              { prenom: 'Rachid', quartier: 'La Défense, 92', places: 'Complet', priere: 'Dhohr 13h52', dispo: false },
+            ].map(e => (
+              <div key={e.prenom} style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '10px', padding: '0.875rem', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.25rem' }}>{e.prenom}</div>
+                <div style={{ fontSize: '0.7rem', opacity: 0.7, marginBottom: '0.4rem' }}>{e.quartier}</div>
+                <div style={{ fontSize: '0.7rem', opacity: 0.75, marginBottom: '0.35rem' }}>🕐 {e.priere}</div>
+                <div style={{ fontSize: '0.72rem', fontWeight: 700, color: e.dispo ? '#86efac' : '#fca5a5' }}>
+                  {e.dispo ? `✓ ${e.places}` : `✗ ${e.places}`}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Grid sections ────────────────────────────────────── */}
       <section id="sections" style={{ marginBottom: '5rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>

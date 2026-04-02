@@ -88,18 +88,29 @@ export default function Navigation() {
 
                   {openGroup === group.label && (
                     <div style={{ position: 'absolute', top: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)', backgroundColor: 'white', border: '1px solid #e7e5e4', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', padding: '0.5rem', minWidth: '220px', zIndex: 100 }}>
-                      {group.items.map((item: NavItem) => (
-                        <Link key={item.href} href={item.href} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', padding: '0.625rem 0.75rem', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.1s' }}
-                          onMouseOver={e => e.currentTarget.style.backgroundColor = '#f0fdfa'}
-                          onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}
-                          onClick={() => setOpenGroup(null)}>
-                          <span style={{ color: TEAL, marginTop: '1px', flexShrink: 0 }}>{item.icon}</span>
-                          <div>
-                            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1c1917' }}>{item.label}</div>
-                            {item.desc && <div style={{ fontSize: '0.72rem', color: '#78716c', marginTop: '1px' }}>{item.desc}</div>}
-                          </div>
-                        </Link>
-                      ))}
+                      {group.items.map((item: NavItem) => {
+                        const isWhereSalat = item.href === '/salle-de-priere';
+                        return (
+                          <Link key={item.href} href={item.href}
+                            style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', padding: '0.625rem 0.75rem', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.1s', backgroundColor: isWhereSalat ? '#f0fdf4' : 'transparent' }}
+                            onMouseOver={e => e.currentTarget.style.backgroundColor = isWhereSalat ? '#dcfce7' : '#f0fdfa'}
+                            onMouseOut={e => e.currentTarget.style.backgroundColor = isWhereSalat ? '#f0fdf4' : 'transparent'}
+                            onClick={() => setOpenGroup(null)}>
+                            <span style={{ color: isWhereSalat ? '#16a34a' : TEAL, marginTop: '1px', flexShrink: 0 }}>{item.icon}</span>
+                            <div>
+                              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1c1917', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                {item.label}
+                                {isWhereSalat && (
+                                  <span style={{ backgroundColor: '#16a34a', color: 'white', fontSize: '0.58rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                                    Nouveau
+                                  </span>
+                                )}
+                              </div>
+                              {item.desc && <div style={{ fontSize: '0.72rem', color: '#78716c', marginTop: '1px' }}>{item.desc}</div>}
+                            </div>
+                          </Link>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -142,12 +153,21 @@ export default function Navigation() {
                   <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.5rem 0.25rem', marginTop: '0.25rem' }}>
                     {group.label}
                   </div>
-                  {group.items.map((item: NavItem) => (
-                    <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0.75rem', fontSize: '0.95rem', fontWeight: 500, color: '#1c1917', borderRadius: '8px', textDecoration: 'none' }}>
-                      <span style={{ color: TEAL }}>{item.icon}</span> {item.label}
-                    </Link>
-                  ))}
+                  {group.items.map((item: NavItem) => {
+                    const isWhereSalat = item.href === '/salle-de-priere';
+                    return (
+                      <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0.75rem', fontSize: '0.95rem', fontWeight: 500, color: '#1c1917', borderRadius: '8px', textDecoration: 'none', backgroundColor: isWhereSalat ? '#f0fdf4' : 'transparent' }}>
+                        <span style={{ color: isWhereSalat ? '#16a34a' : TEAL }}>{item.icon}</span>
+                        {item.label}
+                        {isWhereSalat && (
+                          <span style={{ backgroundColor: '#16a34a', color: 'white', fontSize: '0.6rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase' }}>
+                            Nouveau
+                          </span>
+                        )}
+                      </Link>
+                    );
+                  })}
                 </div>
               );
             })}
