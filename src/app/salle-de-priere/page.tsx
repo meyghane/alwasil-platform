@@ -133,7 +133,7 @@ function EspaceCard({ espace, selectedPriere, genre }: { espace: EspacePriere; s
             <Droplets size={13} /> {espace.ablutions ? 'Ablutions ✓' : 'Ablutions ✗'}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: '#6366f1', fontWeight: 500 }}>
-            <span style={{ fontSize: '0.8rem' }}>🕌</span> Fissabililah (gratuit)
+            <span style={{ fontSize: '0.8rem' }}>🕌</span> FissabiliLlah (gratuit)
           </span>
         </div>
 
@@ -252,7 +252,7 @@ export default function SalleDePrierePage() {
               <h1 style={{ fontSize: '2rem', fontWeight: 700, margin: 0 }}>Where Salat</h1>
             </div>
             <p style={{ color: 'var(--text-secondary)', maxWidth: '560px', lineHeight: 1.5, margin: 0 }}>
-              Des particuliers et commerçants ouvrent leur espace pour que tu puisses prier à l&apos;heure. <strong>Gratuit, fissabililah.</strong> Trouve un espace près de toi ou propose le tien.
+              Des particuliers et commerçants ouvrent leur espace pour que tu puisses prier à l&apos;heure. <strong>Gratuit, FissabiliLlah.</strong> Trouve un espace près de toi ou propose le tien.
             </p>
           </div>
         </div>

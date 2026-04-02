@@ -143,7 +143,7 @@ export default function Home() {
               Where Salat
             </h2>
             <p style={{ fontSize: '1rem', lineHeight: 1.6, opacity: 0.9, marginBottom: '1.5rem', maxWidth: '420px' }}>
-              Des particuliers et commerçants ouvrent leur espace pour que tu puisses prier à l&apos;heure, partout en IDF. <strong>Gratuit. Fissabililah.</strong>
+              Des particuliers et commerçants ouvrent leur espace pour que tu puisses prier à l&apos;heure, partout en IDF. <strong>Gratuit. FissabiliLlah.</strong>
             </p>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
               {['🏠 Chez des particuliers', '🛍️ Dans des commerces', '🙋 Réservation simple', '🚿 Ablutions indiquées'].map(f => (

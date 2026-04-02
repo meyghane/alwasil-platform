@@ -28,7 +28,7 @@ export type EspacePriere = {
   prieres: Record<Priere, DispoPreiere | null>; // null = non disponible pour cette prière
   rating: number;
   avis: number;
-  gratuit: true;         // toujours gratuit (fissabililah)
+  gratuit: true;         // toujours gratuit (FissabiliLlah)
 };
 
 // Temps de prière approximatifs Paris (avril 2026)

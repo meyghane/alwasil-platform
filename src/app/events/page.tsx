@@ -37,6 +37,12 @@ export default function EventsPage() {
   const [selectedCategory, setSelectedCategory] = useState<EventCategory | 'all'>('all');
   const [showPast, setShowPast] = useState(false);
 
+  // Compteurs par département (sur les événements à venir uniquement)
+  const deptCounts: Record<string, number> = {};
+  allEvents.filter(e => isUpcoming(e.date)).forEach(e => {
+    deptCounts[e.department] = (deptCounts[e.department] ?? 0) + 1;
+  });
+
   const filtered = allEvents.filter(ev => {
     const q = search.toLowerCase();
     const matchSearch = !q ||
@@ -110,7 +116,7 @@ export default function EventsPage() {
 
       {/* Filtre département */}
       <div style={{ marginBottom: '1.25rem' }}>
-        <DeptFilter value={selectedDept} onChange={setSelectedDept} />
+        <DeptFilter value={selectedDept} onChange={setSelectedDept} counts={deptCounts} />
       </div>
 
       {/* Catégories */}

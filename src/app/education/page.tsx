@@ -55,6 +55,11 @@ export default function EducationPage() {
   const [selectedFormat, setSelectedFormat] = useState<'all' | 'presentiel' | 'distanciel'>('all');
   const [selectedType, setSelectedType] = useState<TypeFilter>('all');
 
+  const deptCounts: Record<string, number> = {};
+  allInstituts.forEach(inst => {
+    deptCounts[inst.department] = (deptCounts[inst.department] ?? 0) + 1;
+  });
+
   const filtered = allInstituts.filter(inst => {
     const q = search.toLowerCase();
     const matchSearch = !q || inst.name.toLowerCase().includes(q) || inst.city.toLowerCase().includes(q) || inst.tags.some(t => t.toLowerCase().includes(q));
@@ -101,7 +106,7 @@ export default function EducationPage() {
 
       {/* Filtre département */}
       <div style={{ marginBottom: '1.25rem' }}>
-        <DeptFilter value={selectedDept} onChange={setSelectedDept} />
+        <DeptFilter value={selectedDept} onChange={setSelectedDept} counts={deptCounts} />
       </div>
 
       {/* Filtre Type */}
