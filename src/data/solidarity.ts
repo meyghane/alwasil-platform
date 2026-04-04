@@ -125,7 +125,7 @@ export const CAGNOTTE_CAT_COLORS: Record<CagnotteCategory, string> = {
   'afrique': '#f59e0b',
   'mosquee': '#6366f1',
   'famille': '#ec4899',
-  'education': '#0d9488',
+  'education': '#5e17eb',
   'eau-puits': '#3b82f6',
   'orphelins': '#8b5cf6',
   'urgence': '#ef4444',

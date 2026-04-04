@@ -114,7 +114,7 @@ export default function ChatBot() {
           display: open ? 'none' : 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(13,148,136,0.4)',
+          boxShadow: '0 4px 20px rgba(94,23,235,0.4)',
           zIndex: 1000,
           transition: 'transform 0.2s',
         }}
@@ -193,7 +193,7 @@ export default function ChatBot() {
                 {msg.role === 'assistant' && (
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    backgroundColor: 'rgba(13,148,136,0.1)',
+                    backgroundColor: 'rgba(94,23,235,0.1)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0, marginTop: '2px',
                   }}>
@@ -229,7 +229,7 @@ export default function ChatBot() {
               <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '0.5rem', alignItems: 'flex-start' }}>
                 <div style={{
                   width: '28px', height: '28px', borderRadius: '50%',
-                  backgroundColor: 'rgba(13,148,136,0.1)',
+                  backgroundColor: 'rgba(94,23,235,0.1)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, marginTop: '2px',
                 }}>

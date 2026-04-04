@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { BookOpen, ChevronDown, ChevronUp, Download, MapPin, User, Users } from 'lucide-react';
 
-const TEAL = '#0d9488';
-const TEAL_LIGHT = '#f0fdfa';
-const TEAL_BORDER = '#99f6e4';
+const TEAL = '#5e17eb';
+const TEAL_LIGHT = '#f3eeff';
+const TEAL_BORDER = '#c4a8f8';
 
 // ── Données contenu ────────────────────────────────────────────
 

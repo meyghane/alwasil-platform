@@ -277,7 +277,7 @@ export default function HajjPage() {
             {hajjAgences.map(a => (
               <div key={a.id} className="card" style={{ padding: '1.5rem' }}>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.875rem' }}>
-                  <div style={{ width: '50px', height: '50px', borderRadius: '12px', backgroundColor: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', flexShrink: 0 }}>
+                  <div style={{ width: '50px', height: '50px', borderRadius: '12px', backgroundColor: '#f0fff8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', flexShrink: 0 }}>
                     {a.logoEmoji}
                   </div>
                   <div style={{ flex: 1 }}>
@@ -303,7 +303,7 @@ export default function HajjPage() {
 
                 <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
                   {a.tags.map(tag => (
-                    <span key={tag} style={{ backgroundColor: '#f0fdf4', color: '#059669', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.72rem' }}>#{tag}</span>
+                    <span key={tag} style={{ backgroundColor: '#f0fff8', color: '#059669', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.72rem' }}>#{tag}</span>
                   ))}
                 </div>
 

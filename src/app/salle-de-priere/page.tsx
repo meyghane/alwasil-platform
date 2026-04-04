@@ -14,8 +14,8 @@ import {
 } from '@/data/priere-espaces';
 
 const PRIERES: Priere[] = ['fajr', 'dhohr', 'asr', 'maghrib', 'icha'];
-const TEAL = '#0d9488';
-const GREEN = '#16a34a';
+const TEAL = '#5e17eb';
+const GREEN = '#00bf63';
 
 function getPexelsUrl(id: number) {
   return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=600&h=360&fit=crop`;
@@ -88,7 +88,7 @@ function PrieresPills({ espace, selectedPriere, genre }: { espace: EspacePriere;
           <span key={p} title={`${PRIERE_LABELS[p]} — ${HORAIRES_PARIS[p]}`} style={{
             padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.68rem',
             fontWeight: isSelected ? 700 : 500,
-            backgroundColor: isSelected ? TEAL : libre ? '#dcfce7' : '#fee2e2',
+            backgroundColor: isSelected ? TEAL : libre ? '#d4fbe8' : '#fee2e2',
             color: isSelected ? 'white' : libre ? GREEN : '#dc2626',
             border: isSelected ? `1px solid ${TEAL}` : '1px solid transparent',
           }}>
@@ -246,8 +246,8 @@ function EspaceCard({
                   title={`${PRIERE_LABELS[p]} · ${HORAIRES_PARIS[p]}`}
                   style={{
                     padding: '0.25rem 0.55rem', borderRadius: '6px', fontSize: '0.7rem', fontWeight: isSelected ? 700 : 500, cursor: 'pointer', transition: 'all 0.12s',
-                    border: isSelected ? `2px solid ${TEAL}` : `1px solid ${hasSpace ? '#bbf7d0' : '#fecaca'}`,
-                    backgroundColor: isSelected ? TEAL : hasSpace ? '#f0fdf4' : '#fff1f2',
+                    border: isSelected ? `2px solid ${TEAL}` : `1px solid ${hasSpace ? '#a0f0c8' : '#fecaca'}`,
+                    backgroundColor: isSelected ? TEAL : hasSpace ? '#f0fff8' : '#fff1f2',
                     color: isSelected ? 'white' : hasSpace ? GREEN : '#dc2626',
                   }}>
                   {PRIERE_LABELS[p]}
@@ -260,7 +260,7 @@ function EspaceCard({
 
         {/* ── Places H/F pour la prière sélectionnée sur la carte ── */}
         {dispo ? (
-          <div style={{ backgroundColor: '#f0fdfa', borderRadius: '10px', padding: '0.75rem' }}>
+          <div style={{ backgroundColor: '#f3eeff', borderRadius: '10px', padding: '0.75rem' }}>
             <p style={{ fontSize: '0.7rem', fontWeight: 700, color: TEAL, marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               {cardPriere && `${PRIERE_LABELS[cardPriere]} · ${HORAIRES_PARIS[cardPriere]}`}
             </p>
@@ -324,7 +324,7 @@ function EspaceCard({
               style={{
                 marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
                 padding: '0.6rem 1rem',
-                backgroundColor: contactOpen ? '#f0fdfa' : TEAL,
+                backgroundColor: contactOpen ? '#f3eeff' : TEAL,
                 color: contactOpen ? TEAL : 'white',
                 border: contactOpen ? `2px solid ${TEAL}` : 'none',
                 borderRadius: '8px', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer', transition: 'all 0.15s',
@@ -383,7 +383,7 @@ function EspaceCard({
             )}
           </>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '1rem', backgroundColor: '#f0fdf4', border: `1px solid ${GREEN}40`, borderRadius: '10px', textAlign: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '1rem', backgroundColor: '#f0fff8', border: `1px solid ${GREEN}40`, borderRadius: '10px', textAlign: 'center' }}>
             <span style={{ fontSize: '1.5rem' }}>✓</span>
             <p style={{ fontWeight: 700, color: GREEN, fontSize: '0.9rem', margin: 0 }}>
               Message envoyé à {espace.prenom}
@@ -652,7 +652,7 @@ export default function SalleDePrierePage() {
             </p>
           )}
           {userCoords && (
-            <p style={{ fontSize: '0.8rem', color: GREEN, marginBottom: '1rem', backgroundColor: '#f0fdf4', padding: '0.5rem 0.875rem', borderRadius: '6px' }}>
+            <p style={{ fontSize: '0.8rem', color: GREEN, marginBottom: '1rem', backgroundColor: '#f0fff8', padding: '0.5rem 0.875rem', borderRadius: '6px' }}>
               📍 Espaces triés par distance depuis ta position
             </p>
           )}
@@ -775,7 +775,7 @@ export default function SalleDePrierePage() {
           )}
 
           {/* CTA proposer */}
-          <div style={{ marginTop: '3rem', padding: '1.5rem', backgroundColor: '#f0fdfa', borderRadius: '12px', border: '1px solid #99f6e4', textAlign: 'center' }}>
+          <div style={{ marginTop: '3rem', padding: '1.5rem', backgroundColor: '#f3eeff', borderRadius: '12px', border: '1px solid #c4a8f8', textAlign: 'center' }}>
             <p style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.35rem' }}>Tu as un espace disponible ?</p>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' }}>Propose ton salon, ta boutique ou ton bureau. C&apos;est gratuit, ça prend 2 minutes.</p>
             <button onClick={() => setMode('propose')} style={{ padding: '0.6rem 1.5rem', backgroundColor: TEAL, color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem' }}>

@@ -21,7 +21,7 @@ const TYPE_LABELS = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  'institut': '#0d9488',
+  'institut': '#5e17eb',
   'mosquee': '#6366f1',
   'professeur': '#f59e0b',
   'en-ligne': '#3b82f6',
@@ -119,13 +119,13 @@ export default function EducationPage() {
           style={{
             display: 'flex', alignItems: 'center', gap: '0.4rem',
             padding: '0.4rem 1rem', borderRadius: '999px',
-            border: isFiltered ? '2px solid #0d9488' : '1.5px solid var(--border-color)',
-            backgroundColor: isFiltered ? '#f0fdfa' : 'white',
-            color: isFiltered ? '#0d9488' : 'var(--text-secondary)',
+            border: isFiltered ? '2px solid #5e17eb' : '1.5px solid var(--border-color)',
+            backgroundColor: isFiltered ? '#f3eeff' : 'white',
+            color: isFiltered ? '#5e17eb' : 'var(--text-secondary)',
             fontSize: '0.82rem', fontWeight: isFiltered ? 700 : 400, cursor: 'pointer',
           }}>
           {showAdvanced ? '▲' : '▼'} Filtres avancés
-          {isFiltered && <span style={{ backgroundColor: '#0d9488', color: 'white', borderRadius: '999px', padding: '0.05rem 0.4rem', fontSize: '0.65rem', fontWeight: 800 }}>actifs</span>}
+          {isFiltered && <span style={{ backgroundColor: '#5e17eb', color: 'white', borderRadius: '999px', padding: '0.05rem 0.4rem', fontSize: '0.65rem', fontWeight: 800 }}>actifs</span>}
         </button>
       </div>
 
@@ -138,8 +138,8 @@ export default function EducationPage() {
               {TYPE_FILTERS.map(t => (
                 <button key={t.key} onClick={() => setSelectedType(t.key)} style={{
                   padding: '0.35rem 0.875rem', borderRadius: '999px',
-                  border: selectedType === t.key ? '2px solid #0d9488' : '1.5px solid var(--border-color)',
-                  backgroundColor: selectedType === t.key ? '#0d9488' : 'white',
+                  border: selectedType === t.key ? '2px solid #5e17eb' : '1.5px solid var(--border-color)',
+                  backgroundColor: selectedType === t.key ? '#5e17eb' : 'white',
                   color: selectedType === t.key ? 'white' : 'var(--text-secondary)',
                   fontSize: '0.82rem', fontWeight: selectedType === t.key ? 700 : 400, cursor: 'pointer',
                 }}>
@@ -222,8 +222,8 @@ export default function EducationPage() {
         marginTop: '3rem',
         padding: '2rem',
         borderRadius: '1rem',
-        backgroundColor: 'rgba(13, 148, 136, 0.06)',
-        border: '1px solid rgba(13, 148, 136, 0.2)',
+        backgroundColor: 'rgba(94, 23, 235, 0.06)',
+        border: '1px solid rgba(94, 23, 235, 0.2)',
         textAlign: 'center',
       }}>
         <h3 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Vous connaissez un institut non listé ?</h3>

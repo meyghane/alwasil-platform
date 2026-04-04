@@ -340,7 +340,7 @@ const LIEN_TYPE_LABELS: Record<string, string> = {
 const LIEN_TYPE_COLORS: Record<string, string> = {
   signalement: '#ef4444',
   juridique: '#8b5cf6',
-  association: '#0d9488',
+  association: '#5e17eb',
   officiel: '#3b82f6',
 };
 

@@ -209,7 +209,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   suggestion: {
-    title: 'Suggérer une amélioration', emoji: '💡', color: '#0d9488',
+    title: 'Suggérer une amélioration', emoji: '💡', color: '#5e17eb',
     description: 'Une idée pour améliorer Al-Wasil ? Une fonctionnalité manquante ? On est à l\'écoute.',
     fields: [
       { name: 'nom', label: 'Votre prénom (optionnel)', type: 'text' },
@@ -219,7 +219,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   annonceur: {
-    title: 'Partenariat & publicité', emoji: '📣', color: '#0d9488',
+    title: 'Partenariat & publicité', emoji: '📣', color: '#5e17eb',
     description: 'Intéressé par un emplacement publicitaire ou un partenariat ? Consultez notre page annonceurs.',
     fields: [
       { name: 'nom', label: 'Votre nom / Organisation', type: 'text', required: true },
@@ -229,7 +229,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   general: {
-    title: 'Nous contacter', emoji: '✉️', color: '#0d9488',
+    title: 'Nous contacter', emoji: '✉️', color: '#5e17eb',
     description: 'Une question, une suggestion ou une demande ? Écrivez-nous.',
     fields: [
       { name: 'nom', label: 'Nom', type: 'text', required: true },
@@ -298,7 +298,7 @@ function ContactForm() {
       </div>
 
       {sent ? (
-        <div style={{ padding: '2.5rem', borderRadius: '1rem', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', textAlign: 'center' }}>
+        <div style={{ padding: '2.5rem', borderRadius: '1rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8', textAlign: 'center' }}>
           <CheckCircle size={40} color="#10b981" style={{ marginBottom: '1rem' }} />
           <h2 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>Message envoyé !</h2>
           <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>

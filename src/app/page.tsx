@@ -7,8 +7,8 @@ const SECTIONS = [
   {
     href: '/education',
     emoji: '📚',
-    color: '#0d9488',
-    bg: '#f0fdfa',
+    color: '#5e17eb',
+    bg: '#f3eeff',
     title: 'Éducation',
     arabic: 'العلم',
     description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.',
@@ -78,7 +78,7 @@ const SECTIONS = [
     href: '/hajj',
     emoji: '🕋',
     color: '#059669',
-    bg: '#f0fdf4',
+    bg: '#f0fff8',
     title: 'Hajj & Omra',
     arabic: 'الحج',
     description: 'Comparez les agences, offres 2026 et guide du pèlerin.',
@@ -98,7 +98,7 @@ const SECTIONS = [
     href: '#',
     emoji: '💬',
     color: '#10b981',
-    bg: '#f0fdf4',
+    bg: '#f0fff8',
     title: 'Communauté',
     arabic: 'الأمة',
     description: 'Annuaire de compétences, marrainage et espace de brainstorming.',
@@ -113,20 +113,20 @@ export default function Home() {
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section style={{ padding: '5rem 0 3.5rem', textAlign: 'center', maxWidth: '760px', margin: '0 auto' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 1rem', backgroundColor: 'rgba(13,148,136,0.1)', color: '#0d9488', borderRadius: '999px', fontSize: '0.82rem', fontWeight: 700, marginBottom: '1.5rem' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 1rem', backgroundColor: 'rgba(94,23,235,0.1)', color: '#5e17eb', borderRadius: '999px', fontSize: '0.82rem', fontWeight: 700, marginBottom: '1.5rem' }}>
           <span>🌱</span> Bêta — Rejoignez le mouvement
         </div>
-        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3.25rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.025em', marginBottom: '1.25rem', background: 'linear-gradient(135deg, #1c1917 0%, #57534e 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          L&apos;essentiel de la communauté,<br />enfin réuni au même endroit.
+        <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 900, lineHeight: 1.05, letterSpacing: '-0.03em', marginBottom: '1.25rem', fontFamily: 'Poppins, sans-serif', color: '#0a0a0a' }}>
+          L&apos;essentiel de la communauté,<br /><span style={{ color: '#5e17eb' }}>enfin réuni</span> au même endroit.
         </h1>
-        <p style={{ fontSize: '1.1rem', color: '#57534e', marginBottom: '2.25rem', lineHeight: 1.65 }}>
+        <p style={{ fontSize: '1.05rem', color: '#4a4a4a', marginBottom: '2.25rem', lineHeight: 1.7 }}>
           Emploi voile accepté, piscines burkini, librairies islamiques, Hajj & Omra, psychologues, hijama, événements… Tout ce dont tu as besoin, centralisé.
         </p>
         <div style={{ display: 'flex', gap: '0.875rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href="#sections" className="btn btn-primary" style={{ padding: '0.75rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none' }}>
+          <a href="#sections" style={{ padding: '0.75rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, fontFamily: 'Poppins, sans-serif', textDecoration: 'none', backgroundColor: '#5e17eb', color: 'white', borderRadius: '8px', border: '2px solid #0a0a0a', boxShadow: '3px 3px 0px #0a0a0a', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
             Explorer les ressources →
           </a>
-          <Link href="/contact?type=initiative" className="btn btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem', textDecoration: 'none' }}>
+          <Link href="/contact?type=initiative" style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif', textDecoration: 'none', backgroundColor: 'white', color: '#0a0a0a', borderRadius: '8px', border: '2px solid #0a0a0a', boxShadow: '3px 3px 0px #0a0a0a', display: 'inline-flex', alignItems: 'center' }}>
             Proposer une initiative
           </Link>
         </div>
@@ -142,7 +142,7 @@ export default function Home() {
       </section>
 
       {/* ── Stats strip ──────────────────────────────────────── */}
-      <section style={{ marginBottom: '5rem', padding: '2rem', borderRadius: '1.25rem', background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)', color: 'white' }}>
+      <section style={{ marginBottom: '5rem', padding: '2rem', borderRadius: '1.25rem', background: 'linear-gradient(135deg, #5e17eb 0%, #4a11c0 100%)', color: 'white' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.5rem', textAlign: 'center' }}>
           {[
             { value: '10', label: 'Sections', sub: 'et ça grandit' },
@@ -172,7 +172,7 @@ export default function Home() {
           <div>
             {/* Marque Where Salat */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <div style={{ width: '44px', height: '44px', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0 }}>
+              <div style={{ width: '44px', height: '44px', background: 'linear-gradient(135deg, #5e17eb 0%, #1540ff 100%)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0 }}>
                 🕌
               </div>
               <div>
@@ -200,7 +200,7 @@ export default function Home() {
             </div>
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <Link href="/salle-de-priere" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', color: 'white', padding: '0.8rem 1.75rem', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.95rem', boxShadow: '0 4px 15px rgba(22,163,74,0.4)' }}>
+              <Link href="/salle-de-priere" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, #5e17eb 0%, #1540ff 100%)', color: 'white', padding: '0.8rem 1.75rem', borderRadius: '10px', textDecoration: 'none', fontWeight: 700, fontSize: '0.95rem', boxShadow: '0 4px 15px rgba(94,23,235,0.35)' }}>
                 Trouver un espace <ArrowRight size={16} />
               </Link>
               <Link href="/salle-de-priere?mode=propose" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)', color: 'white', padding: '0.8rem 1.5rem', borderRadius: '10px', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>
@@ -234,7 +234,7 @@ export default function Home() {
       <section style={{ marginBottom: '4rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Événements à venir</h2>
-          <Link href="/events" style={{ color: '#0d9488', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.9rem', textDecoration: 'none' }}>
+          <Link href="/events" style={{ color: '#5e17eb', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.9rem', textDecoration: 'none' }}>
             Tout voir <ArrowRight size={15} />
           </Link>
         </div>

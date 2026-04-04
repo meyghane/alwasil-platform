@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 const SECTIONS = [
   {
@@ -44,22 +45,22 @@ const SECTIONS = [
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer style={{ borderTop: '1px solid #e7e5e4', backgroundColor: '#fafaf9', marginTop: '4rem' }}>
+    <footer style={{ borderTop: '2px solid #0a0a0a', backgroundColor: '#0a0a0a', marginTop: '4rem', color: 'white' }}>
       <div className="container" style={{ padding: '3rem 1rem 2rem' }}>
 
         {/* Grid links */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '2rem', marginBottom: '2.5rem' }}>
           {SECTIONS.map(section => (
             <div key={section.title}>
-              <h4 style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#78716c', marginBottom: '0.875rem' }}>
+              <h4 style={{ fontSize: '0.78rem', fontWeight: 800, fontFamily: 'Poppins, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9a9a9a', marginBottom: '0.875rem' }}>
                 {section.title}
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {section.links.map(link => (
                   <li key={link.href + link.label}>
-                    <Link href={link.href} style={{ fontSize: '0.85rem', color: '#57534e', textDecoration: 'none', lineHeight: 1.4 }}
-                      onMouseOver={e => (e.currentTarget.style.color = '#0d9488')}
-                      onMouseOut={e => (e.currentTarget.style.color = '#57534e')}>
+                    <Link href={link.href} style={{ fontSize: '0.85rem', color: '#cccccc', textDecoration: 'none', lineHeight: 1.4 }}
+                      onMouseOver={e => (e.currentTarget.style.color = '#c4a8f8')}
+                      onMouseOut={e => (e.currentTarget.style.color = '#cccccc')}>
                       {link.label}
                     </Link>
                   </li>
@@ -70,23 +71,20 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div style={{ borderTop: '1px solid #e7e5e4', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ borderTop: '1px solid #2a2a2a', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{ width: '32px', height: '32px', backgroundColor: '#0d9488', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '16px', flexShrink: 0 }}>
-              W
-            </div>
+            <Image src="/logo-alwassil.png" alt="Al-Wasil" height={36} width={36} style={{ height: '36px', width: '36px', objectFit: 'contain' }} />
             <div>
-              <p style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1c1917', margin: 0 }}>Al-Wasil — الواصل</p>
-              <p style={{ fontSize: '0.75rem', color: '#78716c', margin: 0 }}>La plateforme de la communauté musulmane française</p>
+              <p style={{ fontSize: '0.75rem', color: '#9a9a9a', margin: 0 }}>La plateforme de la communauté musulmane française</p>
             </div>
           </div>
-          <p style={{ fontSize: '0.78rem', color: '#a8a29e' }}>© {year} Al-Wasil. Tous droits réservés.</p>
+          <p style={{ fontSize: '0.78rem', color: '#6a6a6a' }}>© {year} Al-Wasil. Tous droits réservés.</p>
         </div>
 
         {/* Espace pub footer */}
-        <div style={{ marginTop: '1.5rem', padding: '0.875rem', borderRadius: '0.75rem', border: '2px dashed #e7e5e4', textAlign: 'center' }}>
-          <Link href="/annonceurs" style={{ fontSize: '0.78rem', color: '#a8a29e', textDecoration: 'none' }}>
-            📣 Emplacement publicitaire disponible — <strong style={{ color: '#0d9488' }}>Annoncez sur Al-Wasil →</strong>
+        <div style={{ marginTop: '1.5rem', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #2a2a2a', textAlign: 'center' }}>
+          <Link href="/annonceurs" style={{ fontSize: '0.78rem', color: '#9a9a9a', textDecoration: 'none' }}>
+            📣 Emplacement publicitaire disponible — <strong style={{ color: '#c4a8f8' }}>Annoncez sur Al-Wasil →</strong>
           </Link>
         </div>
       </div>

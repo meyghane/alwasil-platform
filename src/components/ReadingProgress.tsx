@@ -18,7 +18,7 @@ export default function ReadingProgress() {
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '3px', zIndex: 100, backgroundColor: '#e7e5e4' }}>
-      <div style={{ height: '100%', backgroundColor: '#0d9488', width: `${progress}%`, transition: 'width 0.1s linear' }} />
+      <div style={{ height: '100%', backgroundColor: '#5e17eb', width: `${progress}%`, transition: 'width 0.1s linear' }} />
     </div>
   );
 }

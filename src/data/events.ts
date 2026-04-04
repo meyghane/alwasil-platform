@@ -52,7 +52,7 @@ export const EVENT_CATEGORY_LABELS: Record<EventCategory, string> = {
 export const EVENT_CATEGORY_COLORS: Record<EventCategory, string> = {
   conference: '#6366f1',
   maraude: '#ef4444',
-  cours: '#0d9488',
+  cours: '#5e17eb',
   iftar: '#f59e0b',
   webinaire: '#3b82f6',
   jeunesse: '#10b981',

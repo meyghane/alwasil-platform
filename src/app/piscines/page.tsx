@@ -18,7 +18,7 @@ const ACCENT = '#0ea5e9'; // sky-500
 const JOUR_COLORS: Record<string, string> = {
   Lundi: '#6366f1', Mardi: '#8b5cf6', Mercredi: '#0ea5e9',
   Jeudi: '#10b981', Vendredi: '#f59e0b', Samedi: '#ef4444', Dimanche: '#059669',
-  'Tous les jours': '#0d9488',
+  'Tous les jours': '#5e17eb',
   'Lundi & Jeudi': '#8b5cf6',
 };
 
@@ -65,7 +65,7 @@ export default function PiscinesPage() {
           <AlertTriangle size={16} style={{ flexShrink: 0, marginTop: '1px' }} />
           <span><strong>Toujours appeler avant de vous déplacer.</strong> Les créneaux peuvent être modifiés, suspendus ou annulés sans préavis, surtout en intersaison. Les fiches marquées ⚠️ sont à vérifier impérativement.</span>
         </div>
-        <div style={{ padding: '0.875rem 1rem', backgroundColor: '#f0fdf4', borderRadius: '0.5rem', fontSize: '0.85rem', color: '#065f46', borderLeft: '3px solid #10b981', display: 'flex', gap: '0.5rem' }}>
+        <div style={{ padding: '0.875rem 1rem', backgroundColor: '#f0fff8', borderRadius: '0.5rem', fontSize: '0.85rem', color: '#065f46', borderLeft: '3px solid #10b981', display: 'flex', gap: '0.5rem' }}>
           <CheckCircle size={16} style={{ flexShrink: 0, marginTop: '1px' }} />
           <span>Les fiches <strong>✅ Confirmées</strong> ont été vérifiées récemment (appel ou visite). Date de vérification indiquée sur chaque fiche.</span>
         </div>

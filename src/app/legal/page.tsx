@@ -49,7 +49,7 @@ export default function LegalPage() {
 
       <div style={{ padding: '1.25rem', borderRadius: '0.75rem', backgroundColor: '#f5f5f4', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
         Dernière mise à jour : mars 2026. Pour toute question légale, utilisez notre{' '}
-        <a href="/contact" style={{ color: '#0d9488', fontWeight: 600, textDecoration: 'none' }}>formulaire de contact</a>.
+        <a href="/contact" style={{ color: '#5e17eb', fontWeight: 600, textDecoration: 'none' }}>formulaire de contact</a>.
       </div>
     </div>
   );

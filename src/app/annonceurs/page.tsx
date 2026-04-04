@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { TrendingUp, Eye, MousePointer, Users, BarChart2, Mail, CheckCircle, Image, Tag, Zap } from 'lucide-react';
 
-const ACCENT = '#0d9488';
-const GREEN = '#16a34a';
+const ACCENT = '#5e17eb';
+const GREEN = '#00bf63';
 
 type Segment = 'solo' | 'boost' | 'pro' | 'agence';
 
@@ -598,7 +598,7 @@ export default function AnnonceursPage() {
         </p>
 
         {sent ? (
-          <div style={{ padding: '2rem', borderRadius: '1rem', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', textAlign: 'center' }}>
+          <div style={{ padding: '2rem', borderRadius: '1rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8', textAlign: 'center' }}>
             <CheckCircle size={36} color="#10b981" style={{ marginBottom: '0.75rem' }} />
             <h3 style={{ fontWeight: 700, marginBottom: '0.4rem' }}>Message reçu 🎉</h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Nous revenons vers vous sous 24h. Barak Allahou fikoum !</p>

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BookOpen, Calendar, HandHeart, Briefcase, ShieldCheck, Heart, Plane, Menu, X, Library, ChevronDown, Waves, MapPin, PenLine } from 'lucide-react';
 
 type NavItem = { href: string; icon: React.ReactNode; label: string; desc?: string };
@@ -36,7 +37,8 @@ const NAV: NavGroup[] = [
   { href: '/hajj', icon: <Plane size={17} />, label: 'Hajj & Omra' },
 ];
 
-const TEAL = '#0d9488';
+const PRIMARY = '#5e17eb';
+const PRIMARY_LIGHT = '#f3eeff';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,15 +55,13 @@ export default function Navigation() {
 
   return (
     <>
-      <nav style={{ borderBottom: '1px solid #e7e5e4', backgroundColor: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)', position: 'sticky', top: 0, zIndex: 50 }}>
+      <nav style={{ borderBottom: '2px solid #0a0a0a', backgroundColor: '#ffffff', position: 'sticky', top: 0, zIndex: 50 }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '4rem' }}>
 
           {/* Logo */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 'bold', fontSize: '1.25rem', color: '#1c1917', textDecoration: 'none' }}>
-            <div style={{ width: '36px', height: '36px', backgroundColor: TEAL, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
-              <span style={{ fontSize: '20px' }}>W</span>
-            </div>
-            <span>Al-Wasil</span>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', flexShrink: 0 }}>
+            <Image src="/logo-alwassil.png" alt="Al-Wasil" height={48} width={48} style={{ height: '48px', width: '48px', objectFit: 'contain' }} priority />
+            <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: '1.15rem', color: '#0a0a0a', letterSpacing: '-0.02em' }}>Al-Wasil</span>
           </Link>
 
           {/* Desktop nav */}
@@ -69,9 +69,9 @@ export default function Navigation() {
             {NAV.map(group => {
               if ('href' in group) {
                 return (
-                  <Link key={group.href} href={group.href} style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.75rem', fontSize: '0.85rem', color: '#57534e', fontWeight: 500, textDecoration: 'none', borderRadius: '6px', transition: 'all 0.15s' }}
-                    onMouseOver={e => { e.currentTarget.style.color = TEAL; e.currentTarget.style.backgroundColor = '#f0fdfa'; }}
-                    onMouseOut={e => { e.currentTarget.style.color = '#57534e'; e.currentTarget.style.backgroundColor = 'transparent'; }}>
+                  <Link key={group.href} href={group.href} style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.75rem', fontSize: '0.85rem', color: '#0a0a0a', fontWeight: 600, fontFamily: 'Poppins, sans-serif', textDecoration: 'none', borderRadius: '6px', transition: 'all 0.15s' }}
+                    onMouseOver={e => { e.currentTarget.style.color = PRIMARY; e.currentTarget.style.backgroundColor = PRIMARY_LIGHT; }}
+                    onMouseOut={e => { e.currentTarget.style.color = '#0a0a0a'; e.currentTarget.style.backgroundColor = 'transparent'; }}>
                     {group.icon} {group.label}
                   </Link>
                 );
@@ -80,32 +80,32 @@ export default function Navigation() {
                 <div key={group.label} style={{ position: 'relative' }}
                   onMouseEnter={() => handleMouseEnter(group.label)}
                   onMouseLeave={handleMouseLeave}>
-                  <button style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.75rem', fontSize: '0.85rem', color: openGroup === group.label ? TEAL : '#57534e', fontWeight: 500, background: openGroup === group.label ? '#f0fdfa' : 'none', border: 'none', borderRadius: '6px', cursor: 'pointer', transition: 'all 0.15s' }}>
+                  <button style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.75rem', fontSize: '0.85rem', color: openGroup === group.label ? PRIMARY : '#0a0a0a', fontWeight: 600, fontFamily: 'Poppins, sans-serif', background: openGroup === group.label ? PRIMARY_LIGHT : 'none', border: 'none', borderRadius: '6px', cursor: 'pointer', transition: 'all 0.15s' }}>
                     {group.label}
                     <ChevronDown size={13} style={{ transition: 'transform 0.15s', transform: openGroup === group.label ? 'rotate(180deg)' : 'rotate(0deg)' }} />
                   </button>
 
                   {openGroup === group.label && (
-                    <div style={{ position: 'absolute', top: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)', backgroundColor: 'white', border: '1px solid #e7e5e4', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', padding: '0.5rem', minWidth: '220px', zIndex: 100 }}>
+                    <div style={{ position: 'absolute', top: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)', backgroundColor: 'white', border: '2px solid #0a0a0a', borderRadius: '12px', boxShadow: '4px 4px 0px #0a0a0a', padding: '0.5rem', minWidth: '220px', zIndex: 100 }}>
                       {group.items.map((item: NavItem) => {
                         const isWhereSalat = item.href === '/salle-de-priere';
                         return (
                           <Link key={item.href} href={item.href}
-                            style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', padding: '0.625rem 0.75rem', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.1s', backgroundColor: isWhereSalat ? '#f0fdf4' : 'transparent' }}
-                            onMouseOver={e => e.currentTarget.style.backgroundColor = isWhereSalat ? '#dcfce7' : '#f0fdfa'}
-                            onMouseOut={e => e.currentTarget.style.backgroundColor = isWhereSalat ? '#f0fdf4' : 'transparent'}
+                            style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', padding: '0.625rem 0.75rem', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.1s', backgroundColor: isWhereSalat ? '#f0fff8' : 'transparent' }}
+                            onMouseOver={e => e.currentTarget.style.backgroundColor = isWhereSalat ? '#d4fbe8' : PRIMARY_LIGHT}
+                            onMouseOut={e => e.currentTarget.style.backgroundColor = isWhereSalat ? '#f0fff8' : 'transparent'}
                             onClick={() => setOpenGroup(null)}>
-                            <span style={{ color: isWhereSalat ? '#16a34a' : TEAL, marginTop: '1px', flexShrink: 0 }}>{item.icon}</span>
+                            <span style={{ color: isWhereSalat ? '#00bf63' : PRIMARY, marginTop: '1px', flexShrink: 0 }}>{item.icon}</span>
                             <div>
-                              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1c1917', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                              <div style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'Poppins, sans-serif', color: '#0a0a0a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                                 {item.label}
                                 {isWhereSalat && (
-                                  <span style={{ backgroundColor: '#16a34a', color: 'white', fontSize: '0.58rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                                  <span style={{ backgroundColor: '#00bf63', color: 'white', fontSize: '0.58rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
                                     Nouveau
                                   </span>
                                 )}
                               </div>
-                              {item.desc && <div style={{ fontSize: '0.72rem', color: '#78716c', marginTop: '1px' }}>{item.desc}</div>}
+                              {item.desc && <div style={{ fontSize: '0.72rem', color: '#6b6b6b', marginTop: '1px' }}>{item.desc}</div>}
                             </div>
                           </Link>
                         );
@@ -119,18 +119,18 @@ export default function Navigation() {
 
           {/* Right */}
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-            {/* Where Salat — bouton standalone dégradé */}
-            <Link href="/salle-de-priere" className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1rem', borderRadius: '8px', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', color: 'white', fontWeight: 700, fontSize: '0.82rem', textDecoration: 'none', boxShadow: '0 1px 6px rgba(13,148,136,0.35)', whiteSpace: 'nowrap', letterSpacing: '0.01em' }}>
+            {/* Where Salat — bouton standalone */}
+            <Link href="/salle-de-priere" className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1rem', borderRadius: '8px', background: 'linear-gradient(135deg, #5e17eb 0%, #1540ff 100%)', color: 'white', fontWeight: 700, fontFamily: 'Poppins, sans-serif', fontSize: '0.82rem', textDecoration: 'none', boxShadow: '3px 3px 0px #0a0a0a', whiteSpace: 'nowrap', letterSpacing: '0.01em', border: '2px solid #0a0a0a' }}>
               <span style={{ fontSize: '0.9rem' }}>🕌</span> Where Salat
             </Link>
-            <Link href="/connexion" className="btn btn-outline nav-desktop" style={{ fontSize: '0.875rem', padding: '0.5rem 0.75rem', color: '#1c1917', borderColor: '#e7e5e4', backgroundColor: 'white', textDecoration: 'none' }}>
+            <Link href="/connexion" className="btn btn-outline nav-desktop" style={{ fontSize: '0.875rem', padding: '0.5rem 0.75rem', color: '#0a0a0a', borderColor: '#0a0a0a', backgroundColor: 'white', textDecoration: 'none', fontFamily: 'Poppins, sans-serif', fontWeight: 600, border: '2px solid #0a0a0a', boxShadow: '2px 2px 0px #0a0a0a', borderRadius: '8px' }}>
               Connexion
             </Link>
-            <Link href="/connexion" className="btn btn-primary nav-desktop" style={{ fontSize: '0.875rem', textDecoration: 'none' }}>
+            <Link href="/connexion" className="nav-desktop" style={{ fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0.75rem', backgroundColor: PRIMARY, color: 'white', borderRadius: '8px', fontWeight: 700, fontFamily: 'Poppins, sans-serif', border: '2px solid #0a0a0a', boxShadow: '2px 2px 0px #0a0a0a' }}>
               Rejoindre la bêta
             </Link>
             <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn"
-              style={{ background: 'none', border: '1px solid #e7e5e4', borderRadius: '8px', padding: '0.4rem', cursor: 'pointer', color: '#1c1917', display: 'flex', alignItems: 'center' }}
+              style={{ background: 'none', border: '2px solid #0a0a0a', borderRadius: '8px', padding: '0.4rem', cursor: 'pointer', color: '#0a0a0a', display: 'flex', alignItems: 'center' }}
               aria-label="Menu">
               {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -140,31 +140,31 @@ export default function Navigation() {
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <div style={{ position: 'fixed', top: '4rem', left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 40 }} onClick={() => setMenuOpen(false)}>
-          <div style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e7e5e4', padding: '1rem 1.5rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: 'calc(100vh - 4rem)', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
+        <div style={{ position: 'fixed', top: '4rem', left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 40 }} onClick={() => setMenuOpen(false)}>
+          <div style={{ backgroundColor: '#ffffff', borderBottom: '2px solid #0a0a0a', padding: '1rem 1.5rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: 'calc(100vh - 4rem)', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
             {NAV.map(group => {
               if ('href' in group) {
                 return (
                   <Link key={group.href} href={group.href} onClick={() => setMenuOpen(false)}
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 0.5rem', fontSize: '1rem', fontWeight: 600, color: '#1c1917', borderRadius: '8px', textDecoration: 'none', borderBottom: '1px solid #f5f5f4' }}>
-                    <span style={{ color: TEAL }}>{group.icon}</span> {group.label}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 0.5rem', fontSize: '1rem', fontWeight: 700, fontFamily: 'Poppins, sans-serif', color: '#0a0a0a', borderRadius: '8px', textDecoration: 'none', borderBottom: '1px solid #f0f0f0' }}>
+                    <span style={{ color: PRIMARY }}>{group.icon}</span> {group.label}
                   </Link>
                 );
               }
               return (
                 <div key={group.label}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.5rem 0.25rem', marginTop: '0.25rem' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 800, fontFamily: 'Poppins, sans-serif', color: '#9a9a9a', textTransform: 'uppercase', letterSpacing: '0.1em', padding: '0.5rem 0.5rem 0.25rem', marginTop: '0.25rem' }}>
                     {group.label}
                   </div>
                   {group.items.map((item: NavItem) => {
                     const isWhereSalat = item.href === '/salle-de-priere';
                     return (
                       <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0.75rem', fontSize: '0.95rem', fontWeight: 500, color: '#1c1917', borderRadius: '8px', textDecoration: 'none', backgroundColor: isWhereSalat ? '#f0fdf4' : 'transparent' }}>
-                        <span style={{ color: isWhereSalat ? '#16a34a' : TEAL }}>{item.icon}</span>
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0.75rem', fontSize: '0.95rem', fontWeight: 600, fontFamily: 'Poppins, sans-serif', color: '#0a0a0a', borderRadius: '8px', textDecoration: 'none', backgroundColor: isWhereSalat ? '#f0fff8' : 'transparent' }}>
+                        <span style={{ color: isWhereSalat ? '#00bf63' : PRIMARY }}>{item.icon}</span>
                         {item.label}
                         {isWhereSalat && (
-                          <span style={{ backgroundColor: '#16a34a', color: 'white', fontSize: '0.6rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase' }}>
+                          <span style={{ backgroundColor: '#00bf63', color: 'white', fontSize: '0.6rem', fontWeight: 800, padding: '0.1rem 0.4rem', borderRadius: '4px', textTransform: 'uppercase' }}>
                             Nouveau
                           </span>
                         )}
@@ -175,12 +175,12 @@ export default function Navigation() {
               );
             })}
             {/* Where Salat mobile */}
-            <Link href="/salle-de-priere" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)', borderRadius: '10px', color: 'white', fontWeight: 700, fontSize: '1rem', textDecoration: 'none', marginTop: '0.5rem' }}>
+            <Link href="/salle-de-priere" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem', background: 'linear-gradient(135deg, #5e17eb 0%, #1540ff 100%)', border: '2px solid #0a0a0a', borderRadius: '10px', color: 'white', fontWeight: 700, fontFamily: 'Poppins, sans-serif', fontSize: '1rem', textDecoration: 'none', marginTop: '0.5rem' }}>
               <span>🕌</span> Where Salat
             </Link>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', border: '1px solid #e7e5e4', borderRadius: '8px', backgroundColor: 'white', color: '#1c1917', fontWeight: 500, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>Connexion</Link>
-              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', backgroundColor: TEAL, borderRadius: '8px', color: 'white', fontWeight: 600, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>Rejoindre la bêta</Link>
+              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', border: '2px solid #0a0a0a', borderRadius: '8px', backgroundColor: 'white', color: '#0a0a0a', fontWeight: 600, fontFamily: 'Poppins, sans-serif', fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>Connexion</Link>
+              <Link href="/connexion" onClick={() => setMenuOpen(false)} style={{ flex: 1, padding: '0.625rem', backgroundColor: PRIMARY, border: '2px solid #0a0a0a', borderRadius: '8px', color: 'white', fontWeight: 700, fontFamily: 'Poppins, sans-serif', fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none' }}>Rejoindre la bêta</Link>
             </div>
           </div>
         </div>

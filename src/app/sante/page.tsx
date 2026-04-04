@@ -240,7 +240,7 @@ export default function SantePage() {
                     </span>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'flex-end' }}>
-                    <span style={{ fontSize: '0.7rem', backgroundColor: h.gender === 'f' ? '#fce7f3' : h.gender === 'm' ? '#eff6ff' : '#f0fdf4', color: h.gender === 'f' ? '#9d174d' : h.gender === 'm' ? '#1e40af' : '#065f46', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
+                    <span style={{ fontSize: '0.7rem', backgroundColor: h.gender === 'f' ? '#fce7f3' : h.gender === 'm' ? '#eff6ff' : '#f0fff8', color: h.gender === 'f' ? '#9d174d' : h.gender === 'm' ? '#1e40af' : '#065f46', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
                       {h.gender === 'f' ? '🧕 Femmes' : h.gender === 'm' ? '👨 Hommes' : '👥 Mixte'}
                     </span>
                     {h.certifié && (

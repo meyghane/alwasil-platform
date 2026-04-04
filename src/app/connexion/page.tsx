@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Mail, Star, CheckCircle, MessageSquare, MapPin, Bell, Heart } from 'lucide-react';
 
-const TEAL = '#0d9488';
+const TEAL = '#5e17eb';
 
 const PERKS = [
   { icon: <Star size={15} />, label: 'Laisser un avis vérifié sur un praticien, librairie, agence Hajj' },
@@ -65,7 +65,7 @@ export default function ConnexionPage() {
       </div>
 
       {submitted ? (
-        <div style={{ textAlign: 'center', padding: '2.5rem 2rem', borderRadius: '1.25rem', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+        <div style={{ textAlign: 'center', padding: '2.5rem 2rem', borderRadius: '1.25rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8' }}>
           <CheckCircle size={42} color="#10b981" style={{ marginBottom: '1rem' }} />
           <h3 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#065f46' }}>Tu es sur la liste ! 🎉</h3>
           <p style={{ color: '#047857', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
@@ -79,8 +79,8 @@ export default function ConnexionPage() {
       ) : (
         <>
           {/* Ce que tu pourras faire */}
-          <div style={{ backgroundColor: '#f0fdfa', borderRadius: '1rem', border: '1px solid #99f6e4', padding: '1.25rem', marginBottom: '1.5rem' }}>
-            <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#0f766e', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.875rem' }}>
+          <div style={{ backgroundColor: '#f3eeff', borderRadius: '1rem', border: '1px solid #c4a8f8', padding: '1.25rem', marginBottom: '1.5rem' }}>
+            <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#4a11c0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.875rem' }}>
               Ce que tu débloques avec un compte
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>

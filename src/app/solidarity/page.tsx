@@ -303,7 +303,7 @@ export default function SolidarityPage() {
             {filteredVisites.map(v => (
               <div key={v.id} className="card" style={{ padding: '1.25rem' }}>
                 <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
-                  <span style={{ backgroundColor: '#f0fdf4', color: '#10b981', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700 }}>
+                  <span style={{ backgroundColor: '#f0fff8', color: '#10b981', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700 }}>
                     {TYPE_LIEU_LABELS[v.typeLieu]}
                   </span>
                   <span style={{ backgroundColor: '#f5f5f4', color: 'var(--text-secondary)', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem' }}>

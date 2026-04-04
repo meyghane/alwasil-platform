@@ -89,7 +89,7 @@ export default function EventsPage() {
       </div>
 
       {/* Bannière cours → Apprentissage */}
-      <Link href="/education" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', backgroundColor: '#f0fdfa', border: '1px solid #99f6e4', borderRadius: '0.5rem', textDecoration: 'none', color: '#0d9488', fontSize: '0.875rem', fontWeight: 500, marginBottom: '1.25rem' }}>
+      <Link href="/education" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', backgroundColor: '#f3eeff', border: '1px solid #c4a8f8', borderRadius: '0.5rem', textDecoration: 'none', color: '#5e17eb', fontSize: '0.875rem', fontWeight: 500, marginBottom: '1.25rem' }}>
         <span>📚</span>
         <span>Vous cherchez des <strong>cours d'arabe, Coran ou sciences islamiques</strong> ? Rendez-vous dans <strong>Apprentissage →</strong></span>
       </Link>
@@ -211,8 +211,8 @@ export default function EventsPage() {
         marginTop: '3rem',
         padding: '2rem',
         borderRadius: '1rem',
-        backgroundColor: 'rgba(13, 148, 136, 0.06)',
-        border: '1px solid rgba(13, 148, 136, 0.2)',
+        backgroundColor: 'rgba(94, 23, 235, 0.06)',
+        border: '1px solid rgba(94, 23, 235, 0.2)',
         textAlign: 'center',
       }}>
         <h3 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Vous organisez un événement ?</h3>
@@ -267,8 +267,8 @@ function EventCard({ event }: { event: Event }) {
             {event.format === 'enligne' ? '💻 En ligne' : '📍 Présentiel'}
           </span>
           <span style={{
-            backgroundColor: event.isFree ? '#dcfce7' : '#fef3c7',
-            color: event.isFree ? '#16a34a' : '#b45309',
+            backgroundColor: event.isFree ? '#d4fbe8' : '#fef3c7',
+            color: event.isFree ? '#00bf63' : '#b45309',
             padding: '0.15rem 0.6rem',
             borderRadius: '4px',
             fontSize: '0.72rem',
