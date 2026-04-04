@@ -134,7 +134,7 @@ export default function Home() {
 
       {/* ── Grid sections ────────────────────────────────────── */}
       <section id="sections" style={{ marginBottom: '5rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
           {SECTIONS.map(s => (
             <SectionCard key={s.href} {...s} />
           ))}
