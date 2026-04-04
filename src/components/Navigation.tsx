@@ -59,9 +59,8 @@ export default function Navigation() {
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '4rem' }}>
 
           {/* Logo */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', flexShrink: 0 }}>
-            <Image src="/logo-alwassil.png" alt="Al-Wasil" height={48} width={48} style={{ height: '48px', width: '48px', objectFit: 'contain' }} priority />
-            <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: '1.15rem', color: '#0a0a0a', letterSpacing: '-0.02em' }}>Al-Wasil</span>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
+            <Image src="/logo-alwasil.png" alt="al wasil" height={56} width={56} style={{ height: '56px', width: '56px', objectFit: 'contain' }} priority />
           </Link>
 
           {/* Desktop nav */}

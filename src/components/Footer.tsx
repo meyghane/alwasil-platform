@@ -73,7 +73,7 @@ export default function Footer() {
         {/* Divider */}
         <div style={{ borderTop: '1px solid #2a2a2a', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Image src="/logo-alwassil.png" alt="Al-Wasil" height={36} width={36} style={{ height: '36px', width: '36px', objectFit: 'contain' }} />
+            <Image src="/logo-alwasil.png" alt="al wasil" height={48} width={48} style={{ height: '48px', width: '48px', objectFit: 'contain' }} />
             <div>
               <p style={{ fontSize: '0.75rem', color: '#9a9a9a', margin: 0 }}>La plateforme de la communauté musulmane française</p>
             </div>
