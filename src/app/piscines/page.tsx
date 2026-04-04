@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Waves, MapPin, Clock, Search, AlertTriangle, CheckCircle, ExternalLink, Phone } from 'lucide-react';
 import { piscines, type PiscineType } from '@/data/piscines';
 import DeptFilter from '@/components/DeptFilter';
+import PageHeader from '@/components/PageHeader';
 
 const TYPE_FILTERS: { key: PiscineType | 'all'; label: string }[] = [
   { key: 'all', label: '🌐 Toutes' },
@@ -46,18 +47,9 @@ export default function PiscinesPage() {
   });
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <Waves size={28} color={ACCENT} />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Piscines — Créneaux Burkini</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Piscines d&apos;Île-de-France acceptant le burkini et maillots couvrants. Créneaux dédiés ou accueil inclusif toute la semaine.
-        </p>
-      </div>
+    <div>
+      <PageHeader title="Piscines Burkini" description="Créneaux réservés burkini et maillots couvrants en Île-de-France." color="#0284c7" emoji="🏊" />
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
       {/* Alertes importantes */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
@@ -203,6 +195,7 @@ export default function PiscinesPage() {
           <Link href="/contact?type=piscine" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Signaler une piscine</Link>
           <Link href="/contact?type=correction" className="btn btn-outline" style={{ textDecoration: 'none' }}>Corriger une info</Link>
         </div>
+      </div>
       </div>
     </div>
   );

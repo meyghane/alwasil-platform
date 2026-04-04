@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Heart, ExternalLink, Search, MapPin, Star, Video, Phone, Globe, CheckCircle } from 'lucide-react';
 import { psyProfiles, hijamaProfiles, roqyaProfiles, medicalProfiles } from '@/data/sante';
 import DeptFilter from '@/components/DeptFilter';
+import PageHeader from '@/components/PageHeader';
 
 type Tab = 'psy' | 'hijama' | 'roqya' | 'medical';
 
@@ -75,18 +76,9 @@ export default function SantePage() {
   const accentColor = tab === 'psy' ? ACCENT : tab === 'hijama' ? HIJAMA_COLOR : tab === 'medical' ? MEDICAL_COLOR : ROQYA_COLOR;
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <Heart size={28} color={ACCENT} />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Santé — Shifa (شِفَاء)</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Praticiens de confiance orientés communauté : psychologues, hijama, roqya char&apos;iyya, sage-femmes et médecins.
-        </p>
-      </div>
+    <div>
+      <PageHeader title="Santé" titleAr="شِفَاء" description="Psychologues orientés communauté, praticiens hijama certifiés et sages-femmes en Île-de-France." color="#db2777" emoji="🧠" />
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '0', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', overflowX: 'auto' }}>
@@ -450,6 +442,7 @@ export default function SantePage() {
           </div>
         </>
       )}
+      </div>
     </div>
   );
 }

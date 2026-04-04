@@ -17,6 +17,7 @@ import {
   type CagnotteCategory,
 } from '@/data/solidarity';
 import DeptFilter from '@/components/DeptFilter';
+import PageHeader from '@/components/PageHeader';
 
 // Map de photos Unsplash par thème
 const UNSPLASH_PHOTOS: Record<string, string> = {
@@ -117,18 +118,9 @@ export default function SolidarityPage() {
   });
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <HandHeart size={28} color="#ef4444" />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Solidarité — Takaful (تَكَافُل)</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Cagnottes, maraudes, visites de malades, voyages humanitaires et associations. Ensemble on va plus loin.
-        </p>
-      </div>
+    <div>
+      <PageHeader title="Solidarité" titleAr="تَكَافُل" description="Cagnottes, maraudes, visites aux malades et voyages humanitaires." color="#ef4444" emoji="🤲" />
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '0', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', overflowX: 'auto' }}>
@@ -444,6 +436,7 @@ export default function SolidarityPage() {
           <Link href="/contact?type=cagnotte" className="btn btn-primary" style={{ textDecoration: 'none' }}>Proposer une cagnotte</Link>
           <Link href="/contact?type=initiative" className="btn btn-outline" style={{ textDecoration: 'none' }}>Proposer une initiative</Link>
         </div>
+      </div>
       </div>
     </div>
   );

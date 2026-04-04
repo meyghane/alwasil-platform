@@ -11,6 +11,7 @@ import {
   type EventCategory,
 } from '@/data/events';
 import DeptFilter from '@/components/DeptFilter';
+import PageHeader from '@/components/PageHeader';
 
 const CATEGORIES: { key: EventCategory | 'all'; label: string }[] = [
   { key: 'all', label: 'Tout' },
@@ -68,25 +69,9 @@ export default function EventsPage() {
   });
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Calendar size={28} color="var(--primary-color)" />
-            <div>
-              <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Événements — Liqa (لِقَاء)</h1>
-              <p style={{ color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
-                {allEvents.filter(e => isUpcoming(e.date)).length} événements à venir en Île-de-France et en ligne.
-              </p>
-            </div>
-          </div>
-          <Link href="/contact?type=evenement" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
-            <Plus size={16} /> Proposer un événement
-          </Link>
-        </div>
-      </div>
+    <div>
+      <PageHeader title="Événements" titleAr="لِقَاء" description="Conférences, séminaires, portes ouvertes et iftars en France." color="#d97706" emoji="📅" />
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
       {/* Bannière cours → Apprentissage */}
       <Link href="/education" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', backgroundColor: '#f3eeff', border: '1px solid #c4a8f8', borderRadius: '0.5rem', textDecoration: 'none', color: '#5e17eb', fontSize: '0.875rem', fontWeight: 500, marginBottom: '1.25rem' }}>
@@ -220,6 +205,7 @@ export default function EventsPage() {
           Référencez-le gratuitement pour toucher toute la communauté d'Île-de-France.
         </p>
         <Link href="/contact?type=evenement" className="btn btn-primary" style={{ textDecoration: 'none' }}>Ajouter mon événement</Link>
+      </div>
       </div>
     </div>
   );

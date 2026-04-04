@@ -6,6 +6,7 @@ import {
   Briefcase, ExternalLink, Search, MapPin, Users,
   Star, CheckCircle, Clock,
 } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
 import {
   jobOffers,
   talentProfiles,
@@ -96,18 +97,15 @@ export default function JobsPage() {
   });
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <Briefcase size={28} color="#10b981" />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Emploi — Amal (أمَل)</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Offres d&apos;emploi <strong>voile accepté</strong> et <strong>prière acceptée</strong>, vivier de talents communautaires et réseau CMN.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        title="Emploi"
+        titleAr="أمَل"
+        description="Offres voile accepté et prière acceptée, vivier de talents communautaires et réseau CMN."
+        color="#1540ff"
+        emoji="💼"
+      />
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '0', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', overflowX: 'auto' }}>
@@ -416,6 +414,7 @@ export default function JobsPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

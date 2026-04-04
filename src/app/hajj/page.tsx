@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Plane, ExternalLink, Search, Star, MapPin, CheckCircle, XCircle, Phone, Globe, Users } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
 import {
   hajjAgences, hajjPackages,
   VOYAGE_TYPE_LABELS, VOYAGE_TYPE_COLORS,
@@ -78,18 +79,9 @@ export default function HajjPage() {
   const sorted = [...filteredPackages].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <Plane size={28} color="#059669" />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Hajj & Omra — الحج والعمرة</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Comparez les offres d&apos;agences de confiance, trouvez le package qui vous correspond et préparez votre voyage spirituel.
-        </p>
-      </div>
+    <div>
+      <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Comparez les agences françaises, offres 2026 et guide complet du pèlerin." color="#00bf63" emoji="🕋" />
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '0', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', overflowX: 'auto' }}>
@@ -417,6 +409,7 @@ export default function HajjPage() {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

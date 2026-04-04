@@ -10,6 +10,7 @@ import {
   type LibrairieType,
 } from '@/data/librairies';
 import DeptFilter from '@/components/DeptFilter';
+import PageHeader from '@/components/PageHeader';
 
 const TYPE_FILTERS: { key: LibrairieType | 'all'; label: string }[] = [
   { key: 'all', label: '🌐 Toutes' },
@@ -51,19 +52,9 @@ export default function LibrairiePage() {
   const sorted = [...filtered].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <BookOpen size={28} color={ACCENT} />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Librairies islamiques — Île-de-France</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Toutes les librairies islamiques d&apos;Île-de-France : livres, Corans, manuels d&apos;arabe, vêtements et accessoires.
-          Bientôt étendu à toute la France.
-        </p>
-      </div>
+    <div>
+      <PageHeader title="Librairies" description="Librairies islamiques d'Île-de-France : livres, Corans, arabe, cadeaux." color="#7c3aed" emoji="📖" />
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
       {/* Bandeau info */}
       <div style={{ marginBottom: '1.5rem', padding: '0.875rem 1rem', backgroundColor: `${ACCENT}08`, borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: `3px solid ${ACCENT}`, display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
@@ -243,6 +234,7 @@ export default function LibrairiePage() {
           <Link href="/contact?type=librairie" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Signaler une librairie</Link>
           <Link href="/contact?type=revendiquer-librairie" className="btn btn-outline" style={{ textDecoration: 'none' }}>Je gère cette librairie</Link>
         </div>
+      </div>
       </div>
     </div>
   );

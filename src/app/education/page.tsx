@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Search, MapPin, Star, BookOpen, Globe, Building2, CheckCircle } from 'lucide-react';
 import { allInstituts, COURSE_LABELS, type Institut, type CourseType } from '@/data/institutes';
 import DeptFilter from '@/components/DeptFilter';
+import PageHeader from '@/components/PageHeader';
 
 const FORMAT_LABELS = {
   presentiel: 'Présentiel',
@@ -74,18 +75,18 @@ export default function EducationPage() {
   });
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
+    <div>
+      <PageHeader
+        title="Apprentissage"
+        titleAr="عِلْم"
+        description="Instituts, mosquées et professeurs répertoriés en Île-de-France et en ligne."
+        color="#5e17eb"
+        emoji="📚"
+        count={allInstituts.length}
+        countLabel="ressources référencées"
+      />
 
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <BookOpen size={28} color="var(--primary-color)" />
-          <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Apprentissage — Ilm (عِلْم)</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          {allInstituts.length} instituts, mosquées et professeurs répertoriés en Île-de-France et en ligne.
-        </p>
-      </div>
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
 
       {/* Search bar */}
       <div style={{ position: 'relative', marginBottom: '1.25rem' }}>
@@ -356,6 +357,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
           </div>
         </div>
 
+      </div>
       </div>
     </div>
   );
