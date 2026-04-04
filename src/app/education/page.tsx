@@ -233,6 +233,7 @@ export default function EducationPage() {
         </p>
         <Link href="/contact?type=general" className="btn btn-primary" style={{ textDecoration: 'none' }}>Proposer un ajout</Link>
       </div>
+      </div>
     </div>
   );
 }
