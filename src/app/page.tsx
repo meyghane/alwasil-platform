@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight, MapPin } from 'lucide-react';
 import SectionCard from '@/components/SectionCard';

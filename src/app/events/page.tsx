@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Calendar, MapPin, Clock, ExternalLink, Plus } from 'lucide-react';
+import { Search, Calendar, MapPin, Clock, ExternalLink, Plus, User, Tag } from 'lucide-react';
 import {
   allEvents,
   EVENT_CATEGORY_LABELS,
@@ -17,6 +17,7 @@ const CATEGORIES: { key: EventCategory | 'all'; label: string }[] = [
   { key: 'all', label: 'Tout' },
   { key: 'conference', label: 'Conférence' },
   { key: 'maraude', label: 'Maraude' },
+  { key: 'cours', label: 'Cours' },
   { key: 'iftar', label: 'Iftar' },
   { key: 'webinaire', label: 'Webinaire' },
   { key: 'jeunesse', label: 'Jeunesse' },
@@ -38,7 +39,7 @@ export default function EventsPage() {
   const [selectedCategory, setSelectedCategory] = useState<EventCategory | 'all'>('all');
   const [showPast, setShowPast] = useState(false);
 
-  // Compteurs par département (sur les événements à venir uniquement)
+  // Compteurs par département
   const deptCounts: Record<string, number> = {};
   allEvents.filter(e => isUpcoming(e.date)).forEach(e => {
     deptCounts[e.department] = (deptCounts[e.department] ?? 0) + 1;
@@ -57,10 +58,8 @@ export default function EventsPage() {
     return matchSearch && matchDept && matchCat && matchTime;
   });
 
-  // Trier par date croissante
   const sorted = [...filtered].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-  // Grouper par date
   const grouped: Record<string, Event[]> = {};
   sorted.forEach(ev => {
     const key = ev.date;
@@ -69,261 +68,245 @@ export default function EventsPage() {
   });
 
   return (
-    <div>
-      <PageHeader title="Événements" titleAr="لِقَاء" description="Conférences, séminaires, portes ouvertes et iftars en France." color="#d97706" emoji="📅" />
-      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
+    <div style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
+      <PageHeader 
+        title="Événements" 
+        titleAr="لِقَاء" 
+        description="L'agenda communautaire : conférences, séminaires, et rencontres en France." 
+        color="#0d9488" 
+        emoji="📅" 
+      />
 
-      {/* Bannière cours → Apprentissage */}
-      <Link href="/education" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', backgroundColor: '#f3eeff', border: '1px solid #c4a8f8', borderRadius: '0.5rem', textDecoration: 'none', color: '#5e17eb', fontSize: '0.875rem', fontWeight: 500, marginBottom: '1.25rem' }}>
-        <span>📚</span>
-        <span>Vous cherchez des <strong>cours d'arabe, Coran ou sciences islamiques</strong> ? Rendez-vous dans <strong>Apprentissage →</strong></span>
-      </Link>
+      <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1000px' }}>
 
-      {/* Search */}
-      <div style={{ position: 'relative', marginBottom: '1.25rem' }}>
-        <Search size={18} style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
-        <input
-          type="text"
-          placeholder="Rechercher un événement, une ville, un organisateur..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '0.75rem 1rem 0.75rem 2.75rem',
-            borderRadius: '0.5rem',
-            border: '1px solid var(--border-color)',
-            fontSize: '0.95rem',
-            outline: 'none',
-            boxSizing: 'border-box',
-          }}
-        />
-      </div>
-
-      {/* Filtre département */}
-      <div style={{ marginBottom: '1.25rem' }}>
-        <DeptFilter value={selectedDept} onChange={setSelectedDept} counts={deptCounts} />
-      </div>
-
-      {/* Catégories */}
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-        {CATEGORIES.map(cat => {
-          const color = cat.key !== 'all' ? EVENT_CATEGORY_COLORS[cat.key] : 'var(--primary-color)';
-          const isActive = selectedCategory === cat.key;
-          return (
-            <button
-              key={cat.key}
-              onClick={() => setSelectedCategory(cat.key)}
+        {/* Search & Filters Bar */}
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '1.25rem',
+          marginBottom: '2.5rem',
+          padding: '1.5rem',
+          backgroundColor: '#fafaf9',
+          borderRadius: '12px',
+          border: '1px solid #e7e5e4'
+        }}>
+          <div style={{ position: 'relative' }}>
+            <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#a8a29e' }} />
+            <input
+              type="text"
+              placeholder="Ville, organisateur, mot-clé..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
               style={{
-                padding: '0.4rem 1rem',
-                borderRadius: '999px',
-                border: isActive ? `2px solid ${color}` : '1.5px solid var(--border-color)',
-                backgroundColor: isActive ? color : 'white',
-                color: isActive ? 'white' : 'var(--text-secondary)',
-                fontSize: '0.82rem',
-                fontWeight: isActive ? 700 : 400,
+                width: '100%',
+                padding: '0.8rem 1rem 0.8rem 3rem',
+                borderRadius: '8px',
+                border: '1px solid #e7e5e4',
+                fontSize: '0.95rem',
+                outline: 'none',
+                backgroundColor: 'white'
+              }}
+            />
+          </div>
+
+          <DeptFilter value={selectedDept} onChange={setSelectedDept} counts={deptCounts} />
+
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            {CATEGORIES.map(cat => {
+              const isActive = selectedCategory === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  onClick={() => setSelectedCategory(cat.key)}
+                  style={{
+                    padding: '0.4rem 0.8rem',
+                    borderRadius: '6px',
+                    border: '1px solid #e7e5e4',
+                    backgroundColor: isActive ? '#1c1917' : 'white',
+                    color: isActive ? 'white' : '#57534e',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s'
+                  }}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => setShowPast(!showPast)}
+              style={{
+                marginLeft: 'auto',
+                fontSize: '0.8rem',
+                color: '#78716c',
+                background: 'none',
+                border: 'none',
                 cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                transition: 'all 0.15s ease',
+                textDecoration: 'underline'
               }}
             >
-              {cat.label}
+              {showPast ? 'Masquer les archives' : 'Voir les archives'}
             </button>
-          );
-        })}
-        <button
-          onClick={() => setShowPast(!showPast)}
-          style={{
-            marginLeft: 'auto',
-            padding: '0.4rem 1rem',
-            borderRadius: '999px',
-            border: '1.5px solid var(--border-color)',
-            backgroundColor: showPast ? '#f5f5f4' : 'white',
-            color: 'var(--text-secondary)',
-            fontSize: '0.82rem',
-            cursor: 'pointer',
-          }}
-        >
-          {showPast ? 'Masquer passés' : 'Voir événements passés'}
-        </button>
-      </div>
-
-      {/* Résultats */}
-      {sorted.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-secondary)' }}>
-          <Calendar size={48} style={{ margin: '0 auto 1rem', opacity: 0.3 }} />
-          <p>Aucun événement pour ces filtres.</p>
-          <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Essaie un autre département ou une autre catégorie.</p>
+          </div>
         </div>
-      ) : (
-        <div>
-          {Object.entries(grouped).map(([date, events]) => (
-            <div key={date} style={{ marginBottom: '2rem' }}>
-              {/* Séparateur de date */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-                marginBottom: '1rem',
-              }}>
+
+        {/* Results */}
+        {sorted.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '5rem 0', color: '#a8a29e' }}>
+            <Calendar size={48} style={{ margin: '0 auto 1.5rem', opacity: 0.2 }} />
+            <p style={{ fontSize: '1.1rem', fontWeight: 500 }}>Aucun événement trouvé</p>
+            <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Essayez de modifier vos filtres de recherche.</p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+            {Object.entries(grouped).map(([date, events]) => (
+              <div key={date}>
+                {/* Date Header */}
                 <div style={{
-                  backgroundColor: 'var(--primary-color)',
-                  color: 'white',
-                  borderRadius: '8px',
-                  padding: '0.4rem 0.9rem',
-                  fontSize: '0.875rem',
-                  fontWeight: 700,
-                  whiteSpace: 'nowrap',
-                  textTransform: 'capitalize',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  marginBottom: '1rem'
                 }}>
-                  {formatDate(date)}
+                  <div style={{
+                    color: '#1c1917',
+                    fontSize: '0.95rem',
+                    fontWeight: 700,
+                    textTransform: 'capitalize'
+                  }}>
+                    {formatDate(date)}
+                  </div>
+                  <div style={{ flex: 1, height: '1px', backgroundColor: '#e7e5e4' }} />
                 </div>
-                <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-color)' }} />
-              </div>
 
-              {/* Cartes du jour */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-                {events.map(ev => (
-                  <EventCard key={ev.id} event={ev} />
-                ))}
+                {/* Events List */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {events.map(ev => (
+                    <EventRow key={ev.id} event={ev} />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        )}
+
+        {/* CTA */}
+        <div style={{
+          marginTop: '5rem',
+          padding: '3rem 2rem',
+          borderRadius: '16px',
+          backgroundColor: '#f0fdfa',
+          border: '1px solid #ccfbf1',
+          textAlign: 'center',
+        }}>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.75rem', color: '#134e4a' }}>Vous organisez un événement ?</h3>
+          <p style={{ color: '#0d9488', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
+            Référencez vos conférences, séminaires ou maraudes gratuitement sur Al-Wasil.
+          </p>
+          <Link href="/contact?type=evenement" className="btn btn-primary" style={{ 
+            textDecoration: 'none',
+            padding: '0.75rem 2rem',
+            backgroundColor: '#0d9488',
+            borderRadius: '8px',
+            fontWeight: 600
+          }}>
+            Ajouter un événement
+          </Link>
         </div>
-      )}
-
-      {/* CTA */}
-      <div style={{
-        marginTop: '3rem',
-        padding: '2rem',
-        borderRadius: '1rem',
-        backgroundColor: 'rgba(94, 23, 235, 0.06)',
-        border: '1px solid rgba(94, 23, 235, 0.2)',
-        textAlign: 'center',
-      }}>
-        <h3 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Vous organisez un événement ?</h3>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
-          Référencez-le gratuitement pour toucher toute la communauté d'Île-de-France.
-        </p>
-        <Link href="/contact?type=evenement" className="btn btn-primary" style={{ textDecoration: 'none' }}>Ajouter mon événement</Link>
-      </div>
       </div>
     </div>
   );
 }
 
-// ============================================================
-// Composant carte événement
-// ============================================================
-function EventCard({ event }: { event: Event }) {
+function EventRow({ event }: { event: Event }) {
   const color = EVENT_CATEGORY_COLORS[event.category];
   const past = !isUpcoming(event.date);
 
   return (
-    <div className="card" style={{
-      padding: 0,
+    <div style={{
       display: 'flex',
-      overflow: 'hidden',
-      opacity: past ? 0.65 : 1,
-      flexDirection: 'row',
+      alignItems: 'center',
+      padding: '1.5rem 0',
+      borderBottom: '1px solid #f5f5f4',
+      opacity: past ? 0.5 : 1,
+      gap: '2rem',
     }}>
-      {/* Bande couleur gauche */}
-      <div style={{ width: '5px', backgroundColor: color, flexShrink: 0 }} />
+      {/* Time column */}
+      <div style={{ width: '90px', flexShrink: 0 }}>
+        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1c1917' }}>
+          {event.timeStart}
+        </div>
+        <div style={{ fontSize: '0.8rem', color: '#78716c', marginTop: '2px' }}>
+          {event.timeEnd || 'Fin variable'}
+        </div>
+      </div>
 
-      <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-
-        {/* Badges top */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <span style={{
-            backgroundColor: color + '18',
+      {/* Content column */}
+      <div style={{ flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 600, margin: 0, color: '#1c1917' }}>
+            {event.title}
+          </h3>
+          <span style={{ 
+            fontSize: '0.65rem', 
+            fontWeight: 800, 
+            textTransform: 'uppercase', 
+            letterSpacing: '0.05em',
             color: color,
-            padding: '0.15rem 0.6rem',
-            borderRadius: '4px',
-            fontSize: '0.72rem',
-            fontWeight: 700,
+            backgroundColor: color + '12',
+            padding: '2px 8px',
+            borderRadius: '4px'
           }}>
             {EVENT_CATEGORY_LABELS[event.category]}
           </span>
-          <span style={{
-            backgroundColor: event.format === 'enligne' ? '#dbeafe' : '#f5f5f4',
-            color: event.format === 'enligne' ? '#2563eb' : 'var(--text-secondary)',
-            padding: '0.15rem 0.6rem',
-            borderRadius: '4px',
-            fontSize: '0.72rem',
-          }}>
-            {event.format === 'enligne' ? '💻 En ligne' : '📍 Présentiel'}
-          </span>
-          <span style={{
-            backgroundColor: event.isFree ? '#d4fbe8' : '#fef3c7',
-            color: event.isFree ? '#00bf63' : '#b45309',
-            padding: '0.15rem 0.6rem',
-            borderRadius: '4px',
-            fontSize: '0.72rem',
-            fontWeight: 600,
-          }}>
-            {event.isFree ? 'Gratuit' : event.price}
-          </span>
-          {past && (
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginLeft: 'auto' }}>Passé</span>
+        </div>
+        
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.875rem', color: '#78716c', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <MapPin size={15} color="#a8a29e" />
+            <span style={{ fontWeight: 500, color: '#44403c' }}>{event.city}</span> 
+            {event.department !== '00' && <span>({event.department})</span>}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <User size={15} color="#a8a29e" />
+            {event.organizer}
+          </div>
+          {event.isFree ? (
+            <div style={{ color: '#0d9488', fontWeight: 600 }}>Gratuit</div>
+          ) : (
+            <div style={{ color: '#b45309', fontWeight: 600 }}>{event.price}</div>
           )}
         </div>
-
-        {/* Titre */}
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, lineHeight: 1.3, margin: 0 }}>
-          {event.title}
-        </h3>
-
-        {/* Description */}
-        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
-          {event.description}
-        </p>
-
-        {/* Infos pratiques */}
-        <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-            <Clock size={13} color={color} />
-            {event.timeStart}{event.timeEnd ? ` → ${event.timeEnd}` : ''}
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-            <MapPin size={13} color={color} />
-            {event.location}, <strong>{event.city}</strong>
-            {event.department !== '00' && <span style={{ color: color, fontWeight: 600 }}> ({event.department})</span>}
-          </div>
-          <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-            Par <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{event.organizer}</span>
-          </div>
-        </div>
-
-        {/* Tags */}
-        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-          {event.tags.map(tag => (
-            <span key={tag} style={{
-              backgroundColor: '#f5f5f4',
-              color: 'var(--text-secondary)',
-              padding: '0.15rem 0.5rem',
-              borderRadius: '4px',
-              fontSize: '0.72rem',
-            }}>
-              #{tag}
-            </span>
-          ))}
-        </div>
-
       </div>
 
-      {/* Bouton inscription */}
-      {event.registrationUrl && !past && (
-        <div style={{ display: 'flex', alignItems: 'center', padding: '1.25rem 1rem', borderLeft: '1px solid var(--border-color)' }}>
+      {/* Action column */}
+      <div style={{ flexShrink: 0 }}>
+        {event.registrationUrl && !past ? (
           <a
             href={event.registrationUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', whiteSpace: 'nowrap' }}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.5rem', 
+              fontSize: '0.875rem', 
+              color: 'white',
+              backgroundColor: '#1c1917',
+              fontWeight: 600,
+              textDecoration: 'none',
+              padding: '0.6rem 1.25rem',
+              borderRadius: '8px',
+              transition: 'all 0.2s'
+            }}
           >
-            S'inscrire <ExternalLink size={13} />
+            S'inscrire <ExternalLink size={15} />
           </a>
-        </div>
-      )}
+        ) : past ? (
+          <span style={{ fontSize: '0.8rem', color: '#a8a29e', fontWeight: 500 }}>Événement passé</span>
+        ) : null}
+      </div>
     </div>
   );
 }
