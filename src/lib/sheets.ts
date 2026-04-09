@@ -240,5 +240,129 @@ export async function getCagnottesActives(): Promise<Cagnotte[]> {
   const all = await getCagnottes();
   return all
     .filter(c => c.is_active)
-    .sort((a, b) => b.montant_collecte - a.montant_collecte); // tri par montant collecté
+    .sort((a, b) => b.montant_collecte - a.montant_collecte);
+}
+
+// ── Piscines ─────────────────────────────────────────────────
+
+export type PiscineSheet = {
+  id: string;
+  name: string;
+  type: 'municipale' | 'privee' | 'associative';
+  adresse: string;
+  ville: string;
+  department: string;
+  creneaux: { jour: string; horaire: string; info?: string }[];
+  tarif: string;
+  phone: string;
+  website: string;
+  maps: string;
+  description: string;
+  confirmed: boolean;
+  lastVerified: string;
+  tags: string[];
+  note: string;
+  active: boolean;
+};
+
+function parseCreneaux(raw: string): { jour: string; horaire: string; info?: string }[] {
+  if (!raw) return [];
+  return raw.split('|').map(s => {
+    s = s.trim();
+    const infoMatch = s.match(/\(([^)]+)\)$/);
+    const info = infoMatch ? infoMatch[1] : undefined;
+    const withoutInfo = s.replace(/\s*\([^)]+\)$/, '').trim();
+    const parts = withoutInfo.split(/\s+/);
+    const horaire = parts.pop() ?? '';
+    const jour = parts.join(' ');
+    return { jour, horaire, ...(info ? { info } : {}) };
+  });
+}
+
+export async function getPiscines(): Promise<PiscineSheet[]> {
+  try {
+    const rows = await fetchSheet('Piscines');
+    return rows
+      .filter(row => row[0] && row[16]?.toUpperCase() !== 'FALSE')
+      .map(row => ({
+        id:           row[0]  || '',
+        name:         row[1]  || '',
+        type:         (row[2] || 'municipale') as PiscineSheet['type'],
+        adresse:      row[3]  || '',
+        ville:        row[4]  || '',
+        department:   row[5]  || '',
+        creneaux:     parseCreneaux(row[6]),
+        tarif:        row[7]  || '',
+        phone:        row[8]  || '',
+        website:      row[9]  || '',
+        maps:         row[10] || '',
+        description:  row[11] || '',
+        confirmed:    row[12]?.toUpperCase() === 'TRUE',
+        lastVerified: row[13] || '',
+        tags:         row[14] ? row[14].split(',').map(s => s.trim()).filter(Boolean) : [],
+        note:         row[15] || '',
+        active:       true,
+      }));
+  } catch (e) {
+    console.error('[sheets] getPiscines error:', e);
+    return [];
+  }
+}
+
+// ── Librairies ───────────────────────────────────────────────
+
+export type LibrairieSheet = {
+  id: string;
+  name: string;
+  type: 'physique' | 'en-ligne' | 'mixte';
+  description: string;
+  adresse: string;
+  ville: string;
+  department: string;
+  horaires: string;
+  fermeture: string;
+  phone: string;
+  website: string;
+  instagram: string;
+  maps: string;
+  specialites: string[];
+  langues: string[];
+  tags: string[];
+  online: boolean;
+  livraison: boolean;
+  note: string;
+  featured: boolean;
+};
+
+export async function getLibrairies(): Promise<LibrairieSheet[]> {
+  try {
+    const rows = await fetchSheet('Librairies');
+    return rows
+      .filter(row => row[0] && row[20]?.toUpperCase() !== 'FALSE')
+      .map(row => ({
+        id:          row[0]  || '',
+        name:        row[1]  || '',
+        type:        (row[2] || 'physique') as LibrairieSheet['type'],
+        description: row[3]  || '',
+        adresse:     row[4]  || '',
+        ville:       row[5]  || '',
+        department:  row[6]  || '',
+        horaires:    row[7]  || '',
+        fermeture:   row[8]  || '',
+        phone:       row[9]  || '',
+        website:     row[10] || '',
+        instagram:   row[11] || '',
+        maps:        row[12] || '',
+        specialites: row[13] ? row[13].split(',').map(s => s.trim()).filter(Boolean) : [],
+        langues:     row[14] ? row[14].split(',').map(s => s.trim()).filter(Boolean) : [],
+        tags:        row[15] ? row[15].split(',').map(s => s.trim()).filter(Boolean) : [],
+        online:      row[16]?.toUpperCase() === 'TRUE',
+        livraison:   row[17]?.toUpperCase() === 'TRUE',
+        note:        row[18] || '',
+        featured:    row[19]?.toUpperCase() === 'TRUE',
+      }));
+  } catch (e) {
+    console.error('[sheets] getLibrairies error:', e);
+    return [];
+  }
 }
