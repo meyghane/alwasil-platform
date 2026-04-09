@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse('Token manquant', { status: 400 });
   }
 
-  const result = verifyValidationToken(token);
+  const result = await verifyValidationToken(token);
   if (!result) {
     return new NextResponse('Token invalide ou expiré', { status: 400 });
   }

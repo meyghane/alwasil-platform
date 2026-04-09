@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   const fullData = { ...data, id, categorie, sheetTab: form.sheetTab };
 
   // Token de validation (valide 24h)
-  const token = createValidationToken(fullData);
+  const token = await createValidationToken(fullData);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://al-wasil.fr';
   const validateUrl = `${baseUrl}/api/admin/valider?token=${token}&action=valider`;
   const rejectUrl  = `${baseUrl}/api/admin/valider?token=${token}&action=rejeter`;

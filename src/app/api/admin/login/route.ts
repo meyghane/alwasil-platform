@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Identifiants incorrects' }, { status: 401 });
   }
 
-  const token = createSessionToken();
+  const token = await createSessionToken();
   const res = NextResponse.json({ ok: true });
   res.cookies.set(getSessionCookieName(), token, {
     httpOnly: true,
