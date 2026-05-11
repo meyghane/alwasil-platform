@@ -151,7 +151,7 @@ export default function EventsPage() {
           </div>
         </div>
 
-        {/* Results */}
+        {/* Results — grille 3 colonnes */}
         {sorted.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '5rem 0', color: '#a8a29e' }}>
             <Calendar size={48} style={{ margin: '0 auto 1.5rem', opacity: 0.2 }} />
@@ -159,34 +159,9 @@ export default function EventsPage() {
             <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Essayez de modifier vos filtres de recherche.</p>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-            {Object.entries(grouped).map(([date, events]) => (
-              <div key={date}>
-                {/* Date Header */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  marginBottom: '1rem'
-                }}>
-                  <div style={{
-                    color: '#1c1917',
-                    fontSize: '0.95rem',
-                    fontWeight: 700,
-                    textTransform: 'capitalize'
-                  }}>
-                    {formatDate(date)}
-                  </div>
-                  <div style={{ flex: 1, height: '1px', backgroundColor: '#e7e5e4' }} />
-                </div>
-
-                {/* Events List */}
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {events.map(ev => (
-                    <EventRow key={ev.id} event={ev} />
-                  ))}
-                </div>
-              </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+            {sorted.map(ev => (
+              <EventCard key={ev.id} event={ev} />
             ))}
           </div>
         )}
@@ -219,93 +194,105 @@ export default function EventsPage() {
   );
 }
 
-function EventRow({ event }: { event: Event }) {
+function EventCard({ event }: { event: Event }) {
   const color = EVENT_CATEGORY_COLORS[event.category];
   const past = !isUpcoming(event.date);
+  const d = new Date(event.date);
+  const dayNum = d.toLocaleDateString('fr-FR', { day: 'numeric' });
+  const monthStr = d.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
 
   return (
     <div style={{
+      backgroundColor: 'white',
+      borderRadius: '16px',
+      border: '1px solid #e7e5e4',
+      borderTop: `3px solid ${color}`,
+      overflow: 'hidden',
       display: 'flex',
-      alignItems: 'center',
-      padding: '1.5rem 0',
-      borderBottom: '1px solid #f5f5f4',
-      opacity: past ? 0.5 : 1,
-      gap: '2rem',
+      flexDirection: 'column',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+      opacity: past ? 0.6 : 1,
     }}>
-      {/* Time column */}
-      <div style={{ width: '90px', flexShrink: 0 }}>
-        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1c1917' }}>
-          {event.timeStart}
-        </div>
-        <div style={{ fontSize: '0.8rem', color: '#78716c', marginTop: '2px' }}>
-          {event.timeEnd || 'Fin variable'}
-        </div>
-      </div>
-
-      {/* Content column */}
-      <div style={{ flex: 1 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 600, margin: 0, color: '#1c1917' }}>
-            {event.title}
-          </h3>
-          <span style={{ 
-            fontSize: '0.65rem', 
-            fontWeight: 800, 
-            textTransform: 'uppercase', 
-            letterSpacing: '0.05em',
-            color: color,
-            backgroundColor: color + '12',
-            padding: '2px 8px',
-            borderRadius: '4px'
-          }}>
+      {/* Header */}
+      <div style={{ padding: '1rem 1.1rem 0.75rem', background: `linear-gradient(135deg, ${color}10, transparent)` }}>
+        {/* Badges */}
+        <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+          {event.featured && (
+            <span style={{ backgroundColor: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800 }}>⭐ En avant</span>
+          )}
+          <span style={{ backgroundColor: color + '18', color, border: `1px solid ${color}33`, padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}>
             {EVENT_CATEGORY_LABELS[event.category]}
           </span>
+          <span style={{ backgroundColor: '#f5f5f4', color: '#57534e', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 600 }}>
+            {event.format === 'enligne' ? '💻 En ligne' : event.format === 'hybride' ? '🔀 Hybride' : '📍 Présentiel'}
+          </span>
         </div>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.875rem', color: '#78716c', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <MapPin size={15} color="#a8a29e" />
-            <span style={{ fontWeight: 500, color: '#44403c' }}>{event.city}</span> 
-            {event.department !== '00' && <span>({event.department})</span>}
+
+        {/* Date + heure */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{
+            width: 44, height: 44, borderRadius: '10px', flexShrink: 0,
+            backgroundColor: color, display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+          }}>
+            <span style={{ color: 'white', fontSize: '1rem', fontWeight: 800, lineHeight: 1 }}>{dayNum}</span>
+            <span style={{ color: 'white', fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', opacity: 0.85 }}>{monthStr}</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <User size={15} color="#a8a29e" />
-            {event.organizer}
+          <div>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#1c1917' }}>
+              {event.timeStart}{event.timeEnd ? ` — ${event.timeEnd}` : ''}
+            </div>
+            <div style={{ fontSize: '0.72rem', color: '#a8a29e', marginTop: '1px', textTransform: 'capitalize' }}>
+              {d.toLocaleDateString('fr-FR', { weekday: 'long' })}
+            </div>
           </div>
-          {event.isFree ? (
-            <div style={{ color: '#0d9488', fontWeight: 600 }}>Gratuit</div>
-          ) : (
-            <div style={{ color: '#b45309', fontWeight: 600 }}>{event.price}</div>
-          )}
         </div>
       </div>
 
-      {/* Action column */}
-      <div style={{ flexShrink: 0 }}>
-        {event.registrationUrl && !past ? (
-          <a
-            href={event.registrationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              fontSize: '0.875rem', 
-              color: 'white',
-              backgroundColor: '#1c1917',
-              fontWeight: 600,
-              textDecoration: 'none',
-              padding: '0.6rem 1.25rem',
-              borderRadius: '8px',
-              transition: 'all 0.2s'
-            }}
-          >
-            S'inscrire <ExternalLink size={15} />
+      {/* Corps */}
+      <div style={{ padding: '0.75rem 1.1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+        <h3 style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0, color: '#1c1917', lineHeight: 1.35 }}>
+          {event.title}
+        </h3>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', color: '#78716c' }}>
+            <MapPin size={11} color="#a8a29e" />
+            <span style={{ fontWeight: 500, color: '#44403c' }}>{event.city}</span>
+            {event.department !== '00' && <span style={{ color: '#a8a29e' }}>({event.department})</span>}
+          </div>
+          <div style={{ fontSize: '0.72rem', color: '#a8a29e' }}>par {event.organizer}</div>
+        </div>
+
+        <p style={{
+          fontSize: '0.78rem', color: '#78716c', lineHeight: 1.5, margin: 0, flex: 1,
+          display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+        } as React.CSSProperties}>
+          {event.description}
+        </p>
+
+        <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+          {event.tags.slice(0, 3).map(t => (
+            <span key={t} style={{ backgroundColor: '#f5f5f4', color: '#78716c', padding: '1px 7px', borderRadius: '4px', fontSize: '0.68rem' }}>#{t}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div style={{ padding: '0 1.1rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
+        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: event.isFree ? '#0d9488' : '#b45309' }}>
+          {event.isFree ? '✓ Gratuit' : event.price}
+        </span>
+        {past ? (
+          <span style={{ fontSize: '0.72rem', color: '#a8a29e' }}>Événement passé</span>
+        ) : event.registrationUrl ? (
+          <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', backgroundColor: '#1c1917', color: 'white', padding: '0.5rem 0.875rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, textDecoration: 'none' }}>
+            S'inscrire <ExternalLink size={11} />
           </a>
-        ) : past ? (
-          <span style={{ fontSize: '0.8rem', color: '#a8a29e', fontWeight: 500 }}>Événement passé</span>
-        ) : null}
+        ) : (
+          <span style={{ fontSize: '0.72rem', color: '#78716c', fontWeight: 500 }}>Entrée libre</span>
+        )}
       </div>
     </div>
   );
