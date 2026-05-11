@@ -95,82 +95,108 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
           <strong style={{ color: 'var(--text-primary)' }}>{sorted.length}</strong> piscine{sorted.length > 1 ? 's' : ''} trouvée{sorted.length > 1 ? 's' : ''}
         </p>
 
-        {/* Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {/* Cards — grille 3 colonnes */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
           {sorted.map(p => (
-            <div key={p.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
-              <div style={{ padding: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem', gap: '0.75rem' }}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.35rem' }}>
-                      {p.confirmed
-                        ? <span style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}><CheckCircle size={10} style={{ display: 'inline', marginRight: '2px' }} />Confirmé — {p.lastVerified}</span>
-                        : <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}><AlertTriangle size={10} style={{ display: 'inline', marginRight: '2px' }} />À vérifier</span>
-                      }
-                      <span style={{ backgroundColor: '#f0f9ff', color: '#0369a1', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.7rem' }}>
-                        {p.type === 'municipale' ? '🏛️ Municipale' : p.type === 'privee' ? '🏊 Privée' : '🤝 Associative'}
-                      </span>
-                    </div>
-                    <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}>{p.name}</h3>
-                    <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-                      <MapPin size={11} style={{ display: 'inline' }} /> {p.adresse}, {p.ville} ({p.department})
-                      {p.tarif && <span style={{ marginLeft: '0.75rem', color: '#059669', fontWeight: 600 }}>💰 {p.tarif}</span>}
-                    </p>
-                  </div>
+            <div key={p.id} style={{
+              backgroundColor: 'white',
+              borderRadius: '16px',
+              border: '1px solid #e7e5e4',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            }}>
+              {/* Header coloré */}
+              <div style={{
+                background: p.confirmed
+                  ? 'linear-gradient(135deg, #f0fdf410, #dcfce708)'
+                  : 'linear-gradient(135deg, #fffbeb10, #fef3c708)',
+                borderBottom: `3px solid ${p.confirmed ? '#10b981' : '#f59e0b'}`,
+                padding: '1rem 1.1rem 0.875rem',
+              }}>
+                {/* Badges */}
+                <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
+                  {p.confirmed
+                    ? <span style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px' }}><CheckCircle size={9} />Confirmé</span>
+                    : <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px' }}><AlertTriangle size={9} />À vérifier</span>
+                  }
+                  <span style={{ backgroundColor: '#f0f9ff', color: '#0369a1', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 600 }}>
+                    {p.type === 'municipale' ? '🏛️ Municipale' : p.type === 'privee' ? '🏊 Privée' : '🤝 Associative'}
+                  </span>
                 </div>
 
-                <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', lineHeight: 1.55, marginBottom: '0.875rem' }}>{p.description}</p>
+                {/* Nom + localisation */}
+                <h3 style={{ fontWeight: 700, fontSize: '0.95rem', margin: '0 0 0.25rem', lineHeight: 1.3, color: '#1c1917' }}>{p.name}</h3>
+                <p style={{ fontSize: '0.75rem', color: '#78716c', margin: 0, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                  <MapPin size={11} /> {p.ville} ({p.department})
+                  {p.tarif && <span style={{ marginLeft: '0.5rem', color: '#059669', fontWeight: 600 }}>· {p.tarif}</span>}
+                </p>
+              </div>
+
+              {/* Corps */}
+              <div style={{ padding: '0.875rem 1.1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <p style={{ fontSize: '0.78rem', color: '#78716c', lineHeight: 1.5, margin: 0,
+                  display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                } as React.CSSProperties}>{p.description}</p>
 
                 {/* Créneaux */}
                 {p.creneaux.length > 0 && (
-                  <div style={{ marginBottom: '0.875rem' }}>
-                    <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
-                      <Clock size={11} style={{ display: 'inline', marginRight: '4px' }} />Créneaux burkini
+                  <div>
+                    <p style={{ fontSize: '0.68rem', fontWeight: 700, color: '#a8a29e', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <Clock size={10} />Créneaux burkini
                     </p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                      {p.creneaux.map((c, i) => (
-                        <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                          <span style={{ backgroundColor: `${getJourColor(c.jour)}18`, color: getJourColor(c.jour), border: `1px solid ${getJourColor(c.jour)}40`, padding: '0.2rem 0.65rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700, whiteSpace: 'nowrap', flexShrink: 0 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                      {p.creneaux.slice(0, 3).map((c, i) => (
+                        <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                          <span style={{ backgroundColor: `${getJourColor(c.jour)}18`, color: getJourColor(c.jour), border: `1px solid ${getJourColor(c.jour)}40`, padding: '1px 8px', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 700, whiteSpace: 'nowrap' }}>
                             {c.jour}
                           </span>
-                          <span style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{c.horaire}</span>
-                          {c.info && <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>{c.info}</span>}
+                          <span style={{ fontWeight: 600, fontSize: '0.75rem', color: '#1c1917' }}>{c.horaire}</span>
                         </div>
                       ))}
+                      {p.creneaux.length > 3 && (
+                        <span style={{ fontSize: '0.68rem', color: '#a8a29e' }}>+{p.creneaux.length - 3} autres créneaux</span>
+                      )}
                     </div>
                   </div>
                 )}
 
                 {p.note && (
-                  <div style={{ backgroundColor: p.confirmed ? '#fffbeb' : '#fff1f2', borderLeft: `3px solid ${p.confirmed ? '#f59e0b' : '#ef4444'}`, padding: '0.4rem 0.6rem', borderRadius: '0 4px 4px 0', fontSize: '0.75rem', color: p.confirmed ? '#78350f' : '#9f1239', marginBottom: '0.875rem' }}>
+                  <div style={{ backgroundColor: '#fffbeb', borderLeft: `2px solid #f59e0b`, padding: '0.35rem 0.6rem', borderRadius: '0 4px 4px 0', fontSize: '0.72rem', color: '#78350f' }}>
                     {p.note}
                   </div>
                 )}
 
-                <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap', marginBottom: '0.875rem' }}>
-                  {p.tags.map(tag => (
-                    <span key={tag} style={{ backgroundColor: '#f5f5f4', color: 'var(--text-secondary)', padding: '0.15rem 0.45rem', borderRadius: '4px', fontSize: '0.7rem' }}>#{tag}</span>
+                <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+                  {p.tags.slice(0, 4).map(tag => (
+                    <span key={tag} style={{ backgroundColor: '#f5f5f4', color: '#78716c', padding: '1px 7px', borderRadius: '4px', fontSize: '0.68rem' }}>#{tag}</span>
                   ))}
                 </div>
+              </div>
 
-                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                  {p.phone && (
-                    <a href={`tel:${p.phone}`}
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', backgroundColor: ACCENT, color: 'white', padding: '0.45rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
-                      <Phone size={13} /> Appeler pour confirmer
-                    </a>
-                  )}
+              {/* Footer CTA */}
+              <div style={{ padding: '0 1.1rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                {p.phone && (
+                  <a href={`tel:${p.phone}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: ACCENT, color: 'white', padding: '0.55rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none' }}>
+                    <Phone size={12} /> Appeler
+                  </a>
+                )}
+                <div style={{ display: 'flex', gap: '0.4rem' }}>
                   {p.website && (
-                    <a href={p.website} target="_blank" rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', border: '1px solid var(--border-color)', padding: '0.45rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.82rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
-                      <ExternalLink size={13} /> Site
+                    <a href={p.website} target="_blank" rel="noopener noreferrer" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', border: '1px solid #e7e5e4', padding: '0.45rem', borderRadius: '8px', fontSize: '0.75rem', color: '#57534e', textDecoration: 'none' }}>
+                      <ExternalLink size={11} /> Site
                     </a>
                   )}
                   {p.maps && (
-                    <a href={p.maps} target="_blank" rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', border: '1px solid var(--border-color)', padding: '0.45rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.82rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
-                      <MapPin size={13} /> Itinéraire
+                    <a href={p.maps} target="_blank" rel="noopener noreferrer" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', border: '1px solid #e7e5e4', padding: '0.45rem', borderRadius: '8px', fontSize: '0.75rem', color: '#57534e', textDecoration: 'none' }}>
+                      <MapPin size={11} /> Maps
                     </a>
+                  )}
+                  {!p.phone && !p.website && !p.maps && (
+                    <Link href="/contact?type=piscine" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.45rem', borderRadius: '8px', border: '1px solid #e7e5e4', fontSize: '0.75rem', color: '#78716c', textDecoration: 'none' }}>
+                      Infos
+                    </Link>
                   )}
                 </div>
               </div>

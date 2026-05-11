@@ -134,9 +134,13 @@ export default function EducationPage() {
             <p style={{ fontSize: '1.1rem', fontWeight: 500 }}>Aucun institut trouvé</p>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '1rem',
+          }}>
             {filtered.map(inst => (
-              <InstitutRow key={inst.id} inst={inst} />
+              <InstitutCard key={inst.id} inst={inst} />
             ))}
           </div>
         )}
@@ -169,124 +173,192 @@ export default function EducationPage() {
   );
 }
 
-function InstitutRow({ inst }: { inst: Institut }) {
+const TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; emoji: string }> = {
+  'institut':   { label: 'Institut',          color: '#5e17eb', bg: '#f3f0ff', emoji: '📚' },
+  'mosquee':    { label: 'Mosquée',           color: '#0d9488', bg: '#f0fdfa', emoji: '🕌' },
+  'professeur': { label: 'Professeur',        color: '#d97706', bg: '#fffbeb', emoji: '👨‍🏫' },
+  'en-ligne':   { label: 'Formation en ligne',color: '#2563eb', bg: '#eff6ff', emoji: '💻' },
+  'cercle':     { label: 'Cercle de science', color: '#db2777', bg: '#fdf2f8', emoji: '🔵' },
+};
+
+const AUDIENCE_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  hommes:  { label: '👨 Hommes',  color: '#1d4ed8', bg: '#eff6ff' },
+  femmes:  { label: '👩 Femmes',  color: '#be185d', bg: '#fdf2f8' },
+  enfants: { label: '🧒 Enfants', color: '#15803d', bg: '#f0fdf4' },
+  mixte:   { label: '👥 Mixte',   color: '#6b7280', bg: '#f9fafb' },
+};
+
+function InstitutCard({ inst }: { inst: Institut }) {
+  const tc = TYPE_CONFIG[inst.type] ?? TYPE_CONFIG['institut'];
+
   return (
     <div style={{
+      backgroundColor: 'white',
+      borderRadius: '16px',
+      border: '1px solid #e7e5e4',
+      overflow: 'hidden',
       display: 'flex',
-      alignItems: 'center',
-      padding: '1.75rem 0',
-      borderBottom: '1px solid #f5f5f4',
-      gap: '2rem',
+      flexDirection: 'column',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
     }}>
-      {/* Name & Type */}
-      <div style={{ flex: 1 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: 0, color: '#1c1917' }}>
-            {inst.name}
-          </h3>
-          <span style={{ 
-            fontSize: '0.625rem', 
-            fontWeight: 800, 
-            textTransform: 'uppercase', 
-            letterSpacing: '0.05em',
-            color: '#0d9488',
-            backgroundColor: '#f0fdfa',
-            padding: '2px 8px',
-            borderRadius: '4px',
-            border: '1px solid #ccfbf1'
+      {/* Header coloré */}
+      <div style={{
+        background: `linear-gradient(135deg, ${tc.color}18, ${tc.color}08)`,
+        borderBottom: `3px solid ${tc.color}`,
+        padding: '1.25rem 1.25rem 1rem',
+        position: 'relative',
+        minHeight: '90px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}>
+        {/* Badges top */}
+        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+          {inst.featured && (
+            <span style={{
+              fontSize: '0.65rem', fontWeight: 800,
+              color: 'white', backgroundColor: '#f59e0b',
+              padding: '2px 8px', borderRadius: '20px',
+            }}>
+              ⭐ Mis en avant
+            </span>
+          )}
+          <span style={{
+            fontSize: '0.65rem', fontWeight: 700,
+            color: tc.color, backgroundColor: 'white',
+            padding: '2px 8px', borderRadius: '20px',
+            border: `1px solid ${tc.color}44`,
           }}>
-            {TYPE_LABELS[inst.type as keyof typeof TYPE_LABELS]}
+            {tc.emoji} {tc.label}
           </span>
           {inst.verified && (
-            <span title="Établissement vérifié" style={{ color: '#0d9488', display: 'flex', alignItems: 'center' }}>
-              <CheckCircle size={16} fill="#0d9488" color="white" />
+            <span style={{
+              fontSize: '0.65rem', fontWeight: 700,
+              color: '#0d9488', backgroundColor: 'white',
+              padding: '2px 8px', borderRadius: '20px',
+              border: '1px solid #ccfbf1',
+            }}>
+              ✓ Vérifié
             </span>
           )}
         </div>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', fontSize: '0.875rem', color: '#78716c', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <MapPin size={15} color="#a8a29e" />
-            <span style={{ fontWeight: 500, color: '#44403c' }}>{inst.city}</span> 
-            {inst.department !== '00' && <span>({inst.department})</span>}
+
+        {/* Icône + localisation */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.75rem' }}>
+          <div style={{
+            width: 44, height: 44, borderRadius: '10px', flexShrink: 0,
+            backgroundColor: 'white', border: `1px solid ${tc.color}33`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '1.3rem', boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+          }}>
+            {tc.emoji}
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            {inst.format.includes('distanciel') ? <Globe size={15} color="#a8a29e" /> : <Building2 size={15} color="#a8a29e" />}
-            {inst.format.map(f => FORMAT_LABELS[f as keyof typeof FORMAT_LABELS]).join(', ')}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.8rem', color: '#44403c', fontWeight: 600 }}>
+              <MapPin size={12} color="#a8a29e" />
+              {inst.city}
+              {inst.department !== '00' && <span style={{ color: '#a8a29e', fontWeight: 400 }}>({inst.department})</span>}
+            </div>
+            {inst.rating && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: '#d97706', fontWeight: 600, marginTop: '2px' }}>
+                <Star size={11} fill="#d97706" color="#d97706" /> {inst.rating.toFixed(1)}
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        {/* Courses Tags */}
-        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-          {inst.courses.map(c => (
-            <span key={c} style={{
-              fontSize: '0.75rem',
-              color: '#57534e',
-              backgroundColor: '#f5f5f4',
-              padding: '2px 8px',
-              borderRadius: '4px',
-              fontWeight: 500
+      {/* Corps de la carte */}
+      <div style={{ padding: '1rem 1.25rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        {/* Titre */}
+        <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#1c1917', lineHeight: 1.35 }}>
+          {inst.name}
+        </h3>
+
+        {/* Format badges */}
+        <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+          {inst.format.map(f => (
+            <span key={f} style={{
+              fontSize: '0.65rem', fontWeight: 600,
+              color: '#44403c', backgroundColor: '#f5f5f4',
+              padding: '2px 8px', borderRadius: '20px',
+              border: '1px solid #e7e5e4',
             }}>
-              {COURSE_LABELS[c]}
+              {FORMAT_LABELS[f as keyof typeof FORMAT_LABELS]}
+            </span>
+          ))}
+        </div>
+
+        {/* Description */}
+        {inst.description && (
+          <p style={{
+            margin: 0, fontSize: '0.8rem', color: '#78716c', lineHeight: 1.55, flex: 1,
+            display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+          } as React.CSSProperties}>
+            {inst.description}
+          </p>
+        )}
+
+        {/* Audience */}
+        {inst.audience?.length > 0 && (
+          <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+            {inst.audience.map(a => {
+              const ac = AUDIENCE_CONFIG[a];
+              return (
+                <span key={a} style={{
+                  fontSize: '0.7rem', fontWeight: 600,
+                  color: ac.color, backgroundColor: ac.bg,
+                  padding: '3px 10px', borderRadius: '20px',
+                  border: `1.5px solid ${ac.color}33`,
+                }}>
+                  {ac.label}
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Cours hashtags */}
+        <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+          {inst.courses.slice(0, 5).map(c => (
+            <span key={c} style={{
+              fontSize: '0.7rem', color: '#57534e',
+              backgroundColor: '#f5f5f4', padding: '2px 8px',
+              borderRadius: '6px', fontWeight: 500, border: '1px solid #e7e5e4',
+            }}>
+              #{COURSE_LABELS[c]}
             </span>
           ))}
         </div>
       </div>
 
-      {/* Action column */}
-      <div style={{ flexShrink: 0, display: 'flex', gap: '0.75rem' }}>
+      {/* Footer — CTA */}
+      <div style={{ padding: '0 1.25rem 1.25rem' }}>
         {inst.website ? (
-          <a
-            href={inst.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              fontSize: '0.875rem', 
-              color: 'white',
-              backgroundColor: '#1c1917',
-              fontWeight: 600,
-              textDecoration: 'none',
-              padding: '0.6rem 1.25rem',
-              borderRadius: '8px',
-              transition: 'all 0.2s'
-            }}
-          >
-            Voir le site <ExternalLink size={15} />
+          <a href={inst.website} target="_blank" rel="noopener noreferrer" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+            padding: '0.65rem', borderRadius: '10px', width: '100%',
+            backgroundColor: '#1c1917', color: 'white',
+            fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none',
+          }}>
+            Voir le site <ExternalLink size={13} />
           </a>
         ) : inst.phone ? (
-          <a
-            href={`tel:${inst.phone}`}
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              fontSize: '0.875rem', 
-              color: '#1c1917',
-              fontWeight: 600,
-              textDecoration: 'none',
-              padding: '0.6rem 1.25rem',
-              borderRadius: '8px',
-              border: '1px solid #e7e5e4'
-            }}
-          >
-            Contact <Phone size={15} />
+          <a href={`tel:${inst.phone}`} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+            padding: '0.65rem', borderRadius: '10px', width: '100%',
+            border: '1.5px solid #1c1917', color: '#1c1917',
+            fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none',
+          }}>
+            <Phone size={13} /> Contacter
           </a>
         ) : (
-          <Link
-            href="/contact?type=general"
-            style={{ 
-              fontSize: '0.875rem', 
-              color: '#78716c',
-              fontWeight: 500,
-              textDecoration: 'none',
-              padding: '0.6rem 1.25rem',
-              borderRadius: '8px',
-              border: '1px solid #e7e5e4'
-            }}
-          >
+          <Link href="/contact?type=general" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
+            padding: '0.65rem', borderRadius: '10px', width: '100%',
+            border: '1px solid #e7e5e4', color: '#78716c',
+            fontSize: '0.85rem', fontWeight: 500, textDecoration: 'none',
+          }}>
             Infos
           </Link>
         )}

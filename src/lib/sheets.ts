@@ -60,6 +60,17 @@ export type Evenement = {
   featured: boolean;
 };
 
+// ── Statuts ────────────────────────────────────────────────
+// Convention : colonne "status" = dernière colonne de chaque onglet
+// Valeurs : "en ligne" | "à vérifier" | "pas en ligne"
+// Les lignes sans colonne status (données legacy) sont toujours incluses.
+
+function isPublished(row: string[], knownColCount: number): boolean {
+  const status = row[knownColCount]; // colonne juste après les colonnes connues
+  if (!status || status.trim() === '') return true; // pas de colonne status = legacy = inclus
+  return status.trim() === 'en ligne';
+}
+
 // ── Fonction générique de fetch ─────────────────────────────
 
 async function fetchSheet(sheetName: string): Promise<string[][]> {
@@ -94,7 +105,7 @@ export async function getMosquees(): Promise<Mosquee[]> {
     const rows = await fetchSheet('Mosquées');
 
     return rows
-      .filter(row => row[0]) // ignore lignes vides
+      .filter(row => row[0] && isPublished(row, 20)) // 20 colonnes connues + status en [20]
       .map(row => ({
         id_osm:           row[0]  || '',
         nom:              row[1]  || '',
@@ -139,7 +150,7 @@ export async function getEvenements(): Promise<Evenement[]> {
     const now = new Date();
 
     return rows
-      .filter(row => row[0] && row[3]) // doit avoir id et date
+      .filter(row => row[0] && row[3] && isPublished(row, 23)) // 23 colonnes connues
       .map(row => ({
         id:               row[0]  || '',
         titre:            row[1]  || '',
@@ -208,7 +219,7 @@ export async function getCagnottes(): Promise<Cagnotte[]> {
     const rows = await fetchSheet('Cagnottes');
 
     return rows
-      .filter(row => row[0] && row[4]) // doit avoir id et url
+      .filter(row => row[0] && row[4] && isPublished(row, 18)) // 18 colonnes connues
       .map(row => ({
         id:               row[0]  || '',
         titre:            row[1]  || '',
@@ -283,7 +294,7 @@ export async function getPiscines(): Promise<PiscineSheet[]> {
   try {
     const rows = await fetchSheet('Piscines');
     return rows
-      .filter(row => row[0] && row[16]?.toUpperCase() !== 'FALSE')
+      .filter(row => row[0] && row[16]?.toUpperCase() !== 'FALSE' && isPublished(row, 18))
       .map(row => ({
         id:           row[0]  || '',
         name:         row[1]  || '',
@@ -338,7 +349,7 @@ export async function getLibrairies(): Promise<LibrairieSheet[]> {
   try {
     const rows = await fetchSheet('Librairies');
     return rows
-      .filter(row => row[0] && row[20]?.toUpperCase() !== 'FALSE')
+      .filter(row => row[0] && row[20]?.toUpperCase() !== 'FALSE' && isPublished(row, 23))
       .map(row => ({
         id:          row[0]  || '',
         name:        row[1]  || '',

@@ -1,9 +1,15 @@
+// POST /api/admin/soumettre
+// Écrit la fiche dans l'onglet "Soumissions" du Google Sheet avec status "à vérifier"
+// + email de notification simple (admin valide directement dans le Sheet)
+
 import { NextRequest, NextResponse } from 'next/server';
-import { isAdminLoggedIn, createValidationToken } from '@/lib/admin-auth';
+import { isAdminLoggedIn } from '@/lib/admin-auth';
 import { CATEGORY_FORMS } from '@/lib/admin-forms';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${process.env.SHEET_PRIVE_ID || '1Lrx55hXR_fgAViZOT6B1fb72QXrVu7TgFxwZCkDwJeI'}/edit#gid=0`;
 
 export async function POST(req: NextRequest) {
   if (!(await isAdminLoggedIn())) {
@@ -16,48 +22,94 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Catégorie inconnue' }, { status: 400 });
   }
 
-  // Générer un id unique
   const id = `${categorie}-${Date.now()}`;
-  const fullData = { ...data, id, categorie, sheetTab: form.sheetTab };
+  const now = new Date().toISOString();
 
-  // Token de validation (valide 24h)
-  const token = await createValidationToken(fullData);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://al-wasil.fr';
-  const validateUrl = `${baseUrl}/api/admin/valider?token=${token}&action=valider`;
-  const rejectUrl  = `${baseUrl}/api/admin/valider?token=${token}&action=rejeter`;
+  const row = {
+    id,
+    categorie,
+    destinationTab: form.sheetTab,
+    status: 'à vérifier',
+    soumis_le: now,
+    soumis_par: 'admin',
+    ...data,
+  };
 
-  // Résumé des champs pour l'email
+  // Écrire dans le Sheet via Apps Script
+  const webhookUrl = process.env.APPS_SCRIPT_WEBHOOK_URL;
+  let sheetWriteOk = false;
+
+  if (webhookUrl) {
+    try {
+      const res = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sheetTab: 'Soumissions', row }),
+      });
+      sheetWriteOk = res.ok;
+    } catch (e) {
+      console.error('[soumettre] Apps Script error:', e);
+    }
+  }
+
+  // Email de notification (simple — admin valide dans le Sheet)
   const fieldsHtml = Object.entries(data)
-    .map(([k, v]) => `<tr><td style="padding:4px 8px;font-weight:600;color:#555">${k}</td><td style="padding:4px 8px">${v || '—'}</td></tr>`)
+    .map(([k, v]) => `<tr>
+      <td style="padding:5px 10px;font-weight:600;color:#555;border-bottom:1px solid #f3f4f6">${k}</td>
+      <td style="padding:5px 10px;color:#111;border-bottom:1px solid #f3f4f6">${String(v || '—')}</td>
+    </tr>`)
     .join('');
 
-  await resend.emails.send({
-    from: 'Al-Wasil Admin <onboarding@resend.dev>',
-    to: process.env.CONTACT_EMAIL || 'al-wasil@hotmail.com',
-    subject: `[Al-Wasil] Nouvelle fiche à valider — ${form.emoji} ${form.label}`,
-    html: `
-      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-        <div style="background:#0a0a0a;padding:20px;border-radius:8px 8px 0 0">
-          <h1 style="color:white;margin:0;font-size:1.2rem">Al-Wasil — Validation requise</h1>
-        </div>
-        <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
-          <p style="margin:0 0 16px">Une nouvelle fiche <strong>${form.emoji} ${form.label}</strong> est en attente de validation :</p>
-          <table style="width:100%;border-collapse:collapse;font-size:0.9rem;margin-bottom:24px">
-            ${fieldsHtml}
-          </table>
-          <div style="display:flex;gap:12px">
-            <a href="${validateUrl}" style="display:inline-block;background:#00bf63;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:700;font-size:1rem">
-              ✅ Valider et publier
-            </a>
-            <a href="${rejectUrl}" style="display:inline-block;background:#ef4444;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:700;font-size:1rem">
-              ❌ Rejeter
-            </a>
+  try {
+    await resend.emails.send({
+      from: 'Al-Wasil <onboarding@resend.dev>',
+      to: process.env.CONTACT_EMAIL || 'al-wasil@hotmail.com',
+      subject: `[Al-Wasil] Nouvelle soumission à vérifier — ${form.emoji} ${form.label}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:620px;margin:0 auto;background:#fff">
+          <div style="background:#0a0a0a;padding:20px 24px;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:12px">
+            <span style="font-size:1.5rem">${form.emoji}</span>
+            <div>
+              <h1 style="color:white;margin:0;font-size:1rem;font-weight:700">Nouvelle soumission — ${form.label}</h1>
+              <p style="color:#9ca3af;margin:4px 0 0;font-size:0.8rem">Soumis le ${new Date(now).toLocaleString('fr-FR')}</p>
+            </div>
           </div>
-          <p style="margin-top:16px;font-size:0.75rem;color:#9ca3af">Ce lien expire dans 24h.</p>
-        </div>
-      </div>
-    `,
-  });
 
-  return NextResponse.json({ ok: true, message: 'Email de validation envoyé !' });
+          <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px">
+            <table style="width:100%;border-collapse:collapse;font-size:0.875rem;margin-bottom:24px;border:1px solid #f3f4f6;border-radius:8px;overflow:hidden">
+              ${fieldsHtml}
+            </table>
+
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px;margin-bottom:20px">
+              <p style="margin:0;font-size:0.875rem;color:#15803d;font-weight:600">Pour publier cette fiche sur le site :</p>
+              <ol style="margin:8px 0 0;padding-left:20px;color:#166534;font-size:0.85rem;line-height:1.8">
+                <li>Ouvrir le Google Sheet (bouton ci-dessous)</li>
+                <li>Aller dans l'onglet <strong>"Soumissions"</strong></li>
+                <li>Changer le statut de <code style="background:#dcfce7;padding:1px 5px;border-radius:3px">"à vérifier"</code> → <code style="background:#dcfce7;padding:1px 5px;border-radius:3px">"en ligne"</code></li>
+                <li>L'Apps Script copie automatiquement la ligne dans l'onglet <strong>${form.sheetTab}</strong></li>
+              </ol>
+            </div>
+
+            <a href="${SHEET_URL}" style="display:inline-block;background:#0a0a0a;color:white;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.9rem">
+              📊 Ouvrir le Google Sheet
+            </a>
+
+            <p style="margin:16px 0 0;font-size:0.75rem;color:#9ca3af">
+              Mettre <code>"pas en ligne"</code> pour rejeter. La fiche ne sera pas publiée sur le site.
+            </p>
+          </div>
+        </div>
+      `,
+    });
+  } catch (e) {
+    console.error('[soumettre] Resend error:', e);
+  }
+
+  return NextResponse.json({
+    ok: true,
+    sheetWriteOk,
+    message: sheetWriteOk
+      ? 'Fiche enregistrée dans le Sheet (onglet Soumissions) — email envoyé.'
+      : 'Email envoyé. Vérifier la connexion Apps Script.',
+  });
 }

@@ -190,76 +190,91 @@ export default function JobsPage() {
             <strong style={{ color: 'var(--text-primary)' }}>{filteredOffers.length}</strong> offre{filteredOffers.length > 1 ? 's' : ''} trouvée{filteredOffers.length > 1 ? 's' : ''}
           </p>
 
-          {/* Job cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {/* Job cards — grille 3 colonnes */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
             {filteredOffers.map(job => (
-              <div key={job.id} className="card" style={{ padding: '1.25rem', borderLeft: job.featured ? '3px solid #10b981' : undefined }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  {/* Logo */}
-                  <div style={{ width: '48px', height: '48px', borderRadius: '10px', backgroundColor: '#f5f5f4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', flexShrink: 0 }}>
-                    {job.companyLogo}
+              <div key={job.id} style={{
+                backgroundColor: 'white',
+                borderRadius: '16px',
+                border: '1px solid #e7e5e4',
+                borderTop: job.featured ? `3px solid #10b981` : undefined,
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+              }}>
+                {/* Header */}
+                <div style={{ padding: '1rem 1.1rem 0.75rem', background: 'linear-gradient(135deg, #f0fdf408, #ffffff)' }}>
+                  {/* Badges */}
+                  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
+                    {job.featured && (
+                      <span style={{ backgroundColor: '#10b981', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800 }}>⭐ Mis en avant</span>
+                    )}
+                    {job.cmn && (
+                      <span style={{ backgroundColor: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}>🌐 Via CMN</span>
+                    )}
+                    <span style={{ backgroundColor: `${JOB_TYPE_COLORS[job.type]}20`, color: JOB_TYPE_COLORS[job.type], padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}>
+                      {JOB_TYPE_LABELS[job.type]}
+                    </span>
+                    <span style={{ backgroundColor: '#f5f5f4', color: '#57534e', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 600 }}>
+                      {REMOTE_LABELS[job.remote]}
+                    </span>
                   </div>
 
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    {/* Top row */}
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.4rem', alignItems: 'center' }}>
-                      {job.featured && (
-                        <span style={{ backgroundColor: '#10b981', color: 'white', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>
-                          ⭐ Mis en avant
-                        </span>
-                      )}
-                      {job.cmn && (
-                        <span style={{ backgroundColor: '#f59e0b', color: 'white', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>
-                          🌐 Via CMN
-                        </span>
-                      )}
-                      <span style={{ backgroundColor: `${JOB_TYPE_COLORS[job.type]}20`, color: JOB_TYPE_COLORS[job.type], padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>
-                        {JOB_TYPE_LABELS[job.type]}
+                  {/* Logo + titre */}
+                  <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+                    <div style={{ width: 40, height: 40, borderRadius: '8px', backgroundColor: '#f5f5f4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem', flexShrink: 0, border: '1px solid #e7e5e4' }}>
+                      {job.companyLogo}
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '0.9rem', fontWeight: 700, margin: '0 0 0.2rem', lineHeight: 1.3, color: '#1c1917' }}>{job.title}</h3>
+                      <p style={{ fontSize: '0.75rem', color: '#78716c', margin: 0 }}>
+                        <strong style={{ color: '#44403c' }}>{job.company}</strong>
+                      </p>
+                      <p style={{ fontSize: '0.72rem', color: '#a8a29e', margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        <MapPin size={10} /> {job.location}
+                        {job.salary && <span style={{ marginLeft: '0.4rem', color: '#10b981', fontWeight: 700 }}>· {job.salary}</span>}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Corps */}
+                <div style={{ padding: '0.75rem 1.1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <p style={{ fontSize: '0.78rem', color: '#78716c', lineHeight: 1.5, margin: 0,
+                    display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                  } as React.CSSProperties}>
+                    {job.description}
+                  </p>
+
+                  {/* Friendly badges */}
+                  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                    {job.friendly.map(f => (
+                      <span key={f} style={{ backgroundColor: `${FRIENDLY_COLORS[f]}18`, color: FRIENDLY_COLORS[f], border: `1px solid ${FRIENDLY_COLORS[f]}40`, padding: '2px 8px', borderRadius: '20px', fontSize: '0.68rem', fontWeight: 700 }}>
+                        {FRIENDLY_LABELS[f]}
                       </span>
-                      <span style={{ color: 'var(--text-secondary)', fontSize: '0.75rem' }}>{REMOTE_LABELS[job.remote]}</span>
-                    </div>
-
-                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.2rem', lineHeight: 1.3 }}>{job.title}</h3>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                      <strong style={{ color: 'var(--text-primary)' }}>{job.company}</strong>
-                      {' '}<MapPin size={12} style={{ display: 'inline', marginLeft: '0.25rem' }} />{' '}{job.location}
-                      {job.salary && <span style={{ marginLeft: '0.75rem', color: '#10b981', fontWeight: 600 }}>💰 {job.salary}</span>}
-                    </p>
-
-                    <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', lineHeight: 1.55, marginBottom: '0.75rem' }}>
-                      {job.description}
-                    </p>
-
-                    {/* Friendly badges */}
-                    <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-                      {job.friendly.map(f => (
-                        <span key={f} style={{ backgroundColor: `${FRIENDLY_COLORS[f]}18`, color: FRIENDLY_COLORS[f], border: `1px solid ${FRIENDLY_COLORS[f]}40`, padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.72rem', fontWeight: 700 }}>
-                          {FRIENDLY_LABELS[f]}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Tags + footer */}
-                    <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-                      {job.tags.map(tag => (
-                        <span key={tag} style={{ backgroundColor: '#f5f5f4', color: 'var(--text-secondary)', padding: '0.15rem 0.45rem', borderRadius: '4px', fontSize: '0.7rem' }}>#{tag}</span>
-                      ))}
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                        <Clock size={11} style={{ display: 'inline', marginRight: '3px' }} />
-                        Publié le {new Date(job.postedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
-                        {job.postedBy && (
-                          <span> • Par <strong style={{ color: 'var(--text-primary)' }}>{job.postedBy}</strong></span>
-                        )}
-                      </div>
-                      <a href={job.url} target="_blank" rel="noopener noreferrer"
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', backgroundColor: '#10b981', color: 'white', padding: '0.45rem 1rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
-                        Postuler <ExternalLink size={12} />
-                      </a>
-                    </div>
+                    ))}
                   </div>
+
+                  {/* Tags */}
+                  <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+                    {job.tags.slice(0, 4).map(tag => (
+                      <span key={tag} style={{ backgroundColor: '#f5f5f4', color: '#78716c', padding: '1px 7px', borderRadius: '4px', fontSize: '0.68rem' }}>#{tag}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div style={{ padding: '0 1.1rem 1rem' }}>
+                  <div style={{ fontSize: '0.68rem', color: '#a8a29e', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Clock size={10} />
+                    {new Date(job.postedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+                    {job.postedBy && <span> · <strong style={{ color: '#78716c' }}>{job.postedBy}</strong></span>}
+                  </div>
+                  <a href={job.url} target="_blank" rel="noopener noreferrer"
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#10b981', color: 'white', padding: '0.6rem', borderRadius: '8px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: '100%' }}>
+                    Postuler <ExternalLink size={12} />
+                  </a>
                 </div>
               </div>
             ))}
