@@ -56,7 +56,7 @@ export default function ConnexionPage() {
           W
         </div>
         <h1 style={{ fontSize: '1.65rem', fontWeight: 800, marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-          Al-Wasil bêta
+          Al-Wasil
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto' }}>
           Inscris-toi pour être parmi les premiers à accéder aux fonctionnalités communautaires — avis, favoris, alertes.

@@ -175,7 +175,7 @@ export default function Home() {
               backdropFilter: 'blur(6px)',
             }}>
               <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#fff', display: 'inline-block' }} />
-              Bêta ouverte · Communauté musulmane de France
+              Plateforme communautaire · France
             </div>
 
             <h1 style={{
@@ -215,7 +215,7 @@ export default function Home() {
               }}>
                 Explorer <ArrowRight size={14} />
               </a>
-              <Link href="/connexion" style={{
+              <Link href="/contact" style={{
                 display: 'inline-flex', alignItems: 'center',
                 padding: '0.75rem 1.5rem',
                 backgroundColor: 'rgba(255,255,255,0.1)',
@@ -226,7 +226,7 @@ export default function Home() {
                 backdropFilter: 'blur(6px)',
                 letterSpacing: '-0.01em',
               }}>
-                Rejoindre la bêta
+                Nous contacter
               </Link>
             </div>
           </div>
@@ -391,11 +391,11 @@ export default function Home() {
             Rejoins la communauté
           </h2>
           <p style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.75)', maxWidth: '440px', margin: '0 auto 2rem', lineHeight: 1.7 }}>
-            Al-Wasil est en bêta ouverte. Chaque retour compte pour bâtir la meilleure
-            plateforme pour les musulmans de France.
+            Contribue à faire grandir la plateforme communautaire
+            de référence pour les musulmans de France.
           </p>
           <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/connexion" style={{
+            <Link href="/contact" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
               padding: '0.8rem 1.75rem',
               backgroundColor: '#fff', color: V[700],
@@ -403,7 +403,7 @@ export default function Home() {
               textDecoration: 'none', borderRadius: '8px',
               boxShadow: '0 4px 16px rgba(0,0,0,.15)',
             }}>
-              S&apos;inscrire <ArrowRight size={14} />
+              Proposer une ressource <ArrowRight size={14} />
             </Link>
             <Link href="/contact" style={{
               display: 'inline-flex', alignItems: 'center',

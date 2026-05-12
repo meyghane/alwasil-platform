@@ -115,8 +115,8 @@ export default function Navigation() {
             <Link href="/connexion" className="nav-desktop login-link">
               Connexion
             </Link>
-            <Link href="/connexion" className="btn btn-primary join-btn">
-              Nous rejoindre
+            <Link href="/contact?type=general" className="btn btn-primary join-btn">
+              Contribuer
             </Link>
             <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn">
               {menuOpen ? <X size={22} /> : <Menu size={22} />}

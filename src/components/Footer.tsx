@@ -59,8 +59,8 @@ export default function Footer() {
                 {section.links.map(link => (
                   <li key={link.href + link.label}>
                     <Link href={link.href} style={{ fontSize: '0.85rem', color: '#cccccc', textDecoration: 'none', lineHeight: 1.4 }}
-                      onMouseOver={e => (e.currentTarget.style.color = '#c4a8f8')}
-                      onMouseOut={e => (e.currentTarget.style.color = '#cccccc')}>
+                      onMouseOver={e => (e.currentTarget.style.color = '#6ee7b7')}
+                      onMouseOut={e => (e.currentTarget.style.color = '#9a9a9a')}>
                       {link.label}
                     </Link>
                   </li>
@@ -84,7 +84,7 @@ export default function Footer() {
         {/* Espace pub footer */}
         <div style={{ marginTop: '1.5rem', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #2a2a2a', textAlign: 'center' }}>
           <Link href="/annonceurs" style={{ fontSize: '0.78rem', color: '#9a9a9a', textDecoration: 'none' }}>
-            📣 Emplacement publicitaire disponible — <strong style={{ color: '#c4a8f8' }}>Annoncez sur Al-Wasil →</strong>
+            📣 Emplacement publicitaire disponible — <strong style={{ color: '#6ee7b7' }}>Annoncez sur Al-Wasil →</strong>
           </Link>
         </div>
       </div>
