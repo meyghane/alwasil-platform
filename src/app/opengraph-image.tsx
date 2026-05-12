@@ -53,7 +53,7 @@ export default async function Image() {
 
         {/* Pills */}
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center', maxWidth: '900px' }}>
-          {['Emploi voile OK', 'Piscines burkini', 'Hajj & Omra', 'Hijama · Psy', 'Where Salat', 'Librairies islamiques'].map(label => (
+          {['Emploi voile OK', 'Piscines burkini', 'Hajj & Omra', 'Hijama · Psy', 'Événements IDF', 'Librairies islamiques'].map(label => (
             <div key={label} style={{
               backgroundColor: 'rgba(255,255,255,0.15)',
               border: '1px solid rgba(255,255,255,0.25)',

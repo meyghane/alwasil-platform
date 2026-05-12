@@ -323,14 +323,8 @@ export const articles: Article[] = [
         href: '/jobs',
         desc: 'Entreprises qui acceptent le voile, les aménagements de prière, et valorisent la diversité religieuse',
       },
-      { type: 'h2', content: "Where Salat : l'alternative pour prier près de chez vous" },
-      { type: 'p', content: "Si votre lieu de travail ne peut pas vous offrir d'espace, Where Salat (la feature Al-Wasil) recense des particuliers et commerçants qui ouvrent leur espace aux alentours de votre lieu de travail. Entrez votre adresse professionnelle, trouvez un espace à 5 min à pied, et réservez votre créneau." },
-      {
-        type: 'cta',
-        label: 'Trouver un espace de prière près de votre travail',
-        href: '/salle-de-priere',
-        desc: 'Where Salat — FissabiliLlah, gratuit, partout en Île-de-France',
-      },
+      { type: 'h2', content: "Trouver un espace de prière près de son lieu de travail" },
+      { type: 'p', content: "Si votre lieu de travail ne dispose pas d'espace de prière, de nombreuses mosquées et salles communautaires en Île-de-France ouvrent leurs portes aux travailleurs lors des pauses. Renseignez-vous auprès de la mosquée la plus proche de votre lieu de travail." },
       {
         type: 'faq',
         items: [

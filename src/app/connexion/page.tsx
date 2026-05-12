@@ -8,10 +8,9 @@ const TEAL = '#5e17eb';
 
 const PERKS = [
   { icon: <Star size={15} />, label: 'Laisser un avis vérifié sur un praticien, librairie, agence Hajj' },
-  { icon: <MessageSquare size={15} />, label: 'Contacter un hôte Where Salat et réserver une place de prière' },
-  { icon: <Bell size={15} />, label: 'Notifications push : prière suivante près de toi' },
-  { icon: <MapPin size={15} />, label: 'Proposer ton propre espace de prière (Where Salat)' },
+  { icon: <Bell size={15} />, label: 'Notifications : nouvelles ressources et événements près de toi' },
   { icon: <Heart size={15} />, label: 'Sauvegarder tes ressources favorites sur toutes les sections' },
+  { icon: <MessageSquare size={15} />, label: 'Accès aux fonctionnalités communautaires en avant-première' },
 ];
 
 export default function ConnexionPage() {
@@ -60,7 +59,7 @@ export default function ConnexionPage() {
           Al-Wasil bêta
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto' }}>
-          Inscris-toi pour être parmi les premiers à accéder aux fonctionnalités communautaires — avis, Where Salat, favoris.
+          Inscris-toi pour être parmi les premiers à accéder aux fonctionnalités communautaires — avis, favoris, alertes.
         </p>
       </div>
 
