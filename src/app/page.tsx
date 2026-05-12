@@ -6,6 +6,7 @@ import {
   ArrowRight, MapPin, ChevronRight, Users, BookOpen, Calendar, Briefcase,
   Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
   HeartHandshake, UserCheck, Landmark, ShieldCheck, MessageCircle,
+  Search, CheckCircle, Zap, Plus,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { allInstituts } from '@/data/institutes';
@@ -210,42 +211,61 @@ export default function Home() {
             </div>
 
             <h1 style={{
-              fontSize: 'clamp(2.75rem, 5vw, 3.75rem)',
-              fontWeight: 700, lineHeight: 1.05,
+              fontSize: 'clamp(2.4rem, 5vw, 3.5rem)',
+              fontWeight: 800, lineHeight: 1.08,
               letterSpacing: '-0.03em',
-              color: '#fff', marginBottom: '1.25rem',
+              color: '#fff', marginBottom: '1rem',
             }}>
-              L&apos;essentiel de la{' '}
+              Fini de chercher partout.{' '}
               <span style={{
-                background: 'linear-gradient(135deg, #e0c8ff 0%, #fff 100%)',
+                background: 'linear-gradient(135deg, #6ee7b7 0%, #a7f3d0 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-              }}>communauté</span>
-              {' '}réuni.
+              }}>Tout est ici.</span>
             </h1>
 
+            {/* Problème */}
+            <p style={{
+              fontSize: '0.95rem',
+              color: 'rgba(255,255,255,0.55)',
+              lineHeight: 1.6, marginBottom: '0.6rem', maxWidth: '430px',
+              fontStyle: 'italic',
+            }}>
+              Emploi voile OK impossible à trouver. Piscine burkini introuvable. Cours d&apos;arabe dispersés. Événements qu&apos;on rate.
+            </p>
+
+            {/* Solution */}
             <p style={{
               fontSize: '1rem',
-              color: 'rgba(255,255,255,0.75)',
-              lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: '420px',
+              color: 'rgba(255,255,255,0.88)',
+              lineHeight: 1.7, marginBottom: '2rem', maxWidth: '430px',
+              fontWeight: 500,
             }}>
-              Emploi voile accepté, piscines burkini, librairies, Hajj & Omra,
-              psychologues, événements… Tout centralisé pour les musulmans de France.
+              Al-Wasil centralise <strong style={{ color: '#6ee7b7' }}>tout ce que la communauté musulmane de France cherche</strong> — en un seul endroit, mis à jour par la communauté.
             </p>
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
               <a href="#rubriques" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
                 padding: '0.75rem 1.5rem',
-                backgroundColor: '#fff', color: V[700],
+                backgroundColor: '#fff', color: V[800],
                 fontWeight: 700, fontSize: '0.9rem',
                 textDecoration: 'none', borderRadius: '8px',
-                boxShadow: '0 0 20px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.2)',
-                letterSpacing: '-0.01em',
+                boxShadow: '0 0 20px rgba(255,255,255,0.25), 0 4px 12px rgba(0,0,0,0.2)',
               }}>
-                Explorer <ArrowRight size={14} />
+                Je cherche une ressource <ArrowRight size={14} />
               </a>
+              <Link href="/contact?type=general" style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                padding: '0.75rem 1.25rem',
+                backgroundColor: 'rgba(110,231,183,0.12)', color: '#6ee7b7',
+                fontWeight: 600, fontSize: '0.9rem',
+                textDecoration: 'none', borderRadius: '8px',
+                border: '1px solid rgba(110,231,183,0.35)',
+              }}>
+                <Plus size={14} /> Proposer une fiche
+              </Link>
             </div>
           </div>
 
@@ -337,21 +357,86 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── LABEL RUBRIQUES ──────────────────────────────────── */}
-      <div id="rubriques" style={{ borderBottom: `1px solid ${V.border}`, backgroundColor: V.card }}>
-        <div className="container" style={{ padding: '0.875rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ width: '3px', height: '16px', backgroundColor: V.primary, borderRadius: '9999px', display: 'block', flexShrink: 0 }} />
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.dark, textTransform: 'uppercase' }}>
-              Les Rubriques
+      {/* ─── COMMENT ÇA MARCHE ────────────────────────────────── */}
+      <section style={{ backgroundColor: '#fff', padding: '4rem 0', borderBottom: `1px solid ${V.border}` }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>
+              Comment ça marche
             </span>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+              Trois étapes, c&apos;est tout.
+            </h2>
+            <p style={{ color: V.muted, fontSize: '0.95rem', maxWidth: '420px', margin: '0 auto' }}>
+              Pas d&apos;inscription, pas de compte. Trouve ce que tu cherches en quelques secondes.
+            </p>
           </div>
-          <span style={{ fontSize: '0.72rem', color: V.muted }}>{SECTIONS.length} sections disponibles</span>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+            {[
+              {
+                icon: <Search size={24} color={V.primary} strokeWidth={1.8} />,
+                step: '01',
+                title: 'Cherche',
+                desc: 'Tape ta ville, une catégorie ou un mot-clé. Filtre par département. Le moteur connaît plus de 1000 ressources vérifiées.',
+              },
+              {
+                icon: <CheckCircle size={24} color={V.primary} strokeWidth={1.8} />,
+                step: '02',
+                title: 'Trouve instantanément',
+                desc: 'Résultats filtrés et organisés. Chaque fiche est vérifiée ou soumise par la communauté. Contacts directs inclus.',
+              },
+              {
+                icon: <Zap size={24} color={V.primary} strokeWidth={1.8} />,
+                step: '03',
+                title: 'Agis directement',
+                desc: 'Clique, appelle, postule ou donne directement. Et si quelque chose manque, ajoute-le pour aider les suivants.',
+              },
+            ].map((s, i) => (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: '14px',
+                    backgroundColor: V[50], border: `1px solid ${V[200]}`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    {s.icon}
+                  </div>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 800, color: V[200], letterSpacing: '0.1em' }}>ÉTAPE {s.step}</span>
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: V.dark, marginBottom: '0.4rem' }}>{s.title}</h3>
+                  <p style={{ fontSize: '0.85rem', color: V.muted, lineHeight: 1.7 }}>{s.desc}</p>
+                </div>
+                {i < 2 && (
+                  <div style={{ position: 'absolute', right: '-1rem', top: '26px', color: V[300] }}>
+                    <ArrowRight size={16} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── LABEL RUBRIQUES ──────────────────────────────────── */}
+      <div id="rubriques" style={{ backgroundColor: '#fff', padding: '3.5rem 0 0' }}>
+        <div className="container" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>
+            Toutes les rubriques
+          </span>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+            Que cherches-tu aujourd&apos;hui ?
+          </h2>
+          <p style={{ color: V.muted, fontSize: '0.9rem', maxWidth: '480px', margin: '0 auto' }}>
+            {SECTIONS.length} rubriques · chacune mise à jour par la communauté
+          </p>
         </div>
       </div>
 
       {/* ─── GRID SECTIONS ────────────────────────────────────── */}
-      <section style={{ padding: '2rem 0 4rem', backgroundColor: '#fff' }}>
+      <section style={{ padding: '0 0 4rem', backgroundColor: '#fff' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
             {SECTIONS.map(s => <RubriqueCard key={s.href} {...s} />)}
@@ -380,59 +465,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── CTA COMMUNAUTÉ — même vert profond que la bannière ── */}
+      {/* ─── CONTRIBUTION CTA — même vert profond que la bannière ── */}
       <section style={{
         background: 'linear-gradient(150deg, #0a3d20 0%, #052810 45%, #020f07 100%)',
-        padding: '4rem 0',
+        padding: '5rem 0',
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Halo lumineux top-left identique au hero */}
         <div style={{
           position: 'absolute', top: '-20%', left: '-5%',
           width: '50%', height: '120%',
           background: 'radial-gradient(ellipse at center, rgba(40,200,100,0.22) 0%, rgba(20,140,60,0.08) 50%, transparent 70%)',
           pointerEvents: 'none',
         }} />
-        <div className="container" style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
-            <div style={{
-              width: '48px', height: '48px',
-              backgroundColor: 'rgba(255,255,255,0.15)',
-              borderRadius: '12px', display: 'flex',
-              alignItems: 'center', justifyContent: 'center',
-            }}>
-              <Users size={22} color="#fff" />
-            </div>
+
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          {/* Accroche centrale */}
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#6ee7b7', textTransform: 'uppercase' }}>
+              Ce site grandit grâce à vous
+            </span>
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', margin: '0.75rem 0 0.875rem' }}>
+              Chaque fiche ajoutée = une ressource<br />de plus pour quelqu&apos;un qui en a besoin.
+            </h2>
+            <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.6)', maxWidth: '500px', margin: '0 auto', lineHeight: 1.7 }}>
+              Al-Wasil est construit par la communauté, pour la communauté.
+              Plus il y a de données, plus il est utile. Plus il est utile, plus les gens l&apos;utilisent.
+              <strong style={{ color: 'rgba(255,255,255,0.85)' }}> Tu fais partie de cette boucle.</strong>
+            </p>
           </div>
-          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.025em', marginBottom: '0.75rem' }}>
-            Rejoins la communauté
-          </h2>
-          <p style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.75)', maxWidth: '440px', margin: '0 auto 2rem', lineHeight: 1.7 }}>
-            Contribue à faire grandir la plateforme communautaire
-            de référence pour les musulmans de France.
-          </p>
-          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact" style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-              padding: '0.8rem 1.75rem',
-              backgroundColor: '#fff', color: V[700],
-              fontWeight: 700, fontSize: '0.9rem',
+
+          {/* 4 actions de contribution */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '2.5rem' }}>
+            {[
+              { href: '/contact?type=piscine',      icon: <Waves size={18} strokeWidth={1.8} />,         label: 'Signaler une piscine burkini',    sub: 'Créneau, horaires, tarif' },
+              { href: '/contact?type=evenement',     icon: <Calendar size={18} strokeWidth={1.8} />,      label: 'Ajouter un événement',             sub: 'Conférence, maraude, cours...' },
+              { href: '/contact?type=offre-emploi',  icon: <Briefcase size={18} strokeWidth={1.8} />,     label: 'Signaler un employeur OK',         sub: 'Voile accepté, prière OK' },
+              { href: '/contact?type=general',       icon: <Plus size={18} strokeWidth={1.8} />,           label: 'Autre ressource',                  sub: 'Institut, librairie, praticien...' },
+            ].map((item, i) => (
+              <Link key={i} href={item.href} style={{
+                textDecoration: 'none',
+                display: 'flex', alignItems: 'flex-start', gap: '0.875rem',
+                padding: '1.1rem 1.25rem',
+                backgroundColor: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '12px',
+                transition: 'background 0.2s',
+              }}
+              onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)')}
+              onMouseOut={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)')}
+              >
+                <div style={{
+                  width: 36, height: 36, borderRadius: '8px', flexShrink: 0,
+                  backgroundColor: 'rgba(110,231,183,0.15)',
+                  border: '1px solid rgba(110,231,183,0.25)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#6ee7b7',
+                }}>
+                  {item.icon}
+                </div>
+                <div>
+                  <p style={{ color: '#fff', fontWeight: 600, fontSize: '0.875rem', margin: '0 0 2px' }}>{item.label}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.75rem', margin: 0 }}>{item.sub}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* CTA principal */}
+          <div style={{ textAlign: 'center' }}>
+            <Link href="/contact?type=general" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+              padding: '0.9rem 2rem',
+              backgroundColor: '#fff', color: '#065f46',
+              fontWeight: 700, fontSize: '0.95rem',
               textDecoration: 'none', borderRadius: '8px',
-              boxShadow: '0 4px 16px rgba(0,0,0,.15)',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
             }}>
-              Proposer une ressource <ArrowRight size={14} />
+              <Plus size={16} /> Contribuer à Al-Wasil
             </Link>
-            <Link href="/contact" style={{
-              display: 'inline-flex', alignItems: 'center',
-              padding: '0.8rem 1.5rem',
-              backgroundColor: 'rgba(255,255,255,0.1)',
-              color: '#fff', fontWeight: 600, fontSize: '0.9rem',
-              textDecoration: 'none', borderRadius: '8px',
-              border: '1px solid rgba(255,255,255,0.25)',
-            }}>
-              Nous contacter
-            </Link>
+            <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.75rem', marginTop: '1rem' }}>
+              Gratuit · Sans compte · En 2 minutes
+            </p>
           </div>
         </div>
       </section>
