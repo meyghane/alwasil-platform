@@ -35,20 +35,37 @@ export async function POST(req: NextRequest) {
     ...data,
   };
 
-  // Écrire dans le Sheet via Apps Script
-  const webhookUrl = process.env.APPS_SCRIPT_WEBHOOK_URL;
+  // ── VOIE 1 : Make.com webhook (AI + Sheet + Email) ─────────────
+  const makeUrl = process.env.MAKE_WEBHOOK_URL;
   let sheetWriteOk = false;
 
-  if (webhookUrl) {
+  if (makeUrl) {
     try {
-      const res = await fetch(webhookUrl, {
+      const res = await fetch(makeUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sheetTab: 'Soumissions', row }),
+        body: JSON.stringify(row),
       });
       sheetWriteOk = res.ok;
     } catch (e) {
-      console.error('[soumettre] Apps Script error:', e);
+      console.error('[soumettre] Make webhook error:', e);
+    }
+  }
+
+  // ── VOIE 2 : Apps Script (fallback si Make indisponible) ────────
+  if (!sheetWriteOk) {
+    const appsScriptUrl = process.env.APPS_SCRIPT_WEBHOOK_URL;
+    if (appsScriptUrl) {
+      try {
+        const res = await fetch(appsScriptUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sheetTab: 'Soumissions', row }),
+        });
+        sheetWriteOk = res.ok;
+      } catch (e) {
+        console.error('[soumettre] Apps Script fallback error:', e);
+      }
     }
   }
 
