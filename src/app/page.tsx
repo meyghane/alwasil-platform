@@ -1,10 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight, MapPin, ChevronRight, Users, BookOpen, Calendar, Briefcase,
   Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
-  HeartHandshake, UserCheck, Landmark,
+  HeartHandshake, UserCheck, Landmark, ShieldCheck, MessageCircle,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { allInstituts } from '@/data/institutes';
@@ -37,76 +38,90 @@ const V = {
 };
 
 // ── Data ──────────────────────────────────────────────────────────
-const SECTIONS = [
+const SECTIONS: {
+  href: string; icon: LucideIcon; color: string; bg: string;
+  title: string; arabic: string; description: string; tags: string[];
+  image: string; soon?: boolean;
+}[] = [
   {
-    href: '/education', emoji: '📚',
+    href: '/education', icon: BookOpen,
     color: '#059669', bg: '#d1fae5',
     title: 'Éducation', arabic: 'العلم',
     description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.',
     tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'],
+    image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80',
   },
   {
-    href: '/events', emoji: '📅',
+    href: '/events', icon: Calendar,
     color: '#047857', bg: '#ecfdf5',
     title: 'Événements', arabic: 'اللقاء',
     description: 'Conférences, séminaires et portes ouvertes en France.',
     tags: ['Conférences', 'Séminaires', 'En ligne'],
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
   },
   {
-    href: '/solidarity', emoji: '🤲',
+    href: '/solidarity', icon: HeartHandshake,
     color: '#065f46', bg: '#d1fae5',
     title: 'Solidarité', arabic: 'التكافل',
     description: 'Cagnottes, maraudes, visites aux malades et voyages humanitaires.',
     tags: ['Cagnottes', 'Maraudes', 'Gaza'],
+    image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80',
   },
   {
-    href: '/jobs', emoji: '💼',
+    href: '/jobs', icon: Briefcase,
     color: '#059669', bg: '#ecfdf5',
     title: 'Emploi', arabic: 'الأمل',
     description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.',
     tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'],
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
   },
   {
-    href: '/sante', emoji: '🧠',
+    href: '/sante', icon: Stethoscope,
     color: '#047857', bg: '#d1fae5',
     title: 'Santé', arabic: 'الشفاء',
     description: 'Psychologues orientés communauté, hijama certifiés et roqya.',
     tags: ['Psychologues', 'Hijama', 'Roqya'],
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80',
   },
   {
-    href: '/librairies', emoji: '📖',
+    href: '/librairies', icon: Library,
     color: '#065f46', bg: '#ecfdf5',
     title: 'Librairies', arabic: 'المكتبة',
     description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.',
     tags: ['Corans', 'Livres', 'Enfants'],
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
   },
   {
-    href: '/piscines', emoji: '🏊',
+    href: '/piscines', icon: Waves,
     color: '#10b981', bg: '#d1fae5',
     title: 'Piscines Burkini', arabic: 'السباحة',
     description: 'Créneaux burkini et maillots couvrants en Île-de-France.',
     tags: ['Créneaux femmes', 'Burkini', 'IdF'],
+    image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80',
   },
   {
-    href: '/hajj', emoji: '🕋',
+    href: '/hajj', icon: Plane,
     color: '#059669', bg: '#ecfdf5',
     title: 'Hajj & Omra', arabic: 'الحج',
     description: 'Comparez les agences, offres 2026 et guide du pèlerin.',
     tags: ['Hajj 2026', 'Omra', 'Comparateur'],
+    image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80',
   },
   {
-    href: '/justice', emoji: '⚖️',
+    href: '/justice', icon: ShieldCheck,
     color: '#047857', bg: '#d1fae5',
     title: 'Justice & Droits', arabic: 'العدل',
     description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.',
     tags: ['Voile au travail', 'ARCOM', 'Discrimination'],
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80',
   },
   {
-    href: '#', emoji: '💬',
+    href: '#', icon: MessageCircle,
     color: '#6ee7b7', bg: '#ecfdf5',
     title: 'Communauté', arabic: 'الأمة',
     description: 'Annuaire de compétences, marrainage et espace de brainstorming.',
     tags: ['Marrainage', 'Compétences', 'Bientôt'],
+    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80',
     soon: true,
   },
 ];
@@ -138,9 +153,9 @@ function buildStats(): StatItem[] {
 const STATS = buildStats();
 
 const EVENTS = [
-  { title: "Conférence : L'Éthique au Travail", date: 'Sam 28 Mars · 14h00', location: 'Grande Mosquée de Paris', organizer: 'Institut Al-Ghazali', tag: 'Conférence', color: '#7c3aed' },
-  { title: 'Maraude Solidaire — Gare du Nord', date: 'Dim 29 Mars · 19h30', location: 'Gare du Nord, Paris', organizer: 'Au Cœur de la Fraternité', tag: 'Solidarité', color: '#6366f1' },
-  { title: "Webinaire : Comprendre les enjeux de l'IA", date: 'Jeu 2 Avril · 20h00', location: 'En ligne (Zoom)', organizer: 'Muslim Tech Network', tag: 'Webinaire', color: '#5e6ad2' },
+  { title: "Conférence : L'Éthique au Travail", date: 'Sam 28 Mars · 14h00', location: 'Grande Mosquée de Paris', organizer: 'Institut Al-Ghazali', tag: 'Conférence', color: '#059669' },
+  { title: 'Maraude Solidaire — Gare du Nord', date: 'Dim 29 Mars · 19h30', location: 'Gare du Nord, Paris', organizer: 'Au Cœur de la Fraternité', tag: 'Solidarité', color: '#047857' },
+  { title: "Webinaire : Comprendre les enjeux de l'IA", date: 'Jeu 2 Avril · 20h00', location: 'En ligne (Zoom)', organizer: 'Muslim Tech Network', tag: 'Webinaire', color: '#065f46' },
 ];
 
 // ── Page ──────────────────────────────────────────────────────────
@@ -250,15 +265,11 @@ export default function Home() {
                   className="led-face"
                   style={{ background: '#051c0e' }}
                 >
+                  {/* Icône Lucide tracé vert — pas d'emoji */}
+                  <s.icon size={22} color="#6ee7b7" strokeWidth={1.5} />
                   <span style={{
-                    fontSize: '1.6rem',
-                    filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.25))',
-                  }}>
-                    {s.emoji}
-                  </span>
-                  <span style={{
-                    fontSize: '0.56rem', fontWeight: 800,
-                    color: 'rgba(255,255,255,0.9)',
+                    fontSize: '0.54rem', fontWeight: 800,
+                    color: 'rgba(255,255,255,0.88)',
                     textAlign: 'center',
                     letterSpacing: '0.05em',
                     textTransform: 'uppercase',
@@ -429,86 +440,100 @@ export default function Home() {
   );
 }
 
-// ── RubriqueCard ──────────────────────────────────────────────────
-function RubriqueCard({ href, emoji, color, bg, title, arabic, description, tags, soon }: {
-  href: string; emoji: string; color: string; bg: string;
+// ── RubriqueCard — image de fond + icône cercle vert + hover ─────
+function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tags, soon, image }: {
+  href: string; icon: LucideIcon; color: string; bg: string;
   title: string; arabic: string; description: string;
-  tags: string[]; soon?: boolean;
+  tags: string[]; soon?: boolean; image: string;
 }) {
-  const card = (
+  const [hovered, setHovered] = useState(false);
+
+  const inner = (
     <div
+      onMouseEnter={() => !soon && setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
-        backgroundColor: '#fff',
-        border: `1px solid ${V.border}`,
-        borderRadius: '12px',
+        position: 'relative',
+        borderRadius: '16px',
         overflow: 'hidden',
-        display: 'flex', flexDirection: 'column',
-        height: '100%',
-        opacity: soon ? 0.65 : 1,
+        height: '230px',
         cursor: soon ? 'default' : 'pointer',
-        transition: 'box-shadow 0.2s, transform 0.15s',
-      }}
-      onMouseOver={e => {
-        if (!soon) {
-          (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 20px rgba(94,106,210,.12)`;
-          (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)';
-        }
-      }}
-      onMouseOut={e => {
-        (e.currentTarget as HTMLElement).style.boxShadow = '';
-        (e.currentTarget as HTMLElement).style.transform = '';
+        opacity: soon ? 0.7 : 1,
       }}
     >
-      {/* Barre accent top */}
-      <div style={{ height: '3px', backgroundColor: color }} />
+      {/* Image de fond */}
+      <img
+        src={image}
+        alt={title}
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover',
+          transform: hovered ? 'scale(1.07)' : 'scale(1)',
+          transition: 'transform 0.5s ease',
+        }}
+      />
 
-      <div style={{ padding: '1.125rem 1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <div style={{
-              width: '36px', height: '36px',
-              backgroundColor: bg, borderRadius: '8px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.1rem', flexShrink: 0,
-            }}>
-              {emoji}
-            </div>
-            <div>
-              <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: V.dark, lineHeight: 1.2 }}>
-                {title}
-              </div>
-              <div style={{ fontSize: '0.68rem', color: V.muted, fontFamily: 'serif', marginTop: '1px' }}>
-                {arabic}
-              </div>
-            </div>
-          </div>
-          {soon && (
-            <span style={{
-              fontSize: '0.6rem', fontWeight: 700,
-              letterSpacing: '0.05em', textTransform: 'uppercase',
-              backgroundColor: V[50], color: V.muted,
-              padding: '0.2rem 0.45rem', borderRadius: '4px',
-              flexShrink: 0,
-            }}>
-              Bientôt
-            </span>
-          )}
+      {/* Overlay dégradé noir */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: hovered
+          ? 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.18) 100%)'
+          : 'linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.08) 100%)',
+        transition: 'background 0.4s',
+      }} />
+
+      {/* Contenu */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'flex-end',
+        padding: '1.1rem 1.25rem',
+      }}>
+        {/* Icône en cercle tracé vert */}
+        <div style={{
+          width: 38, height: 38, borderRadius: '50%',
+          border: '1.5px solid rgba(110,231,183,0.65)',
+          backgroundColor: 'rgba(5,150,105,0.18)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          marginBottom: '0.55rem',
+          backdropFilter: 'blur(4px)',
+        }}>
+          <Icon size={17} color="#6ee7b7" strokeWidth={1.8} />
         </div>
 
-        {/* Description */}
-        <p style={{ fontSize: '0.8125rem', color: V.text, lineHeight: 1.65, flex: 1, margin: '0 0 0.875rem' }}>
+        {/* Titre */}
+        <h3 style={{
+          color: '#fff', fontWeight: 700, fontSize: '1rem',
+          margin: '0 0 1px', lineHeight: 1.2,
+          textShadow: '0 1px 4px rgba(0,0,0,0.4)',
+        }}>
+          {title}
+          {soon && <span style={{ marginLeft: '0.5rem', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#6ee7b7', verticalAlign: 'middle' }}>BIENTÔT</span>}
+        </h3>
+        <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.65rem', fontFamily: 'serif', display: 'block', marginBottom: '0.5rem' }}>
+          {arabic}
+        </span>
+
+        {/* Description — slide up au survol */}
+        <p style={{
+          color: 'rgba(255,255,255,0.78)', fontSize: '0.73rem', lineHeight: 1.5, margin: '0 0 0.5rem',
+          maxHeight: hovered ? '56px' : '0px',
+          overflow: 'hidden',
+          transition: 'max-height 0.35s ease',
+        }}>
           {description}
         </p>
 
         {/* Tags */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem' }}>
-          {tags.map(tag => (
+        <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+          {tags.slice(0, 3).map(tag => (
             <span key={tag} style={{
-              fontSize: '0.65rem', fontWeight: 500,
-              backgroundColor: bg, color: color,
-              padding: '0.15rem 0.5rem', borderRadius: '9999px',
-              border: `1px solid ${color}30`,
+              fontSize: '0.62rem', fontWeight: 600,
+              backgroundColor: 'rgba(5,150,105,0.28)',
+              color: '#6ee7b7',
+              border: '1px solid rgba(110,231,183,0.35)',
+              padding: '2px 8px', borderRadius: '20px',
             }}>
               {tag}
             </span>
@@ -518,8 +543,8 @@ function RubriqueCard({ href, emoji, color, bg, title, arabic, description, tags
     </div>
   );
 
-  if (soon) return <div style={{ height: '100%' }}>{card}</div>;
-  return <Link href={href} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>{card}</Link>;
+  if (soon) return <div>{inner}</div>;
+  return <Link href={href} style={{ textDecoration: 'none', display: 'block' }}>{inner}</Link>;
 }
 
 // ── EventCard ─────────────────────────────────────────────────────
