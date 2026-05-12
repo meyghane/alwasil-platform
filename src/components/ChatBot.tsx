@@ -10,7 +10,7 @@ type Message = {
 
 function renderMarkdown(text: string): string {
   return text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--primary-color);font-weight:600;text-decoration:underline">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#059669;font-weight:600;text-decoration:underline">$1</a>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br/>');
 }
@@ -107,7 +107,7 @@ export default function ChatBot() {
           width: '56px',
           height: '56px',
           borderRadius: '50%',
-          backgroundColor: 'var(--primary-color)',
+          backgroundColor: '#059669',
           color: 'white',
           border: 'none',
           cursor: 'pointer',
@@ -145,7 +145,7 @@ export default function ChatBot() {
         }}>
           {/* Header */}
           <div style={{
-            backgroundColor: 'var(--primary-color)',
+            backgroundColor: '#059669',
             color: 'white',
             padding: '1rem 1.25rem',
             display: 'flex',
@@ -197,12 +197,12 @@ export default function ChatBot() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0, marginTop: '2px',
                   }}>
-                    <Bot size={15} color="var(--primary-color)" />
+                    <Bot size={15} color="#059669" />
                   </div>
                 )}
                 <div style={{
                   maxWidth: '80%',
-                  backgroundColor: msg.role === 'user' ? 'var(--primary-color)' : '#f5f5f4',
+                  backgroundColor: msg.role === 'user' ? '#059669' : '#f5f5f4',
                   color: msg.role === 'user' ? 'white' : 'var(--text-primary)',
                   padding: '0.6rem 0.875rem',
                   borderRadius: msg.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
@@ -214,7 +214,7 @@ export default function ChatBot() {
                 {msg.role === 'user' && (
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    backgroundColor: 'var(--primary-color)',
+                    backgroundColor: '#059669',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0, marginTop: '2px',
                   }}>
@@ -233,7 +233,7 @@ export default function ChatBot() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, marginTop: '2px',
                 }}>
-                  <Bot size={15} color="var(--primary-color)" />
+                  <Bot size={15} color="#059669" />
                 </div>
                 <div style={{
                   maxWidth: '80%',
@@ -243,7 +243,7 @@ export default function ChatBot() {
                   fontSize: '0.875rem',
                   lineHeight: 1.55,
                 }}
-                  dangerouslySetInnerHTML={{ __html: renderMarkdown(streamingText) + '<span style="display:inline-block;width:2px;height:14px;background:var(--primary-color);margin-left:2px;animation:blink 0.8s infinite">▌</span>' }}
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(streamingText) + '<span style="display:inline-block;width:2px;height:14px;background:#059669;margin-left:2px;animation:blink 0.8s infinite">▌</span>' }}
                 />
               </div>
             )}
@@ -255,7 +255,7 @@ export default function ChatBot() {
                   {[0, 1, 2].map(i => (
                     <div key={i} style={{
                       width: '6px', height: '6px', borderRadius: '50%',
-                      backgroundColor: 'var(--primary-color)',
+                      backgroundColor: '#059669',
                       animation: `bounce 1s ${i * 0.15}s infinite`,
                       opacity: 0.6,
                     }} />
@@ -320,7 +320,7 @@ export default function ChatBot() {
               style={{
                 width: '38px', height: '38px',
                 borderRadius: '0.5rem',
-                backgroundColor: loading || !input.trim() ? '#e5e7eb' : 'var(--primary-color)',
+                backgroundColor: loading || !input.trim() ? '#e5e7eb' : '#059669',
                 color: 'white',
                 border: 'none',
                 cursor: loading || !input.trim() ? 'default' : 'pointer',
