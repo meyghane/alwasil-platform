@@ -6,7 +6,7 @@ import {
   ArrowRight, MapPin, ChevronRight, Users, BookOpen, Calendar, Briefcase,
   Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
   HeartHandshake, UserCheck, Landmark, ShieldCheck, MessageCircle,
-  Search, CheckCircle, Zap, Plus,
+  Search, CheckCircle, Zap, Plus, Moon, Radio,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { allInstituts } from '@/data/institutes';
@@ -118,11 +118,29 @@ const SECTIONS: {
   },
   {
     href: '#', icon: MessageCircle,
-    color: '#c4b5fd', bg: '#ecfdf5',
+    color: '#c4b5fd', bg: '#f5f3ff',
     title: 'Communauté', arabic: 'الأمة',
-    description: 'Annuaire de compétences, marrainage et espace de brainstorming.',
-    tags: ['Marrainage', 'Compétences', 'Bientôt'],
+    description: 'Annuaire de compétences, marrainage et espace de brainstorming communautaire.',
+    tags: ['Marrainage', 'Compétences', 'Entraide'],
     image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80',
+    soon: true,
+  },
+  {
+    href: '#', icon: Radio,
+    color: '#a78bfa', bg: '#f5f3ff',
+    title: 'Groupes WhatsApp', arabic: 'المجموعات',
+    description: 'Rejoins les groupes WhatsApp de ta ville : maraudes, événements, cours, sœurs isolées.',
+    tags: ['Par ville', 'Sœurs', 'Maraudes'],
+    image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80',
+    soon: true,
+  },
+  {
+    href: '#', icon: Moon,
+    color: '#8b5cf6', bg: '#f5f3ff',
+    title: 'Muqabala', arabic: 'المقابلة',
+    description: 'Trouve un partenaire pour réviser le Coran ensemble. Sessions en présentiel ou en ligne.',
+    tags: ['Coran', 'Révision', 'Hifz'],
+    image: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&q=80',
     soon: true,
   },
 ];
@@ -397,13 +415,14 @@ export default function Home() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
                   <div style={{
                     width: 52, height: 52, borderRadius: '14px',
-                    backgroundColor: V[50], border: `1px solid ${V[200]}`,
+                    backgroundColor: V[100], border: `2px solid ${V[400]}`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0,
+                    boxShadow: `0 2px 8px ${V[300]}44`,
                   }}>
                     {s.icon}
                   </div>
-                  <span style={{ fontSize: '0.65rem', fontWeight: 800, color: V[200], letterSpacing: '0.1em' }}>ÉTAPE {s.step}</span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 800, color: V[700], letterSpacing: '0.1em' }}>ÉTAPE {s.step}</span>
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: V.dark, marginBottom: '0.4rem' }}>{s.title}</h3>
@@ -690,7 +709,7 @@ function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tag
           marginBottom: '0.55rem',
           backdropFilter: 'blur(4px)',
         }}>
-          <Icon size={17} color="#6ee7b7" strokeWidth={1.8} />
+          <Icon size={17} color="#c4b5fd" strokeWidth={1.8} />
         </div>
 
         {/* Titre */}
