@@ -231,19 +231,6 @@ export default function Home() {
               }}>
                 Explorer <ArrowRight size={14} />
               </a>
-              <Link href="/contact" style={{
-                display: 'inline-flex', alignItems: 'center',
-                padding: '0.75rem 1.5rem',
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                color: '#fff',
-                fontWeight: 600, fontSize: '0.9rem',
-                textDecoration: 'none', borderRadius: '8px',
-                border: '1px solid rgba(255,255,255,0.35)',
-                backdropFilter: 'blur(6px)',
-                letterSpacing: '-0.01em',
-              }}>
-                Nous contacter
-              </Link>
             </div>
           </div>
 
