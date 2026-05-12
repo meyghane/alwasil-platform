@@ -131,26 +131,23 @@ a {
   }
 }
 
-/* ── STATS ANIMATION ─────────────────────────────────────────── */
+/* ── TICKER STATS — défilement infini ────────────────────────── */
 
-@keyframes stat-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.stat-item {
-  animation: stat-in 0.5s ease-out both;
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 35s linear infinite;
 }
-.stat-item:nth-child(1) { animation-delay: 0.05s; }
-.stat-item:nth-child(2) { animation-delay: 0.15s; }
-.stat-item:nth-child(3) { animation-delay: 0.25s; }
-.stat-item:nth-child(4) { animation-delay: 0.35s; }
+
+/* Pause au survol */
+.ticker-track:hover {
+  animation-play-state: paused;
+}
 
 /* ── BORDER BEAM — lumière qui fait le tour du contour ──────── */
 

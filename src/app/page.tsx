@@ -103,11 +103,22 @@ const SECTIONS = [
   },
 ];
 
+// Chiffres mis à jour à chaque ajout de données dans le Google Sheet
 const STATS = [
-  { value: '10+', label: 'Rubriques', sub: 'et ça grandit', icon: <BookOpen size={18} color={V.primary} /> },
-  { value: '8',   label: 'Piscines burkini', sub: 'Île-de-France', icon: <span style={{ fontSize: '1.1rem' }}>🏊</span> },
-  { value: '10',  label: 'Librairies', sub: 'référencées', icon: <span style={{ fontSize: '1.1rem' }}>📚</span> },
-  { value: '8',   label: 'Packages Hajj', sub: 'à comparer', icon: <span style={{ fontSize: '1.1rem' }}>🕋</span> },
+  { value: '+1040', label: 'Mosquées référencées', icon: '🕌' },
+  { value: '+20',   label: 'Événements à venir', icon: '📅' },
+  { value: '+14',   label: 'Instituts & cours', icon: '📚' },
+  { value: '+8',    label: 'Piscines burkini', icon: '🏊' },
+  { value: '+20',   label: 'Praticiens de santé', icon: '🧠' },
+  { value: '+10',   label: 'Cagnottes actives', icon: '💰' },
+  { value: '+8',    label: 'Offres d\'emploi', icon: '💼' },
+  { value: '+10',   label: 'Librairies islamiques', icon: '📖' },
+  { value: '+8',    label: 'Packages Hajj & Omra', icon: '🕋' },
+  { value: '+5',    label: 'Juristes & avocats', icon: '⚖️' },
+  { value: '+10',   label: 'Associations', icon: '🤝' },
+  { value: '+6',    label: 'Initiatives solidaires', icon: '🤲' },
+  { value: '+6',    label: 'Profils talents CMN', icon: '👩‍💼' },
+  { value: '+5',    label: 'Agences Hajj agréées', icon: '✈️' },
 ];
 
 const EVENTS = [
@@ -260,39 +271,48 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── STATS — prolongement vert de la bannière ────────── */}
+      {/* ─── TICKER STATS — défile en continu ────────────────── */}
       <section style={{
         background: 'linear-gradient(180deg, #0a3d20 0%, #051c0e 100%)',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
-        padding: '1.1rem 0',
+        padding: '0.85rem 0',
+        overflow: 'hidden',
       }}>
-        <div className="container">
+        {/* Masques flous sur les bords */}
+        <div style={{ position: 'relative' }}>
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '0',
-          }}>
-            {STATS.map((s, i) => (
+            position: 'absolute', left: 0, top: 0, bottom: 0, width: '80px', zIndex: 2,
+            background: 'linear-gradient(to right, #051c0e, transparent)',
+            pointerEvents: 'none',
+          }} />
+          <div style={{
+            position: 'absolute', right: 0, top: 0, bottom: 0, width: '80px', zIndex: 2,
+            background: 'linear-gradient(to left, #051c0e, transparent)',
+            pointerEvents: 'none',
+          }} />
+
+          {/* Piste défilante — items doublés pour le loop seamless */}
+          <div className="ticker-track">
+            {[...STATS, ...STATS].map((s, i) => (
               <div
-                key={s.label}
-                className="stat-item"
+                key={i}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '0.6rem 1.5rem',
-                  borderRight: i < STATS.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                  gap: '0.55rem',
+                  padding: '0 2rem',
+                  borderRight: '1px solid rgba(255,255,255,0.08)',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
                 }}
               >
-                <div style={{ fontSize: '1.2rem', flexShrink: 0, opacity: 0.9 }}>{s.icon}</div>
-                <div>
-                  <p style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', lineHeight: 1, letterSpacing: '-0.04em', margin: 0 }}>
-                    {s.value}
-                  </p>
-                  <p style={{ fontSize: '0.72rem', fontWeight: 600, color: 'rgba(255,255,255,0.75)', margin: 0 }}>
-                    {s.label} <span style={{ color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>· {s.sub}</span>
-                  </p>
-                </div>
+                <span style={{ fontSize: '1rem', opacity: 0.85 }}>{s.icon}</span>
+                <span style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
+                  {s.value}
+                </span>
+                <span style={{ fontSize: '0.72rem', fontWeight: 500, color: 'rgba(255,255,255,0.6)' }}>
+                  {s.label}
+                </span>
               </div>
             ))}
           </div>
