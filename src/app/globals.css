@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap');
 @import url('https://fonts.cdnfonts.com/css/glacial-indifference-2');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap');
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -128,4 +129,73 @@ a {
   .hidden-mobile {
     display: none !important;
   }
+}
+
+/* ── BORDER BEAM — faisceau lumineux sur le contour ────────── */
+
+@keyframes led-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Conteneur externe : clip le beam au border-radius */
+.led-card-outer {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Le faisceau rotatif — gradient conique très fin */
+.led-spin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent 338deg,
+    rgba(255,255,255,0.08) 346deg,
+    rgba(255,255,255,0.55) 352deg,
+    rgba(255,255,255,0.95) 356deg,
+    white 358deg,
+    rgba(255,255,255,0.6) 360deg,
+    transparent 362deg
+  );
+  animation: led-spin 3.5s linear infinite;
+  z-index: 0;
+  opacity: 0.85;
+  transition: opacity 0.25s;
+}
+
+/* Face intérieure : couvre tout sauf 1.5px de bord */
+.led-face {
+  position: absolute;
+  inset: 1.5px;
+  border-radius: 12.5px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+}
+
+/* Hover : faisceau plus rapide + face légèrement plus lumineuse */
+.led-card-outer:hover .led-spin {
+  animation-duration: 1.4s;
+  opacity: 1;
+}
+.led-card-outer:hover .led-face {
+  background: rgba(255,255,255,0.13) !important;
+}
+.led-card-outer:hover {
+  transform: scale(1.035);
+  transition: transform 0.18s;
 }
