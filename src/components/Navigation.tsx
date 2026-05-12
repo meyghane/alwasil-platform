@@ -112,11 +112,11 @@ export default function Navigation() {
 
           {/* Right */}
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-            <Link href="/connexion" className="nav-desktop login-link">
-              Connexion
+            <Link href="/admin" className="nav-desktop login-link">
+              Admin
             </Link>
             <Link href="/contact?type=general" className="btn btn-primary join-btn">
-              Contribuer
+              Proposer une fiche
             </Link>
             <button onClick={() => setMenuOpen(!menuOpen)} className="nav-mobile-btn">
               {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -152,8 +152,7 @@ export default function Navigation() {
               );
             })}
             <div className="mobile-footer">
-              <Link href="/connexion" onClick={() => setMenuOpen(false)} className="mobile-btn-outline">Connexion</Link>
-              <Link href="/connexion" onClick={() => setMenuOpen(false)} className="mobile-btn-primary">S&apos;inscrire</Link>
+              <Link href="/contact?type=general" onClick={() => setMenuOpen(false)} className="mobile-btn-primary">Proposer une fiche</Link>
             </div>
           </div>
         </div>
