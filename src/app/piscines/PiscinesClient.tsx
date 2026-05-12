@@ -212,7 +212,7 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
             Aidez la communauté ! Signalez une piscine ou corrigez une info incorrecte.
           </p>
           <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact?type=piscine" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Signaler une piscine</Link>
+            <Link href="/contact?type=piscine" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Ajouter une piscine</Link>
             <Link href="/contact?type=correction" className="btn btn-outline" style={{ textDecoration: 'none' }}>Corriger une info</Link>
           </div>
         </div>

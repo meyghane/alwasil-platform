@@ -465,6 +465,83 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─── TÉMOIGNAGES ──────────────────────────────────────── */}
+      <section style={{ backgroundColor: V[50], padding: '4rem 0', borderTop: `1px solid ${V[200]}` }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>
+              Ils utilisent Al-Wasil
+            </span>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem' }}>
+              Ce que dit la communauté
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+            {[
+              {
+                quote: "J'ai trouvé une piscine avec créneau burkini à 10 min de chez moi en 2 minutes. Avant je passais des heures à chercher.",
+                name: 'Amira B.',
+                role: 'Utilisatrice · Seine-Saint-Denis',
+                tag: 'Piscines burkini',
+              },
+              {
+                quote: "On a trouvé notre employeur actuel via Al-Wasil. Le voile est accepté, la prière aussi. Ça change tout.",
+                name: 'Khadija M.',
+                role: 'Utilisatrice · Paris 18e',
+                tag: 'Emploi',
+              },
+              {
+                quote: "On utilise Al-Wasil pour promouvoir nos maraudes. On a 3× plus de bénévoles depuis qu'on est référencés.",
+                name: 'Association An-Nour',
+                role: 'Organisateur · Bobigny',
+                tag: 'Solidarité',
+              },
+            ].map((t, i) => (
+              <div key={i} style={{
+                backgroundColor: '#fff',
+                borderRadius: '14px',
+                padding: '1.5rem',
+                border: `1px solid ${V[200]}`,
+                display: 'flex', flexDirection: 'column', gap: '1rem',
+                boxShadow: '0 2px 8px rgba(5,150,105,0.06)',
+              }}>
+                {/* Quote */}
+                <p style={{
+                  fontSize: '0.9rem', color: V.text, lineHeight: 1.7,
+                  fontStyle: 'italic', flex: 1,
+                }}>
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+
+                {/* Auteur */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div>
+                    <p style={{ fontWeight: 700, fontSize: '0.875rem', color: V.dark, margin: 0 }}>{t.name}</p>
+                    <p style={{ fontSize: '0.72rem', color: V.muted, margin: 0 }}>{t.role}</p>
+                  </div>
+                  <span style={{
+                    fontSize: '0.65rem', fontWeight: 700,
+                    backgroundColor: V[50], color: V.primary,
+                    padding: '3px 10px', borderRadius: '20px',
+                    border: `1px solid ${V[200]}`,
+                  }}>
+                    {t.tag}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p style={{ textAlign: 'center', fontSize: '0.78rem', color: V.muted, marginTop: '1.5rem' }}>
+            Ces témoignages seront remplacés par de vrais retours de la communauté.{' '}
+            <Link href="/contact?type=general" style={{ color: V.primary, textDecoration: 'none', fontWeight: 600 }}>
+              Partager ton expérience →
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* ─── CONTRIBUTION CTA — même vert profond que la bannière ── */}
       <section style={{
         background: 'linear-gradient(150deg, #0a3d20 0%, #052810 45%, #020f07 100%)',
@@ -498,9 +575,9 @@ export default function Home() {
           {/* 4 actions de contribution */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '2.5rem' }}>
             {[
-              { href: '/contact?type=piscine',      icon: <Waves size={18} strokeWidth={1.8} />,         label: 'Signaler une piscine burkini',    sub: 'Créneau, horaires, tarif' },
+              { href: '/contact?type=piscine',      icon: <Waves size={18} strokeWidth={1.8} />,         label: 'Ajouter une piscine burkini',     sub: 'Créneau, horaires, tarif' },
               { href: '/contact?type=evenement',     icon: <Calendar size={18} strokeWidth={1.8} />,      label: 'Ajouter un événement',             sub: 'Conférence, maraude, cours...' },
-              { href: '/contact?type=offre-emploi',  icon: <Briefcase size={18} strokeWidth={1.8} />,     label: 'Signaler un employeur OK',         sub: 'Voile accepté, prière OK' },
+              { href: '/contact?type=offre-emploi',  icon: <Briefcase size={18} strokeWidth={1.8} />,     label: 'Référencer un employeur',          sub: 'Voile accepté, prière OK' },
               { href: '/contact?type=general',       icon: <Plus size={18} strokeWidth={1.8} />,           label: 'Autre ressource',                  sub: 'Institut, librairie, praticien...' },
             ].map((item, i) => (
               <Link key={i} href={item.href} style={{

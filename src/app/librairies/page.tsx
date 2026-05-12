@@ -231,7 +231,7 @@ export default function LibrairiePage() {
           Signalez-la en quelques clics. Vous gérez une librairie ? Réclamez votre fiche gratuitement.
         </p>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/contact?type=librairie" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Signaler une librairie</Link>
+          <Link href="/contact?type=librairie" className="btn btn-primary" style={{ backgroundColor: ACCENT, textDecoration: 'none' }}>Ajouter une librairie</Link>
           <Link href="/contact?type=revendiquer-librairie" className="btn btn-outline" style={{ textDecoration: 'none' }}>Je gère cette librairie</Link>
         </div>
       </div>

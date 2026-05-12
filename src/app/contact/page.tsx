@@ -18,9 +18,9 @@ const SUJET_OPTIONS: { value: string; label: string; redirectTo?: string }[] = [
   { value: 'initiative',            label: '🍲 Proposer une maraude / initiative', redirectTo: 'initiative' },
   { value: 'offre-emploi',          label: '💼 Publier une offre d\'emploi',     redirectTo: 'offre-emploi' },
   { value: 'profil-emploi',         label: '⭐ Ajouter mon profil (vivier talents)', redirectTo: 'profil-emploi' },
-  { value: 'librairie',             label: '📖 Signaler une librairie islamique', redirectTo: 'librairie' },
+  { value: 'librairie',             label: 'Ajouter une librairie islamique', redirectTo: 'librairie' },
   { value: 'revendiquer-librairie', label: '🏪 Je gère une librairie référencée', redirectTo: 'revendiquer-librairie' },
-  { value: 'piscine',               label: '🏊 Signaler un créneau burkini',     redirectTo: 'piscine' },
+  { value: 'piscine',               label: 'Ajouter un créneau burkini',     redirectTo: 'piscine' },
   { value: 'hajj-devis',            label: '🕋 Demander un devis Hajj / Omra',   redirectTo: 'hajj-devis' },
   // Corrections & questions
   { value: 'correction',            label: '✏️ Corriger une information erronée', redirectTo: 'correction' },
@@ -111,7 +111,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   librairie: {
-    title: 'Signaler une librairie islamique', emoji: '📖', color: '#7c3aed',
+    title: 'Ajouter une librairie islamique', emoji: '📖', color: '#7c3aed',
     description: 'Vous connaissez une librairie islamique non référencée ? Signalez-la en quelques clics.',
     fields: [
       { name: 'email', label: 'Votre email', type: 'email', required: true },
@@ -136,7 +136,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   piscine: {
-    title: 'Signaler un créneau burkini', emoji: '🏊', color: '#0284c7',
+    title: 'Ajouter un créneau burkini', emoji: '🏊', color: '#0284c7',
     description: 'Vous connaissez une piscine ou un créneau burkini non référencé ? Aidez la communauté.',
     fields: [
       { name: 'email', label: 'Votre email', type: 'email', required: true },
