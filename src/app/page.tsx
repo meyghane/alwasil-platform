@@ -355,7 +355,7 @@ export default function Home() {
       {/* ─── GRID SECTIONS ────────────────────────────────────── */}
       <section style={{ padding: '2rem 0 4rem', backgroundColor: '#fff' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(288px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
             {SECTIONS.map(s => <RubriqueCard key={s.href} {...s} />)}
           </div>
         </div>
@@ -376,7 +376,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
             {EVENTS.map(ev => <EventCard key={ev.title} {...ev} />)}
           </div>
         </div>
