@@ -1,7 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, MapPin, ChevronRight, Users, BookOpen, Calendar, Briefcase } from 'lucide-react';
+import {
+  ArrowRight, MapPin, ChevronRight, Users, BookOpen, Calendar, Briefcase,
+  Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
+  HeartHandshake, UserCheck, Landmark,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { allInstituts } from '@/data/institutes';
+import { allEvents } from '@/data/events';
+import { jobOffers } from '@/data/jobs';
 
 // ── Tokens ────────────────────────────────────────────────────────
 const FONT = "'Inter', system-ui, -apple-system, sans-serif";
@@ -103,23 +111,31 @@ const SECTIONS = [
   },
 ];
 
-// Chiffres mis à jour à chaque ajout de données dans le Google Sheet
-const STATS = [
-  { value: '+1040', label: 'Mosquées référencées', icon: '🕌' },
-  { value: '+20',   label: 'Événements à venir', icon: '📅' },
-  { value: '+14',   label: 'Instituts & cours', icon: '📚' },
-  { value: '+8',    label: 'Piscines burkini', icon: '🏊' },
-  { value: '+20',   label: 'Praticiens de santé', icon: '🧠' },
-  { value: '+10',   label: 'Cagnottes actives', icon: '💰' },
-  { value: '+8',    label: 'Offres d\'emploi', icon: '💼' },
-  { value: '+10',   label: 'Librairies islamiques', icon: '📖' },
-  { value: '+8',    label: 'Packages Hajj & Omra', icon: '🕋' },
-  { value: '+5',    label: 'Juristes & avocats', icon: '⚖️' },
-  { value: '+10',   label: 'Associations', icon: '🤝' },
-  { value: '+6',    label: 'Initiatives solidaires', icon: '🤲' },
-  { value: '+6',    label: 'Profils talents CMN', icon: '👩‍💼' },
-  { value: '+5',    label: 'Agences Hajj agréées', icon: '✈️' },
-];
+// Compteurs dynamiques — les nombres issus des fichiers data s'auto-incrémentent
+// Les autres (mosquées, piscines…) sont mis à jour manuellement à chaque batch ajouté au Sheet
+type StatItem = { count: number; label: string; icon: LucideIcon };
+
+function buildStats(): StatItem[] {
+  const upcomingEvents = allEvents.filter(e => new Date(e.date) >= new Date()).length;
+  return [
+    { count: 1040,                label: 'mosquées référencées en France',           icon: Building2 },
+    { count: upcomingEvents,      label: 'événements islamiques à venir en IDF',      icon: Calendar },
+    { count: allInstituts.length, label: 'instituts & professeurs de Coran',          icon: BookOpen },
+    { count: 8,                   label: 'piscines burkini référencées en IDF',        icon: Waves },
+    { count: 20,                  label: 'praticiens de santé sensibilisés',           icon: Stethoscope },
+    { count: 10,                  label: 'cagnottes communautaires actives',           icon: HandCoins },
+    { count: jobOffers.length,    label: 'offres d\'emploi voile & prière acceptés',   icon: Briefcase },
+    { count: 10,                  label: 'librairies islamiques référencées',          icon: Library },
+    { count: 8,                   label: 'packages Hajj & Omra à comparer',            icon: Plane },
+    { count: 5,                   label: 'juristes & avocats spécialisés',             icon: Scale },
+    { count: 10,                  label: 'associations islamiques répertoriées',       icon: Users },
+    { count: 6,                   label: 'initiatives solidaires organisées',          icon: HeartHandshake },
+    { count: 6,                   label: 'profils talents CMN disponibles',            icon: UserCheck },
+    { count: 5,                   label: 'agences Hajj agréées & comparées',           icon: Landmark },
+  ];
+}
+
+const STATS = buildStats();
 
 const EVENTS = [
   { title: "Conférence : L'Éthique au Travail", date: 'Sam 28 Mars · 14h00', location: 'Grande Mosquée de Paris', organizer: 'Institut Al-Ghazali', tag: 'Conférence', color: '#7c3aed' },
@@ -175,7 +191,7 @@ export default function Home() {
               backdropFilter: 'blur(6px)',
             }}>
               <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#fff', display: 'inline-block' }} />
-              Plateforme communautaire · France
+              La communauté musulmane française, centralisée.
             </div>
 
             <h1 style={{
@@ -293,28 +309,32 @@ export default function Home() {
 
           {/* Piste défilante — items doublés pour le loop seamless */}
           <div className="ticker-track">
-            {[...STATS, ...STATS].map((s, i) => (
-              <div
-                key={i}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.55rem',
-                  padding: '0 2rem',
-                  borderRight: '1px solid rgba(255,255,255,0.08)',
-                  flexShrink: 0,
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <span style={{ fontSize: '1rem', opacity: 0.85 }}>{s.icon}</span>
-                <span style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
-                  {s.value}
-                </span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 500, color: 'rgba(255,255,255,0.6)' }}>
-                  {s.label}
-                </span>
-              </div>
-            ))}
+            {[...STATS, ...STATS].map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <div
+                  key={i}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.55rem',
+                    padding: '0 2.25rem',
+                    borderRight: '1px solid rgba(255,255,255,0.07)',
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {/* Icône Lucide — tracé vert, pas d'emoji */}
+                  <Icon size={14} color="#6ee7b7" strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>
+                    Plus de {s.count}
+                  </span>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 400, color: 'rgba(255,255,255,0.55)' }}>
+                    {s.label}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
