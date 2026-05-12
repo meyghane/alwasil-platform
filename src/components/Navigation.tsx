@@ -47,7 +47,7 @@ const NAV: NavGroup[] = [
   },
 ];
 
-const PRIMARY = '#0d9488';
+const PRIMARY = '#7c3aed';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
