@@ -67,14 +67,11 @@ export default function Navigation() {
       <nav className="nav-container">
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '4.5rem' }}>
 
-          {/* Logo */}
+          {/* Logo — texte seul, sans icône */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: '40px', height: '40px', backgroundColor: PRIMARY, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '1.4rem' }}>W</div>
-              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ fontSize: '1.15rem', fontWeight: 700, color: '#fff' }}>Al-Wasil</span>
-                <span style={{ fontSize: '0.65rem', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.1em', marginTop: '2px' }}>الواصل</span>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+              <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>Al-Wasil</span>
+              <span style={{ fontSize: '0.65rem', fontWeight: 500, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.1em', marginTop: '2px' }}>الواصل</span>
             </div>
           </Link>
 
@@ -248,14 +245,13 @@ export default function Navigation() {
         .login-link {
           font-size: 0.875rem;
           padding: 0.5rem 1rem;
-          color: rgba(255,255,255,0.80);
+          color: #fff;
           text-decoration: none;
-          font-weight: 500;
+          font-weight: 600;
           border-radius: 8px;
-          transition: background 0.2s, color 0.2s;
+          transition: background 0.2s;
         }
         .login-link:hover {
-          color: #fff;
           background-color: rgba(255,255,255,0.08);
         }
         .join-btn {
