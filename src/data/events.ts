@@ -50,15 +50,15 @@ export const EVENT_CATEGORY_LABELS: Record<EventCategory, string> = {
 };
 
 export const EVENT_CATEGORY_COLORS: Record<EventCategory, string> = {
-  conference: '#059669',   // emerald
-  maraude:    '#065f46',   // vert profond
-  cours:      '#0d9488',   // teal-vert
-  iftar:      '#10b981',   // vert clair
-  webinaire:  '#047857',   // vert moyen
-  jeunesse:   '#34d399',   // vert menthe
-  famille:    '#0f766e',   // teal sombre
-  collecte:   '#047857',   // vert moyen
-  autre:      '#059669',   // emerald
+  conference: '#7c3aed',   // violet
+  maraude:    '#dc2626',   // rouge (urgence solidarité)
+  cours:      '#6d28d9',   // violet profond
+  iftar:      '#d97706',   // ambre (chaleur)
+  webinaire:  '#2563eb',   // bleu
+  jeunesse:   '#059669',   // vert (énergie)
+  famille:    '#db2777',   // rose
+  collecte:   '#ea580c',   // orange
+  autre:      '#7c3aed',   // violet
 };
 
 export const DEPT_LABELS: Record<string, string> = {

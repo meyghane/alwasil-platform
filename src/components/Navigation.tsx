@@ -161,7 +161,7 @@ export default function Navigation() {
       <style jsx>{`
         .nav-container {
           border-bottom: 1px solid rgba(255,255,255,0.08);
-          background-color: #051c0e;
+          background-color: #0f0225;
           position: sticky;
           top: 0;
           z-index: 50;
