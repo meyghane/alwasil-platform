@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, MapPin, Star, BookOpen, Globe, Building2, CheckCircle, Phone, ExternalLink, Filter } from 'lucide-react';
+import {
+  Search, MapPin, Star, BookOpen, Building2, CheckCircle, Phone, ExternalLink,
+  Landmark, Monitor, Users, User, Baby, GraduationCap, type LucideIcon,
+} from 'lucide-react';
 import { allInstituts, COURSE_LABELS, type Institut, type CourseType } from '@/data/institutes';
 import DeptFilter from '@/components/DeptFilter';
 import PageHeader from '@/components/PageHeader';
@@ -173,19 +176,19 @@ export default function EducationPage() {
   );
 }
 
-const TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; emoji: string }> = {
-  'institut':   { label: 'Institut',          color: '#5e17eb', bg: '#f3f0ff', emoji: '📚' },
-  'mosquee':    { label: 'Mosquée',           color: '#0d9488', bg: '#f0fdfa', emoji: '🕌' },
-  'professeur': { label: 'Professeur',        color: '#d97706', bg: '#fffbeb', emoji: '👨‍🏫' },
-  'en-ligne':   { label: 'Formation en ligne',color: '#2563eb', bg: '#eff6ff', emoji: '💻' },
-  'cercle':     { label: 'Cercle de science', color: '#db2777', bg: '#fdf2f8', emoji: '🔵' },
+const TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; icon: LucideIcon }> = {
+  'institut':   { label: 'Institut',           color: '#059669', bg: '#d1fae5', icon: BookOpen },
+  'mosquee':    { label: 'Mosquée',            color: '#0d9488', bg: '#f0fdfa', icon: Landmark },
+  'professeur': { label: 'Professeur',         color: '#047857', bg: '#ecfdf5', icon: GraduationCap },
+  'en-ligne':   { label: 'Formation en ligne', color: '#065f46', bg: '#d1fae5', icon: Monitor },
+  'cercle':     { label: 'Cercle de science',  color: '#10b981', bg: '#d1fae5', icon: Users },
 };
 
-const AUDIENCE_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  hommes:  { label: '👨 Hommes',  color: '#1d4ed8', bg: '#eff6ff' },
-  femmes:  { label: '👩 Femmes',  color: '#be185d', bg: '#fdf2f8' },
-  enfants: { label: '🧒 Enfants', color: '#15803d', bg: '#f0fdf4' },
-  mixte:   { label: '👥 Mixte',   color: '#6b7280', bg: '#f9fafb' },
+const AUDIENCE_CONFIG: Record<string, { label: string; icon: LucideIcon; color: string; bg: string }> = {
+  hommes:  { label: 'Hommes',  icon: User,  color: '#059669', bg: '#d1fae5' },
+  femmes:  { label: 'Femmes',  icon: User,  color: '#047857', bg: '#ecfdf5' },
+  enfants: { label: 'Enfants', icon: Baby,  color: '#065f46', bg: '#d1fae5' },
+  mixte:   { label: 'Mixte',   icon: Users, color: '#0d9488', bg: '#f0fdfa' },
 };
 
 function InstitutCard({ inst }: { inst: Institut }) {
@@ -219,8 +222,9 @@ function InstitutCard({ inst }: { inst: Institut }) {
               fontSize: '0.65rem', fontWeight: 800,
               color: 'white', backgroundColor: '#f59e0b',
               padding: '2px 8px', borderRadius: '20px',
+              display: 'inline-flex', alignItems: 'center', gap: '3px',
             }}>
-              ⭐ Mis en avant
+              <Star size={9} strokeWidth={2.5} /> Mis en avant
             </span>
           )}
           <span style={{
@@ -228,17 +232,19 @@ function InstitutCard({ inst }: { inst: Institut }) {
             color: tc.color, backgroundColor: 'white',
             padding: '2px 8px', borderRadius: '20px',
             border: `1px solid ${tc.color}44`,
+            display: 'inline-flex', alignItems: 'center', gap: '3px',
           }}>
-            {tc.emoji} {tc.label}
+            <tc.icon size={10} strokeWidth={2} /> {tc.label}
           </span>
           {inst.verified && (
             <span style={{
               fontSize: '0.65rem', fontWeight: 700,
-              color: '#0d9488', backgroundColor: 'white',
+              color: '#059669', backgroundColor: 'white',
               padding: '2px 8px', borderRadius: '20px',
-              border: '1px solid #ccfbf1',
+              border: '1px solid #a7f3d0',
+              display: 'inline-flex', alignItems: 'center', gap: '3px',
             }}>
-              ✓ Vérifié
+              <CheckCircle size={10} strokeWidth={2} /> Vérifié
             </span>
           )}
         </div>
@@ -247,11 +253,11 @@ function InstitutCard({ inst }: { inst: Institut }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.75rem' }}>
           <div style={{
             width: 44, height: 44, borderRadius: '10px', flexShrink: 0,
-            backgroundColor: 'white', border: `1px solid ${tc.color}33`,
+            backgroundColor: tc.bg, border: `1px solid ${tc.color}33`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '1.3rem', boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
           }}>
-            {tc.emoji}
+            <tc.icon size={20} color={tc.color} strokeWidth={1.6} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.8rem', color: '#44403c', fontWeight: 600 }}>
@@ -310,8 +316,9 @@ function InstitutCard({ inst }: { inst: Institut }) {
                   color: ac.color, backgroundColor: ac.bg,
                   padding: '3px 10px', borderRadius: '20px',
                   border: `1.5px solid ${ac.color}33`,
+                  display: 'inline-flex', alignItems: 'center', gap: '4px',
                 }}>
-                  {ac.label}
+                  <ac.icon size={11} strokeWidth={1.8} /> {ac.label}
                 </span>
               );
             })}

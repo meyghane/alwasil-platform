@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES RÉELLES — Instituts islamiques Île-de-France
+// DONNÉES RÉELLES - Instituts islamiques Île-de-France
 // Sources : sites officiels, Google Maps, annuaires communautaires
 // Dernière MàJ : Mars 2026
 // ============================================================
@@ -45,7 +45,7 @@ export type CourseType =
 const paris: Institut[] = [
   {
     id: 'gmp-al-ghazali',
-    name: 'Institut Al-Ghazali — Grande Mosquée de Paris',
+    name: 'Institut Al-Ghazali - Grande Mosquée de Paris',
     type: 'institut',
     address: '2 bis Place du Puits de l\'Ermite',
     city: 'Paris 5e',
@@ -359,7 +359,7 @@ const seineMarne: Institut[] = [
 const valOise: Institut[] = [
   {
     id: 'mosquee-sarcelles',
-    name: 'Mosquée Al-Rahma — Sarcelles',
+    name: 'Mosquée Al-Rahma - Sarcelles',
     type: 'mosquee',
     address: 'Sarcelles',
     city: 'Sarcelles',
@@ -460,7 +460,7 @@ const grandsInstituts: Institut[] = [
   },
   {
     id: 'ifi-paris',
-    name: 'IFI — Institut de Formation à l\'Islam',
+    name: 'IFI - Institut de Formation à l\'Islam',
     type: 'institut',
     address: 'Paris',
     city: 'Paris',
@@ -476,7 +476,7 @@ const grandsInstituts: Institut[] = [
   },
   {
     id: 'dar-al-iman',
-    name: 'Dar Al-Iman — Institut',
+    name: 'Dar Al-Iman - Institut',
     type: 'institut',
     address: 'Île-de-France',
     city: 'Paris / IDF',
@@ -510,7 +510,7 @@ const grandsInstituts: Institut[] = [
 const enligne: Institut[] = [
   {
     id: 'iesh-enligne',
-    name: 'IESH — Institut Européen des Sciences Humaines',
+    name: 'IESH - Institut Européen des Sciences Humaines',
     type: 'en-ligne',
     address: 'Château-Chinon (siège) + antenne Paris',
     city: 'Paris / National',
@@ -543,7 +543,7 @@ const enligne: Institut[] = [
   },
   {
     id: 'bayyinah-tv',
-    name: 'Bayyinah TV — Nouman Ali Khan',
+    name: 'Bayyinah TV - Nouman Ali Khan',
     type: 'en-ligne',
     address: 'En ligne',
     city: 'En ligne',
@@ -574,7 +574,7 @@ const enligne: Institut[] = [
   },
   {
     id: 'alhadith-fr',
-    name: 'Al-Hadîth.fr — Cours en ligne',
+    name: 'Al-Hadîth.fr - Cours en ligne',
     type: 'en-ligne',
     address: 'En ligne',
     city: 'En ligne',
@@ -589,7 +589,7 @@ const enligne: Institut[] = [
   },
   {
     id: 'mosquee-enligne-live',
-    name: 'Cours Live — Mosquées sur YouTube',
+    name: 'Cours Live - Mosquées sur YouTube',
     type: 'en-ligne',
     address: 'En ligne (YouTube)',
     city: 'En ligne',
@@ -603,7 +603,7 @@ const enligne: Institut[] = [
   },
   {
     id: 'professeur-egyptien-tajwid',
-    name: 'Sheikh Ahmed — Correction Tajwid (Égypte)',
+    name: 'Sheikh Ahmed - Correction Tajwid (Égypte)',
     type: 'professeur',
     address: 'En ligne (Zoom/Skype)',
     city: 'En ligne',
