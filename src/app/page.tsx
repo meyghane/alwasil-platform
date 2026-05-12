@@ -64,7 +64,7 @@ const SECTIONS: {
     color: '#065f46', bg: '#d1fae5',
     title: 'Solidarité', arabic: 'التكافل',
     description: 'Cagnottes, maraudes, visites aux malades et voyages humanitaires.',
-    tags: ['Cagnottes', 'Maraudes', 'Gaza'],
+    tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Palestine', 'Voyages'],
     image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80',
   },
   {

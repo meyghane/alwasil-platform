@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Calendar, MapPin, Clock, ExternalLink, Plus, User, Tag } from 'lucide-react';
+import { Search, Calendar, MapPin, Clock, ExternalLink, User, Star, Monitor, Shuffle, Navigation } from 'lucide-react';
 import {
   allEvents,
   EVENT_CATEGORY_LABELS,
@@ -218,13 +218,20 @@ function EventCard({ event }: { event: Event }) {
         {/* Badges */}
         <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
           {event.featured && (
-            <span style={{ backgroundColor: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800 }}>⭐ En avant</span>
+            <span style={{ backgroundColor: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+              <Star size={9} strokeWidth={2.5} /> En avant
+            </span>
           )}
           <span style={{ backgroundColor: color + '18', color, border: `1px solid ${color}33`, padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}>
             {EVENT_CATEGORY_LABELS[event.category]}
           </span>
-          <span style={{ backgroundColor: '#f5f5f4', color: '#57534e', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 600 }}>
-            {event.format === 'enligne' ? '💻 En ligne' : event.format === 'hybride' ? '🔀 Hybride' : '📍 Présentiel'}
+          <span style={{ backgroundColor: '#f5f5f4', color: '#57534e', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+            {event.format === 'enligne'
+              ? <><Monitor size={9} strokeWidth={2} /> En ligne</>
+              : event.format === 'hybride'
+              ? <><Shuffle size={9} strokeWidth={2} /> Hybride</>
+              : <><Navigation size={9} strokeWidth={2} /> Présentiel</>
+            }
           </span>
         </div>
 

@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   HandHeart, ExternalLink, Search, MapPin, Heart,
-  Globe, Users, Plane, Building2, Phone,
+  Globe, Users, Plane, Building2, Phone, Coins,
+  AlertTriangle, Droplets, BookOpen, Baby, Landmark,
+  Activity, HeartHandshake, Flag,
 } from 'lucide-react';
 import {
   cagnottes,
@@ -52,16 +54,16 @@ function formatAmount(n?: number, currency = 'EUR') {
   return n >= 1000 ? `${sym}${(n / 1000).toFixed(0)}k` : `${sym}${n}`;
 }
 
-const CAGNOTTE_CATS: { key: CagnotteCategory | 'all'; label: string }[] = [
-  { key: 'all', label: '🌐 Tout' },
-  { key: 'palestine', label: '🇵🇸 Palestine' },
-  { key: 'urgence', label: '🚨 Urgence' },
-  { key: 'eau-puits', label: '💧 Eau & Puits' },
-  { key: 'orphelins', label: '🤲 Orphelins' },
-  { key: 'mosquee', label: '🕌 Mosquées' },
-  { key: 'education', label: '📚 Éducation' },
-  { key: 'famille', label: '👨‍👩‍👧 Familles' },
-  { key: 'afrique', label: '🌍 Afrique' },
+const CAGNOTTE_CATS: { key: CagnotteCategory | 'all'; label: string; icon: React.ReactNode }[] = [
+  { key: 'all',       label: 'Tout',       icon: <Globe size={11} strokeWidth={1.8} /> },
+  { key: 'palestine', label: 'Palestine',  icon: <Flag size={11} strokeWidth={1.8} /> },
+  { key: 'urgence',   label: 'Urgence',    icon: <AlertTriangle size={11} strokeWidth={1.8} /> },
+  { key: 'eau-puits', label: 'Eau & Puits',icon: <Droplets size={11} strokeWidth={1.8} /> },
+  { key: 'orphelins', label: 'Orphelins',  icon: <Baby size={11} strokeWidth={1.8} /> },
+  { key: 'mosquee',   label: 'Mosquées',   icon: <Landmark size={11} strokeWidth={1.8} /> },
+  { key: 'education', label: 'Éducation',  icon: <BookOpen size={11} strokeWidth={1.8} /> },
+  { key: 'famille',   label: 'Familles',   icon: <Users size={11} strokeWidth={1.8} /> },
+  { key: 'afrique',   label: 'Afrique',    icon: <Globe size={11} strokeWidth={1.8} /> },
 ];
 
 const TYPE_LIEU_LABELS: Record<string, string> = {
@@ -73,12 +75,12 @@ const TYPE_LIEU_LABELS: Record<string, string> = {
 
 type Tab = 'cagnottes' | 'maraudes' | 'visites' | 'voyages' | 'associations';
 
-const TABS: { key: Tab; label: string; count?: number }[] = [
-  { key: 'cagnottes', label: '🤲 Cagnottes', count: cagnottes.length },
-  { key: 'maraudes', label: '🍲 Maraudes', count: initiatives.length },
-  { key: 'visites', label: '💚 Visites malades', count: visiteMalades.length },
-  { key: 'voyages', label: '✈️ Voyages humanitaires', count: voyagesHumanitaires.length },
-  { key: 'associations', label: '🏛️ Associations', count: associations.length },
+const TABS: { key: Tab; label: string; count?: number; icon: React.ReactNode }[] = [
+  { key: 'cagnottes',    label: 'Cagnottes',            count: cagnottes.length,          icon: <Coins size={13} strokeWidth={1.8} /> },
+  { key: 'maraudes',     label: 'Maraudes',             count: initiatives.length,        icon: <HeartHandshake size={13} strokeWidth={1.8} /> },
+  { key: 'visites',      label: 'Visites malades',      count: visiteMalades.length,      icon: <Heart size={13} strokeWidth={1.8} /> },
+  { key: 'voyages',      label: 'Voyages humanitaires', count: voyagesHumanitaires.length,icon: <Plane size={13} strokeWidth={1.8} /> },
+  { key: 'associations', label: 'Associations',         count: associations.length,       icon: <Building2 size={13} strokeWidth={1.8} /> },
 ];
 
 export default function SolidarityPage() {
@@ -131,9 +133,9 @@ export default function SolidarityPage() {
             style={{
               padding: '0.75rem 1.25rem',
               border: 'none',
-              borderBottom: tab === t.key ? '2px solid #ef4444' : '2px solid transparent',
+              borderBottom: tab === t.key ? '2px solid #059669' : '2px solid transparent',
               backgroundColor: 'transparent',
-              color: tab === t.key ? '#ef4444' : 'var(--text-secondary)',
+              color: tab === t.key ? '#059669' : 'var(--text-secondary)',
               fontWeight: tab === t.key ? 700 : 400,
               fontSize: '0.88rem',
               cursor: 'pointer',
@@ -142,7 +144,9 @@ export default function SolidarityPage() {
               transition: 'all 0.15s',
             }}
           >
-            {t.label}{t.count !== undefined ? ` (${t.count})` : ''}
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              {t.icon}{t.label}{t.count !== undefined ? ` (${t.count})` : ''}
+            </span>
           </button>
         ))}
       </div>
@@ -169,7 +173,7 @@ export default function SolidarityPage() {
               return (
                 <button key={cat.key} onClick={() => setCatFilter(cat.key)}
                   style={{ padding: '0.4rem 0.9rem', borderRadius: '999px', border: isActive ? `2px solid ${color}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? color : 'white', color: isActive ? 'white' : 'var(--text-secondary)', fontSize: '0.82rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s' }}>
-                  {cat.label}
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>{cat.icon}{cat.label}</span>
                 </button>
               );
             })}
