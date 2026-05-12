@@ -50,12 +50,12 @@ const SECTIONS: FooterSection[] = [
   },
 ];
 
-const GREEN = '#6ee7b7';
+const GREEN = '#c4b5fd';
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer style={{ borderTop: '1px solid #1a1a1a', backgroundColor: '#0a0a0a', marginTop: '4rem', color: 'white' }}>
+    <footer style={{ borderTop: 'none', backgroundColor: '#0a0a0a', color: 'white' }}>
       <div className="container" style={{ padding: '3rem 1rem 2rem' }}>
 
         {/* Grid liens */}

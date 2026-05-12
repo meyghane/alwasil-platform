@@ -107,14 +107,14 @@ export default function ChatBot() {
           width: '56px',
           height: '56px',
           borderRadius: '50%',
-          backgroundColor: '#059669',
+          backgroundColor: '#7c3aed',
           color: 'white',
           border: 'none',
           cursor: 'pointer',
           display: open ? 'none' : 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(5,150,105,0.4)',
+          boxShadow: '0 4px 20px rgba(124,58,237,0.4)',
           zIndex: 1000,
           transition: 'transform 0.2s',
         }}
@@ -145,7 +145,7 @@ export default function ChatBot() {
         }}>
           {/* Header */}
           <div style={{
-            backgroundColor: '#059669',
+            backgroundColor: '#7c3aed',
             color: 'white',
             padding: '1rem 1.25rem',
             display: 'flex',
@@ -193,16 +193,16 @@ export default function ChatBot() {
                 {msg.role === 'assistant' && (
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    backgroundColor: 'rgba(5,150,105,0.12)',
+                    backgroundColor: 'rgba(124,58,237,0.12)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0, marginTop: '2px',
                   }}>
-                    <Bot size={15} color="#059669" />
+                    <Bot size={15} color="#7c3aed" />
                   </div>
                 )}
                 <div style={{
                   maxWidth: '80%',
-                  backgroundColor: msg.role === 'user' ? '#059669' : '#f5f5f4',
+                  backgroundColor: msg.role === 'user' ? '#7c3aed' : '#f5f5f4',
                   color: msg.role === 'user' ? 'white' : 'var(--text-primary)',
                   padding: '0.6rem 0.875rem',
                   borderRadius: msg.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
@@ -214,7 +214,7 @@ export default function ChatBot() {
                 {msg.role === 'user' && (
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    backgroundColor: '#059669',
+                    backgroundColor: '#7c3aed',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0, marginTop: '2px',
                   }}>
@@ -229,11 +229,11 @@ export default function ChatBot() {
               <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '0.5rem', alignItems: 'flex-start' }}>
                 <div style={{
                   width: '28px', height: '28px', borderRadius: '50%',
-                  backgroundColor: 'rgba(5,150,105,0.12)',
+                  backgroundColor: 'rgba(124,58,237,0.12)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, marginTop: '2px',
                 }}>
-                  <Bot size={15} color="#059669" />
+                  <Bot size={15} color="#7c3aed" />
                 </div>
                 <div style={{
                   maxWidth: '80%',
@@ -255,7 +255,7 @@ export default function ChatBot() {
                   {[0, 1, 2].map(i => (
                     <div key={i} style={{
                       width: '6px', height: '6px', borderRadius: '50%',
-                      backgroundColor: '#059669',
+                      backgroundColor: '#7c3aed',
                       animation: `bounce 1s ${i * 0.15}s infinite`,
                       opacity: 0.6,
                     }} />
@@ -320,7 +320,7 @@ export default function ChatBot() {
               style={{
                 width: '38px', height: '38px',
                 borderRadius: '0.5rem',
-                backgroundColor: loading || !input.trim() ? '#e5e7eb' : '#059669',
+                backgroundColor: loading || !input.trim() ? '#e5e7eb' : '#7c3aed',
                 color: 'white',
                 border: 'none',
                 cursor: loading || !input.trim() ? 'default' : 'pointer',
