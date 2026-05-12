@@ -72,8 +72,8 @@ export default function Navigation() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <div style={{ width: '40px', height: '40px', backgroundColor: PRIMARY, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '1.4rem' }}>W</div>
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ fontSize: '1.15rem', fontWeight: 700, color: '#1c1917' }}>Al-Wasil</span>
-                <span style={{ fontSize: '0.65rem', fontWeight: 500, color: PRIMARY, letterSpacing: '0.1em', marginTop: '2px' }}>الواصل</span>
+                <span style={{ fontSize: '1.15rem', fontWeight: 700, color: '#fff' }}>Al-Wasil</span>
+                <span style={{ fontSize: '0.65rem', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.1em', marginTop: '2px' }}>الواصل</span>
               </div>
             </div>
           </Link>
@@ -164,9 +164,8 @@ export default function Navigation() {
 
       <style jsx>{`
         .nav-container {
-          border-bottom: 1px solid #e7e5e4;
-          background-color: rgba(255, 255, 255, 0.98);
-          backdrop-filter: blur(8px);
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          background-color: #051c0e;
           position: sticky;
           top: 0;
           z-index: 50;
@@ -177,15 +176,15 @@ export default function Navigation() {
           gap: 0.35rem;
           padding: 0.5rem 0.8rem;
           font-size: 0.875rem;
-          color: #44403c;
+          color: rgba(255,255,255,0.80);
           font-weight: 500;
           text-decoration: none;
           border-radius: 8px;
           transition: all 0.2s;
         }
         .nav-link:hover {
-          color: ${PRIMARY};
-          background-color: #f0fdfa;
+          color: #fff;
+          background-color: rgba(255,255,255,0.08);
         }
         .nav-group-btn {
           display: flex;
@@ -193,7 +192,7 @@ export default function Navigation() {
           gap: 0.35rem;
           padding: 0.5rem 0.8rem;
           font-size: 0.875rem;
-          color: #44403c;
+          color: rgba(255,255,255,0.80);
           font-weight: 500;
           background: none;
           border: none;
@@ -202,8 +201,8 @@ export default function Navigation() {
           transition: all 0.2s;
         }
         .nav-group-btn.active, .nav-group-btn:hover {
-          color: ${PRIMARY};
-          background-color: #f0fdfa;
+          color: #fff;
+          background-color: rgba(255,255,255,0.08);
         }
         .dropdown-menu {
           position: absolute;
@@ -249,32 +248,33 @@ export default function Navigation() {
         .login-link {
           font-size: 0.875rem;
           padding: 0.5rem 1rem;
-          color: #44403c;
+          color: rgba(255,255,255,0.80);
           text-decoration: none;
           font-weight: 500;
           border-radius: 8px;
-          transition: background 0.2s;
+          transition: background 0.2s, color 0.2s;
         }
         .login-link:hover {
-          background-color: #f5f5f4;
+          color: #fff;
+          background-color: rgba(255,255,255,0.08);
         }
         .join-btn {
           font-size: 0.875rem;
           text-decoration: none;
           padding: 0.6rem 1.25rem;
-          background-color: ${PRIMARY};
-          color: white;
+          background-color: #fff;
+          color: #051c0e;
           border-radius: 8px;
-          font-weight: 600;
-          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+          font-weight: 700;
+          box-shadow: 0 0 12px rgba(255,255,255,0.15);
         }
         .nav-mobile-btn {
           background: none;
-          border: 1px solid #e7e5e4;
+          border: 1px solid rgba(255,255,255,0.25);
           border-radius: 8px;
           padding: 0.5rem;
           cursor: pointer;
-          color: #1c1917;
+          color: #fff;
           display: flex;
           align-items: center;
         }

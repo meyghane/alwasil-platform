@@ -131,14 +131,14 @@ a {
   }
 }
 
-/* ── BORDER BEAM — faisceau lumineux sur le contour ────────── */
+/* ── BORDER BEAM — lumière qui fait le tour du contour ──────── */
 
 @keyframes led-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Conteneur externe : clip le beam au border-radius */
+/* Conteneur externe : 2px = l'épaisseur du "tube" lumineux */
 .led-card-outer {
   position: relative;
   border-radius: 14px;
@@ -146,37 +146,49 @@ a {
   display: flex;
   text-decoration: none;
   cursor: pointer;
+  /* Halo doux permanent autour du bouton — comme si le contour brillait */
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.10),
+    0 0 10px rgba(255,255,255,0.04);
+  transition: box-shadow 0.3s, transform 0.18s;
 }
 
-/* Le faisceau rotatif — gradient conique très fin */
+/* Faisceau rotatif : long arc (~100°), dégradé doux, sans projection centrale */
 .led-spin {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200%;
-  height: 200%;
+  /* Assez grand pour couvrir les coins */
+  width: 210%;
+  height: 210%;
   transform: translate(-50%, -50%) rotate(0deg);
   background: conic-gradient(
     from 0deg at 50% 50%,
     transparent 0deg,
-    transparent 338deg,
-    rgba(255,255,255,0.08) 346deg,
-    rgba(255,255,255,0.55) 352deg,
-    rgba(255,255,255,0.95) 356deg,
-    white 358deg,
-    rgba(255,255,255,0.6) 360deg,
-    transparent 362deg
+    transparent 240deg,
+    rgba(255,255,255,0.02) 258deg,
+    rgba(255,255,255,0.10) 272deg,
+    rgba(255,255,255,0.28) 288deg,
+    rgba(255,255,255,0.52) 304deg,
+    rgba(255,255,255,0.75) 318deg,
+    rgba(255,255,255,0.92) 330deg,
+    white                  337deg,
+    rgba(255,255,255,0.92) 344deg,
+    rgba(255,255,255,0.65) 352deg,
+    rgba(255,255,255,0.30) 358deg,
+    rgba(255,255,255,0.08) 362deg,
+    transparent            366deg
   );
-  animation: led-spin 3.5s linear infinite;
+  animation: led-spin 4s linear infinite;
   z-index: 0;
-  opacity: 0.85;
-  transition: opacity 0.25s;
+  /* Léger flou pour adoucir les bords du faisceau */
+  filter: blur(0.4px);
 }
 
-/* Face intérieure : couvre tout sauf 1.5px de bord */
+/* Face intérieure OPAQUE — masque le centre du conic-gradient */
 .led-face {
   position: absolute;
-  inset: 1.5px;
+  inset: 1.5px;          /* épaisseur du contour visible */
   border-radius: 12.5px;
   z-index: 1;
   display: flex;
@@ -184,18 +196,21 @@ a {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: background 0.2s;
+  transition: background 0.25s;
+  /* PAS de transparence : on ne voit que la tranche de 1.5px autour */
 }
 
-/* Hover : faisceau plus rapide + face légèrement plus lumineuse */
+/* Hover : faisceau accéléré + halo plus prononcé */
 .led-card-outer:hover .led-spin {
-  animation-duration: 1.4s;
-  opacity: 1;
+  animation-duration: 1.8s;
 }
 .led-card-outer:hover .led-face {
-  background: rgba(255,255,255,0.13) !important;
+  background: rgba(8, 38, 18, 0.92) !important;
 }
 .led-card-outer:hover {
-  transform: scale(1.035);
-  transition: transform 0.18s;
+  transform: scale(1.03);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.22),
+    0 0 18px rgba(255,255,255,0.10),
+    0 0 32px rgba(255,255,255,0.05);
 }

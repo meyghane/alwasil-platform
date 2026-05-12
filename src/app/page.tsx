@@ -231,10 +231,10 @@ export default function Home() {
               >
                 {/* Faisceau rotatif — le "LED qui fait le tour" */}
                 <div className="led-spin" />
-                {/* Face intérieure — fond vert sombre */}
+                {/* Face intérieure — OPAQUE : cache le centre du gradient */}
                 <div
                   className="led-face"
-                  style={{ background: 'rgba(5, 28, 14, 0.88)' }}
+                  style={{ background: '#051c0e' }}
                 >
                   <span style={{
                     fontSize: '1.6rem',
