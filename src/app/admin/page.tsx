@@ -94,27 +94,15 @@ export default async function AdminPage() {
             const Icon = getCatIcon(cat.key);
             return (
               <Link key={cat.key} href={`/admin/ajouter/${cat.key}`} style={{ textDecoration: 'none' }}>
-                <div style={{
+                <div className="admin-cat-card" style={{
                   backgroundColor: 'white',
                   borderRadius: '14px',
                   border: '1px solid #ede9fe',
                   padding: '1.25rem',
                   display: 'flex', flexDirection: 'column', gap: '0.75rem',
                   boxShadow: '0 2px 8px rgba(109,40,217,0.06)',
-                  transition: 'transform 0.15s, box-shadow 0.15s',
                   cursor: 'pointer',
-                }}
-                  onMouseOver={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.transform = 'translateY(-2px)';
-                    el.style.boxShadow = '0 8px 20px rgba(109,40,217,0.14)';
-                  }}
-                  onMouseOut={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.transform = '';
-                    el.style.boxShadow = '0 2px 8px rgba(109,40,217,0.06)';
-                  }}
-                >
+                }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <div style={{
                       width: 40, height: 40, borderRadius: '10px', flexShrink: 0,

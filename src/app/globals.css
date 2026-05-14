@@ -131,6 +131,15 @@ a {
   }
 }
 
+/* ── ADMIN CARDS ─────────────────────────────────────────────── */
+.admin-cat-card {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.admin-cat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(109,40,217,0.14) !important;
+}
+
 /* ── PARTICULES PAGE HEADER ──────────────────────────────────── */
 
 @keyframes particle-float {
