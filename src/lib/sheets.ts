@@ -66,9 +66,22 @@ export type Evenement = {
 // Les lignes sans colonne status (données legacy) sont toujours incluses.
 
 function isPublished(row: string[], knownColCount: number): boolean {
-  const status = row[knownColCount]; // colonne juste après les colonnes connues
-  if (!status || status.trim() === '') return true; // pas de colonne status = legacy = inclus
-  return status.trim() === 'en ligne';
+  const status = (row[knownColCount] ?? '').trim().toLowerCase();
+  // Pas de colonne status → données legacy → on inclut (TRUE/FALSE géré séparément)
+  if (!status) return true;
+  // Nouvelles valeurs texte
+  if (status === 'en ligne') return true;
+  if (status === 'à vérifier' || status === 'a verifier' || status === 'expiré' || status === 'expire' || status === 'pas en ligne') return false;
+  // Backward compat avec TRUE/FALSE
+  if (status === 'true') return true;
+  if (status === 'false') return false;
+  return true; // valeur inconnue → on inclut par sécurité
+}
+
+// Helper pour les événements expirés (date passée)
+function isEventExpired(dateStr: string): boolean {
+  if (!dateStr) return false;
+  return new Date(dateStr) < new Date(new Date().toDateString());
 }
 
 // ── Fonction générique de fetch ─────────────────────────────
