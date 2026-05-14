@@ -2,7 +2,26 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { CheckCircle, Send, RotateCcw, LayoutDashboard, Check, X } from 'lucide-react';
 import type { CategoryForm } from '@/lib/admin-forms';
+
+const V = '#7c3aed';
+const V_LIGHT = '#f5f3ff';
+const V_BORDER = '#ede9fe';
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '0.75rem 1rem',
+  borderRadius: '10px',
+  border: `1.5px solid ${V_BORDER}`,
+  fontSize: '0.9rem',
+  outline: 'none',
+  boxSizing: 'border-box',
+  fontFamily: 'Poppins, sans-serif',
+  color: '#1c1917',
+  backgroundColor: '#faf9ff',
+  transition: 'border-color 0.15s',
+};
 
 export default function AddForm({ categorie, form }: { categorie: string; form: CategoryForm }) {
   const [data, setData] = useState<Record<string, string | string[]>>({});
@@ -26,7 +45,6 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
     e.preventDefault();
     setStatus('loading');
 
-    // Convertir les multiselect en chaînes virgule
     const serialized: Record<string, string> = {};
     for (const [k, v] of Object.entries(data)) {
       serialized[k] = Array.isArray(v) ? v.join(',') : String(v ?? '');
@@ -51,15 +69,39 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
   if (status === 'success') {
     return (
       <div style={{ padding: '3rem 2rem', textAlign: 'center' }}>
-        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📬</div>
-        <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: '1.25rem', marginBottom: '0.75rem' }}>Email envoyé !</h2>
-        <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>{message}</p>
+        <div style={{
+          width: 64, height: 64, borderRadius: '50%',
+          backgroundColor: V_LIGHT, border: `2px solid ${V_BORDER}`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 1.25rem',
+        }}>
+          <CheckCircle size={30} color={V} strokeWidth={1.8} />
+        </div>
+        <h2 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#1c1917' }}>
+          Fiche envoyée !
+        </h2>
+        <p style={{ color: '#6b7280', marginBottom: '0.5rem', fontSize: '0.875rem', lineHeight: 1.6 }}>
+          {message}
+        </p>
+        <p style={{ color: '#a8a29e', fontSize: '0.78rem', marginBottom: '2rem' }}>
+          Vérifie ta boîte mail pour valider la fiche.
+        </p>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button onClick={() => { setStatus('idle'); setData({}); }} style={{ padding: '0.75rem 1.5rem', backgroundColor: form.color, color: 'white', border: '2px solid #0a0a0a', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', boxShadow: '3px 3px 0 #0a0a0a' }}>
-            + Ajouter une autre fiche
+          <button onClick={() => { setStatus('idle'); setData({}); }} style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+            padding: '0.75rem 1.5rem', backgroundColor: V, color: 'white',
+            border: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '0.875rem',
+            cursor: 'pointer',
+          }}>
+            <RotateCcw size={14} /> Ajouter une autre fiche
           </button>
-          <button onClick={() => router.push('/admin')} style={{ padding: '0.75rem 1.5rem', backgroundColor: 'white', color: '#0a0a0a', border: '2px solid #0a0a0a', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', boxShadow: '3px 3px 0 #0a0a0a' }}>
-            Retour au dashboard
+          <button onClick={() => router.push('/admin')} style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+            padding: '0.75rem 1.5rem', backgroundColor: 'white', color: V,
+            border: `1.5px solid ${V_BORDER}`, borderRadius: '10px', fontWeight: 600,
+            fontSize: '0.875rem', cursor: 'pointer',
+          }}>
+            <LayoutDashboard size={14} /> Dashboard
           </button>
         </div>
       </div>
@@ -67,13 +109,17 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+    <form onSubmit={handleSubmit} style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
       {form.fields.map(field => (
         <div key={field.key}>
-          <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#374151', marginBottom: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <label style={{
+            display: 'block', fontSize: '0.75rem', fontWeight: 700,
+            color: '#4c1d95', marginBottom: '0.4rem',
+            textTransform: 'uppercase', letterSpacing: '0.06em',
+          }}>
             {field.label}
-            {field.required && <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>}
+            {field.required && <span style={{ color: '#7c3aed', marginLeft: '4px' }}>*</span>}
           </label>
 
           {/* Textarea */}
@@ -84,7 +130,7 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
               required={field.required}
               placeholder={field.placeholder}
               rows={3}
-              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1.5px solid #e5e7eb', fontSize: '0.9rem', outline: 'none', resize: 'vertical', boxSizing: 'border-box', fontFamily: 'inherit' }}
+              style={{ ...inputStyle, resize: 'vertical' }}
             />
           )}
 
@@ -94,7 +140,7 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
               value={(data[field.key] as string) || ''}
               onChange={e => setValue(field.key, e.target.value)}
               required={field.required}
-              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1.5px solid #e5e7eb', fontSize: '0.9rem', outline: 'none', backgroundColor: 'white', boxSizing: 'border-box' }}
+              style={{ ...inputStyle, backgroundColor: '#faf9ff' }}
             >
               <option value="">— Choisir —</option>
               {field.options?.map(opt => (
@@ -113,7 +159,14 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
                     key={opt.value}
                     type="button"
                     onClick={() => toggleMultiselect(field.key, opt.value)}
-                    style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', border: `2px solid ${selected ? form.color : '#e5e7eb'}`, backgroundColor: selected ? form.color : 'white', color: selected ? 'white' : '#374151', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', transition: 'all 0.1s' }}
+                    style={{
+                      padding: '0.35rem 0.875rem', borderRadius: '20px',
+                      border: `1.5px solid ${selected ? V : V_BORDER}`,
+                      backgroundColor: selected ? V : 'white',
+                      color: selected ? 'white' : '#6b7280',
+                      fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer',
+                      transition: 'all 0.15s',
+                    }}
                   >
                     {opt.label}
                   </button>
@@ -124,24 +177,35 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
 
           {/* Boolean */}
           {field.type === 'boolean' && (
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              {[{ value: 'TRUE', label: '✅ Oui' }, { value: 'FALSE', label: '❌ Non' }].map(opt => {
+            <div style={{ display: 'flex', gap: '0.6rem' }}>
+              {[
+                { value: 'TRUE',  label: 'Oui', icon: <Check size={13} strokeWidth={2.5} /> },
+                { value: 'FALSE', label: 'Non', icon: <X size={13} strokeWidth={2.5} /> },
+              ].map(opt => {
                 const selected = (data[field.key] as string) === opt.value;
                 return (
                   <button
                     key={opt.value}
                     type="button"
                     onClick={() => setValue(field.key, opt.value)}
-                    style={{ padding: '0.4rem 1rem', borderRadius: '6px', border: `2px solid ${selected ? '#0a0a0a' : '#e5e7eb'}`, backgroundColor: selected ? '#0a0a0a' : 'white', color: selected ? 'white' : '#374151', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+                      padding: '0.5rem 1.25rem', borderRadius: '10px',
+                      border: `1.5px solid ${selected ? V : V_BORDER}`,
+                      backgroundColor: selected ? V : 'white',
+                      color: selected ? 'white' : '#6b7280',
+                      fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer',
+                      transition: 'all 0.15s',
+                    }}
                   >
-                    {opt.label}
+                    {opt.icon} {opt.label}
                   </button>
                 );
               })}
             </div>
           )}
 
-          {/* Tous les autres (text, url, tel, email, number, date) */}
+          {/* Input (text, url, tel, email, number, date) */}
           {!['textarea', 'select', 'multiselect', 'boolean'].includes(field.type) && (
             <input
               type={field.type}
@@ -149,28 +213,44 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
               onChange={e => setValue(field.key, e.target.value)}
               required={field.required}
               placeholder={field.placeholder}
-              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1.5px solid #e5e7eb', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' }}
+              style={inputStyle}
             />
           )}
 
           {field.hint && (
-            <p style={{ fontSize: '0.72rem', color: '#9ca3af', margin: '0.3rem 0 0' }}>{field.hint}</p>
+            <p style={{ fontSize: '0.72rem', color: '#a8a29e', margin: '0.3rem 0 0', fontStyle: 'italic' }}>
+              {field.hint}
+            </p>
           )}
         </div>
       ))}
 
       {status === 'error' && (
-        <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '6px', fontSize: '0.85rem', color: '#dc2626' }}>
-          {message}
+        <div style={{
+          padding: '0.875rem 1rem', backgroundColor: '#fef2f2',
+          border: '1px solid #fca5a5', borderRadius: '10px',
+          fontSize: '0.85rem', color: '#dc2626',
+          display: 'flex', alignItems: 'center', gap: '0.5rem',
+        }}>
+          <X size={14} /> {message}
         </div>
       )}
 
       <button
         type="submit"
         disabled={status === 'loading'}
-        style={{ padding: '0.875rem', backgroundColor: form.color, color: 'white', border: '2px solid #0a0a0a', borderRadius: '8px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '0.95rem', cursor: status === 'loading' ? 'not-allowed' : 'pointer', opacity: status === 'loading' ? 0.7 : 1, boxShadow: '4px 4px 0 #0a0a0a', marginTop: '0.5rem' }}
+        style={{
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+          padding: '0.9rem', backgroundColor: status === 'loading' ? '#a78bfa' : V,
+          color: 'white', border: 'none', borderRadius: '12px',
+          fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '0.95rem',
+          cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+          marginTop: '0.5rem', transition: 'background 0.2s',
+          boxShadow: '0 4px 12px rgba(109,40,217,0.25)',
+        }}
       >
-        {status === 'loading' ? 'Envoi en cours...' : `${form.emoji} Envoyer pour validation`}
+        <Send size={16} strokeWidth={2} />
+        {status === 'loading' ? 'Envoi en cours...' : 'Envoyer pour validation'}
       </button>
     </form>
   );
