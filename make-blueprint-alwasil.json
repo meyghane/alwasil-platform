@@ -1,0 +1,117 @@
+{
+  "name": "Al-Wasil — Soumissions → Sheet → Email",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "hook": "alwasil-events-in",
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": { "x": 0, "y": 0 },
+        "restore": { "parameters": { "hook": { "label": "alwasil-events-in" } } }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": { "handleErrors": false, "useNewZLibDecompressor": true },
+      "mapper": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAhou4JCWwY3sumVbTIlMja_Nkivw7U6Lk",
+        "serializeUrl": false,
+        "method": "POST",
+        "headers": [],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMTLS": false,
+        "contentType": "application/json",
+        "data": "{\"contents\":[{\"parts\":[{\"text\":\"Tu reçois des données d'un événement islamique. Retourne UNIQUEMENT un JSON strict (pas de markdown) avec ces clés: titre (string, max 60 chars, propre), description (string, 2 phrases max), tags (string, 4 mots-clés séparés par virgule), departement (string, code dept 2 chiffres déduit de la ville, ou '75' par défaut). Données: titre={{1.titre}}, ville={{1.ville}}, description={{1.description}}, categorie={{1.categorie}}\"}]}],\"generationConfig\":{\"temperature\":0.2,\"maxOutputTokens\":512}}",
+        "followAllRedirects": false
+      },
+      "metadata": {
+        "designer": { "x": 300, "y": 0 },
+        "restore": { "expect": { "method": { "label": "POST" }, "bodyType": { "label": "Raw" }, "contentType": { "label": "JSON (application/json)" } } }
+      }
+    },
+    {
+      "id": 3,
+      "module": "google-sheets:addRow",
+      "version": 2,
+      "parameters": { "includeHeaders": 1 },
+      "mapper": {
+        "spreadsheetId": "1Qr-ZnpjCOUBWpki__ueQIQQrPSogs4bRJ0osy4RoLfU",
+        "sheetId": "Events",
+        "values": {
+          "id": "{{1.categorie}}-{{formatDate(now; \"YYYYMMDDHHmmss\")}}",
+          "titre": "{{1.titre}}",
+          "categorie": "{{1.categorie}}",
+          "date_debut": "{{1.date_debut}}",
+          "date_fin": "{{1.date_fin}}",
+          "heure_debut": "{{1.heure_debut}}",
+          "heure_fin": "{{1.heure_fin}}",
+          "lieu": "{{1.lieu}}",
+          "adresse": "{{1.adresse}}",
+          "ville": "{{1.ville}}",
+          "departement": "{{1.departement}}",
+          "organisateur": "{{1.organisateur}}",
+          "description": "{{1.description}}",
+          "tags": "{{1.tags}}",
+          "format": "{{if(1.format; 1.format; \"presentiel\")}}",
+          "gratuit": "{{if(1.gratuit; \"TRUE\"; \"FALSE\")}}",
+          "prix": "{{1.prix}}",
+          "status": "à vérifier",
+          "soumis_le": "{{formatDate(now; \"YYYY-MM-DD HH:mm\")}}"
+        }
+      },
+      "metadata": {
+        "designer": { "x": 600, "y": 0 }
+      }
+    },
+    {
+      "id": 4,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "to": "al-wasil@hotmail.com",
+        "subject": "[Al-Wasil] Nouvelle soumission à valider — {{1.categorie}}",
+        "htmlBody": "<div style='font-family:sans-serif;max-width:600px'><h2 style='color:#7c3aed'>Nouvelle soumission Al-Wasil</h2><p><strong>Catégorie:</strong> {{1.categorie}}</p><p><strong>Titre:</strong> {{1.titre}}</p><p><strong>Ville:</strong> {{1.ville}}</p><p><strong>Date:</strong> {{1.date_debut}}</p><hr><a href='https://docs.google.com/spreadsheets/d/1Qr-ZnpjCOUBWpki__ueQIQQrPSogs4bRJ0osy4RoLfU/edit' style='background:#7c3aed;color:white;padding:10px 20px;border-radius:6px;text-decoration:none'>Ouvrir le Sheet pour valider →</a><p style='color:#888;font-size:0.8em;margin-top:16px'>Change le status de <em>à vérifier</em> → <em>en ligne</em> pour publier.</p></div>",
+        "from": ""
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": 0 }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": { "orphans": [] },
+    "zone": "eu1.make.com"
+  }
+}

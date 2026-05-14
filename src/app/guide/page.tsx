@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { BookOpen, ChevronDown, ChevronUp, Download, MapPin, User, Users } from 'lucide-react';
+import { useState, useCallback } from 'react';
+import { BookOpen, ChevronDown, ChevronUp, Download, Eye, MapPin, User, Users, X } from 'lucide-react';
 
 const TEAL = '#5e17eb';
 const TEAL_LIGHT = '#f3eeff';
@@ -124,6 +124,46 @@ function Section({ title, emoji, children, defaultOpen = false }: { title: strin
 export default function GuidePage() {
   const [gender, setGender] = useState<'h' | 'f' | null>(null);
   const [dept, setDept] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
+
+  const handleDownloadPDF = useCallback(() => {
+    // Ouvre une nouvelle fenêtre avec le guide en mode impression propre
+    const w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) { window.print(); return; }
+    w.document.write(`<!DOCTYPE html><html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<title>Guide - Mes Premiers Pas en Islam — Al-Wasil</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Poppins, sans-serif; color: #1c1917; background: #fff; padding: 2rem; max-width: 700px; margin: 0 auto; }
+  h1 { font-size: 2rem; font-weight: 900; color: #7c3aed; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.1rem; font-weight: 700; color: #7c3aed; margin: 1.5rem 0 0.75rem; border-bottom: 2px solid #ede9fe; padding-bottom: 0.4rem; }
+  p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.75rem; color: #44403c; }
+  .item { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: flex-start; }
+  .num { width: 28px; height: 28px; border-radius: 50%; background: #7c3aed; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
+  .badge { background: #f5f3ff; border: 1px solid #ddd6fe; color: #7c3aed; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 0.5rem; }
+  footer { margin-top: 3rem; text-align: center; color: #a8a29e; font-size: 0.75rem; border-top: 1px solid #e7e5e4; padding-top: 1rem; }
+  @media print { body { padding: 1rem; } }
+</style>
+</head>
+<body>
+<div class="badge">Al-Wasil — Mes Premiers Pas</div>
+<h1>Guide pour débuter en Islam</h1>
+<p>Les fondamentaux sur lesquels tous les savants s'accordent, sans divergences d'écoles.</p>
+
+<h2>Les 5 piliers de l'Islam</h2>
+${PILIERS.map((p, i) => `<div class="item"><div class="num">${i+1}</div><div><strong>${p.nom}</strong> <em style="color:#a8a29e">${p.ar}</em><br/><span style="font-size:0.85rem;color:#57534e">${p.desc}</span></div></div>`).join('')}
+
+<h2>L'ablution (Wudu) — étapes</h2>
+${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><strong>${s.titre}</strong><br/><span style="font-size:0.85rem;color:#57534e">${s.desc}</span></div></div>`).join('')}
+
+<footer>© Al-Wasil — alwasil-platform.vercel.app — Guide généré le ${new Date().toLocaleDateString('fr-FR')}</footer>
+<script>window.onload = () => { setTimeout(() => window.print(), 500); }</script>
+</body></html>`);
+    w.document.close();
+  }, []);
 
   const mosquee = DEPARTEMENTS_MOSQUEES[dept];
 

@@ -2,7 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, ExternalLink, Search, MapPin, Star, Globe, Phone, Clock, Package, Truck } from 'lucide-react';
+import {
+  BookOpen, ExternalLink, Search, MapPin, Star, Globe, Phone, Clock, Package, Truck,
+  Building2, Monitor, Shuffle, BookMarked, Languages, Baby, Flag, Scale, Moon, Shirt,
+  Gem, Lightbulb, type LucideIcon,
+} from 'lucide-react';
 import {
   librairies,
   SPECIALITE_LABELS,
@@ -12,23 +16,23 @@ import {
 import DeptFilter from '@/components/DeptFilter';
 import PageHeader from '@/components/PageHeader';
 
-const TYPE_FILTERS: { key: LibrairieType | 'all'; label: string }[] = [
-  { key: 'all', label: '🌐 Toutes' },
-  { key: 'physique', label: '🏪 Physiques' },
-  { key: 'en-ligne', label: '💻 En ligne' },
-  { key: 'mixte', label: '🔀 Physique + Site' },
+const TYPE_FILTERS: { key: LibrairieType | 'all'; label: string; icon: LucideIcon }[] = [
+  { key: 'all',      label: 'Toutes',         icon: Globe },
+  { key: 'physique', label: 'Physiques',       icon: Building2 },
+  { key: 'en-ligne', label: 'En ligne',        icon: Monitor },
+  { key: 'mixte',    label: 'Physique + Site', icon: Shuffle },
 ];
 
-const SPECIALITE_FILTERS: { key: LibrairieSpecialite | 'all'; label: string }[] = [
-  { key: 'all', label: 'Toutes spécialités' },
-  { key: 'coran-tafsir', label: '📖 Coran & Tafsir' },
-  { key: 'arabe', label: '🔤 Langue arabe' },
-  { key: 'enfants', label: '👶 Enfants' },
-  { key: 'livres-francais', label: '🇫🇷 Livres français' },
-  { key: 'fiqh', label: '⚖️ Fiqh' },
-  { key: 'spiritualite', label: '🌙 Spiritualité' },
-  { key: 'vetements', label: '👘 Vêtements' },
-  { key: 'accessoires', label: '📿 Accessoires' },
+const SPECIALITE_FILTERS: { key: LibrairieSpecialite | 'all'; label: string; icon: LucideIcon }[] = [
+  { key: 'all',           label: 'Toutes spécialités', icon: BookOpen },
+  { key: 'coran-tafsir',  label: 'Coran & Tafsir',     icon: BookMarked },
+  { key: 'arabe',         label: 'Langue arabe',        icon: Languages },
+  { key: 'enfants',       label: 'Enfants',             icon: Baby },
+  { key: 'livres-francais',label: 'Livres français',   icon: Flag },
+  { key: 'fiqh',          label: 'Fiqh',                icon: Scale },
+  { key: 'spiritualite',  label: 'Spiritualité',        icon: Moon },
+  { key: 'vetements',     label: 'Vêtements',           icon: Shirt },
+  { key: 'accessoires',   label: 'Accessoires',         icon: Gem },
 ];
 
 const ACCENT = '#7c3aed'; // violet — couleur librairies
@@ -69,10 +73,11 @@ export default function LibrairiePage() {
       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.875rem' }}>
         {TYPE_FILTERS.map(f => {
           const isActive = typeFilter === f.key;
+          const Icon = f.icon;
           return (
             <button key={f.key} onClick={() => setTypeFilter(f.key)}
-              style={{ padding: '0.4rem 0.9rem', borderRadius: '999px', border: isActive ? `2px solid ${ACCENT}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? ACCENT : 'white', color: isActive ? 'white' : 'var(--text-secondary)', fontSize: '0.82rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', transition: 'all 0.15s' }}>
-              {f.label}
+              style={{ padding: '0.4rem 0.9rem', borderRadius: '999px', border: isActive ? `2px solid ${ACCENT}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? ACCENT : 'white', color: isActive ? 'white' : 'var(--text-secondary)', fontSize: '0.82rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+              <Icon size={12} strokeWidth={2} />{f.label}
             </button>
           );
         })}
@@ -100,10 +105,11 @@ export default function LibrairiePage() {
       <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
         {SPECIALITE_FILTERS.map(f => {
           const isActive = specialiteFilter === f.key;
+          const Icon = f.icon;
           return (
             <button key={f.key} onClick={() => setSpecialiteFilter(f.key)}
-              style={{ padding: '0.3rem 0.7rem', borderRadius: '6px', border: isActive ? `2px solid ${ACCENT}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? `${ACCENT}15` : 'transparent', color: isActive ? ACCENT : 'var(--text-secondary)', fontSize: '0.78rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', transition: 'all 0.15s' }}>
-              {f.label}
+              style={{ padding: '0.3rem 0.7rem', borderRadius: '6px', border: isActive ? `2px solid ${ACCENT}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? `${ACCENT}15` : 'transparent', color: isActive ? ACCENT : 'var(--text-secondary)', fontSize: '0.78rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
+              <Icon size={11} strokeWidth={2} />{f.label}
             </button>
           );
         })}

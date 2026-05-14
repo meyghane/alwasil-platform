@@ -182,9 +182,30 @@ export default function Home() {
         <div style={{
           position: 'absolute', bottom: '0', right: '0',
           width: '35%', height: '60%',
-          background: 'radial-gradient(ellipse at center, rgba(10,80,30,0.25) 0%, transparent 65%)',
+          background: 'radial-gradient(ellipse at center, rgba(109,40,217,0.2) 0%, transparent 65%)',
           pointerEvents: 'none',
         }} />
+
+        {/* Particules poussière — même que PageHeader */}
+        {[
+          { x:'5%',  y:'15%', s:2, d:0 },   { x:'15%', y:'70%', s:1, d:2.5 },
+          { x:'25%', y:'40%', s:3, d:1.2 }, { x:'35%', y:'85%', s:1, d:4 },
+          { x:'45%', y:'20%', s:2, d:0.8 }, { x:'55%', y:'60%', s:1, d:3.2 },
+          { x:'65%', y:'30%', s:2, d:1.8 }, { x:'75%', y:'75%', s:3, d:0.4 },
+          { x:'85%', y:'50%', s:1, d:2.8 }, { x:'92%', y:'25%', s:2, d:1.5 },
+          { x:'10%', y:'55%', s:1, d:3.8 }, { x:'50%', y:'90%', s:2, d:2.2 },
+          { x:'70%', y:'10%', s:1, d:0.6 }, { x:'80%', y:'85%', s:3, d:1.0 },
+          { x:'40%', y:'5%',  s:2, d:4.5 }, { x:'20%', y:'95%', s:1, d:3.5 },
+          { x:'60%', y:'45%', s:2, d:2.0 }, { x:'90%', y:'65%', s:1, d:1.3 },
+        ].map((p, i) => (
+          <div key={i} style={{
+            position: 'absolute', left: p.x, top: p.y,
+            width: `${p.s}px`, height: `${p.s}px`,
+            borderRadius: '50%', backgroundColor: '#c4b5fd',
+            opacity: 0.4, pointerEvents: 'none',
+            animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite`,
+          }} />
+        ))}
 
         <div className="container" style={{
           display: 'grid',

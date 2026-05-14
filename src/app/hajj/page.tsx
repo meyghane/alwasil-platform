@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plane, ExternalLink, Search, Star, MapPin, CheckCircle, XCircle, Phone, Globe, Users } from 'lucide-react';
+import { Plane, ExternalLink, Search, Star, MapPin, CheckCircle, XCircle, Phone, Globe, Users, BookOpen, Building2, Moon, Zap, type LucideIcon } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import {
   hajjAgences, hajjPackages,
@@ -11,18 +11,18 @@ import {
 
 type Tab = 'packages' | 'agences' | 'guide';
 
-const TABS: { key: Tab; label: string }[] = [
-  { key: 'packages', label: '🕋 Comparer les offres' },
-  { key: 'agences', label: '🏢 Agences de confiance' },
-  { key: 'guide', label: '📋 Guide du pèlerin' },
+const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
+  { key: 'packages', label: 'Comparer les offres',  icon: Plane },
+  { key: 'agences',  label: 'Agences de confiance', icon: Building2 },
+  { key: 'guide',    label: 'Guide du pèlerin',     icon: BookOpen },
 ];
 
-const TYPE_FILTERS: { key: VoyageType | 'all'; label: string }[] = [
-  { key: 'all', label: '🌐 Tous' },
-  { key: 'hajj', label: '🕋 Hajj 2026' },
-  { key: 'omra-ramadan', label: '🌙 Omra Ramadan' },
-  { key: 'omra-hors-saison', label: '✈️ Omra hors saison' },
-  { key: 'omra-express', label: '⚡ Omra Express' },
+const TYPE_FILTERS: { key: VoyageType | 'all'; label: string; icon: LucideIcon }[] = [
+  { key: 'all',             label: 'Tous',           icon: Globe },
+  { key: 'hajj',            label: 'Hajj 2026',      icon: Plane },
+  { key: 'omra-ramadan',    label: 'Omra Ramadan',   icon: Moon },
+  { key: 'omra-hors-saison',label: 'Omra hors saison', icon: Plane },
+  { key: 'omra-express',    label: 'Omra Express',   icon: Zap },
 ];
 
 const DEPART_CITIES: (DepartCity | 'Tous')[] = ['Tous', 'Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Lille'];
@@ -85,12 +85,16 @@ export default function HajjPage() {
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '0', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', overflowX: 'auto' }}>
-        {TABS.map(t => (
-          <button key={t.key} onClick={() => setTab(t.key)}
-            style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #059669' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#059669' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s' }}>
-            {t.label}
-          </button>
-        ))}
+        {TABS.map(t => {
+          const Icon = t.icon;
+          return (
+            <button key={t.key} onClick={() => setTab(t.key)}
+              style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #7c3aed' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#7c3aed' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Icon size={14} strokeWidth={1.8} />
+              {t.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* ─── COMPARATEUR PACKAGES ─── */}

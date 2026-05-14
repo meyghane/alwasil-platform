@@ -153,18 +153,18 @@ export default function EducationPage() {
           marginTop: '5rem',
           padding: '3rem 2rem',
           borderRadius: '16px',
-          backgroundColor: '#f0fdfa',
+          backgroundColor: '#f5f3ff',
           border: '1px solid #ccfbf1',
           textAlign: 'center',
         }}>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.75rem', color: '#134e4a' }}>Un institut manque à l'appel ?</h3>
-          <p style={{ color: '#0d9488', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
+          <p style={{ color: '#6d28d9', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
             Contribuez à l'annuaire Al-Wasil en proposant un nouvel établissement d'enseignement.
           </p>
           <Link href="/contact?type=general" className="btn btn-primary" style={{ 
             textDecoration: 'none',
             padding: '0.75rem 2rem',
-            backgroundColor: '#0d9488',
+            backgroundColor: '#6d28d9',
             borderRadius: '8px',
             fontWeight: 600
           }}>
@@ -177,18 +177,18 @@ export default function EducationPage() {
 }
 
 const TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; icon: LucideIcon }> = {
-  'institut':   { label: 'Institut',           color: '#059669', bg: '#d1fae5', icon: BookOpen },
-  'mosquee':    { label: 'Mosquée',            color: '#0d9488', bg: '#f0fdfa', icon: Landmark },
-  'professeur': { label: 'Professeur',         color: '#047857', bg: '#ecfdf5', icon: GraduationCap },
-  'en-ligne':   { label: 'Formation en ligne', color: '#065f46', bg: '#d1fae5', icon: Monitor },
-  'cercle':     { label: 'Cercle de science',  color: '#10b981', bg: '#d1fae5', icon: Users },
+  'institut':   { label: 'Institut',           color: '#7c3aed', bg: '#ede9fe', icon: BookOpen },
+  'mosquee':    { label: 'Mosquée',            color: '#6d28d9', bg: '#f5f3ff', icon: Landmark },
+  'professeur': { label: 'Professeur',         color: '#7c3aed', bg: '#f5f3ff', icon: GraduationCap },
+  'en-ligne':   { label: 'Formation en ligne', color: '#4c1d95', bg: '#ede9fe', icon: Monitor },
+  'cercle':     { label: 'Cercle de science',  color: '#8b5cf6', bg: '#ede9fe', icon: Users },
 };
 
 const AUDIENCE_CONFIG: Record<string, { label: string; icon: LucideIcon; color: string; bg: string }> = {
-  hommes:  { label: 'Hommes',  icon: User,  color: '#059669', bg: '#d1fae5' },
-  femmes:  { label: 'Femmes',  icon: User,  color: '#047857', bg: '#ecfdf5' },
-  enfants: { label: 'Enfants', icon: Baby,  color: '#065f46', bg: '#d1fae5' },
-  mixte:   { label: 'Mixte',   icon: Users, color: '#0d9488', bg: '#f0fdfa' },
+  hommes:  { label: 'Hommes',  icon: User,  color: '#7c3aed', bg: '#ede9fe' },
+  femmes:  { label: 'Femmes',  icon: User,  color: '#7c3aed', bg: '#f5f3ff' },
+  enfants: { label: 'Enfants', icon: Baby,  color: '#4c1d95', bg: '#ede9fe' },
+  mixte:   { label: 'Mixte',   icon: Users, color: '#6d28d9', bg: '#f5f3ff' },
 };
 
 function InstitutCard({ inst }: { inst: Institut }) {
@@ -239,7 +239,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
           {inst.verified && (
             <span style={{
               fontSize: '0.65rem', fontWeight: 700,
-              color: '#059669', backgroundColor: 'white',
+              color: '#7c3aed', backgroundColor: 'white',
               padding: '2px 8px', borderRadius: '20px',
               border: '1px solid #a7f3d0',
               display: 'inline-flex', alignItems: 'center', gap: '3px',

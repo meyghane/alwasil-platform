@@ -131,6 +131,14 @@ a {
   }
 }
 
+/* ── PARTICULES PAGE HEADER ──────────────────────────────────── */
+
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: inherit; }
+  33%       { transform: translateY(-12px) scale(1.3); }
+  66%       { transform: translateY(-6px) scale(0.8); }
+}
+
 /* ── TICKER STATS — défilement infini ────────────────────────── */
 
 @keyframes ticker-scroll {

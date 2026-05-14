@@ -4,7 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import {
   Briefcase, ExternalLink, Search, MapPin, Users,
-  Star, CheckCircle, Clock,
+  Star, CheckCircle, Clock, Globe, Monitor, Stethoscope,
+  BookOpen, Scale, HandCoins, Megaphone, Wrench, UserCheck,
+  Network, HeartHandshake, type LucideIcon,
 } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import {
@@ -23,50 +25,50 @@ import DeptFilter from '@/components/DeptFilter';
 
 type Tab = 'offres' | 'talents' | 'reseau';
 
-const TABS: { key: Tab; label: string }[] = [
-  { key: 'offres', label: '💼 Offres d\'emploi' },
-  { key: 'talents', label: '⭐ Vivier de talents' },
-  { key: 'reseau', label: '🤝 Réseau CMN' },
+const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
+  { key: 'offres',  label: "Offres d'emploi", icon: Briefcase },
+  { key: 'talents', label: 'Vivier de talents', icon: UserCheck },
+  { key: 'reseau',  label: 'Réseau CMN',        icon: Network },
 ];
 
-const SECTORS: { key: JobSector | 'all'; label: string }[] = [
-  { key: 'all', label: '🌐 Tous secteurs' },
-  { key: 'tech', label: '💻 Tech' },
-  { key: 'sante', label: '🏥 Santé' },
-  { key: 'education', label: '📚 Éducation' },
-  { key: 'juridique', label: '⚖️ Juridique' },
-  { key: 'finance', label: '💼 Finance' },
-  { key: 'humanitaire', label: '🤲 Humanitaire' },
-  { key: 'communication', label: '📣 Comm' },
-  { key: 'autre', label: '🔧 Autre' },
+const SECTORS: { key: JobSector | 'all'; label: string; icon: LucideIcon }[] = [
+  { key: 'all',          label: 'Tous secteurs', icon: Globe },
+  { key: 'tech',         label: 'Tech',          icon: Monitor },
+  { key: 'sante',        label: 'Santé',         icon: Stethoscope },
+  { key: 'education',    label: 'Éducation',     icon: BookOpen },
+  { key: 'juridique',    label: 'Juridique',     icon: Scale },
+  { key: 'finance',      label: 'Finance',       icon: HandCoins },
+  { key: 'humanitaire',  label: 'Humanitaire',   icon: HeartHandshake },
+  { key: 'communication',label: 'Comm',          icon: Megaphone },
+  { key: 'autre',        label: 'Autre',         icon: Wrench },
 ];
 
-const FRIENDLY_FILTERS: { key: FriendlyLevel | 'all'; label: string }[] = [
-  { key: 'all', label: '✅ Tous' },
-  { key: 'voile-ok', label: '🧕 Voile OK' },
-  { key: 'priere-ok', label: '🕌 Prière OK' },
-  { key: 'full-friendly', label: '⭐ Full Friendly' },
+const FRIENDLY_FILTERS: { key: FriendlyLevel | 'all'; label: string; icon: LucideIcon }[] = [
+  { key: 'all',          label: 'Tous',         icon: CheckCircle },
+  { key: 'voile-ok',     label: 'Voile OK',     icon: UserCheck },
+  { key: 'priere-ok',    label: 'Prière OK',    icon: Star },
+  { key: 'full-friendly',label: 'Full Friendly',icon: Star },
 ];
 
 const JOB_TYPE_COLORS: Record<JobType, string> = {
-  cdi: '#10b981',
-  cdd: '#3b82f6',
-  freelance: '#8b5cf6',
-  stage: '#f59e0b',
+  cdi:        '#7c3aed',
+  cdd:        '#6d28d9',
+  freelance:  '#8b5cf6',
+  stage:      '#f59e0b',
   alternance: '#f97316',
-  benevole: '#ef4444',
+  benevole:   '#4c1d95',
 };
 
 const SECTOR_COLORS: Record<string, string> = {
-  tech: '#6366f1',
-  sante: '#10b981',
-  education: '#f59e0b',
-  commerce: '#f97316',
-  juridique: '#3b82f6',
-  humanitaire: '#ef4444',
-  finance: '#059669',
+  tech:          '#6366f1',
+  sante:         '#7c3aed',
+  education:     '#f59e0b',
+  commerce:      '#f97316',
+  juridique:     '#6d28d9',
+  humanitaire:   '#4c1d95',
+  finance:       '#7c3aed',
   communication: '#8b5cf6',
-  autre: '#6b7280',
+  autre:         '#6b7280',
 };
 
 export default function JobsPage() {
@@ -109,27 +111,15 @@ export default function JobsPage() {
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '0', marginBottom: '1.5rem', borderBottom: '2px solid var(--border-color)', overflowX: 'auto' }}>
-        {TABS.map(t => (
-          <button
-            key={t.key}
-            onClick={() => { setTab(t.key); setSearch(''); }}
-            style={{
-              padding: '0.75rem 1.25rem',
-              border: 'none',
-              borderBottom: tab === t.key ? '2px solid #10b981' : '2px solid transparent',
-              backgroundColor: 'transparent',
-              color: tab === t.key ? '#10b981' : 'var(--text-secondary)',
-              fontWeight: tab === t.key ? 700 : 400,
-              fontSize: '0.88rem',
-              cursor: 'pointer',
-              marginBottom: '-2px',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.15s',
-            }}
-          >
-            {t.label}
-          </button>
-        ))}
+        {TABS.map(t => {
+          const Icon = t.icon;
+          return (
+            <button key={t.key} onClick={() => { setTab(t.key); setSearch(''); }}
+              style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #7c3aed' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#7c3aed' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Icon size={14} strokeWidth={1.8} />{t.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* ─── OFFRES D'EMPLOI ─── */}
@@ -152,20 +142,21 @@ export default function JobsPage() {
             <DeptFilter value={deptFilter} onChange={setDeptFilter} />
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer', userSelect: 'none' }}>
               <input type="checkbox" checked={remoteOnly} onChange={e => setRemoteOnly(e.target.checked)}
-                style={{ accentColor: '#10b981' }} />
-              🏠 Remote uniquement
+                style={{ accentColor: '#7c3aed' }} />
+              Remote uniquement
             </label>
           </div>
 
           {/* Friendly filter */}
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.875rem' }}>
             {FRIENDLY_FILTERS.map(f => {
-              const color = f.key !== 'all' ? FRIENDLY_COLORS[f.key] : '#10b981';
+              const color = '#7c3aed';
               const isActive = friendlyFilter === f.key;
+              const Icon = f.icon;
               return (
                 <button key={f.key} onClick={() => setFriendlyFilter(f.key)}
-                  style={{ padding: '0.35rem 0.85rem', borderRadius: '999px', border: isActive ? `2px solid ${color}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? color : 'white', color: isActive ? 'white' : 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s' }}>
-                  {f.label}
+                  style={{ padding: '0.35rem 0.85rem', borderRadius: '999px', border: isActive ? `2px solid ${color}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? color : 'white', color: isActive ? 'white' : 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <Icon size={11} strokeWidth={2} />{f.label}
                 </button>
               );
             })}
@@ -174,12 +165,13 @@ export default function JobsPage() {
           {/* Sector filter */}
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
             {SECTORS.map(s => {
-              const color = s.key !== 'all' ? SECTOR_COLORS[s.key] : '#10b981';
+              const color = s.key !== 'all' ? SECTOR_COLORS[s.key] : '#7c3aed';
               const isActive = sectorFilter === s.key;
+              const Icon = s.icon;
               return (
                 <button key={s.key} onClick={() => setSectorFilter(s.key)}
-                  style={{ padding: '0.3rem 0.75rem', borderRadius: '6px', border: isActive ? `2px solid ${color}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? `${color}15` : 'transparent', color: isActive ? color : 'var(--text-secondary)', fontSize: '0.78rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', transition: 'all 0.15s' }}>
-                  {s.label}
+                  style={{ padding: '0.3rem 0.75rem', borderRadius: '6px', border: isActive ? `2px solid ${color}` : '1.5px solid var(--border-color)', backgroundColor: isActive ? `${color}15` : 'transparent', color: isActive ? color : 'var(--text-secondary)', fontSize: '0.78rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
+                  <Icon size={11} strokeWidth={2} />{s.label}
                 </button>
               );
             })}
