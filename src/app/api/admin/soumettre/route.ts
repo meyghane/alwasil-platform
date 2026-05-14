@@ -77,8 +77,9 @@ export async function POST(req: NextRequest) {
     </tr>`)
     .join('');
 
+  let emailError = '';
   try {
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'Al-Wasil <onboarding@resend.dev>',
       to: process.env.CONTACT_EMAIL || 'al-wasil@hotmail.com',
       subject: `[Al-Wasil] Nouvelle soumission à vérifier — ${form.emoji} ${form.label}`,
@@ -118,13 +119,17 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
-  } catch (e) {
-    console.error('[soumettre] Resend error:', e);
+    console.log('[soumettre] Resend result:', JSON.stringify(emailResult));
+  } catch (e: unknown) {
+    emailError = e instanceof Error ? e.message : String(e);
+    console.error('[soumettre] Resend error:', emailError);
   }
 
   return NextResponse.json({
     ok: true,
     sheetWriteOk,
+    emailSentTo: process.env.CONTACT_EMAIL || 'al-wasil@hotmail.com',
+    emailError: emailError || null,
     message: sheetWriteOk
       ? 'Fiche enregistrée dans le Sheet (onglet Soumissions) — email envoyé.'
       : 'Email envoyé. Vérifier la connexion Apps Script.',
