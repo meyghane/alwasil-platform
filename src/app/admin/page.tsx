@@ -6,7 +6,7 @@ import AdminLogout from './AdminLogout';
 import {
   Waves, BookOpen, Calendar, Briefcase, Brain, Activity,
   Gem, Library, HandCoins, Plane, History, ArrowLeft, Plus,
-  LayoutDashboard, Info,
+  LayoutDashboard, Info, Inbox,
 } from 'lucide-react';
 
 const CAT_ICONS: Record<string, typeof Waves> = {
@@ -57,6 +57,16 @@ export default async function AdminPage() {
           </div>
 
           <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+            <Link href="/admin/soumissions" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+              fontSize: '0.78rem', color: 'white', textDecoration: 'none',
+              padding: '0.4rem 0.875rem',
+              backgroundColor: 'rgba(196,181,253,0.2)',
+              border: '1px solid rgba(196,181,253,0.4)',
+              borderRadius: '8px',
+            }}>
+              <Inbox size={13} strokeWidth={2} /> Soumissions
+            </Link>
             <Link href="/admin/historique" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
               fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)', textDecoration: 'none',
@@ -149,11 +159,10 @@ export default async function AdminPage() {
               Comment ça marche
             </h3>
             <ol style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.83rem', color: '#57534e', lineHeight: 1.9 }}>
-              <li>Tu remplis le formulaire de la catégorie</li>
-              <li>Les données sont envoyées à Make → Gemini formate → Google Sheet</li>
-              <li>Un email de notification arrive sur al-wasil@hotmail.com</li>
-              <li>Tu changes le statut → <strong style={{ color: VIOLET }}>"en ligne"</strong> dans le Sheet</li>
-              <li>La fiche apparaît sur le site immédiatement</li>
+              <li>Tu remplis le formulaire de la catégorie voulue</li>
+              <li>La fiche est envoyée au modérateur avec toutes les données</li>
+              <li>Le modérateur valide → la fiche passe <strong style={{ color: VIOLET }}>"en ligne"</strong></li>
+              <li>La fiche apparaît instantanément sur le site</li>
             </ol>
           </div>
         </div>
