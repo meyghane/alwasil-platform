@@ -125,10 +125,32 @@ export async function POST(req: NextRequest) {
     console.error('[soumettre] Resend error:', emailError);
   }
 
+  // ── Notification Telegram ────────────────────────────────────
+  const tgToken = process.env.TELEGRAM_BOT_TOKEN;
+  const tgChatId = process.env.TELEGRAM_CHAT_ID;
+  if (tgToken && tgChatId) {
+    try {
+      const nom = (data.name || data.titre || data.nom || '(sans titre)') as string;
+      const ville = (data.ville || data.city || '') as string;
+      await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: tgChatId,
+          text: `🔔 <b>Nouvelle soumission Al-Wasil</b>\n\n📁 <b>${form.label}</b>\n📝 ${nom}${ville ? `\n📍 ${ville}` : ''}\n\n👉 <a href="https://alwasil-platform.vercel.app/admin/soumissions">Valider maintenant</a>`,
+          parse_mode: 'HTML',
+          disable_web_page_preview: false,
+        }),
+      });
+    } catch (e) {
+      console.error('[soumettre] Telegram error:', e);
+    }
+  }
+
   return NextResponse.json({
     ok: true,
     sheetWriteOk,
-    emailSentTo: process.env.CONTACT_EMAIL || 'al-wasil@hotmail.com',
+    emailSentTo: process.env.CONTACT_EMAIL || 'meyghvne@gmail.com',
     emailError: emailError || null,
     message: sheetWriteOk
       ? 'Fiche enregistrée dans le Sheet (onglet Soumissions) — email envoyé.'
