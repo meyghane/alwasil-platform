@@ -17,25 +17,25 @@ import { jobOffers } from '@/data/jobs';
 const FONT = "'Inter', system-ui, -apple-system, sans-serif";
 
 const V = {
-  50:  '#f5f0ff',
-  100: '#ece0ff',
-  200: '#d4b8f5',
-  300: '#b080dc',
-  400: '#8a50b8',
-  500: '#662a94',
-  600: '#4a0e58',
-  700: '#3a0a45',
-  800: '#2c0835',
-  900: '#1e0524',
-  primary:  '#4a0e58',   // Violet très profond — signature Al-Wasil
-  hover:    '#3a0a45',
-  dark:     '#1e0524',   // Titres
-  text:     '#3f3f46',   // Corps
-  muted:    '#71717a',   // Secondaire
-  border:   '#e4e4e7',   // Hairline neutre
-  borderV:  '#d9aef5',   // Hairline violet
-  surface:  '#f8f0ff',   // Fond léger violet
-  card:     '#fafafa',   // Fond carte léger
+  50:  '#fdfbf0',
+  100: '#faf4d8',
+  200: '#f0dea0',
+  300: '#e0be60',
+  400: '#c9973a',
+  500: '#a87830',
+  600: '#8a6025',
+  700: '#6a481a',
+  800: '#4a3010',
+  900: '#2a1a08',
+  primary:  '#c9973a',   // Or chaud — art islamique & spiritualité
+  hover:    '#a87830',
+  dark:     '#0f0a00',   // Titres (noir chaud)
+  text:     '#3a2e1a',   // Corps
+  muted:    '#7a6848',   // Secondaire
+  border:   '#e8e0d0',   // Hairline neutre
+  borderV:  '#f0dea0',   // Hairline or
+  surface:  '#fdfbf2',   // Fond léger crème
+  card:     '#fffef8',   // Fond carte
 };
 
 // ── Data ──────────────────────────────────────────────────────────
@@ -167,7 +167,7 @@ export default function Home() {
       {/* ─── HERO — fond vert profond + border beam LED ─────── */}
       <section style={{
         padding: '4.5rem 0 4rem',
-        background: 'linear-gradient(150deg, #4a1460 0%, #2c0a36 45%, #160520 100%)',
+        background: 'linear-gradient(150deg, #100c04 0%, #0a0806 45%, #050404 100%)',
         position: 'relative',
         overflow: 'hidden',
       }}>
@@ -175,14 +175,14 @@ export default function Home() {
         <div style={{
           position: 'absolute', top: '-15%', left: '-8%',
           width: '50%', height: '75%',
-          background: 'radial-gradient(ellipse at center, rgba(188,120,232,0.45) 0%, rgba(74,14,88,0.18) 45%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.45) 0%, rgba(20,14,4,0.18) 45%, transparent 70%)',
           pointerEvents: 'none',
         }} />
         {/* Halo secondaire subtil bottom-right */}
         <div style={{
           position: 'absolute', bottom: '0', right: '0',
           width: '35%', height: '60%',
-          background: 'radial-gradient(ellipse at center, rgba(74,14,88,0.2) 0%, transparent 65%)',
+          background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.15) 0%, transparent 65%)',
           pointerEvents: 'none',
         }} />
 
@@ -201,7 +201,7 @@ export default function Home() {
           <div key={i} style={{
             position: 'absolute', left: p.x, top: p.y,
             width: `${p.s}px`, height: `${p.s}px`,
-            borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.9)',
+            borderRadius: '50%', backgroundColor: '#d4a853',
             opacity: 0.4, pointerEvents: 'none',
             animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite`,
           }} />
@@ -280,10 +280,10 @@ export default function Home() {
               <Link href="/contact?type=general" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
                 padding: '0.75rem 1.25rem',
-                backgroundColor: 'rgba(188,120,232,0.12)', color: 'rgba(255,255,255,0.85)',
+                backgroundColor: 'rgba(212,168,83,0.12)', color: '#d4a853',
                 fontWeight: 600, fontSize: '0.9rem',
                 textDecoration: 'none', borderRadius: '8px',
-                border: '1px solid rgba(188,120,232,0.35)',
+                border: '1px solid rgba(212,168,83,0.35)',
               }}>
                 <Plus size={14} /> Proposer une fiche
               </Link>
@@ -304,10 +304,10 @@ export default function Home() {
                 {/* Face intérieure — OPAQUE : cache le centre du gradient */}
                 <div
                   className="led-face"
-                  style={{ background: '#130420' }}
+                  style={{ background: '#080604' }}
                 >
                   {/* Icône Lucide tracé vert — pas d'emoji */}
-                  <s.icon size={22} color="rgba(255,255,255,0.85)" strokeWidth={1.5} />
+                  <s.icon size={22} color="#d4a853" strokeWidth={1.5} />
                   <span style={{
                     fontSize: '0.54rem', fontWeight: 800,
                     color: 'rgba(255,255,255,0.88)',
@@ -328,7 +328,7 @@ export default function Home() {
 
       {/* ─── TICKER STATS — défile en continu ────────────────── */}
       <section style={{
-        background: 'linear-gradient(180deg, #3a1050 0%, #2c0a36 100%)',
+        background: 'linear-gradient(180deg, #0d0b04 0%, #080604 100%)',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
         padding: '0.85rem 0',
         overflow: 'hidden',
@@ -364,7 +364,7 @@ export default function Home() {
                   }}
                 >
                   {/* Icône Lucide — tracé vert, pas d'emoji */}
-                  <Icon size={14} color="rgba(255,255,255,0.85)" strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                  <Icon size={14} color="#d4a853" strokeWidth={1.8} style={{ flexShrink: 0 }} />
                   <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>
                     Plus de {s.count}
                   </span>
@@ -526,7 +526,7 @@ export default function Home() {
                 padding: '1.5rem',
                 border: `1px solid ${V[200]}`,
                 display: 'flex', flexDirection: 'column', gap: '1rem',
-                boxShadow: '0 2px 8px rgba(74,14,88,0.06)',
+                boxShadow: '0 2px 8px rgba(20,14,4,0.06)',
               }}>
                 {/* Quote */}
                 <p style={{
@@ -566,7 +566,7 @@ export default function Home() {
 
       {/* ─── CONTRIBUTION CTA — même vert profond que la bannière ── */}
       <section style={{
-        background: 'linear-gradient(150deg, #4a1460 0%, #2c0a36 45%, #160520 100%)',
+        background: 'linear-gradient(150deg, #100c04 0%, #0a0806 45%, #050404 100%)',
         padding: '5rem 0',
         position: 'relative',
         overflow: 'hidden',
@@ -574,7 +574,7 @@ export default function Home() {
         <div style={{
           position: 'absolute', top: '-20%', left: '-5%',
           width: '50%', height: '120%',
-          background: 'radial-gradient(ellipse at center, rgba(188,120,232,0.28) 0%, rgba(74,14,88,0.1) 50%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.28) 0%, rgba(20,14,4,0.1) 50%, transparent 70%)',
           pointerEvents: 'none',
         }} />
 
@@ -616,8 +616,8 @@ export default function Home() {
               >
                 <div style={{
                   width: 36, height: 36, borderRadius: '8px', flexShrink: 0,
-                  backgroundColor: 'rgba(188,120,232,0.15)',
-                  border: '1px solid rgba(188,120,232,0.25)',
+                  backgroundColor: 'rgba(212,168,83,0.15)',
+                  border: '1px solid rgba(212,168,83,0.25)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: 'rgba(255,255,255,0.85)',
                 }}>
@@ -706,13 +706,13 @@ function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tag
         {/* Icône en cercle tracé vert */}
         <div style={{
           width: 38, height: 38, borderRadius: '50%',
-          border: '1.5px solid rgba(188,120,232,0.65)',
-          backgroundColor: 'rgba(74,14,88,0.18)',
+          border: '1.5px solid rgba(212,168,83,0.65)',
+          backgroundColor: 'rgba(20,14,4,0.18)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           marginBottom: '0.55rem',
           backdropFilter: 'blur(4px)',
         }}>
-          <Icon size={17} color="rgba(255,255,255,0.85)" strokeWidth={1.8} />
+          <Icon size={17} color="#d4a853" strokeWidth={1.8} />
         </div>
 
         {/* Titre */}
@@ -743,9 +743,9 @@ function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tag
           {tags.slice(0, 3).map(tag => (
             <span key={tag} style={{
               fontSize: '0.62rem', fontWeight: 600,
-              backgroundColor: 'rgba(74,14,88,0.28)',
+              backgroundColor: 'rgba(20,14,4,0.28)',
               color: 'rgba(255,255,255,0.85)',
-              border: '1px solid rgba(188,120,232,0.35)',
+              border: '1px solid rgba(212,168,83,0.35)',
               padding: '2px 8px', borderRadius: '20px',
             }}>
               {tag}
