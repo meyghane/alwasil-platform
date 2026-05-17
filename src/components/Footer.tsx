@@ -50,7 +50,7 @@ const SECTIONS: FooterSection[] = [
   },
 ];
 
-const GREEN = '#c4b5fd';
+const GREEN = '#c9973a';
 
 export default function Footer() {
   const year = new Date().getFullYear();

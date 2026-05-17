@@ -107,7 +107,7 @@ export default function ChatBot() {
           width: '56px',
           height: '56px',
           borderRadius: '50%',
-          backgroundColor: '#4a0e58',
+          backgroundColor: '#c9973a',
           color: 'white',
           border: 'none',
           cursor: 'pointer',
