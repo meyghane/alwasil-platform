@@ -9,10 +9,12 @@ export async function POST(req: NextRequest) {
     const { type, fields } = body;
 
     const TO_EMAIL = process.env.CONTACT_EMAIL || 'meyghvne@gmail.com';
+    const now = new Date().toLocaleString('fr-FR');
 
-    const subject = `[Al-Wasil] Nouvelle demande : ${type}`;
+    // ── 1. Email via Resend ─────────────────────────────────────
+    const subject = `[Al-Wasil] Nouvelle soumission : ${type}`;
     const html = `
-      <h2>Nouvelle demande via Al-Wasil — ${type}</h2>
+      <h2>Nouvelle soumission via Al-Wasil — ${type}</h2>
       <table style="border-collapse:collapse;width:100%">
         ${Object.entries(fields as Record<string, string>)
           .map(([k, v]) => `
@@ -22,21 +24,55 @@ export async function POST(req: NextRequest) {
             </tr>`)
           .join('')}
       </table>
-      <p style="margin-top:24px;color:#6b7280;font-size:13px">
-        Envoyé depuis al-wasil.fr — ${new Date().toLocaleString('fr-FR')}
+      <p style="margin-top:24px">
+        <a href="https://alwasil-platform.vercel.app/admin/soumissions" style="background:#7c3aed;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700">
+          👉 Valider dans l'admin
+        </a>
       </p>
+      <p style="margin-top:16px;color:#6b7280;font-size:13px">Envoyé depuis al-wasil.fr — ${now}</p>
     `;
 
-    const { error } = await resend.emails.send({
+    resend.emails.send({
       from: 'Al-Wasil <onboarding@resend.dev>',
       to: [TO_EMAIL],
       subject,
       html,
-      replyTo: fields?.email || undefined,
-    });
+      replyTo: (fields as Record<string, string>)?.email || undefined,
+    }).catch(e => console.error('[contact] Resend error:', e));
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    // ── 2. Make webhook → Gemini → Google Sheet ─────────────────
+    const makeUrl = process.env.MAKE_WEBHOOK_URL;
+    if (makeUrl) {
+      const row = {
+        id: `${type}-${Date.now()}`,
+        categorie: type,
+        status: 'à vérifier',
+        soumis_le: new Date().toISOString(),
+        soumis_par: 'public',
+        ...fields,
+      };
+      fetch(makeUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(row),
+      }).catch(e => console.error('[contact] Make webhook error:', e));
+    }
+
+    // ── 3. Telegram notification ────────────────────────────────
+    const tgToken = process.env.TELEGRAM_BOT_TOKEN;
+    const tgChatId = process.env.TELEGRAM_CHAT_ID;
+    if (tgToken && tgChatId) {
+      const nom = (fields as Record<string, string>)?.name ||
+                  (fields as Record<string, string>)?.nom ||
+                  (fields as Record<string, string>)?.titre || '';
+      const ville = (fields as Record<string, string>)?.ville || '';
+      const text = `🔔 <b>Nouvelle soumission publique</b>\n\n📁 <b>${type}</b>${nom ? `\n📝 ${nom}` : ''}${ville ? `\n📍 ${ville}` : ''}\n\n👉 <a href="https://alwasil-platform.vercel.app/admin/soumissions">Valider maintenant</a>`;
+
+      fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: tgChatId, text, parse_mode: 'HTML' }),
+      }).catch(e => console.error('[contact] Telegram error:', e));
     }
 
     return NextResponse.json({ ok: true });
