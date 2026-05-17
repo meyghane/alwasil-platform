@@ -153,11 +153,36 @@ function buildStats(): StatItem[] {
 
 const STATS = buildStats();
 
-const EVENTS = [
-  { title: "Conférence : L'Éthique au Travail", date: 'Sam 28 Mars · 14h00', location: 'Grande Mosquée de Paris', organizer: 'Institut Al-Ghazali', tag: 'Conférence', color: '#4a0e58' },
-  { title: 'Maraude Solidaire — Gare du Nord', date: 'Dim 29 Mars · 19h30', location: 'Gare du Nord, Paris', organizer: 'Au Cœur de la Fraternité', tag: 'Solidarité', color: '#3a0a45' },
-  { title: "Webinaire : Comprendre les enjeux de l'IA", date: 'Jeu 2 Avril · 20h00', location: 'En ligne (Zoom)', organizer: 'Muslim Tech Network', tag: 'Webinaire', color: '#2c0835' },
-];
+// Prochains événements réels — filtrés dynamiquement depuis les données
+const TAG_COLORS: Record<string, string> = {
+  conference: '#a87830', maraude: '#8a6025', cours: '#c9973a',
+  iftar: '#d4a853', webinaire: '#6a481a', jeunesse: '#a87830',
+  famille: '#c9973a', collecte: '#8a6025', autre: '#a87830',
+};
+const CAT_LABELS: Record<string, string> = {
+  conference: 'Conférence', maraude: 'Maraude', cours: 'Cours',
+  iftar: 'Iftar', webinaire: 'Webinaire', jeunesse: 'Jeunesse',
+  famille: 'Famille', collecte: 'Collecte', autre: 'Événement',
+};
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const UPCOMING_EVENTS = allEvents
+  .filter(e => new Date(e.date) >= today)
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  .slice(0, 3)
+  .map(e => {
+    const d = new Date(e.date);
+    const dateStr = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'long' });
+    return {
+      title: e.title,
+      date: `${dateStr.charAt(0).toUpperCase() + dateStr.slice(1)} · ${e.timeStart}`,
+      location: e.location + (e.city ? `, ${e.city}` : ''),
+      organizer: e.organizer,
+      tag: CAT_LABELS[e.category] || 'Événement',
+      color: TAG_COLORS[e.category] || '#c9973a',
+    };
+  });
 
 // ── Page ──────────────────────────────────────────────────────────
 export default function Home() {
@@ -481,9 +506,20 @@ export default function Home() {
             </Link>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-            {EVENTS.map(ev => <EventCard key={ev.title} {...ev} />)}
-          </div>
+          {UPCOMING_EVENTS.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: '#fdfbf2', borderRadius: '16px', border: '1px solid #f0dea0' }}>
+              <p style={{ color: V.muted, margin: 0, fontSize: '0.9rem' }}>
+                Aucun événement à venir pour le moment.{' '}
+                <Link href="/contact?type=evenement" style={{ color: V.primary, fontWeight: 600, textDecoration: 'none' }}>
+                  Proposer un événement →
+                </Link>
+              </p>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${UPCOMING_EVENTS.length}, 1fr)`, gap: '1rem' }}>
+              {UPCOMING_EVENTS.map(ev => <EventCard key={ev.title} {...ev} />)}
+            </div>
+          )}
         </div>
       </section>
 
