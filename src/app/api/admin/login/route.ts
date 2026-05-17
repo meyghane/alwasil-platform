@@ -1,24 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createSessionToken, getSessionCookieName, getSessionMaxAge } from '@/lib/admin-auth';
+import { authenticateUser, createUserToken, getUserCookieName, getUserMaxAge } from '@/lib/user-auth';
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
-  if (
-    email !== process.env.ADMIN_EMAIL ||
-    password !== process.env.ADMIN_PASSWORD
-  ) {
+  const session = await authenticateUser(email, password);
+  if (!session) {
     return NextResponse.json({ error: 'Identifiants incorrects' }, { status: 401 });
   }
 
-  const token = await createSessionToken();
-  const res = NextResponse.json({ ok: true });
-  res.cookies.set(getSessionCookieName(), token, {
+  const token = await createUserToken(session);
+  const res   = NextResponse.json({ ok: true, role: session.role });
+
+  res.cookies.set(getUserCookieName(), token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure:   process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: getSessionMaxAge(),
-    path: '/',
+    maxAge:   getUserMaxAge(),
+    path:     '/',
   });
+
   return res;
 }

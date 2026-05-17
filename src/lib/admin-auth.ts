@@ -49,9 +49,20 @@ export async function verifySessionToken(token: string): Promise<boolean> {
 export async function isAdminLoggedIn(): Promise<boolean> {
   const { cookies } = await import('next/headers');
   const store = await cookies();
-  const token = store.get(COOKIE_NAME)?.value;
-  if (!token) return false;
-  return verifySessionToken(token);
+
+  // Ancien cookie aw_admin (backward compat)
+  const adminToken = store.get(COOKIE_NAME)?.value;
+  if (adminToken && await verifySessionToken(adminToken)) return true;
+
+  // Nouveau cookie aw_user unifié (role=admin)
+  const { verifyUserToken } = await import('./user-auth');
+  const userToken = store.get('aw_user')?.value;
+  if (userToken) {
+    const session = await verifyUserToken(userToken);
+    if (session?.role === 'admin') return true;
+  }
+
+  return false;
 }
 
 export function getSessionCookieName() { return COOKIE_NAME; }

@@ -22,10 +22,11 @@ export default function AdminLoginPage() {
     });
 
     if (res.ok) {
-      router.push('/admin');
+      const data = await res.json();
+      router.push(data.role === 'admin' ? '/admin' : '/modo');
     } else {
-      const { error } = await res.json();
-      setError(error || 'Identifiants incorrects');
+      const data = await res.json();
+      setError(data.error || 'Identifiants incorrects');
     }
     setLoading(false);
   }
@@ -87,7 +88,7 @@ export default function AdminLoginPage() {
               Al-Wasil
             </div>
             <div style={{ fontSize: '0.75rem', color: 'rgba(196,181,253,0.5)', marginTop: '3px' }}>
-              Espace administration
+              Connexion équipe
             </div>
           </div>
 
@@ -168,10 +169,10 @@ export default function AdminLoginPage() {
               {loading ? 'Connexion...' : 'Se connecter'}
             </button>
 
-            <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
-              <a href="/modo/login" style={{ fontSize: '0.75rem', color: 'rgba(196,181,253,0.4)', textDecoration: 'none' }}>
-                Compte modérateur ?
-              </a>
+            <div style={{ textAlign: 'center', marginTop: '0.25rem' }}>
+              <span style={{ fontSize: '0.72rem', color: 'rgba(196,181,253,0.3)' }}>
+                Admin ou modérateur — même page
+              </span>
             </div>
           </form>
         </div>
