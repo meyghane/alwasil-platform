@@ -17,24 +17,24 @@ import { jobOffers } from '@/data/jobs';
 const FONT = "'Inter', system-ui, -apple-system, sans-serif";
 
 const V = {
-  50:  '#f5f3ff',
-  100: '#ede9fe',
-  200: '#ddd6fe',
-  300: '#c4b5fd',
-  400: '#a78bfa',
-  500: '#8b5cf6',
-  600: '#7c3aed',
-  700: '#6d28d9',
-  800: '#5b21b6',
-  900: '#4c1d95',
-  primary:  '#7c3aed',   // Violet spirituel — CTA principal
-  hover:    '#6d28d9',
-  dark:     '#1e1b4b',   // Titres
+  50:  '#eff6ff',
+  100: '#dbeafe',
+  200: '#bfdbfe',
+  300: '#93c5fd',
+  400: '#60a5fa',
+  500: '#3b82f6',
+  600: '#2563eb',
+  700: '#1d4ed8',
+  800: '#1e40af',
+  900: '#1e3a8a',
+  primary:  '#1d4ed8',   // Bleu nuit — CTA principal
+  hover:    '#1e40af',
+  dark:     '#0f172a',   // Titres
   text:     '#3f3f46',   // Corps
   muted:    '#71717a',   // Secondaire
   border:   '#e4e4e7',   // Hairline neutre
-  borderV:  '#ddd6fe',   // Hairline violette
-  surface:  '#f5f3ff',   // Fond léger violet
+  borderV:  '#bfdbfe',   // Hairline bleue
+  surface:  '#eff6ff',   // Fond léger bleu
   card:     '#fafafa',   // Fond carte léger
 };
 
@@ -46,7 +46,7 @@ const SECTIONS: {
 }[] = [
   {
     href: '/education', icon: BookOpen,
-    color: '#7c3aed', bg: '#d1fae5',
+    color: '#1d4ed8', bg: '#d1fae5',
     title: 'Éducation', arabic: 'العلم',
     description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.',
     tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'],
@@ -54,7 +54,7 @@ const SECTIONS: {
   },
   {
     href: '/events', icon: Calendar,
-    color: '#6d28d9', bg: '#ecfdf5',
+    color: '#1e40af', bg: '#ecfdf5',
     title: 'Événements', arabic: 'اللقاء',
     description: 'Conférences, séminaires et portes ouvertes en France.',
     tags: ['Conférences', 'Séminaires', 'En ligne'],
@@ -62,7 +62,7 @@ const SECTIONS: {
   },
   {
     href: '/solidarity', icon: HeartHandshake,
-    color: '#4c1d95', bg: '#d1fae5',
+    color: '#1e3a8a', bg: '#d1fae5',
     title: 'Solidarité', arabic: 'التكافل',
     description: 'Cagnottes, maraudes, visites aux malades et voyages humanitaires.',
     tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Palestine', 'Voyages'],
@@ -70,7 +70,7 @@ const SECTIONS: {
   },
   {
     href: '/jobs', icon: Briefcase,
-    color: '#7c3aed', bg: '#ecfdf5',
+    color: '#1d4ed8', bg: '#ecfdf5',
     title: 'Emploi', arabic: 'الأمل',
     description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.',
     tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'],
@@ -78,7 +78,7 @@ const SECTIONS: {
   },
   {
     href: '/sante', icon: Stethoscope,
-    color: '#6d28d9', bg: '#d1fae5',
+    color: '#1e40af', bg: '#d1fae5',
     title: 'Santé', arabic: 'الشفاء',
     description: 'Psychologues orientés communauté, hijama certifiés et roqya.',
     tags: ['Psychologues', 'Hijama', 'Roqya'],
@@ -86,7 +86,7 @@ const SECTIONS: {
   },
   {
     href: '/librairies', icon: Library,
-    color: '#4c1d95', bg: '#ecfdf5',
+    color: '#1e3a8a', bg: '#ecfdf5',
     title: 'Librairies', arabic: 'المكتبة',
     description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.',
     tags: ['Corans', 'Livres', 'Enfants'],
@@ -94,7 +94,7 @@ const SECTIONS: {
   },
   {
     href: '/piscines', icon: Waves,
-    color: '#8b5cf6', bg: '#d1fae5',
+    color: '#3b82f6', bg: '#d1fae5',
     title: 'Piscines Burkini', arabic: 'السباحة',
     description: 'Créneaux burkini et maillots couvrants en Île-de-France.',
     tags: ['Créneaux femmes', 'Burkini', 'IdF'],
@@ -102,7 +102,7 @@ const SECTIONS: {
   },
   {
     href: '/hajj', icon: Plane,
-    color: '#7c3aed', bg: '#ecfdf5',
+    color: '#1d4ed8', bg: '#ecfdf5',
     title: 'Hajj & Omra', arabic: 'الحج',
     description: 'Comparez les agences, offres 2026 et guide du pèlerin.',
     tags: ['Hajj 2026', 'Omra', 'Comparateur'],
@@ -110,7 +110,7 @@ const SECTIONS: {
   },
   {
     href: '/justice', icon: ShieldCheck,
-    color: '#6d28d9', bg: '#d1fae5',
+    color: '#1e40af', bg: '#d1fae5',
     title: 'Justice & Droits', arabic: 'العدل',
     description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.',
     tags: ['Voile au travail', 'ARCOM', 'Discrimination'],
@@ -118,7 +118,7 @@ const SECTIONS: {
   },
   {
     href: '#', icon: MessageCircle,
-    color: '#c4b5fd', bg: '#f5f3ff',
+    color: '#93c5fd', bg: '#f5f3ff',
     title: 'Communauté', arabic: 'الأمة',
     description: 'Annuaire de compétences, marrainage, muqabala et espace de brainstorming.',
     tags: ['Marrainage', 'Muqabala', 'Compétences', 'Entraide'],
@@ -154,9 +154,9 @@ function buildStats(): StatItem[] {
 const STATS = buildStats();
 
 const EVENTS = [
-  { title: "Conférence : L'Éthique au Travail", date: 'Sam 28 Mars · 14h00', location: 'Grande Mosquée de Paris', organizer: 'Institut Al-Ghazali', tag: 'Conférence', color: '#7c3aed' },
-  { title: 'Maraude Solidaire — Gare du Nord', date: 'Dim 29 Mars · 19h30', location: 'Gare du Nord, Paris', organizer: 'Au Cœur de la Fraternité', tag: 'Solidarité', color: '#6d28d9' },
-  { title: "Webinaire : Comprendre les enjeux de l'IA", date: 'Jeu 2 Avril · 20h00', location: 'En ligne (Zoom)', organizer: 'Muslim Tech Network', tag: 'Webinaire', color: '#4c1d95' },
+  { title: "Conférence : L'Éthique au Travail", date: 'Sam 28 Mars · 14h00', location: 'Grande Mosquée de Paris', organizer: 'Institut Al-Ghazali', tag: 'Conférence', color: '#1d4ed8' },
+  { title: 'Maraude Solidaire — Gare du Nord', date: 'Dim 29 Mars · 19h30', location: 'Gare du Nord, Paris', organizer: 'Au Cœur de la Fraternité', tag: 'Solidarité', color: '#1e40af' },
+  { title: "Webinaire : Comprendre les enjeux de l'IA", date: 'Jeu 2 Avril · 20h00', location: 'En ligne (Zoom)', organizer: 'Muslim Tech Network', tag: 'Webinaire', color: '#1e3a8a' },
 ];
 
 // ── Page ──────────────────────────────────────────────────────────
@@ -167,7 +167,7 @@ export default function Home() {
       {/* ─── HERO — fond vert profond + border beam LED ─────── */}
       <section style={{
         padding: '4.5rem 0 4rem',
-        background: 'linear-gradient(150deg, #3b0764 0%, #1e0545 45%, #0a0118 100%)',
+        background: 'linear-gradient(150deg, #0f2444 0%, #061228 45%, #020810 100%)',
         position: 'relative',
         overflow: 'hidden',
       }}>
@@ -175,14 +175,14 @@ export default function Home() {
         <div style={{
           position: 'absolute', top: '-15%', left: '-8%',
           width: '50%', height: '75%',
-          background: 'radial-gradient(ellipse at center, rgba(167,139,250,0.45) 0%, rgba(109,40,217,0.18) 45%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(96,165,250,0.45) 0%, rgba(29,78,216,0.18) 45%, transparent 70%)',
           pointerEvents: 'none',
         }} />
         {/* Halo secondaire subtil bottom-right */}
         <div style={{
           position: 'absolute', bottom: '0', right: '0',
           width: '35%', height: '60%',
-          background: 'radial-gradient(ellipse at center, rgba(109,40,217,0.2) 0%, transparent 65%)',
+          background: 'radial-gradient(ellipse at center, rgba(29,78,216,0.2) 0%, transparent 65%)',
           pointerEvents: 'none',
         }} />
 
@@ -201,7 +201,7 @@ export default function Home() {
           <div key={i} style={{
             position: 'absolute', left: p.x, top: p.y,
             width: `${p.s}px`, height: `${p.s}px`,
-            borderRadius: '50%', backgroundColor: '#c4b5fd',
+            borderRadius: '50%', backgroundColor: '#93c5fd',
             opacity: 0.4, pointerEvents: 'none',
             animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite`,
           }} />
@@ -239,7 +239,7 @@ export default function Home() {
             }}>
               Fini de chercher partout.{' '}
               <span style={{
-                background: 'linear-gradient(135deg, #c4b5fd 0%, #e9d5ff 100%)',
+                background: 'linear-gradient(135deg, #93c5fd 0%, #bfdbfe 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -263,7 +263,7 @@ export default function Home() {
               lineHeight: 1.7, marginBottom: '2rem', maxWidth: '430px',
               fontWeight: 500,
             }}>
-              Al-Wasil centralise <strong style={{ color: '#c4b5fd' }}>tout ce que la communauté musulmane de France cherche</strong> — en un seul endroit, mis à jour par la communauté.
+              Al-Wasil centralise <strong style={{ color: '#93c5fd' }}>tout ce que la communauté musulmane de France cherche</strong> — en un seul endroit, mis à jour par la communauté.
             </p>
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -280,10 +280,10 @@ export default function Home() {
               <Link href="/contact?type=general" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
                 padding: '0.75rem 1.25rem',
-                backgroundColor: 'rgba(196,181,253,0.12)', color: '#c4b5fd',
+                backgroundColor: 'rgba(147,197,253,0.12)', color: '#93c5fd',
                 fontWeight: 600, fontSize: '0.9rem',
                 textDecoration: 'none', borderRadius: '8px',
-                border: '1px solid rgba(196,181,253,0.35)',
+                border: '1px solid rgba(147,197,253,0.35)',
               }}>
                 <Plus size={14} /> Proposer une fiche
               </Link>
@@ -304,10 +304,10 @@ export default function Home() {
                 {/* Face intérieure — OPAQUE : cache le centre du gradient */}
                 <div
                   className="led-face"
-                  style={{ background: '#0f0225' }}
+                  style={{ background: '#020810' }}
                 >
                   {/* Icône Lucide tracé vert — pas d'emoji */}
-                  <s.icon size={22} color="#c4b5fd" strokeWidth={1.5} />
+                  <s.icon size={22} color="#93c5fd" strokeWidth={1.5} />
                   <span style={{
                     fontSize: '0.54rem', fontWeight: 800,
                     color: 'rgba(255,255,255,0.88)',
@@ -328,7 +328,7 @@ export default function Home() {
 
       {/* ─── TICKER STATS — défile en continu ────────────────── */}
       <section style={{
-        background: 'linear-gradient(180deg, #2d0864 0%, #1a0545 100%)',
+        background: 'linear-gradient(180deg, #0d1f3c 0%, #061228 100%)',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
         padding: '0.85rem 0',
         overflow: 'hidden',
@@ -364,7 +364,7 @@ export default function Home() {
                   }}
                 >
                   {/* Icône Lucide — tracé vert, pas d'emoji */}
-                  <Icon size={14} color="#c4b5fd" strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                  <Icon size={14} color="#93c5fd" strokeWidth={1.8} style={{ flexShrink: 0 }} />
                   <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>
                     Plus de {s.count}
                   </span>
@@ -526,7 +526,7 @@ export default function Home() {
                 padding: '1.5rem',
                 border: `1px solid ${V[200]}`,
                 display: 'flex', flexDirection: 'column', gap: '1rem',
-                boxShadow: '0 2px 8px rgba(109,40,217,0.06)',
+                boxShadow: '0 2px 8px rgba(29,78,216,0.06)',
               }}>
                 {/* Quote */}
                 <p style={{
@@ -566,7 +566,7 @@ export default function Home() {
 
       {/* ─── CONTRIBUTION CTA — même vert profond que la bannière ── */}
       <section style={{
-        background: 'linear-gradient(150deg, #3b0764 0%, #1e0545 45%, #0a0118 100%)',
+        background: 'linear-gradient(150deg, #0f2444 0%, #061228 45%, #020810 100%)',
         padding: '5rem 0',
         position: 'relative',
         overflow: 'hidden',
@@ -574,14 +574,14 @@ export default function Home() {
         <div style={{
           position: 'absolute', top: '-20%', left: '-5%',
           width: '50%', height: '120%',
-          background: 'radial-gradient(ellipse at center, rgba(167,139,250,0.28) 0%, rgba(109,40,217,0.1) 50%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(96,165,250,0.28) 0%, rgba(29,78,216,0.1) 50%, transparent 70%)',
           pointerEvents: 'none',
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           {/* Accroche centrale */}
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#c4b5fd', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#93c5fd', textTransform: 'uppercase' }}>
               Ce site grandit grâce à vous
             </span>
             <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', margin: '0.75rem 0 0.875rem' }}>
@@ -616,10 +616,10 @@ export default function Home() {
               >
                 <div style={{
                   width: 36, height: 36, borderRadius: '8px', flexShrink: 0,
-                  backgroundColor: 'rgba(196,181,253,0.15)',
-                  border: '1px solid rgba(196,181,253,0.25)',
+                  backgroundColor: 'rgba(147,197,253,0.15)',
+                  border: '1px solid rgba(147,197,253,0.25)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#c4b5fd',
+                  color: '#93c5fd',
                 }}>
                   {item.icon}
                 </div>
@@ -636,7 +636,7 @@ export default function Home() {
             <Link href="/contact?type=general" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               padding: '0.9rem 2rem',
-              backgroundColor: '#fff', color: '#4c1d95',
+              backgroundColor: '#fff', color: '#1e3a8a',
               fontWeight: 700, fontSize: '0.95rem',
               textDecoration: 'none', borderRadius: '8px',
               boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
@@ -706,13 +706,13 @@ function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tag
         {/* Icône en cercle tracé vert */}
         <div style={{
           width: 38, height: 38, borderRadius: '50%',
-          border: '1.5px solid rgba(196,181,253,0.65)',
-          backgroundColor: 'rgba(109,40,217,0.18)',
+          border: '1.5px solid rgba(147,197,253,0.65)',
+          backgroundColor: 'rgba(29,78,216,0.18)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           marginBottom: '0.55rem',
           backdropFilter: 'blur(4px)',
         }}>
-          <Icon size={17} color="#c4b5fd" strokeWidth={1.8} />
+          <Icon size={17} color="#93c5fd" strokeWidth={1.8} />
         </div>
 
         {/* Titre */}
@@ -722,7 +722,7 @@ function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tag
           textShadow: '0 1px 4px rgba(0,0,0,0.4)',
         }}>
           {title}
-          {soon && <span style={{ marginLeft: '0.5rem', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#c4b5fd', verticalAlign: 'middle' }}>BIENTÔT</span>}
+          {soon && <span style={{ marginLeft: '0.5rem', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#93c5fd', verticalAlign: 'middle' }}>BIENTÔT</span>}
         </h3>
         <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.65rem', fontFamily: 'serif', display: 'block', marginBottom: '0.5rem' }}>
           {arabic}
@@ -743,9 +743,9 @@ function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tag
           {tags.slice(0, 3).map(tag => (
             <span key={tag} style={{
               fontSize: '0.62rem', fontWeight: 600,
-              backgroundColor: 'rgba(109,40,217,0.28)',
-              color: '#c4b5fd',
-              border: '1px solid rgba(196,181,253,0.35)',
+              backgroundColor: 'rgba(29,78,216,0.28)',
+              color: '#93c5fd',
+              border: '1px solid rgba(147,197,253,0.35)',
               padding: '2px 8px', borderRadius: '20px',
             }}>
               {tag}
