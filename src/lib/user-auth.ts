@@ -116,28 +116,43 @@ export async function getModoAccountsFromSheet(): Promise<ModoAccount[]> {
   }
 }
 
+// ── Hash SHA-256 (pour comparer avec les mots de passe hachés) ───
+async function sha256(str: string): Promise<string> {
+  const data = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 // ── Authentifier un utilisateur ──────────────────────────────────
 export async function authenticateUser(email: string, password: string): Promise<UserSession | null> {
-  // 1. Admin depuis env vars
-  if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-    return { id: 'admin', email, role: 'admin', name: 'Admin', permissions: ['all'] };
+  const hashed = await sha256(password);
+
+  // 1. Admin depuis env vars (supporte clair ET haché)
+  if (email === process.env.ADMIN_EMAIL) {
+    const adminPwd = process.env.ADMIN_PASSWORD || '';
+    if (password === adminPwd || hashed === adminPwd) {
+      return { id: 'admin', email, role: 'admin', name: 'Admin', permissions: ['all'] };
+    }
   }
 
   // 2. Comptes modo depuis MODO_ACCOUNTS env var (test + fallback)
   const envAccounts = getModoAccountsFromEnv();
-  const envUser = envAccounts.find(u => u.email === email && u.password === password && u.actif);
+  const envUser = envAccounts.find(u =>
+    u.email === email && (u.password === password || u.password === hashed) && u.actif
+  );
   if (envUser) {
     return { id: envUser.id, email: envUser.email, role: envUser.role, name: envUser.name, permissions: envUser.permissions };
   }
 
   // 3. Comptes modo depuis Apps Script (Google Sheet "Comptes")
+  // Envoie le hash SHA-256 — Apps Script ne voit jamais le mot de passe en clair
   const url = process.env.APPS_SCRIPT_WEBHOOK_URL;
   if (url) {
     try {
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'login', email, password }),
+        body: JSON.stringify({ action: 'login', email, password: hashed }),
       });
       if (res.ok) {
         const data = await res.json();

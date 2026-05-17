@@ -29,8 +29,14 @@ export default function ComptesClient() {
   const [saving, setSaving]     = useState(false);
 
   const [form, setForm] = useState({
-    email: '', password: '', name: '', role: 'modo' as 'modo' | 'admin', permissions: ['all'] as string[],
+    email: '', password: 'Bismillah', name: '', role: 'modo' as 'modo' | 'admin', permissions: ['all'] as string[],
   });
+
+  async function sha256(str: string): Promise<string> {
+    const data = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 
   useEffect(() => { loadComptes(); }, []);
 
@@ -42,10 +48,12 @@ export default function ComptesClient() {
 
   async function createCompte() {
     setSaving(true);
+    // Hasher le mot de passe avant envoi — admin ne stocke jamais le clair
+    const hashedPassword = await sha256(form.password);
     await fetch('/api/admin/comptes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, password: hashedPassword }),
     });
     await loadComptes();
     setShowForm(false);

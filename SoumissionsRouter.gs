@@ -16,6 +16,7 @@ function doPost(e) {
     if (payload.action === 'listUsers')     return handleListUsers();
     if (payload.action === 'createUser')    return handleCreateUser(payload);
     if (payload.action === 'updateUser')    return handleUpdateUser(payload);
+    if (payload.action === 'updatePassword') return handleUpdatePassword(payload);
     if (payload.action === 'updateStatus')  return handleUpdateStatus(payload);
     // ────────────────────────────────────────────────────────
 
@@ -200,6 +201,25 @@ function handleCreateUser(data) {
     u.createdBy || 'admin'
   ]);
   return jsonOk({ success: true });
+}
+
+function handleUpdatePassword(data) {
+  var ss    = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName('Comptes');
+  if (!sheet) return jsonOk({ ok: false, error: 'Onglet Comptes introuvable' });
+
+  var rows    = sheet.getDataRange().getValues();
+  var headers = rows[0];
+  var emailIdx = headers.indexOf('EMAIL');
+  var passIdx  = headers.indexOf('PASSWORD');
+
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][emailIdx] === data.email) {
+      sheet.getRange(i + 1, passIdx + 1).setValue(data.newPassword);
+      return jsonOk({ ok: true });
+    }
+  }
+  return jsonOk({ ok: false, error: 'Utilisateur non trouvé' });
 }
 
 function handleUpdateUser(data) {
