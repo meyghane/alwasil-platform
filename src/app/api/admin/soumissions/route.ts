@@ -3,12 +3,17 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
+import { getUserSession } from '@/lib/user-auth';
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
 
+async function isAuthorized() {
+  return (await isAdminLoggedIn()) || !!(await getUserSession());
+}
+
 // Lire depuis le Sheet "Soumissions"
 export async function GET() {
-  if (!(await isAdminLoggedIn())) {
+  if (!(await isAuthorized())) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
 
@@ -33,7 +38,7 @@ export async function GET() {
 
 // Mettre à jour le status d'une soumission
 export async function PATCH(req: NextRequest) {
-  if (!(await isAdminLoggedIn())) {
+  if (!(await isAuthorized())) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
 
