@@ -1,0 +1,158 @@
+// Gestion des sessions utilisateur (admin + modo)
+const SECRET = process.env.ADMIN_SESSION_SECRET || 'fallback_secret_change_me';
+const USER_COOKIE = 'aw_user';
+const MAX_AGE = 60 * 60 * 8; // 8h
+
+export type UserRole = 'admin' | 'modo';
+export type Permission = 'all' | 'piscine' | 'events' | 'mosquees' | 'emploi' | 'instituts' | 'cagnottes' | 'hajj' | 'librairies' | 'psy' | 'hijama' | 'roqya';
+
+export interface UserSession {
+  id: string;
+  email: string;
+  role: UserRole;
+  name: string;
+  permissions: Permission[];
+}
+
+export interface ModoAccount {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  role: UserRole;
+  permissions: Permission[];
+  actif: boolean;
+  createdAt?: string;
+  createdBy?: string;
+}
+
+// ── Crypto (même algo que admin-auth.ts) ────────────────────────
+async function getKey(): Promise<CryptoKey> {
+  return crypto.subtle.importKey('raw', new TextEncoder().encode(SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
+}
+
+async function sign(data: string): Promise<string> {
+  const key = await getKey();
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
+  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function verifySignature(data: string, signature: string): Promise<boolean> {
+  const expected = await sign(data);
+  if (expected.length !== signature.length) return false;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
+  return diff === 0;
+}
+
+// ── Session token ────────────────────────────────────────────────
+export async function createUserToken(session: UserSession): Promise<string> {
+  const payload = btoa(JSON.stringify({ ...session, ts: Date.now() }));
+  const sig = await sign(payload);
+  return `${payload}.${sig}`;
+}
+
+export async function verifyUserToken(token: string): Promise<UserSession | null> {
+  const [payload, sig] = token.split('.');
+  if (!payload || !sig) return null;
+  if (!(await verifySignature(payload, sig))) return null;
+  try {
+    const data = JSON.parse(atob(payload));
+    if (Date.now() - data.ts > MAX_AGE * 1000) return null;
+    return { id: data.id, email: data.email, role: data.role, name: data.name, permissions: data.permissions };
+  } catch {
+    return null;
+  }
+}
+
+export async function getUserSession(): Promise<UserSession | null> {
+  const { cookies } = await import('next/headers');
+  const store = await cookies();
+  const token = store.get(USER_COOKIE)?.value;
+  if (!token) return null;
+  return verifyUserToken(token);
+}
+
+export async function isUserLoggedIn(): Promise<boolean> {
+  return (await getUserSession()) !== null;
+}
+
+export async function isModoOrAdmin(): Promise<boolean> {
+  const session = await getUserSession();
+  return session !== null && (session.role === 'admin' || session.role === 'modo');
+}
+
+export function getUserCookieName() { return USER_COOKIE; }
+export function getUserMaxAge() { return MAX_AGE; }
+
+// ── Vérification des droits ──────────────────────────────────────
+export function hasPermission(session: UserSession, category: string): boolean {
+  if (session.role === 'admin') return true;
+  return session.permissions.includes('all') || session.permissions.includes(category as Permission);
+}
+
+// ── Charger les comptes modo depuis env MODO_ACCOUNTS ───────────
+export function getModoAccountsFromEnv(): ModoAccount[] {
+  try {
+    const raw = process.env.MODO_ACCOUNTS;
+    if (!raw) return [];
+    return JSON.parse(raw) as ModoAccount[];
+  } catch {
+    return [];
+  }
+}
+
+// ── Charger les comptes modo depuis Apps Script ──────────────────
+export async function getModoAccountsFromSheet(): Promise<ModoAccount[]> {
+  const url = process.env.APPS_SCRIPT_WEBHOOK_URL;
+  if (!url) return [];
+  try {
+    const res = await fetch(`${url}?action=listUsers`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.users || []) as ModoAccount[];
+  } catch {
+    return [];
+  }
+}
+
+// ── Authentifier un utilisateur ──────────────────────────────────
+export async function authenticateUser(email: string, password: string): Promise<UserSession | null> {
+  // 1. Admin depuis env vars
+  if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+    return { id: 'admin', email, role: 'admin', name: 'Admin', permissions: ['all'] };
+  }
+
+  // 2. Comptes modo depuis MODO_ACCOUNTS env var (test + fallback)
+  const envAccounts = getModoAccountsFromEnv();
+  const envUser = envAccounts.find(u => u.email === email && u.password === password && u.actif);
+  if (envUser) {
+    return { id: envUser.id, email: envUser.email, role: envUser.role, name: envUser.name, permissions: envUser.permissions };
+  }
+
+  // 3. Comptes modo depuis Apps Script (Google Sheet "Comptes")
+  const url = process.env.APPS_SCRIPT_WEBHOOK_URL;
+  if (url) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', email, password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.user) {
+          return {
+            id: data.user.id,
+            email: data.user.email,
+            role: data.user.role,
+            name: data.user.name,
+            permissions: data.user.permissions || ['all'],
+          };
+        }
+      }
+    } catch { /* Apps Script indisponible */ }
+  }
+
+  return null;
+}

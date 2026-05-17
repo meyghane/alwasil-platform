@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
+import { getUserSession, hasPermission } from '@/lib/user-auth';
 import { CATEGORY_FORMS } from '@/lib/admin-forms';
 import { Resend } from 'resend';
 
@@ -12,11 +13,19 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${process.env.SHEET_PRIVE_ID || '1Lrx55hXR_fgAViZOT6B1fb72QXrVu7TgFxwZCkDwJeI'}/edit#gid=0`;
 
 export async function POST(req: NextRequest) {
-  if (!(await isAdminLoggedIn())) {
+  // Accepte admin (ancien cookie) OU session modo/admin (nouveau cookie)
+  const oldAdmin  = await isAdminLoggedIn();
+  const userSess  = await getUserSession();
+  const { categorie, data } = await req.json();
+
+  if (!oldAdmin && !userSess) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
+  if (userSess && !hasPermission(userSess, categorie)) {
+    return NextResponse.json({ error: 'Catégorie non autorisée pour ce compte' }, { status: 403 });
+  }
 
-  const { categorie, data } = await req.json();
+  const soumis_par = userSess?.name || 'admin';
   const form = CATEGORY_FORMS[categorie];
   if (!form) {
     return NextResponse.json({ error: 'Catégorie inconnue' }, { status: 400 });
@@ -31,7 +40,7 @@ export async function POST(req: NextRequest) {
     destinationTab: form.sheetTab,
     status: 'à vérifier',
     soumis_le: now,
-    soumis_par: 'admin',
+    soumis_par,
     ...data,
   };
 

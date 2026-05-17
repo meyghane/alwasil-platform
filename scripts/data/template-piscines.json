@@ -1,0 +1,18 @@
+[
+  {
+    "categorie": "piscine",
+    "name": "Piscine Georges Vallerey",
+    "type": "municipale",
+    "adresse": "148 avenue Gambetta",
+    "ville": "Paris",
+    "departement": "75",
+    "creneaux": "Mar 7h-8h, Jeu 19h-20h, Sam 8h-9h",
+    "tarif": "3.50€ (tarif réduit disponible)",
+    "contact": "01 40 31 15 20",
+    "burkini": "OUI",
+    "vestiaires_separes": "OUI",
+    "description": "Piscine municipale proposant des créneaux réservés et adaptés.",
+    "tags": "piscine,burkini,municipal,Paris",
+    "source": "site-officiel"
+  }
+]

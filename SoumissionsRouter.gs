@@ -1,28 +1,5 @@
 // ============================================================
 // SoumissionsRouter.gs — Al-Wasil
-//
-// RÔLE :
-//   1. Webhook POST : reçoit les soumissions du site et les écrit
-//      dans l'onglet "Soumissions" du Sheet privé avec status "à vérifier"
-//
-//   2. Trigger onEdit : quand admin change le status dans le Sheet,
-//      copie automatiquement la ligne dans l'onglet destination
-//      et met à jour le statut
-//
-// DÉPLOIEMENT :
-//   Apps Script > Déployer > Nouvelle déploiement > Web App
-//   - Exécuter en tant que : Moi
-//   - Accès : Tout le monde
-//   Copier l'URL et la mettre dans APPS_SCRIPT_WEBHOOK_URL (.env.local + Vercel)
-//
-// TRIGGER onEdit :
-//   Apps Script > Déclencheurs > + Ajouter un déclencheur
-//   - Fonction : onStatusChange
-//   - Événement : onEdit (modification de la feuille de calcul)
-//
-// COLONNES ONGLET "Soumissions" (créées automatiquement) :
-//   A: id | B: categorie | C: destinationTab | D: status
-//   E: soumis_le | F: soumis_par | G: name (ou titre) | ...suite des champs
 // ============================================================
 
 var SHEET_ID = '1Lrx55hXR_fgAViZOT6B1fb72QXrVu7TgFxwZCkDwJeI'; // Sheet PRIVÉ
@@ -32,104 +9,258 @@ var SHEET_ID = '1Lrx55hXR_fgAViZOT6B1fb72QXrVu7TgFxwZCkDwJeI'; // Sheet PRIVÉ
 function doPost(e) {
   try {
     var payload = JSON.parse(e.postData.contents);
+
+    // ── Routage selon l'action ──────────────────────────────
+    if (payload.action === 'directImport')  return handleDirectImport(payload);
+    if (payload.action === 'login')         return handleLogin(payload);
+    if (payload.action === 'listUsers')     return handleListUsers();
+    if (payload.action === 'createUser')    return handleCreateUser(payload);
+    if (payload.action === 'updateUser')    return handleUpdateUser(payload);
+    if (payload.action === 'updateStatus')  return handleUpdateStatus(payload);
+    // ────────────────────────────────────────────────────────
+
+    // Comportement par défaut : écriture dans Soumissions
     var sheetTab = payload.sheetTab || 'Soumissions';
-    var row = payload.row || {};
+    var row = payload.row || payload; // accepte row imbriqué OU payload direct
 
     var ss = SpreadsheetApp.openById(SHEET_ID);
-
-    // Créer l'onglet s'il n'existe pas
     var sh = ss.getSheetByName(sheetTab);
     if (!sh) {
       sh = ss.insertSheet(sheetTab);
     }
 
-    // Si l'onglet est vide, créer les headers depuis les clés du row
     if (sh.getLastRow() === 0) {
       var headers = Object.keys(row);
       sh.getRange(1, 1, 1, headers.length).setValues([headers]);
       sh.getRange(1, 1, 1, headers.length).setFontWeight('bold');
       sh.setFrozenRows(1);
-
-      // Colorer la colonne status (colonne D = index 4) en jaune
       var statusColIndex = headers.indexOf('status') + 1;
-      if (statusColIndex > 0) {
-        sh.getRange(1, statusColIndex).setBackground('#fef9c3');
-      }
+      if (statusColIndex > 0) sh.getRange(1, statusColIndex).setBackground('#fef9c3');
     }
 
-    // Récupérer les headers existants pour ordonner les valeurs
     var existingHeaders = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
     var values = existingHeaders.map(function(h) {
       return row[h] !== undefined ? row[h] : '';
     });
 
     sh.appendRow(values);
-
-    // Mettre en couleur la nouvelle ligne (jaune = à vérifier)
     var newRow = sh.getLastRow();
     sh.getRange(newRow, 1, 1, sh.getLastColumn()).setBackground('#fefce8');
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: true, row: newRow }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return jsonOk({ ok: true, row: newRow });
 
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: false, error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return jsonOk({ ok: false, error: err.toString() });
   }
 }
 
-// ── Trigger onEdit (changement de status) ────────────────────
-//
-// Écoute les modifications de la colonne "status" dans l'onglet "Soumissions"
-// Quand le status passe à "en ligne" → copie dans l'onglet destination
-// Quand le status passe à "pas en ligne" → met la ligne en rouge (rejet)
+// ── Import direct (Claude via terminal) ──────────────────────
+
+function handleDirectImport(data) {
+  var ss   = SpreadsheetApp.openById(SHEET_ID);
+  var rows = data.rows || [];
+  var by   = data.importedBy || 'Claude';
+  var at   = data.importedAt || new Date().toISOString();
+
+  // Onglet Historique
+  var hist = ss.getSheetByName('Historique');
+  if (!hist) {
+    hist = ss.insertSheet('Historique');
+    hist.appendRow(['ID', 'CATEGORIE', 'ONGLET', 'NOM', 'ACTION', 'DATE', 'PAR']);
+    hist.getRange(1, 1, 1, 7).setFontWeight('bold');
+  }
+
+  var results = [];
+
+  for (var i = 0; i < rows.length; i++) {
+    var row     = rows[i];
+    var tabName = row.sheetTab || 'Soumissions';
+
+    var sh = ss.getSheetByName(tabName);
+    if (!sh) sh = ss.insertSheet(tabName);
+
+    if (sh.getLastRow() === 0) {
+      sh.appendRow(Object.keys(row));
+      sh.getRange(1, 1, 1, Object.keys(row).length).setFontWeight('bold');
+      sh.setFrozenRows(1);
+    }
+
+    var hdrs = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    var vals = hdrs.map(function(h) { return row[h] !== undefined ? row[h] : ''; });
+    sh.appendRow(vals);
+    sh.getRange(sh.getLastRow(), 1, 1, sh.getLastColumn()).setBackground('#f0fdf4');
+
+    // Log Historique
+    var nom = row.titre || row.name || row.nom || '(sans titre)';
+    hist.appendRow([row.id || ('imp-' + i), row.categorie || '', tabName, nom, 'IMPORT', at, by]);
+
+    results.push({ id: row.id, tab: tabName, status: 'ok' });
+  }
+
+  return jsonOk({ success: true, imported: results.length });
+}
+
+// ── Update status depuis /admin/soumissions ───────────────────
+
+function handleUpdateStatus(data) {
+  var ss  = SpreadsheetApp.openById(SHEET_ID);
+  var sh  = ss.getSheetByName('Soumissions');
+  if (!sh) return jsonOk({ ok: false, error: 'Onglet Soumissions introuvable' });
+
+  var rows    = sh.getDataRange().getValues();
+  var headers = rows[0];
+  var idIdx   = headers.indexOf('id');
+  var statIdx = headers.indexOf('status');
+
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][idIdx]) === String(data.id)) {
+      sh.getRange(i + 1, statIdx + 1).setValue(data.status);
+      var color = data.status === 'en ligne' ? '#dcfce7' : data.status === 'pas en ligne' ? '#fee2e2' : '#fefce8';
+      sh.getRange(i + 1, 1, 1, sh.getLastColumn()).setBackground(color);
+      return jsonOk({ ok: true });
+    }
+  }
+  return jsonOk({ ok: false, error: 'ID non trouvé' });
+}
+
+// ── Auth comptes modo ─────────────────────────────────────────
+
+function handleLogin(data) {
+  var ss    = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName('Comptes');
+  if (!sheet) return jsonOk({ success: false, error: 'Onglet Comptes inexistant' });
+
+  var rows    = sheet.getDataRange().getValues();
+  var headers = rows[0];
+  var emailIdx = headers.indexOf('EMAIL');
+  var passIdx  = headers.indexOf('PASSWORD');
+  var roleIdx  = headers.indexOf('ROLE');
+  var nameIdx  = headers.indexOf('NAME');
+  var permIdx  = headers.indexOf('PERMISSIONS');
+  var actifIdx = headers.indexOf('ACTIF');
+  var idIdx    = headers.indexOf('ID');
+
+  for (var i = 1; i < rows.length; i++) {
+    var r = rows[i];
+    var actif = String(r[actifIdx]).toLowerCase();
+    if (r[emailIdx] === data.email && r[passIdx] === data.password && actif !== 'non' && actif !== 'false') {
+      var permsRaw = r[permIdx] || 'all';
+      var permissions = String(permsRaw).split(',').map(function(p) { return p.trim(); });
+      return jsonOk({
+        success: true,
+        user: {
+          id:          r[idIdx] || ('modo-' + i),
+          email:       r[emailIdx],
+          name:        r[nameIdx] || 'Modérateur',
+          role:        r[roleIdx] || 'modo',
+          permissions: permissions
+        }
+      });
+    }
+  }
+  return jsonOk({ success: false, error: 'Identifiants incorrects' });
+}
+
+function handleListUsers() {
+  var ss    = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName('Comptes');
+  if (!sheet) return jsonOk({ users: [] });
+
+  var rows    = sheet.getDataRange().getValues();
+  var headers = rows[0];
+  var users   = [];
+
+  for (var i = 1; i < rows.length; i++) {
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      var key = String(headers[j]).toLowerCase();
+      if (key !== 'password') obj[key] = rows[i][j];
+    }
+    users.push(obj);
+  }
+  return jsonOk({ users: users });
+}
+
+function handleCreateUser(data) {
+  var ss    = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName('Comptes');
+  if (!sheet) {
+    sheet = ss.insertSheet('Comptes');
+    sheet.appendRow(['ID', 'EMAIL', 'PASSWORD', 'NAME', 'ROLE', 'PERMISSIONS', 'ACTIF', 'CREATED_AT', 'CREATED_BY']);
+    sheet.getRange(1, 1, 1, 9).setFontWeight('bold');
+  }
+
+  var u    = data.user || {};
+  var perm = Array.isArray(u.permissions) ? u.permissions.join(',') : (u.permissions || 'all');
+  sheet.appendRow([
+    u.id || ('modo-' + Date.now()),
+    u.email || '', u.password || '', u.name || '',
+    u.role || 'modo', perm, 'OUI',
+    u.createdAt || new Date().toISOString(),
+    u.createdBy || 'admin'
+  ]);
+  return jsonOk({ success: true });
+}
+
+function handleUpdateUser(data) {
+  var ss    = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName('Comptes');
+  if (!sheet) return jsonOk({ ok: false });
+
+  var rows    = sheet.getDataRange().getValues();
+  var headers = rows[0];
+  var idIdx   = headers.indexOf('ID');
+
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][idIdx]) === String(data.id)) {
+      if (data.actif !== undefined) {
+        var actifIdx = headers.indexOf('ACTIF');
+        sheet.getRange(i + 1, actifIdx + 1).setValue(data.actif ? 'OUI' : 'NON');
+      }
+      if (data.permissions) {
+        var permIdx = headers.indexOf('PERMISSIONS');
+        var perm    = Array.isArray(data.permissions) ? data.permissions.join(',') : data.permissions;
+        sheet.getRange(i + 1, permIdx + 1).setValue(perm);
+      }
+      return jsonOk({ ok: true });
+    }
+  }
+  return jsonOk({ ok: false, error: 'Utilisateur non trouvé' });
+}
+
+// ── Trigger onEdit ────────────────────────────────────────────
 
 function onStatusChange(e) {
   try {
-    var range = e.range;
-    var sheet = range.getSheet();
-
-    // Ignorer si on n'est pas dans l'onglet Soumissions
+    var range  = e.range;
+    var sheet  = range.getSheet();
     if (sheet.getName() !== 'Soumissions') return;
 
-    // Récupérer les headers
-    var lastCol = sheet.getLastColumn();
-    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var lastCol   = sheet.getLastColumn();
+    var headers   = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
     var statusCol = headers.indexOf('status') + 1;
-
-    // Ignorer si la cellule modifiée n'est pas dans la colonne status
     if (range.getColumn() !== statusCol) return;
 
     var newStatus = range.getValue().toString().trim();
-    var rowIndex = range.getRow();
-    if (rowIndex === 1) return; // header row
+    var rowIndex  = range.getRow();
+    if (rowIndex === 1) return;
 
-    // Récupérer toute la ligne
     var rowValues = sheet.getRange(rowIndex, 1, 1, lastCol).getValues()[0];
-    var rowObj = {};
+    var rowObj    = {};
     headers.forEach(function(h, i) { rowObj[h] = rowValues[i]; });
 
     if (newStatus === 'en ligne') {
-      // Publier dans l'onglet destination
       var destinationTab = rowObj['destinationTab'] || rowObj['sheetTab'] || '';
-
       if (destinationTab) {
-        var ss = sheet.getParent();
-        var destSheet = ss.getSheetByName(destinationTab);
+        var ss         = sheet.getParent();
+        var destSheet  = ss.getSheetByName(destinationTab);
+        if (!destSheet) destSheet = ss.insertSheet(destinationTab);
 
-        if (!destSheet) {
-          destSheet = ss.insertSheet(destinationTab);
-        }
-
-        // Ajouter une colonne "status" si elle n'existe pas dans l'onglet destination
         var destHeaders;
         if (destSheet.getLastRow() === 0) {
-          // Onglet vide : créer headers depuis la ligne source (sans les champs meta)
           var metaFields = ['categorie', 'destinationTab', 'sheetTab', 'status', 'soumis_le', 'soumis_par'];
           destHeaders = headers.filter(function(h) { return !metaFields.includes(h); });
-          destHeaders.push('status'); // ajouter status à la fin
+          destHeaders.push('status');
           destSheet.getRange(1, 1, 1, destHeaders.length).setValues([destHeaders]);
           destSheet.getRange(1, 1, 1, destHeaders.length).setFontWeight('bold');
           destSheet.setFrozenRows(1);
@@ -137,26 +268,38 @@ function onStatusChange(e) {
           destHeaders = destSheet.getRange(1, 1, 1, destSheet.getLastColumn()).getValues()[0];
         }
 
-        // Construire la ligne destination
         var destValues = destHeaders.map(function(h) {
           if (h === 'status') return 'en ligne';
           return rowObj[h] !== undefined ? rowObj[h] : '';
         });
-
         destSheet.appendRow(destValues);
-        var destRow = destSheet.getLastRow();
-        destSheet.getRange(destRow, 1, 1, destSheet.getLastColumn()).setBackground('#f0fdf4');
-      }
+        destSheet.getRange(destSheet.getLastRow(), 1, 1, destSheet.getLastColumn()).setBackground('#f0fdf4');
 
-      // Colorier la ligne source en vert
+        // Log Historique
+        var hist = ss.getSheetByName('Historique');
+        if (!hist) {
+          hist = ss.insertSheet('Historique');
+          hist.appendRow(['ID', 'CATEGORIE', 'ONGLET', 'NOM', 'ACTION', 'DATE', 'PAR']);
+        }
+        var nom = rowObj['name'] || rowObj['titre'] || rowObj['nom'] || '(sans titre)';
+        hist.appendRow([rowObj['id'] || '', rowObj['categorie'] || '', destinationTab, nom, 'PUBLICATION', new Date().toISOString(), 'admin']);
+      }
       sheet.getRange(rowIndex, 1, 1, lastCol).setBackground('#dcfce7');
 
     } else if (newStatus === 'pas en ligne') {
-      // Colorier en rouge/gris = rejet
       sheet.getRange(rowIndex, 1, 1, lastCol).setBackground('#fee2e2');
 
+      // Log rejet
+      var ss2  = sheet.getParent();
+      var hist2 = ss2.getSheetByName('Historique');
+      if (!hist2) {
+        hist2 = ss2.insertSheet('Historique');
+        hist2.appendRow(['ID', 'CATEGORIE', 'ONGLET', 'NOM', 'ACTION', 'DATE', 'PAR']);
+      }
+      var nom2 = rowObj['name'] || rowObj['titre'] || rowObj['nom'] || '(sans titre)';
+      hist2.appendRow([rowObj['id'] || '', rowObj['categorie'] || '', '', nom2, 'REJET', new Date().toISOString(), 'admin']);
+
     } else if (newStatus === 'à vérifier') {
-      // Remettre en jaune
       sheet.getRange(rowIndex, 1, 1, lastCol).setBackground('#fefce8');
     }
 
@@ -165,43 +308,25 @@ function onStatusChange(e) {
   }
 }
 
-// ── Utilitaire : créer l'onglet Soumissions avec les bons headers ──
+// ── Setup ─────────────────────────────────────────────────────
 
 function setupSoumissionsTab() {
   var ss = SpreadsheetApp.openById(SHEET_ID);
   var sh = ss.getSheetByName('Soumissions');
+  if (!sh) sh = ss.insertSheet('Soumissions');
+  else { sh.clearContents(); sh.clearFormats(); }
 
-  if (!sh) {
-    sh = ss.insertSheet('Soumissions');
-  } else {
-    sh.clearContents();
-    sh.clearFormats();
-  }
-
-  var headers = [
-    'id', 'categorie', 'destinationTab', 'status', 'soumis_le', 'soumis_par',
-    'name', 'type', 'adresse', 'ville', 'department',
-    'description', 'website', 'phone', 'email', 'tags',
-    // champs variables selon la catégorie (remplis dynamiquement)
-  ];
-
+  var headers = ['id', 'categorie', 'destinationTab', 'status', 'soumis_le', 'soumis_par', 'name', 'type', 'adresse', 'ville', 'department', 'description', 'tags'];
   sh.getRange(1, 1, 1, headers.length).setValues([headers]);
   sh.getRange(1, 1, 1, headers.length).setFontWeight('bold');
   sh.setFrozenRows(1);
-
-  // Colorer la colonne status (D) en jaune
   sh.getRange(1, 4).setBackground('#fef9c3');
-
-  // Dropdown pour la colonne status
-  var statusRule = SpreadsheetApp.newDataValidation()
-    .requireValueInList(['à vérifier', 'en ligne', 'pas en ligne'], true)
-    .build();
-  sh.getRange('D2:D1000').setDataValidation(statusRule);
-
-  Logger.log('Onglet Soumissions créé avec dropdown status ✅');
+  var rule = SpreadsheetApp.newDataValidation().requireValueInList(['à vérifier', 'en ligne', 'pas en ligne'], true).build();
+  sh.getRange('D2:D1000').setDataValidation(rule);
+  Logger.log('Setup OK ✅');
 }
 
-// ── GET (optionnel — liste les soumissions en attente) ─────────
+// ── GET ───────────────────────────────────────────────────────
 
 function doGet(e) {
   var action = e.parameter.action || 'list';
@@ -209,27 +334,27 @@ function doGet(e) {
   if (action === 'list') {
     var ss = SpreadsheetApp.openById(SHEET_ID);
     var sh = ss.getSheetByName('Soumissions');
+    if (!sh || sh.getLastRow() < 2) return jsonOk({ soumissions: [] });
 
-    if (!sh || sh.getLastRow() < 2) {
-      return ContentService
-        .createTextOutput(JSON.stringify({ soumissions: [] }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-
-    var data = sh.getDataRange().getValues();
+    var data    = sh.getDataRange().getValues();
     var headers = data[0];
-    var rows = data.slice(1).map(function(row) {
+    var rows    = data.slice(1).map(function(row) {
       var obj = {};
       headers.forEach(function(h, i) { obj[h] = row[i]; });
       return obj;
-    }).filter(function(r) { return r.status === 'à vérifier'; });
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ soumissions: rows, total: rows.length }))
-      .setMimeType(ContentService.MimeType.JSON);
+    });
+    return jsonOk({ soumissions: rows, total: rows.length });
   }
 
+  if (action === 'listUsers') return handleListUsers();
+
+  return jsonOk({ ok: true });
+}
+
+// ── Helper ────────────────────────────────────────────────────
+
+function jsonOk(obj) {
   return ContentService
-    .createTextOutput(JSON.stringify({ ok: true }))
+    .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }

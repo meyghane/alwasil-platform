@@ -1,0 +1,32 @@
+[
+  {
+    "categorie": "evenement",
+    "titre": "Conférence : Islam et modernité",
+    "description": "Une soirée de réflexion sur la place des musulmans dans la société française contemporaine.",
+    "date": "2026-06-20",
+    "heure": "19h00",
+    "lieu": "Salle des fêtes municipale",
+    "adresse": "12 rue de la Paix",
+    "ville": "Paris",
+    "departement": "75",
+    "tags": "conférence,islam,modernité,société",
+    "lien": "https://example.com",
+    "gratuit": "OUI",
+    "tarif": ""
+  },
+  {
+    "categorie": "evenement",
+    "titre": "Cours de tajwid — niveau débutant",
+    "description": "Apprentissage des règles de récitation coranique pour les débutants, tous niveaux bienvenus.",
+    "date": "2026-06-22",
+    "heure": "10h00",
+    "lieu": "Mosquée Al-Fath",
+    "adresse": "45 boulevard Victor Hugo",
+    "ville": "Saint-Denis",
+    "departement": "93",
+    "tags": "tajwid,coran,cours,débutant",
+    "lien": "",
+    "gratuit": "OUI",
+    "tarif": ""
+  }
+]

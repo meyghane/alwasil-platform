@@ -23,7 +23,7 @@ const inputStyle: React.CSSProperties = {
   transition: 'border-color 0.15s',
 };
 
-export default function AddForm({ categorie, form }: { categorie: string; form: CategoryForm }) {
+export default function AddForm({ categorie, form, backUrl = '/admin' }: { categorie: string; form: CategoryForm; backUrl?: string }) {
   const [data, setData] = useState<Record<string, string | string[]>>({});
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
@@ -95,7 +95,7 @@ export default function AddForm({ categorie, form }: { categorie: string; form: 
           }}>
             <RotateCcw size={14} /> Ajouter une autre fiche
           </button>
-          <button onClick={() => router.push('/admin')} style={{
+          <button onClick={() => router.push(backUrl)} style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
             padding: '0.75rem 1.5rem', backgroundColor: 'white', color: V,
             border: `1.5px solid ${V_BORDER}`, borderRadius: '10px', fontWeight: 600,

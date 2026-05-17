@@ -3,10 +3,11 @@ import { redirect } from 'next/navigation';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 import { CATEGORIES_LIST } from '@/lib/admin-forms';
 import AdminLogout from './AdminLogout';
+import ChatInterne from '@/components/ChatInterne';
 import {
   Waves, BookOpen, Calendar, Briefcase, Brain, Activity,
   Gem, Library, HandCoins, Plane, History, ArrowLeft, Plus,
-  LayoutDashboard, Info, Inbox,
+  LayoutDashboard, Info, Inbox, Users, Sparkles,
 } from 'lucide-react';
 
 const CAT_ICONS: Record<string, typeof Waves> = {
@@ -57,6 +58,16 @@ export default async function AdminPage() {
           </div>
 
           <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+            <Link href="/admin/comptes" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+              fontSize: '0.78rem', color: 'white', textDecoration: 'none',
+              padding: '0.4rem 0.875rem',
+              backgroundColor: 'rgba(196,181,253,0.15)',
+              border: '1px solid rgba(196,181,253,0.3)',
+              borderRadius: '8px',
+            }}>
+              <Users size={13} strokeWidth={2} /> Comptes
+            </Link>
             <Link href="/admin/soumissions" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
               fontSize: '0.78rem', color: 'white', textDecoration: 'none',
@@ -88,14 +99,68 @@ export default async function AdminPage() {
 
       <div className="container" style={{ padding: '2.5rem 1rem', maxWidth: '1000px' }}>
 
+        {/* Ajout Rapide — bandeau Wassil */}
+        <Link href="/modo/ajout-rapide" style={{ textDecoration: 'none', display: 'block', marginBottom: '1.5rem' }}>
+          <div style={{ background: 'linear-gradient(135deg, #4c1d95, #3b0764)', borderRadius: '16px', padding: '1.25rem 1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 8px 24px rgba(76,29,149,0.3)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ width: 44, height: 44, borderRadius: '12px', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Sparkles size={22} color="#c4b5fd" strokeWidth={1.6} />
+              </div>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'white', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide — Wassil</div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(196,181,253,0.65)', marginTop: '2px' }}>Décris en texte libre → Wassil cherche sur Google et crée la fiche automatiquement</div>
+              </div>
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#c4b5fd', fontWeight: 700, flexShrink: 0 }}>✨ Essayer →</div>
+          </div>
+        </Link>
+
         {/* Titre */}
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ marginBottom: '1.5rem' }}>
           <h1 style={{ fontWeight: 900, fontSize: '1.75rem', color: VIOLET_DARK, margin: '0 0 0.4rem', letterSpacing: '-0.02em' }}>
             Tableau de bord
           </h1>
           <p style={{ color: '#6b7280', fontSize: '0.88rem', margin: 0 }}>
             Sélectionne une catégorie pour ajouter une nouvelle fiche.
           </p>
+        </div>
+
+        {/* Leaderboard équipe */}
+        <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #ede9fe', padding: '1.25rem 1.5rem', marginBottom: '2rem', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+            <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Classement hasanates ✨
+            </div>
+            <Link href="/admin/comptes" style={{ fontSize: '0.75rem', color: VIOLET, textDecoration: 'none', fontWeight: 600 }}>Gérer l&apos;équipe →</Link>
+          </div>
+          {/* Podium statique — se remplira quand getStats sera dans Apps Script */}
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            {[
+              { name: 'Admin', initiale: 'A', hasanates: 0, level: 'Moubtadi\'', color: '#7c3aed' },
+            ].map((m, i) => (
+              <div key={m.name} style={{ flex: 1, backgroundColor: i === 0 ? '#f5f3ff' : '#fafafa', borderRadius: '12px', border: `1px solid ${i === 0 ? '#ddd6fe' : '#f3f4f6'}`, padding: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{ position: 'relative', flexShrink: 0 }}>
+                  <div style={{ width: 38, height: 38, borderRadius: '10px', background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, color: 'white', fontSize: '1rem' }}>
+                    {m.initiale}
+                  </div>
+                  {i < 3 && <div style={{ position: 'absolute', top: -6, right: -6, fontSize: '0.7rem' }}>{['🥇','🥈','🥉'][i]}</div>}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#1c1917', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.name}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '2px' }}>
+                    <div style={{ flex: 1, height: 4, backgroundColor: '#ede9fe', borderRadius: '99px', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${Math.min((m.hasanates / 75) * 100, 100)}%`, background: 'linear-gradient(90deg, #7c3aed, #fbbf24)', borderRadius: '99px' }} />
+                    </div>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#fbbf24', flexShrink: 0 }}>{m.hasanates} ✨</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div style={{ flex: 2, backgroundColor: '#f5f3ff', borderRadius: '12px', border: '1px dashed #ddd6fe', padding: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '0.25rem' }}>
+              <div style={{ fontSize: '0.78rem', color: '#9ca3af', textAlign: 'center' }}>Le classement se remplit quand des modérateurs ajoutent des fiches</div>
+              <Link href="/admin/comptes" style={{ fontSize: '0.72rem', color: VIOLET, textDecoration: 'none', fontWeight: 600 }}>+ Inviter un modo</Link>
+            </div>
+          </div>
         </div>
 
         {/* Grille des catégories */}
@@ -167,6 +232,8 @@ export default async function AdminPage() {
           </div>
         </div>
       </div>
+
+      <ChatInterne currentUser="Admin" currentRole="admin" />
     </div>
   );
 }
