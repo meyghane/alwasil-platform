@@ -10,14 +10,27 @@ async function getHistorique() {
     const jsonStr = text.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '');
     const json = JSON.parse(jsonStr);
     if (!json.table?.rows) return [];
-    return json.table.rows.map((row: any) => ({
-      id:         row.c?.[0]?.v || '',
-      categorie:  row.c?.[1]?.v || '',
-      sheetTab:   row.c?.[2]?.v || '',
-      nom:        row.c?.[3]?.v || '',
-      action:     row.c?.[4]?.v || '',
-      date:       row.c?.[5]?.v || '',
-    }));
+    return json.table.rows.map((row: any) => {
+      // Google Sheets renvoie les dates sous forme "Date(2026,2,26)" → parser manuellement
+      const rawDate = row.c?.[5]?.v || '';
+      let parsedDate = '';
+      if (rawDate && typeof rawDate === 'string' && rawDate.startsWith('Date(')) {
+        const parts = rawDate.replace('Date(', '').replace(')', '').split(',').map(Number);
+        // Google Sheets: mois 0-indexé → +1 pour affichage
+        const d = new Date(parts[0], parts[1], parts[2], parts[3] || 0, parts[4] || 0);
+        parsedDate = d.toLocaleString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      } else if (rawDate) {
+        parsedDate = new Date(rawDate).toLocaleString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      }
+      return {
+        id:         row.c?.[0]?.v || '',
+        categorie:  row.c?.[1]?.v || '',
+        sheetTab:   row.c?.[2]?.v || '',
+        nom:        row.c?.[3]?.v || '',
+        action:     row.c?.[4]?.v || '',
+        date:       parsedDate,
+      };
+    });
   } catch {
     return [];
   }
@@ -63,7 +76,7 @@ export default async function HistoriquePage() {
                 {[...historique].reverse().map((entry: any, i: number) => (
                   <tr key={i} style={{ borderBottom: '1px solid #f3f4f6', backgroundColor: i % 2 === 0 ? 'white' : '#fafafa' }}>
                     <td style={{ padding: '0.875rem 1rem', fontSize: '0.82rem', color: '#6b7280', whiteSpace: 'nowrap' }}>
-                      {entry.date ? new Date(entry.date).toLocaleString('fr-FR') : '—'}
+                      {entry.date || '—'}
                     </td>
                     <td style={{ padding: '0.875rem 1rem' }}>
                       <span style={{ fontSize: '0.72rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: entry.action === 'PUBLICATION' ? '#d1fae5' : '#fee2e2', color: entry.action === 'PUBLICATION' ? '#065f46' : '#991b1b' }}>
