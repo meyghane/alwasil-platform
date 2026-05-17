@@ -6,9 +6,9 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 250, 250, 252;
   --background-end-rgb: 255, 255, 255;
-  --primary-color: #7c3aed;
-  --primary-dark: #4a11c0;
-  --primary-light: #f3eeff;
+  --primary-color: #c9973a;
+  --primary-dark: #a87830;
+  --primary-light: #fdfbf0;
   --accent-orange: #fb4102;
   --accent-blue: #1540ff;
   --accent-green: #00bf63;
@@ -235,18 +235,19 @@ a {
   /* PAS de transparence : on ne voit que la tranche de 1.5px autour */
 }
 
-/* Hover : faisceau stoppé + face violet foncé */
+/* Hover : faisceau doré + face noire chaude */
 .led-card-outer:hover .led-spin {
   animation-play-state: paused;
   opacity: 0;
 }
 .led-card-outer:hover .led-face {
-  background: rgba(30, 10, 60, 0.95) !important;
+  background: rgba(18, 12, 4, 0.97) !important;
 }
 .led-card-outer:hover {
-  transform: scale(1.03);
+  transform: scale(1.04);
   box-shadow:
-    0 0 0 1px rgba(196,181,253,0.4),
-    0 0 20px rgba(196,181,253,0.12),
-    0 0 35px rgba(109,40,217,0.08);
+    0 0 0 1.5px rgba(201,151,58,0.7),
+    0 0 20px rgba(201,151,58,0.25),
+    0 0 45px rgba(201,151,58,0.10),
+    0 8px 32px rgba(0,0,0,0.5);
 }

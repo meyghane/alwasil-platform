@@ -337,12 +337,12 @@ export default function Home() {
         <div style={{ position: 'relative' }}>
           <div style={{
             position: 'absolute', left: 0, top: 0, bottom: 0, width: '80px', zIndex: 2,
-            background: 'linear-gradient(to right, #1a0545, transparent)',
+            background: 'linear-gradient(to right, #0d0b04, transparent)',
             pointerEvents: 'none',
           }} />
           <div style={{
             position: 'absolute', right: 0, top: 0, bottom: 0, width: '80px', zIndex: 2,
-            background: 'linear-gradient(to left, #1a0545, transparent)',
+            background: 'linear-gradient(to left, #0d0b04, transparent)',
             pointerEvents: 'none',
           }} />
 
