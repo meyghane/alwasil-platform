@@ -145,7 +145,7 @@ export default function ChatBot() {
         }}>
           {/* Header */}
           <div style={{
-            backgroundColor: '#4a0e58',
+            backgroundColor: '#c9973a',
             color: 'white',
             padding: '1rem 1.25rem',
             display: 'flex',
@@ -202,7 +202,7 @@ export default function ChatBot() {
                 )}
                 <div style={{
                   maxWidth: '80%',
-                  backgroundColor: msg.role === 'user' ? '#4a0e58' : '#f5f5f4',
+                  backgroundColor: msg.role === 'user' ? '#c9973a' : '#f5f5f4',
                   color: msg.role === 'user' ? 'white' : 'var(--text-primary)',
                   padding: '0.6rem 0.875rem',
                   borderRadius: msg.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
@@ -214,7 +214,7 @@ export default function ChatBot() {
                 {msg.role === 'user' && (
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    backgroundColor: '#4a0e58',
+                    backgroundColor: '#c9973a',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0, marginTop: '2px',
                   }}>
@@ -255,7 +255,7 @@ export default function ChatBot() {
                   {[0, 1, 2].map(i => (
                     <div key={i} style={{
                       width: '6px', height: '6px', borderRadius: '50%',
-                      backgroundColor: '#4a0e58',
+                      backgroundColor: '#c9973a',
                       animation: `bounce 1s ${i * 0.15}s infinite`,
                       opacity: 0.6,
                     }} />

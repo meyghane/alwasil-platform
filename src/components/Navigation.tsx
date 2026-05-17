@@ -161,7 +161,7 @@ export default function Navigation() {
       <style jsx>{`
         .nav-container {
           border-bottom: 1px solid rgba(255,255,255,0.08);
-          background-color: #0f0225;
+          background-color: #0a0806;
           position: sticky;
           top: 0;
           z-index: 50;
@@ -257,11 +257,11 @@ export default function Navigation() {
           font-size: 0.875rem;
           text-decoration: none;
           padding: 0.6rem 1.25rem;
-          background-color: #fff;
-          color: #051c0e;
+          background-color: #c9973a;
+          color: #0a0806;
           border-radius: 8px;
           font-weight: 700;
-          box-shadow: 0 0 12px rgba(255,255,255,0.15);
+          box-shadow: 0 0 16px rgba(201,151,58,0.45);
         }
         .nav-mobile-btn {
           background: none;
