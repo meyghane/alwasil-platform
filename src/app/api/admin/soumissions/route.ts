@@ -30,7 +30,17 @@ export async function GET() {
     }
 
     const data = await res.json();
-    return NextResponse.json(data);
+
+    // Normalise les clés en minuscules (Make écrit en MAJUSCULES dans le Sheet)
+    const soumissions = (data.soumissions || []).map((item: Record<string, unknown>) => {
+      const normalized: Record<string, unknown> = {};
+      for (const [k, v] of Object.entries(item)) {
+        normalized[k.toLowerCase()] = v;
+      }
+      return normalized;
+    });
+
+    return NextResponse.json({ ...data, soumissions });
   } catch {
     return NextResponse.json({ soumissions: [], error: 'Apps Script non disponible' });
   }

@@ -95,14 +95,15 @@ export async function POST(req: NextRequest) {
   // ── 2. Préparer la ligne Sheet ────────────────────────────────
   const categorie = String(ficheGeneree.categorie || 'divers');
   const row = {
-    id:          `rapide-${Date.now()}`,
+    id:             `rapide-${Date.now()}`,
     categorie,
-    status:      'à vérifier',
-    soumis_le:   now,
-    soumis_par:  auteur,
-    source:      'ajout-rapide',
-    texte_libre: texte,
-    url_source:  url || '',
+    destinationTab: categorie,   // pour que l'Apps Script sache où déplacer après validation
+    status:         'à vérifier',
+    soumis_le:      now,
+    soumis_par:     auteur,
+    source:         'ajout-rapide',
+    texte_libre:    texte,
+    url_source:     url || '',
     ...ficheGeneree,
   };
 

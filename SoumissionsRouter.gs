@@ -60,7 +60,7 @@ function doPost(e) {
 function handleDirectImport(data) {
   var ss   = SpreadsheetApp.openById(SHEET_ID);
   var rows = data.rows || [];
-  var by   = data.importedBy || 'Claude';
+  var by   = data.importedBy || 'Wassil';
   var at   = data.importedAt || new Date().toISOString();
 
   // Onglet Historique
@@ -366,9 +366,126 @@ function doGet(e) {
     return jsonOk({ soumissions: rows, total: rows.length });
   }
 
-  if (action === 'listUsers') return handleListUsers();
+  if (action === 'listUsers')     return handleListUsers();
+  if (action === 'listHistorique') return handleListHistorique();
 
   return jsonOk({ ok: true });
+}
+
+// ── Lire l'historique depuis l'onglet Historique du Sheet PRIVÉ ──
+
+function handleListHistorique() {
+  var ss   = SpreadsheetApp.openById(SHEET_ID);
+  var hist = ss.getSheetByName('Historique');
+  if (!hist || hist.getLastRow() < 2) return jsonOk({ historique: [] });
+
+  var data    = hist.getDataRange().getValues();
+  var headers = data[0].map(function(h) { return String(h).toLowerCase(); });
+  var rows    = data.slice(1)
+    .filter(function(row) { return row[0] !== ''; }) // ignore lignes vides
+    .map(function(row) {
+      var obj = {};
+      headers.forEach(function(h, i) {
+        // Convertit les objets Date en ISO string
+        var val = row[i];
+        if (val instanceof Date) {
+          obj[h] = val.toISOString();
+        } else {
+          obj[h] = val;
+        }
+      });
+      return obj;
+    });
+
+  rows.reverse(); // plus récents en premier
+  return jsonOk({ historique: rows, total: rows.length });
+}
+
+// ── Trigger installable : log chaque modification de sheet ────
+
+var TABS_IGNORED = ['Historique', 'Comptes', 'Paramètres'];
+var REVALIDATE_URL = 'https://alwasil-platform.vercel.app/api/revalidate';
+
+function onEditInstallable(e) {
+  try {
+    var range   = e.range;
+    var sheet   = range.getSheet();
+    var tabName = sheet.getName();
+
+    if (TABS_IGNORED.indexOf(tabName) !== -1) return;
+    if (range.getRow() === 1) return;
+
+    var ss   = sheet.getParent();
+    var hist = ss.getSheetByName('Historique');
+    if (!hist) {
+      hist = ss.insertSheet('Historique');
+      hist.appendRow(['ID', 'CATEGORIE', 'ONGLET', 'NOM', 'ACTION', 'DATE', 'PAR']);
+      hist.getRange(1, 1, 1, 7).setFontWeight('bold');
+    }
+
+    var lastCol = sheet.getLastColumn();
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var rowVals = sheet.getRange(range.getRow(), 1, 1, lastCol).getValues()[0];
+    var rowMap  = {};
+    headers.forEach(function(h, i) { rowMap[String(h).toLowerCase()] = rowVals[i]; });
+
+    var rowId   = rowMap['id'] || ('row-' + range.getRow());
+    var rowNom  = rowMap['nom'] || rowMap['titre'] || rowMap['name'] || rowMap['id'] || '';
+    var colName = headers[range.getColumn() - 1] || ('col' + range.getColumn());
+    var newVal  = String(range.getValue()).slice(0, 80);
+    var auteur  = tabName === 'Soumissions' ? (rowMap['soumis_par'] || 'Admin') : 'Admin';
+
+    hist.appendRow([
+      rowId, tabName, tabName,
+      rowNom + ' [' + colName + '=' + newVal + ']',
+      tabName === 'Soumissions' ? 'STATUT' : 'MODIFICATION',
+      new Date().toISOString(),
+      auteur
+    ]);
+
+    // Revalider le cache Vercel si le secret est configuré
+    var secret = PropertiesService.getScriptProperties().getProperty('REVALIDATE_SECRET') || '';
+    if (secret) {
+      UrlFetchApp.fetch(REVALIDATE_URL, {
+        method: 'post',
+        contentType: 'application/json',
+        headers: { 'x-revalidate-secret': secret },
+        payload: JSON.stringify({ paths: ['/', '/education', '/piscines', '/librairies', '/sante', '/jobs'] }),
+        muteHttpExceptions: true
+      });
+    }
+
+  } catch (err) {
+    Logger.log('onEditInstallable error: ' + err.toString());
+  }
+}
+
+// ── Installer le trigger (à exécuter UNE SEULE FOIS depuis Apps Script) ──
+
+function setupTriggers() {
+  // Supprimer les doublons éventuels
+  var existing = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < existing.length; i++) {
+    if (existing[i].getHandlerFunction() === 'onEditInstallable') {
+      ScriptApp.deleteTrigger(existing[i]);
+    }
+  }
+
+  // Installer le trigger onEdit sur le Sheet PRIVÉ
+  ScriptApp.newTrigger('onEditInstallable')
+    .forSpreadsheet(SpreadsheetApp.openById(SHEET_ID))
+    .onEdit()
+    .create();
+
+  Logger.log('✅ Trigger onEditInstallable installé sur ' + SHEET_ID);
+}
+
+// ── Configurer le secret Vercel (à exécuter UNE SEULE FOIS) ──────────────
+
+function setupRevalidateSecret() {
+  // Remplace la valeur ci-dessous par ton vrai secret (env var REVALIDATE_SECRET dans Vercel)
+  PropertiesService.getScriptProperties().setProperty('REVALIDATE_SECRET', 'alwasil-revalidate-2026');
+  Logger.log('✅ REVALIDATE_SECRET configuré');
 }
 
 // ── Helper ────────────────────────────────────────────────────

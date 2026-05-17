@@ -5,13 +5,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserSession, getModoAccountsFromEnv, ModoAccount, Permission, UserRole } from '@/lib/user-auth';
+import { isAdminLoggedIn } from '@/lib/admin-auth';
 
 const APPS_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
 
 async function assertAdmin() {
+  if (await isAdminLoggedIn()) return true;
   const session = await getUserSession();
-  if (!session || session.role !== 'admin') return false;
-  return true;
+  return !!(session && session.role === 'admin');
 }
 
 export async function GET() {

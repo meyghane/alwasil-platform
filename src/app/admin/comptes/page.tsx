@@ -10,8 +10,9 @@ export default async function ComptesPage() {
   const userSession = await getUserSession();
   const oldAdmin    = await isAdminLoggedIn();
 
-  if (!userSession && !oldAdmin) redirect('/admin/login');
-  if (userSession && userSession.role !== 'admin') redirect('/modo');
+  // oldAdmin (cookie aw_admin) prime sur tout
+  if (!oldAdmin && !userSession) redirect('/admin/login');
+  if (!oldAdmin && userSession && userSession.role !== 'admin') redirect('/modo');
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f5f3ff 0%, #faf9ff 100%)' }}>
