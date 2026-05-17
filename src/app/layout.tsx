@@ -3,6 +3,7 @@ import './globals.css';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ChatBot from '@/components/ChatBot';
+import PrayerTimesBar from '@/components/PrayerTimesBar';
 
 const BASE_URL = 'https://alwasil-platform.vercel.app';
 
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Navigation />
+        <PrayerTimesBar />
         <main style={{ minHeight: 'calc(100vh - 4rem - 300px)' }}>
           {children}
         </main>
