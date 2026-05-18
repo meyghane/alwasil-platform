@@ -13,10 +13,11 @@ const CRON_SECRET = process.env.CRON_SECRET || '';
 // ── Config par catégorie ─────────────────────────────────────────
 
 type CatConfig = {
-  sheetTab:    string;
-  expiresIn?:  number;   // jours avant expiration auto (null = jamais)
-  prompt:      string;   // prompt Gemini
-  dedup:       string;   // champ utilisé pour la déduplication
+  sheetTab:     string;
+  expiresIn?:   number;   // jours par défaut si pas de date fournie
+  expiryField?: string;   // champ dans la réponse Gemini qui contient la date de fin
+  prompt:       string;
+  dedup:        string;
 };
 
 const CATEGORIES: Record<string, CatConfig> = {
@@ -61,8 +62,10 @@ const CATEGORIES: Record<string, CatConfig> = {
 
   solidarite: {
     sheetTab: 'soumissions_solidarite',
-    prompt: `Find 5 solidarity initiatives in France from Muslim/Islamic associations: maraudes, food banks (distribution alimentaire), elderly visits, neighborhood help. Return ONLY a JSON array. Each object: titre, association, ville, departement, type (maraude/distribution/visite/aide-juridique/autre), description, date_prochaine (YYYY-MM-DD or null), recurrence (hebdo/mensuel/ponctuel), url_source, contact.`,
+    expiresIn: 60, // fallback si pas de date fournie
+    prompt: `Find 5 solidarity initiatives in France from Muslim/Islamic associations: maraudes, food banks (distribution alimentaire), elderly visits, neighborhood help. Return ONLY a JSON array. Each object: titre, association, ville, departement, type (maraude/distribution/visite/aide-juridique/autre), description, date_fin (YYYY-MM-DD or null — the end/expiry date of the initiative), date_prochaine (YYYY-MM-DD or null — next occurrence), recurrence (hebdo/mensuel/ponctuel/permanent), url_source, contact.`,
     dedup: 'titre',
+    expiryField: 'date_fin', // utilise la date de fin si fournie par Gemini
   },
 
   education: {
@@ -178,17 +181,26 @@ export async function GET(req: NextRequest) {
   });
 
   // 5. Écrire dans le Sheet
-  const today = new Date().toISOString().split('T')[0];
-  const expiresAt = config.expiresIn
+  const today    = new Date().toISOString().split('T')[0];
+  const default_expiry = config.expiresIn
     ? new Date(Date.now() + config.expiresIn * 86400000).toISOString().split('T')[0]
     : null;
 
   let written = 0;
   for (let i = 0; i < filtered.length; i++) {
+    const item = filtered[i];
+
+    // Expiration : utilise la date fournie par Gemini si dispo, sinon le défaut
+    let expiresAt = default_expiry;
+    if (config.expiryField) {
+      const fromData = String(item[config.expiryField] || '');
+      if (fromData && fromData > today) expiresAt = fromData;
+    }
+
     const row: Record<string, unknown> = {
-      ...filtered[i],
-      id:        `${cat}-${Date.now()}-${i}`,
-      status:    'à vérifier',
+      ...item,
+      id:         `${cat}-${Date.now()}-${i}`,
+      status:     'à vérifier',
       soumis_par: 'Wassil',
       soumis_le:  new Date().toISOString(),
       ...(expiresAt ? { expires_at: expiresAt } : {}),

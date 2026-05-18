@@ -7,7 +7,7 @@ import ChatInterne from '@/components/ChatInterne';
 import {
   Waves, BookOpen, Calendar, Briefcase, Brain, Activity,
   Gem, Library, HandCoins, Plane, History, ArrowLeft, Plus,
-  LayoutDashboard, Info, Inbox, Users, Sparkles,
+  LayoutDashboard, Info, Inbox, Users, Sparkles, Zap,
 } from 'lucide-react';
 
 const CAT_ICONS: Record<string, typeof Waves> = {
@@ -58,6 +58,16 @@ export default async function AdminPage() {
           </div>
 
           <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+            <Link href="/admin/auto" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+              fontSize: '0.78rem', color: '#c9973a', textDecoration: 'none',
+              padding: '0.4rem 0.875rem',
+              backgroundColor: 'rgba(201,151,58,0.12)',
+              border: '1px solid rgba(201,151,58,0.3)',
+              borderRadius: '8px',
+            }}>
+              <Zap size={13} strokeWidth={2} /> Autos
+            </Link>
             <Link href="/admin/comptes" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
               fontSize: '0.78rem', color: 'white', textDecoration: 'none',
