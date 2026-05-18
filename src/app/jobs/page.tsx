@@ -51,23 +51,23 @@ const FRIENDLY_FILTERS: { key: FriendlyLevel | 'all'; label: string; icon: Lucid
 ];
 
 const JOB_TYPE_COLORS: Record<JobType, string> = {
-  cdi:        '#7c3aed',
-  cdd:        '#6d28d9',
-  freelance:  '#8b5cf6',
+  cdi:        '#c9973a',
+  cdd:        '#a87830',
+  freelance:  '#c9973a',
   stage:      '#f59e0b',
-  alternance: '#f97316',
-  benevole:   '#4c1d95',
+  alternance: '#c9973a',
+  benevole:   '#8a6025',
 };
 
 const SECTOR_COLORS: Record<string, string> = {
   tech:          '#6366f1',
-  sante:         '#7c3aed',
+  sante:         '#c9973a',
   education:     '#f59e0b',
-  commerce:      '#f97316',
-  juridique:     '#6d28d9',
-  humanitaire:   '#4c1d95',
-  finance:       '#7c3aed',
-  communication: '#8b5cf6',
+  commerce:      '#c9973a',
+  juridique:     '#a87830',
+  humanitaire:   '#8a6025',
+  finance:       '#c9973a',
+  communication: '#c9973a',
   autre:         '#6b7280',
 };
 
@@ -115,7 +115,7 @@ export default function JobsPage() {
           const Icon = t.icon;
           return (
             <button key={t.key} onClick={() => { setTab(t.key); setSearch(''); }}
-              style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #7c3aed' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#7c3aed' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+              style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #c9973a' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#c9973a' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
               <Icon size={14} strokeWidth={1.8} />{t.label}
             </button>
           );
@@ -142,7 +142,7 @@ export default function JobsPage() {
             <DeptFilter value={deptFilter} onChange={setDeptFilter} />
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer', userSelect: 'none' }}>
               <input type="checkbox" checked={remoteOnly} onChange={e => setRemoteOnly(e.target.checked)}
-                style={{ accentColor: '#7c3aed' }} />
+                style={{ accentColor: '#c9973a' }} />
               Remote uniquement
             </label>
           </div>
@@ -150,7 +150,7 @@ export default function JobsPage() {
           {/* Friendly filter */}
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.875rem' }}>
             {FRIENDLY_FILTERS.map(f => {
-              const color = '#7c3aed';
+              const color = '#c9973a';
               const isActive = friendlyFilter === f.key;
               const Icon = f.icon;
               return (
@@ -165,7 +165,7 @@ export default function JobsPage() {
           {/* Sector filter */}
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
             {SECTORS.map(s => {
-              const color = s.key !== 'all' ? SECTOR_COLORS[s.key] : '#7c3aed';
+              const color = s.key !== 'all' ? SECTOR_COLORS[s.key] : '#c9973a';
               const isActive = sectorFilter === s.key;
               const Icon = s.icon;
               return (
@@ -189,7 +189,7 @@ export default function JobsPage() {
                 backgroundColor: 'white',
                 borderRadius: '16px',
                 border: '1px solid #e7e5e4',
-                borderTop: job.featured ? `3px solid #10b981` : undefined,
+                borderTop: job.featured ? `3px solid #d4a853` : undefined,
                 overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
@@ -200,7 +200,7 @@ export default function JobsPage() {
                   {/* Badges */}
                   <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
                     {job.featured && (
-                      <span style={{ backgroundColor: '#10b981', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800 }}>⭐ Mis en avant</span>
+                      <span style={{ backgroundColor: '#d4a853', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800 }}>⭐ Mis en avant</span>
                     )}
                     {job.cmn && (
                       <span style={{ backgroundColor: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}>🌐 Via CMN</span>
@@ -225,7 +225,7 @@ export default function JobsPage() {
                       </p>
                       <p style={{ fontSize: '0.72rem', color: '#a8a29e', margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: '3px' }}>
                         <MapPin size={10} /> {job.location}
-                        {job.salary && <span style={{ marginLeft: '0.4rem', color: '#10b981', fontWeight: 700 }}>· {job.salary}</span>}
+                        {job.salary && <span style={{ marginLeft: '0.4rem', color: '#d4a853', fontWeight: 700 }}>· {job.salary}</span>}
                       </p>
                     </div>
                   </div>
@@ -264,7 +264,7 @@ export default function JobsPage() {
                     {job.postedBy && <span> · <strong style={{ color: '#78716c' }}>{job.postedBy}</strong></span>}
                   </div>
                   <a href={job.url} target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#10b981', color: 'white', padding: '0.6rem', borderRadius: '8px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: '100%' }}>
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#d4a853', color: 'white', padding: '0.6rem', borderRadius: '8px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: '100%' }}>
                     Postuler <ExternalLink size={12} />
                   </a>
                 </div>
@@ -281,7 +281,7 @@ export default function JobsPage() {
                     style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'white', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', color: 'var(--text-primary)' }}>
                     ✕ Effacer tous les filtres
                   </button>
-                  <Link href="/contact?type=offre-emploi" style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', backgroundColor: '#10b981', color: 'white', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                  <Link href="/contact?type=offre-emploi" style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', backgroundColor: '#d4a853', color: 'white', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
                     + Publier une offre
                   </Link>
                 </div>
@@ -303,7 +303,7 @@ export default function JobsPage() {
       {/* ─── VIVIER DE TALENTS ─── */}
       {tab === 'talents' && (
         <>
-          <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #10b981' }}>
+          <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #d4a853' }}>
             ⭐ Membres de la communauté ouverts aux opportunités. Contactez-les directement ou partagez leur profil.
           </div>
 
@@ -318,7 +318,7 @@ export default function JobsPage() {
             {filteredTalents.map(t => (
               <div key={t.id} className="card" style={{ padding: '1.25rem', opacity: t.available ? 1 : 0.65 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.875rem' }}>
-                  <div style={{ width: '46px', height: '46px', borderRadius: '50%', backgroundColor: SECTOR_COLORS[t.sector] || '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '1rem', flexShrink: 0 }}>
+                  <div style={{ width: '46px', height: '46px', borderRadius: '50%', backgroundColor: SECTOR_COLORS[t.sector] || '#d4a853', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '1rem', flexShrink: 0 }}>
                     {t.initials}
                   </div>
                   <div>
@@ -345,12 +345,12 @@ export default function JobsPage() {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', fontWeight: 700, color: t.available ? '#10b981' : '#9ca3af' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', fontWeight: 700, color: t.available ? '#d4a853' : '#9ca3af' }}>
                     {t.available
-                      ? <><CheckCircle size={14} color="#10b981" /> Disponible</>
+                      ? <><CheckCircle size={14} color="#d4a853" /> Disponible</>
                       : <><Clock size={14} /> En poste</>}
                   </div>
-                  <button style={{ backgroundColor: '#10b981', color: 'white', border: 'none', padding: '0.4rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}>
+                  <button style={{ backgroundColor: '#d4a853', color: 'white', border: 'none', padding: '0.4rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}>
                     Contacter
                   </button>
                 </div>
@@ -360,7 +360,7 @@ export default function JobsPage() {
 
           {/* CTA rejoindre */}
           <div style={{ marginTop: '2.5rem', padding: '1.75rem', borderRadius: '1rem', backgroundColor: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.2)', textAlign: 'center' }}>
-            <Users size={32} color="#10b981" style={{ marginBottom: '0.75rem' }} />
+            <Users size={32} color="#d4a853" style={{ marginBottom: '0.75rem' }} />
             <h3 style={{ fontWeight: 600, marginBottom: '0.4rem' }}>Rejoignez le vivier</h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginBottom: '1rem' }}>
               Partagez votre profil et recevez des opportunités de la communauté.

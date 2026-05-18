@@ -35,7 +35,7 @@ const SPECIALITE_FILTERS: { key: LibrairieSpecialite | 'all'; label: string; ico
   { key: 'accessoires',   label: 'Accessoires',         icon: Gem },
 ];
 
-const ACCENT = '#7c3aed'; // violet — couleur librairies
+const ACCENT = '#c9973a'; // violet — couleur librairies
 
 export default function LibrairiePage() {
   const [search, setSearch] = useState('');
@@ -57,7 +57,7 @@ export default function LibrairiePage() {
 
   return (
     <div>
-      <PageHeader title="Librairies" description="Librairies islamiques d'Île-de-France : livres, Corans, arabe, cadeaux." color="#7c3aed" emoji="📖" />
+      <PageHeader title="Librairies" description="Librairies islamiques d'Île-de-France : livres, Corans, arabe, cadeaux." color="#c9973a" emoji="📖" />
       <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
       {/* Bandeau info */}
@@ -130,11 +130,11 @@ export default function LibrairiePage() {
                   {lib.featured && (
                     <span style={{ backgroundColor: `${ACCENT}18`, color: ACCENT, padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>⭐ Référence</span>
                   )}
-                  <span style={{ backgroundColor: lib.type === 'physique' ? '#f0fff8' : lib.type === 'en-ligne' ? '#eff6ff' : '#fdf4ff', color: lib.type === 'physique' ? '#065f46' : lib.type === 'en-ligne' ? '#1e40af' : ACCENT, padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600 }}>
+                  <span style={{ backgroundColor: lib.type === 'physique' ? '#f0fff8' : lib.type === 'en-ligne' ? '#eff6ff' : '#fdf4ff', color: lib.type === 'physique' ? '#8a6025' : lib.type === 'en-ligne' ? '#8a6025' : ACCENT, padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600 }}>
                     {lib.type === 'physique' ? '🏪 Physique' : lib.type === 'en-ligne' ? '💻 En ligne' : '🔀 Physique + Site'}
                   </span>
                   {lib.livraison && (
-                    <span style={{ backgroundColor: '#f0fff8', color: '#059669', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem' }}>
+                    <span style={{ backgroundColor: '#f0fff8', color: '#c9973a', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem' }}>
                       <Truck size={9} style={{ display: 'inline', marginRight: '2px' }} />Livraison
                     </span>
                   )}

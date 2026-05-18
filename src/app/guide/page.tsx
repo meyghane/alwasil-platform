@@ -33,9 +33,9 @@ const WUDU_STEPS = [
 ];
 
 const PRIERES = [
-  { nom: 'Fajr', ar: 'الفجر', heure: 'Avant le lever du soleil', rakat: 2, couleur: '#7c3aed' },
+  { nom: 'Fajr', ar: 'الفجر', heure: 'Avant le lever du soleil', rakat: 2, couleur: '#c9973a' },
   { nom: 'Dhohr', ar: 'الظهر', heure: 'Début d\'après-midi', rakat: 4, couleur: '#d97706' },
-  { nom: 'Asr', ar: 'العصر', heure: 'Fin d\'après-midi', rakat: 4, couleur: '#ea580c' },
+  { nom: 'Asr', ar: 'العصر', heure: 'Fin d\'après-midi', rakat: 4, couleur: '#a87830' },
   { nom: 'Maghrib', ar: 'المغرب', heure: 'Après le coucher du soleil', rakat: 3, couleur: '#dc2626' },
   { nom: 'Icha', ar: 'العشاء', heure: 'La nuit', rakat: 4, couleur: '#1e3a5f' },
 ];
@@ -244,7 +244,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
           Les ablutions sont obligatoires avant la prière, le toucher du Coran et la circumambulation (tawaf). Elles sont invalidées par : les selles/urines, les gaz intestinaux, le sommeil profond, le saignement abondant.
         </p>
         {gender === 'f' && (
-          <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdf2f8', border: '1px solid #f9a8d4', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#9d174d' }}>
+          <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdfbf0', border: '1px solid #d4a853', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#8a6025' }}>
             <strong>Pour les sœurs :</strong> L'étape 8 (passage sur la tête) se fait par-dessus le voile si tu es en wudu et que tu le portes déjà. Si tu n'as pas de voile, passe les mains sur les cheveux normalement.
           </div>
         )}
@@ -283,7 +283,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
       {/* ── SECTION 5 : Comment prier ── */}
       <Section title="Comment faire sa prière — les étapes" icon={BookOpen}>
         {gender === 'f' && (
-          <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdf2f8', border: '1px solid #f9a8d4', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#9d174d' }}>
+          <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdfbf0', border: '1px solid #d4a853', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#8a6025' }}>
             <strong>Pour les sœurs :</strong> La position des bras, des mains et des pieds diffère légèrement (par exemple, les bras restent plus proches du corps). Un guide spécifique avec images est recommandé — recherche "comment prier pour les femmes" sur YouTube.
           </div>
         )}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ArrowLeft, Lock, CheckCircle, Star, TrendingUp, FileText, Shield } from 'lucide-react';
 import type { UserSession } from '@/lib/user-auth';
 
-const VIOLET = '#7c3aed';
+const VIOLET = '#c9973a';
 
 type Stats = { soumises: number; validees: number; rejetees: number; ajoutsRapides: number };
 type Level = { label: string; ar: string; color: string; next: number | null; progress: number };
@@ -61,7 +61,7 @@ export default function ProfilClient({
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f5f3ff 0%, #faf9ff 100%)', fontFamily: 'Poppins, sans-serif' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #fdfbf0 0%, #faf9ff 100%)', fontFamily: 'Poppins, sans-serif' }}>
 
       {/* Header */}
       <div style={{ background: 'linear-gradient(135deg, #3b0764 0%, #1e0545 100%)' }}>
@@ -83,7 +83,7 @@ export default function ProfilClient({
 
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', position: 'relative' }}>
             {/* Avatar */}
-            <div style={{ width: 64, height: 64, borderRadius: '18px', background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 900, color: 'white', flexShrink: 0, boxShadow: '0 4px 16px rgba(124,58,237,0.4)' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '18px', background: 'linear-gradient(135deg, #c9973a, #8a6025)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 900, color: 'white', flexShrink: 0, boxShadow: '0 4px 16px rgba(124,58,237,0.4)' }}>
               {session.name.charAt(0).toUpperCase()}
             </div>
 
@@ -91,11 +91,11 @@ export default function ProfilClient({
               <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'white' }}>{session.name}</div>
               <div style={{ fontSize: '0.78rem', color: 'rgba(196,181,253,0.7)', marginTop: '2px' }}>{session.email}</div>
               <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.6rem', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', backgroundColor: 'rgba(196,181,253,0.15)', color: '#c4b5fd', border: '1px solid rgba(196,181,253,0.2)' }}>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', backgroundColor: 'rgba(196,181,253,0.15)', color: '#d4a853', border: '1px solid rgba(196,181,253,0.2)' }}>
                   {session.role === 'admin' ? '⚙️ Administrateur' : '🛡️ Modérateur'}
                 </span>
                 {session.permissions.includes('all') ? (
-                  <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', backgroundColor: 'rgba(196,181,253,0.15)', color: '#c4b5fd' }}>Accès complet</span>
+                  <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', borderRadius: '6px', backgroundColor: 'rgba(196,181,253,0.15)', color: '#d4a853' }}>Accès complet</span>
                 ) : session.permissions.map(p => (
                   <span key={p} style={{ fontSize: '0.68rem', padding: '3px 8px', borderRadius: '6px', backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }}>{PERM_LABELS[p] || p}</span>
                 ))}
@@ -124,7 +124,7 @@ export default function ProfilClient({
             {level.next && (
               <div>
                 <div style={{ height: 6, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '99px', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${level.progress}%`, background: 'linear-gradient(90deg, #7c3aed, #fbbf24)', borderRadius: '99px', transition: 'width 0.6s ease' }} />
+                  <div style={{ height: '100%', width: `${level.progress}%`, background: 'linear-gradient(90deg, #c9973a, #fbbf24)', borderRadius: '99px', transition: 'width 0.6s ease' }} />
                 </div>
                 <div style={{ fontSize: '0.68rem', color: 'rgba(196,181,253,0.5)', marginTop: '0.35rem', display: 'flex', justifyContent: 'space-between' }}>
                   <span>{level.progress}% vers {level.next.toLocaleString('fr-FR')} ✨</span>
@@ -143,12 +143,12 @@ export default function ProfilClient({
         {/* Stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
           {[
-            { label: 'Soumises', value: stats.soumises, icon: FileText, color: '#7c3aed', bg: '#f5f3ff' },
-            { label: 'Validées', value: stats.validees, icon: CheckCircle, color: '#059669', bg: '#f0fdf4' },
+            { label: 'Soumises', value: stats.soumises, icon: FileText, color: '#c9973a', bg: '#fdfbf0' },
+            { label: 'Validées', value: stats.validees, icon: CheckCircle, color: '#c9973a', bg: '#f0fdf4' },
             { label: 'Rejetées', value: stats.rejetees, icon: Shield, color: '#dc2626', bg: '#fef2f2' },
             { label: 'Taux OK', value: `${taux}%`, icon: TrendingUp, color: '#d97706', bg: '#fffbeb' },
           ].map(({ label, value, icon: Icon, color, bg }) => (
-            <div key={label} style={{ backgroundColor: 'white', borderRadius: '14px', border: '1px solid #ede9fe', padding: '1rem', textAlign: 'center', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
+            <div key={label} style={{ backgroundColor: 'white', borderRadius: '14px', border: '1px solid #fdfbf0', padding: '1rem', textAlign: 'center', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
               <div style={{ width: 36, height: 36, borderRadius: '10px', backgroundColor: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 0.5rem' }}>
                 <Icon size={18} color={color} strokeWidth={1.8} />
               </div>
@@ -159,27 +159,27 @@ export default function ProfilClient({
         </div>
 
         {/* Gains par action */}
-        <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #ede9fe', padding: '1.25rem', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
+        <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #fdfbf0', padding: '1.25rem', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
           <div style={{ fontWeight: 700, fontSize: '0.8rem', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.875rem' }}>Comment gagner des hasanates ✨</div>
           {[
-            { action: 'Ajouter une fiche manuellement', gain: '+10 ✨', color: '#7c3aed' },
-            { action: 'Ajout Rapide avec Wassil', gain: '+15 ✨', color: '#5b21b6' },
-            { action: 'Fiche validée par l\'admin', gain: '+25 ✨', color: '#059669' },
-            { action: 'Valider une soumission', gain: '+5 ✨', color: '#0284c7' },
+            { action: 'Ajouter une fiche manuellement', gain: '+10 ✨', color: '#c9973a' },
+            { action: 'Ajout Rapide avec Wassil', gain: '+15 ✨', color: '#8a6025' },
+            { action: 'Fiche validée par l\'admin', gain: '+25 ✨', color: '#c9973a' },
+            { action: 'Valider une soumission', gain: '+5 ✨', color: '#a87830' },
           ].map(({ action, gain, color }) => (
-            <div key={action} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 0', borderBottom: '1px solid #f5f3ff' }}>
+            <div key={action} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 0', borderBottom: '1px solid #fdfbf0' }}>
               <span style={{ fontSize: '0.83rem', color: '#374151' }}>{action}</span>
               <span style={{ fontSize: '0.83rem', fontWeight: 700, color }}>{gain}</span>
             </div>
           ))}
-          <div style={{ marginTop: '0.875rem', padding: '0.75rem', backgroundColor: '#f5f3ff', borderRadius: '10px', fontSize: '0.75rem', color: '#7c3aed', fontStyle: 'italic', textAlign: 'center', lineHeight: 1.5 }}>
+          <div style={{ marginTop: '0.875rem', padding: '0.75rem', backgroundColor: '#fdfbf0', borderRadius: '10px', fontSize: '0.75rem', color: '#c9973a', fontStyle: 'italic', textAlign: 'center', lineHeight: 1.5 }}>
             &ldquo;Qui guide vers une bonne action reçoit une récompense équivalente.&rdquo; — Hadith
           </div>
         </div>
 
         {/* Onglets Profil / Sécurité */}
-        <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #ede9fe', overflow: 'hidden', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
-          <div style={{ display: 'flex', borderBottom: '1px solid #ede9fe' }}>
+        <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #fdfbf0', overflow: 'hidden', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
+          <div style={{ display: 'flex', borderBottom: '1px solid #fdfbf0' }}>
             {(['profil', 'securite'] as const).map(t => (
               <button key={t} onClick={() => setTab(t)}
                 style={{ flex: 1, padding: '0.875rem', background: 'none', border: 'none', fontWeight: tab === t ? 700 : 500, fontSize: '0.85rem', color: tab === t ? VIOLET : '#9ca3af', cursor: 'pointer', borderBottom: tab === t ? `2px solid ${VIOLET}` : '2px solid transparent', fontFamily: 'Poppins, sans-serif', transition: 'all 0.15s' }}>
@@ -195,9 +195,9 @@ export default function ProfilClient({
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: '#374151', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nom affiché</label>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <input value={displayName} onChange={e => setDN(e.target.value)}
-                      style={{ flex: 1, padding: '0.75rem 1rem', border: '2px solid #ede9fe', borderRadius: '10px', fontSize: '0.9rem', outline: 'none', fontFamily: 'Poppins, sans-serif' }} />
+                      style={{ flex: 1, padding: '0.75rem 1rem', border: '2px solid #fdfbf0', borderRadius: '10px', fontSize: '0.9rem', outline: 'none', fontFamily: 'Poppins, sans-serif' }} />
                     <button onClick={saveName} disabled={savingName}
-                      style={{ padding: '0.75rem 1.25rem', backgroundColor: nameOk ? '#059669' : VIOLET, color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'Poppins, sans-serif', transition: 'background 0.2s' }}>
+                      style={{ padding: '0.75rem 1.25rem', backgroundColor: nameOk ? '#c9973a' : VIOLET, color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'Poppins, sans-serif', transition: 'background 0.2s' }}>
                       {nameOk ? '✓ Sauvé' : savingName ? '...' : 'Sauvegarder'}
                     </button>
                   </div>
@@ -227,11 +227,11 @@ export default function ProfilClient({
                   <div key={label as string}>
                     <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: '#374151', marginBottom: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label as string}</label>
                     <input type="password" value={val as string} onChange={e => (setter as (v: string) => void)(e.target.value)} required
-                      style={{ width: '100%', padding: '0.75rem 1rem', border: '2px solid #ede9fe', borderRadius: '10px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box', fontFamily: 'Poppins, sans-serif' }} />
+                      style={{ width: '100%', padding: '0.75rem 1rem', border: '2px solid #fdfbf0', borderRadius: '10px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box', fontFamily: 'Poppins, sans-serif' }} />
                   </div>
                 ))}
                 {pwdStatus !== 'idle' && (
-                  <div style={{ padding: '0.75rem', borderRadius: '8px', fontSize: '0.85rem', backgroundColor: pwdStatus === 'ok' ? '#d1fae5' : '#fee2e2', color: pwdStatus === 'ok' ? '#065f46' : '#991b1b' }}>{pwdMsg}</div>
+                  <div style={{ padding: '0.75rem', borderRadius: '8px', fontSize: '0.85rem', backgroundColor: pwdStatus === 'ok' ? '#fdfbf0' : '#fee2e2', color: pwdStatus === 'ok' ? '#8a6025' : '#991b1b' }}>{pwdMsg}</div>
                 )}
                 <button type="submit" style={{ padding: '0.8rem', backgroundColor: VIOLET, color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
                   Mettre à jour
@@ -242,18 +242,18 @@ export default function ProfilClient({
         </div>
 
         {/* Niveaux */}
-        <div style={{ marginTop: '1.5rem', backgroundColor: 'white', borderRadius: '16px', border: '1px solid #ede9fe', padding: '1.25rem', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
+        <div style={{ marginTop: '1.5rem', backgroundColor: 'white', borderRadius: '16px', border: '1px solid #fdfbf0', padding: '1.25rem', boxShadow: '0 2px 8px rgba(109,40,217,0.06)' }}>
           <div style={{ fontWeight: 700, fontSize: '0.8rem', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.875rem' }}>Niveaux & récompenses</div>
           {[
             { label: 'Moubtadi\'', ar: 'مبتدئ', min: 0, max: 75, color: '#6b7280' },
-            { label: 'Mousāhim', ar: 'مساهم', min: 75, max: 200, color: '#0284c7' },
-            { label: 'Nāfi\'', ar: 'نافع', min: 200, max: 500, color: '#059669' },
-            { label: 'Bâtisseur', ar: 'بانٍ', min: 500, max: 1000, color: '#7c3aed' },
+            { label: 'Mousāhim', ar: 'مساهم', min: 75, max: 200, color: '#a87830' },
+            { label: 'Nāfi\'', ar: 'نافع', min: 200, max: 500, color: '#c9973a' },
+            { label: 'Bâtisseur', ar: 'بانٍ', min: 500, max: 1000, color: '#c9973a' },
             { label: 'Pilier', ar: 'ركيزة', min: 1000, max: null, color: '#f59e0b' },
           ].map(({ label, ar, min, max, color }) => {
             const isCurrentLevel = hasanates >= min && (max === null || hasanates < max);
             return (
-              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0.75rem', borderRadius: '8px', marginBottom: '0.35rem', backgroundColor: isCurrentLevel ? '#f5f3ff' : 'transparent', border: isCurrentLevel ? '1px solid #ddd6fe' : '1px solid transparent' }}>
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0.75rem', borderRadius: '8px', marginBottom: '0.35rem', backgroundColor: isCurrentLevel ? '#fdfbf0' : 'transparent', border: isCurrentLevel ? '1px solid #f0dea0' : '1px solid transparent' }}>
                 <Star size={14} color={color} strokeWidth={isCurrentLevel ? 2.5 : 1.5} fill={isCurrentLevel ? color : 'none'} />
                 <div style={{ flex: 1 }}>
                   <span style={{ fontWeight: isCurrentLevel ? 700 : 500, fontSize: '0.85rem', color: isCurrentLevel ? color : '#6b7280' }}>{label}</span>

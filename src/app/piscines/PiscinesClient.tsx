@@ -16,13 +16,13 @@ const TYPE_FILTERS: { key: PiscineType | 'all'; label: string }[] = [
   { key: 'associative', label: '🤝 Associatives' },
 ];
 
-const ACCENT = '#0ea5e9';
+const ACCENT = '#c9973a';
 
 const JOUR_COLORS: Record<string, string> = {
-  Lundi: '#6366f1', Mardi: '#8b5cf6', Mercredi: '#0ea5e9',
-  Jeudi: '#10b981', Vendredi: '#f59e0b', Samedi: '#ef4444', Dimanche: '#059669',
-  'Tous les jours': '#5e17eb',
-  'Lundi & Jeudi': '#8b5cf6',
+  Lundi: '#6366f1', Mardi: '#c9973a', Mercredi: '#c9973a',
+  Jeudi: '#d4a853', Vendredi: '#f59e0b', Samedi: '#ef4444', Dimanche: '#c9973a',
+  'Tous les jours': '#c9973a',
+  'Lundi & Jeudi': '#c9973a',
 };
 
 function getJourColor(jour: string): string {
@@ -50,7 +50,7 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
 
   return (
     <div>
-      <PageHeader title="Piscines Burkini" description="Créneaux réservés burkini et maillots couvrants en Île-de-France." color="#0284c7" emoji="🏊" />
+      <PageHeader title="Piscines Burkini" description="Créneaux réservés burkini et maillots couvrants en Île-de-France." color="#a87830" emoji="🏊" />
       <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
         {/* Alertes importantes */}
@@ -59,7 +59,7 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
             <AlertTriangle size={16} style={{ flexShrink: 0, marginTop: '1px' }} />
             <span><strong>Toujours appeler avant de vous déplacer.</strong> Les créneaux peuvent être modifiés, suspendus ou annulés sans préavis.</span>
           </div>
-          <div style={{ padding: '0.875rem 1rem', backgroundColor: '#f0fff8', borderRadius: '0.5rem', fontSize: '0.85rem', color: '#065f46', borderLeft: '3px solid #10b981', display: 'flex', gap: '0.5rem' }}>
+          <div style={{ padding: '0.875rem 1rem', backgroundColor: '#f0fff8', borderRadius: '0.5rem', fontSize: '0.85rem', color: '#8a6025', borderLeft: '3px solid #d4a853', display: 'flex', gap: '0.5rem' }}>
             <CheckCircle size={16} style={{ flexShrink: 0, marginTop: '1px' }} />
             <span>Les fiches <strong>✅ Confirmées</strong> ont été vérifiées récemment.</span>
           </div>
@@ -110,18 +110,18 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
               {/* Header coloré */}
               <div style={{
                 background: p.confirmed
-                  ? 'linear-gradient(135deg, #f0fdf410, #dcfce708)'
+                  ? 'linear-gradient(135deg, #f0fdf410, #fdfbf008)'
                   : 'linear-gradient(135deg, #fffbeb10, #fef3c708)',
-                borderBottom: `3px solid ${p.confirmed ? '#10b981' : '#f59e0b'}`,
+                borderBottom: `3px solid ${p.confirmed ? '#d4a853' : '#f59e0b'}`,
                 padding: '1rem 1.1rem 0.875rem',
               }}>
                 {/* Badges */}
                 <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
                   {p.confirmed
-                    ? <span style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px' }}><CheckCircle size={9} />Confirmé</span>
+                    ? <span style={{ backgroundColor: '#fdfbf0', color: '#8a6025', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px' }}><CheckCircle size={9} />Confirmé</span>
                     : <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px' }}><AlertTriangle size={9} />À vérifier</span>
                   }
-                  <span style={{ backgroundColor: '#f0f9ff', color: '#0369a1', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 600 }}>
+                  <span style={{ backgroundColor: '#f0f9ff', color: '#8a6025', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 600 }}>
                     {p.type === 'municipale' ? '🏛️ Municipale' : p.type === 'privee' ? '🏊 Privée' : '🤝 Associative'}
                   </span>
                 </div>
@@ -130,7 +130,7 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
                 <h3 style={{ fontWeight: 700, fontSize: '0.95rem', margin: '0 0 0.25rem', lineHeight: 1.3, color: '#1c1917' }}>{p.name}</h3>
                 <p style={{ fontSize: '0.75rem', color: '#78716c', margin: 0, display: 'flex', alignItems: 'center', gap: '3px' }}>
                   <MapPin size={11} /> {p.ville} ({p.department})
-                  {p.tarif && <span style={{ marginLeft: '0.5rem', color: '#059669', fontWeight: 600 }}>· {p.tarif}</span>}
+                  {p.tarif && <span style={{ marginLeft: '0.5rem', color: '#c9973a', fontWeight: 600 }}>· {p.tarif}</span>}
                 </p>
               </div>
 

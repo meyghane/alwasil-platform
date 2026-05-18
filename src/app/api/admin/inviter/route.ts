@@ -45,18 +45,18 @@ export async function POST(req: NextRequest) {
           <div style="color:white;font-size:1.5rem;font-weight:900;letter-spacing:-0.02em">Al-Wasil</div>
           <div style="color:rgba(196,181,253,0.7);font-size:0.85rem;margin-top:4px">الواصل</div>
         </div>
-        <div style="padding:28px;border:1px solid #ede9fe;border-top:none;border-radius:0 0 14px 14px;background:white">
+        <div style="padding:28px;border:1px solid #fdfbf0;border-top:none;border-radius:0 0 14px 14px;background:white">
           <h2 style="color:#0f0225;font-size:1.1rem;margin:0 0 12px">Bienvenue dans l'équipe !</h2>
           <p style="color:#374151;font-size:0.9rem;line-height:1.7;margin:0 0 20px">
             ${name ? `<strong>${name}</strong>, tu` : 'Tu'} as été invité(e) à rejoindre l'équipe de modération d'<strong>Al-Wasil</strong>.<br>
-            Rôle : <strong style="color:#7c3aed">${role === 'admin' ? 'Administrateur' : 'Modérateur'}</strong>
+            Rôle : <strong style="color:#c9973a">${role === 'admin' ? 'Administrateur' : 'Modérateur'}</strong>
           </p>
           <div style="text-align:center;margin:24px 0">
-            <a href="${inviteUrl}" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:700;font-size:0.95rem">
+            <a href="${inviteUrl}" style="display:inline-block;background:linear-gradient(135deg,#c9973a,#8a6025);color:white;padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:700;font-size:0.95rem">
               Rejoindre l'équipe →
             </a>
           </div>
-          <div style="background:#f5f3ff;border-radius:10px;padding:14px;margin-top:8px">
+          <div style="background:#fdfbf0;border-radius:10px;padding:14px;margin-top:8px">
             <p style="margin:0;font-size:0.78rem;color:#6b7280;line-height:1.6">
               Tu vas choisir ton mot de passe à la première connexion.<br>
               Ce lien expire dans <strong>7 jours</strong>.

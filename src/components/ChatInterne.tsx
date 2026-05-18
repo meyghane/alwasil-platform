@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Pusher from 'pusher-js';
 import { Send, X, MessageCircle, Users, Lock } from 'lucide-react';
 
-const VIOLET = '#7c3aed';
+const VIOLET = '#c9973a';
 const DARK   = '#0f0225';
 
 type Message = {
@@ -142,7 +142,7 @@ export default function ChatInterne({
         style={{
           position: 'fixed', bottom: '5rem', right: '1.5rem', zIndex: 998,
           width: 52, height: 52, borderRadius: '50%',
-          background: 'linear-gradient(135deg, #7c3aed, #5b21b6)',
+          background: 'linear-gradient(135deg, #c9973a, #8a6025)',
           border: 'none', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           boxShadow: '0 4px 20px rgba(124,58,237,0.4)',
@@ -233,7 +233,7 @@ export default function ChatInterne({
             {currentRole === 'admin' && activeChannel === 'general' && onlineUsers.length > 0 && (
               <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
                 {onlineUsers.map(name => (
-                  <span key={name} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.62rem', backgroundColor: '#f0fdf4', color: '#059669', padding: '1px 7px', borderRadius: '99px', border: '1px solid #bbf7d0' }}>
+                  <span key={name} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.62rem', backgroundColor: '#f0fdf4', color: '#c9973a', padding: '1px 7px', borderRadius: '99px', border: '1px solid #f0dea0' }}>
                     <span style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: '#4ade80', display: 'inline-block' }} />
                     {name}
                   </span>
@@ -258,7 +258,7 @@ export default function ChatInterne({
                 <div key={msg.id} style={{ display: 'flex', flexDirection: isMe ? 'row-reverse' : 'row', gap: '0.5rem', alignItems: 'flex-end' }}>
                   {/* Avatar */}
                   {!isMe && (
-                    <div style={{ width: 28, height: 28, borderRadius: '8px', flexShrink: 0, background: msg.role === 'admin' ? 'linear-gradient(135deg, #7c3aed, #5b21b6)' : 'linear-gradient(135deg, #0284c7, #0369a1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.7rem', fontWeight: 700 }}>
+                    <div style={{ width: 28, height: 28, borderRadius: '8px', flexShrink: 0, background: msg.role === 'admin' ? 'linear-gradient(135deg, #c9973a, #8a6025)' : 'linear-gradient(135deg, #a87830, #8a6025)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.7rem', fontWeight: 700 }}>
                       {msg.author.charAt(0).toUpperCase()}
                     </div>
                   )}
@@ -295,10 +295,10 @@ export default function ChatInterne({
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Écrire un message..."
-              style={{ flex: 1, padding: '0.6rem 0.875rem', border: '1.5px solid #ede9fe', borderRadius: '12px', fontSize: '0.85rem', outline: 'none', fontFamily: 'Poppins, sans-serif', backgroundColor: '#faf9ff' }}
+              style={{ flex: 1, padding: '0.6rem 0.875rem', border: '1.5px solid #fdfbf0', borderRadius: '12px', fontSize: '0.85rem', outline: 'none', fontFamily: 'Poppins, sans-serif', backgroundColor: '#faf9ff' }}
             />
             <button type="submit" disabled={!input.trim() || sending}
-              style={{ width: 38, height: 38, borderRadius: '10px', background: input.trim() ? 'linear-gradient(135deg, #7c3aed, #5b21b6)' : '#f3f4f6', border: 'none', cursor: input.trim() ? 'pointer' : 'not-allowed', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              style={{ width: 38, height: 38, borderRadius: '10px', background: input.trim() ? 'linear-gradient(135deg, #c9973a, #8a6025)' : '#f3f4f6', border: 'none', cursor: input.trim() ? 'pointer' : 'not-allowed', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <Send size={16} color={input.trim() ? 'white' : '#9ca3af'} strokeWidth={2} />
             </button>
           </form>

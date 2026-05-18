@@ -67,7 +67,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   'profil-emploi': {
-    title: 'Ajouter mon profil au vivier', emoji: '⭐', color: '#2563eb',
+    title: 'Ajouter mon profil au vivier', emoji: '⭐', color: '#c9973a',
     description: 'Rejoignez le vivier de talents de la communauté. Votre profil sera visible des recruteurs.',
     fields: [
       { name: 'nom', label: 'Prénom + initiale du nom (ex: Aicha B.)', type: 'text', required: true },
@@ -82,7 +82,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   'offre-emploi': {
-    title: 'Publier une offre d\'emploi', emoji: '💼', color: '#2563eb',
+    title: 'Publier une offre d\'emploi', emoji: '💼', color: '#c9973a',
     description: 'Publiez gratuitement une offre voile accepté, prière OK ou Muslim-friendly.',
     fields: [
       { name: 'nom', label: 'Votre nom / RH', type: 'text', required: true },
@@ -111,7 +111,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   librairie: {
-    title: 'Ajouter une librairie islamique', emoji: '📖', color: '#7c3aed',
+    title: 'Ajouter une librairie islamique', emoji: '📖', color: '#c9973a',
     description: 'Vous connaissez une librairie islamique non référencée ? Signalez-la en quelques clics.',
     fields: [
       { name: 'email', label: 'Votre email', type: 'email', required: true },
@@ -125,7 +125,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   'revendiquer-librairie': {
-    title: 'Je gère cette librairie', emoji: '🏪', color: '#7c3aed',
+    title: 'Je gère cette librairie', emoji: '🏪', color: '#c9973a',
     description: 'Revendiquez votre fiche pour la mettre à jour, ajouter vos horaires et votre photo.',
     fields: [
       { name: 'nom', label: 'Votre nom', type: 'text', required: true },
@@ -136,7 +136,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   piscine: {
-    title: 'Ajouter un créneau burkini', emoji: '🏊', color: '#0284c7',
+    title: 'Ajouter un créneau burkini', emoji: '🏊', color: '#a87830',
     description: 'Vous connaissez une piscine ou un créneau burkini non référencé ? Aidez la communauté.',
     fields: [
       { name: 'email', label: 'Votre email', type: 'email', required: true },
@@ -160,7 +160,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   'question-juridique': {
-    title: 'Proposer une question juridique', emoji: '⚖️', color: '#7c3aed',
+    title: 'Proposer une question juridique', emoji: '⚖️', color: '#c9973a',
     description: 'Une question sur vos droits en France qui n\'est pas encore dans notre FAQ ? Proposez-la.',
     fields: [
       { name: 'email', label: 'Votre email (optionnel)', type: 'email' },
@@ -169,7 +169,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   'hajj-devis': {
-    title: 'Demander un devis Hajj / Omra', emoji: '🕋', color: '#059669',
+    title: 'Demander un devis Hajj / Omra', emoji: '🕋', color: '#c9973a',
     description: 'Nous transmettons votre demande directement à l\'agence. Réponse sous 24–48h.',
     fields: [
       { name: 'nom', label: 'Nom complet', type: 'text', required: true },
@@ -195,7 +195,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   mosquee: {
-    title: 'Référencer / corriger une mosquée', emoji: '🕌', color: '#059669',
+    title: 'Référencer / corriger une mosquée', emoji: '🕌', color: '#c9973a',
     description: 'Une mosquée dynamique non référencée, ou des infos incorrectes ? Aidez-nous à compléter.',
     fields: [
       { name: 'email', label: 'Votre email', type: 'email', required: true },
@@ -209,7 +209,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   suggestion: {
-    title: 'Suggérer une amélioration', emoji: '💡', color: '#5e17eb',
+    title: 'Suggérer une amélioration', emoji: '💡', color: '#c9973a',
     description: 'Une idée pour améliorer Al-Wasil ? Une fonctionnalité manquante ? On est à l\'écoute.',
     fields: [
       { name: 'nom', label: 'Votre prénom (optionnel)', type: 'text' },
@@ -219,7 +219,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   annonceur: {
-    title: 'Partenariat & publicité', emoji: '📣', color: '#5e17eb',
+    title: 'Partenariat & publicité', emoji: '📣', color: '#c9973a',
     description: 'Intéressé par un emplacement publicitaire ou un partenariat ? Consultez notre page annonceurs.',
     fields: [
       { name: 'nom', label: 'Votre nom / Organisation', type: 'text', required: true },
@@ -229,7 +229,7 @@ const FORM_CONFIG: Record<FormType, {
     ],
   },
   general: {
-    title: 'Nous contacter', emoji: '✉️', color: '#5e17eb',
+    title: 'Nous contacter', emoji: '✉️', color: '#c9973a',
     description: 'Une question, une suggestion ou une demande ? Écrivez-nous.',
     fields: [
       { name: 'nom', label: 'Nom', type: 'text', required: true },
@@ -299,7 +299,7 @@ function ContactForm() {
 
       {sent ? (
         <div style={{ padding: '2.5rem', borderRadius: '1rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8', textAlign: 'center' }}>
-          <CheckCircle size={40} color="#10b981" style={{ marginBottom: '1rem' }} />
+          <CheckCircle size={40} color="#d4a853" style={{ marginBottom: '1rem' }} />
           <h2 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>Message envoyé !</h2>
           <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
             Nous avons bien reçu votre demande. Barak Allahou fikoum !<br />

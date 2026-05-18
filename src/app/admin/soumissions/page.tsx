@@ -8,7 +8,7 @@ export default async function SoumissionsPage() {
   if (!(await isAdminLoggedIn())) redirect('/admin/login');
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f5f3ff 0%, #faf9ff 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #fdfbf0 0%, #faf9ff 100%)' }}>
 
       {/* Header */}
       <div style={{ background: 'linear-gradient(135deg, #3b0764 0%, #1e0545 100%)', borderBottom: '1px solid rgba(196,181,253,0.15)' }}>
@@ -19,7 +19,7 @@ export default async function SoumissionsPage() {
             </Link>
             <div style={{ width: '1px', height: '16px', backgroundColor: 'rgba(255,255,255,0.15)' }} />
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Inbox size={16} color="#c4b5fd" strokeWidth={1.8} />
+              <Inbox size={16} color="#d4a853" strokeWidth={1.8} />
               <span style={{ fontWeight: 700, color: 'white', fontSize: '0.9rem' }}>Soumissions à modérer</span>
             </div>
           </div>

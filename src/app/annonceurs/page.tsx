@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { TrendingUp, Eye, MousePointer, Users, BarChart2, Mail, CheckCircle, Image, Tag, Zap } from 'lucide-react';
 
-const ACCENT = '#5e17eb';
-const GREEN = '#00bf63';
+const ACCENT = '#c9973a';
+const GREEN = '#c9973a';
 
 type Segment = 'solo' | 'boost' | 'pro' | 'agence';
 
@@ -323,7 +323,7 @@ export default function AnnonceursPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '3rem' }}>
         {[
           { icon: <Users size={22} color={ACCENT} />, value: '12 000+', label: 'Visiteurs/mois', sub: 'en croissance' },
-          { icon: <Eye size={22} color='#8b5cf6' />, value: '45 000+', label: 'Pages vues/mois', sub: 'audience engagée' },
+          { icon: <Eye size={22} color='#c9973a' />, value: '45 000+', label: 'Pages vues/mois', sub: 'audience engagée' },
           { icon: <MousePointer size={22} color='#f59e0b' />, value: '4,2%', label: 'Taux de clic moyen', sub: '(2× la moyenne web)' },
           { icon: <BarChart2 size={22} color='#ef4444' />, value: '8 sections', label: 'Thématiques ciblées', sub: 'Hajj, Emploi, Santé…' },
         ].map(s => (
@@ -342,9 +342,9 @@ export default function AnnonceursPage() {
         <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Une audience musulmane active, en France, cherchant des ressources concrètes pour leur quotidien.</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.875rem' }}>
           {[
-            { label: 'Femmes', value: '62%', color: '#ec4899' },
+            { label: 'Femmes', value: '62%', color: '#c9973a' },
             { label: 'Paris & IdF', value: '68%', color: ACCENT },
-            { label: '18–35 ans', value: '71%', color: '#8b5cf6' },
+            { label: '18–35 ans', value: '71%', color: '#c9973a' },
             { label: 'Visite hebdo', value: '54%', color: '#f59e0b' },
           ].map(s => (
             <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.875rem 1rem', borderRadius: '0.75rem', border: '1px solid var(--border-color)', backgroundColor: 'white' }}>
@@ -599,7 +599,7 @@ export default function AnnonceursPage() {
 
         {sent ? (
           <div style={{ padding: '2rem', borderRadius: '1rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8', textAlign: 'center' }}>
-            <CheckCircle size={36} color="#10b981" style={{ marginBottom: '0.75rem' }} />
+            <CheckCircle size={36} color="#d4a853" style={{ marginBottom: '0.75rem' }} />
             <h3 style={{ fontWeight: 700, marginBottom: '0.4rem' }}>Message reçu 🎉</h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Nous revenons vers vous sous 24h. Barak Allahou fikoum !</p>
           </div>

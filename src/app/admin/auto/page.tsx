@@ -128,7 +128,7 @@ export default function AutoPage() {
                       </div>
                     </div>
                   </div>
-                  {status === 'ok' && <CheckCircle size={16} color="#059669" strokeWidth={2} />}
+                  {status === 'ok' && <CheckCircle size={16} color="#c9973a" strokeWidth={2} />}
                   {status === 'error' && <AlertCircle size={16} color="#dc2626" strokeWidth={2} />}
                   {isLoading && <RefreshCw size={16} color={GOLD} strokeWidth={2} style={{ animation: 'spin 1s linear infinite' }} />}
                 </div>
@@ -138,7 +138,7 @@ export default function AutoPage() {
                     <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: '#fdfbf0', border: '1px solid #f0dea0', color: '#7a6848' }}>
                       {r.found} trouvés
                     </span>
-                    <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: r.written > 0 ? '#f0fdf4' : '#f9fafb', border: `1px solid ${r.written > 0 ? '#bbf7d0' : '#e5e7eb'}`, color: r.written > 0 ? '#059669' : '#6b7280' }}>
+                    <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: r.written > 0 ? '#f0fdf4' : '#f9fafb', border: `1px solid ${r.written > 0 ? '#f0dea0' : '#e5e7eb'}`, color: r.written > 0 ? '#c9973a' : '#6b7280' }}>
                       {r.written} écrits
                     </span>
                     {r.lastRun && <span style={{ fontSize: '0.68rem', color: '#9ca3af', marginLeft: 'auto' }}>{r.lastRun}</span>}

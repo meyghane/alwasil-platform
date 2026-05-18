@@ -133,9 +133,9 @@ export default function SolidarityPage() {
             style={{
               padding: '0.75rem 1.25rem',
               border: 'none',
-              borderBottom: tab === t.key ? '2px solid #059669' : '2px solid transparent',
+              borderBottom: tab === t.key ? '2px solid #c9973a' : '2px solid transparent',
               backgroundColor: 'transparent',
-              color: tab === t.key ? '#059669' : 'var(--text-secondary)',
+              color: tab === t.key ? '#c9973a' : 'var(--text-secondary)',
               fontWeight: tab === t.key ? 700 : 400,
               fontSize: '0.88rem',
               cursor: 'pointer',
@@ -292,14 +292,14 @@ export default function SolidarityPage() {
           <div style={{ marginBottom: '1.5rem' }}>
             <DeptFilter value={deptFilter} onChange={setDeptFilter} />
           </div>
-          <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #10b981' }}>
+          <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #d4a853' }}>
             💚 Visiter un malade ou une personne âgée est une sunnah du Prophète ﷺ. Ces initiatives vous permettent de le faire de manière organisée, en EHPAD, hôpital, ou à domicile.
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
             {filteredVisites.map(v => (
               <div key={v.id} className="card" style={{ padding: '1.25rem' }}>
                 <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
-                  <span style={{ backgroundColor: '#f0fff8', color: '#10b981', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700 }}>
+                  <span style={{ backgroundColor: '#f0fff8', color: '#d4a853', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700 }}>
                     {TYPE_LIEU_LABELS[v.typeLieu]}
                   </span>
                   <span style={{ backgroundColor: '#f5f5f4', color: 'var(--text-secondary)', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem' }}>
@@ -324,13 +324,13 @@ export default function SolidarityPage() {
                 </div>
                 {v.contactUrl && (
                   <a href={v.contactUrl} target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '1rem', backgroundColor: '#10b981', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: 'fit-content' }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '1rem', backgroundColor: '#d4a853', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: 'fit-content' }}>
                     Je m&apos;inscris <ExternalLink size={12} />
                   </a>
                 )}
                 {v.phone && (
                   <a href={`tel:${v.phone}`}
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '0.5rem', color: '#10b981', fontSize: '0.82rem', textDecoration: 'none' }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '0.5rem', color: '#d4a853', fontSize: '0.82rem', textDecoration: 'none' }}>
                     <Phone size={13} /> {v.phone}
                   </a>
                 )}

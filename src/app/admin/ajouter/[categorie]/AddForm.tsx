@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { CheckCircle, Send, RotateCcw, LayoutDashboard, Check, X } from 'lucide-react';
 import type { CategoryForm } from '@/lib/admin-forms';
 
-const V = '#7c3aed';
-const V_LIGHT = '#f5f3ff';
-const V_BORDER = '#ede9fe';
+const V = '#c9973a';
+const V_LIGHT = '#fdfbf0';
+const V_BORDER = '#fdfbf0';
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
@@ -115,11 +115,11 @@ export default function AddForm({ categorie, form, backUrl = '/admin' }: { categ
         <div key={field.key}>
           <label style={{
             display: 'block', fontSize: '0.75rem', fontWeight: 700,
-            color: '#4c1d95', marginBottom: '0.4rem',
+            color: '#8a6025', marginBottom: '0.4rem',
             textTransform: 'uppercase', letterSpacing: '0.06em',
           }}>
             {field.label}
-            {field.required && <span style={{ color: '#7c3aed', marginLeft: '4px' }}>*</span>}
+            {field.required && <span style={{ color: '#c9973a', marginLeft: '4px' }}>*</span>}
           </label>
 
           {/* Textarea */}
@@ -241,7 +241,7 @@ export default function AddForm({ categorie, form, backUrl = '/admin' }: { categ
         disabled={status === 'loading'}
         style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-          padding: '0.9rem', backgroundColor: status === 'loading' ? '#a78bfa' : V,
+          padding: '0.9rem', backgroundColor: status === 'loading' ? '#d4a853' : V,
           color: 'white', border: 'none', borderRadius: '12px',
           fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '0.95rem',
           cursor: status === 'loading' ? 'not-allowed' : 'pointer',

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Inbox, Plus, LogOut, Shield, User, Bell, Sparkles } from 'lucide-react';
 import ChatInterne from '@/components/ChatInterne';
 
-const VIOLET = '#7c3aed';
+const VIOLET = '#c9973a';
 const DARK   = '#0f0225';
 
 const ALL_CATS = [
@@ -36,9 +36,9 @@ async function getStats(name: string) {
 
 function getLevel(h: number) {
   if (h >= 1000) return { label: 'Pilier', ar: 'ركيزة', color: '#f59e0b', next: null, min: 1000, progress: 100 };
-  if (h >= 500)  return { label: 'Bâtisseur', ar: 'بانٍ', color: '#7c3aed', next: 1000, min: 500, progress: Math.round(((h-500)/500)*100) };
-  if (h >= 200)  return { label: 'Nāfi\'', ar: 'نافع', color: '#059669', next: 500, min: 200, progress: Math.round(((h-200)/300)*100) };
-  if (h >= 75)   return { label: 'Mousāhim', ar: 'مساهم', color: '#0284c7', next: 200, min: 75, progress: Math.round(((h-75)/125)*100) };
+  if (h >= 500)  return { label: 'Bâtisseur', ar: 'بانٍ', color: '#c9973a', next: 1000, min: 500, progress: Math.round(((h-500)/500)*100) };
+  if (h >= 200)  return { label: 'Nāfi\'', ar: 'نافع', color: '#c9973a', next: 500, min: 200, progress: Math.round(((h-200)/300)*100) };
+  if (h >= 75)   return { label: 'Mousāhim', ar: 'مساهم', color: '#a87830', next: 200, min: 75, progress: Math.round(((h-75)/125)*100) };
   return { label: 'Moubtadi\'', ar: 'مبتدئ', color: '#9ca3af', next: 75, min: 0, progress: Math.round((h/75)*100) };
 }
 
@@ -53,14 +53,14 @@ export default async function ModoDashboard() {
   const level       = getLevel(hasanates);
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f5f3ff 0%, #faf9ff 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #fdfbf0 0%, #faf9ff 100%)' }}>
 
       {/* Header */}
       <div style={{ background: 'linear-gradient(135deg, #3b0764 0%, #1e0545 100%)', borderBottom: '1px solid rgba(196,181,253,0.15)' }}>
         <div className="container" style={{ padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
             <div style={{ width: 38, height: 38, borderRadius: '10px', background: 'rgba(196,181,253,0.15)', border: '1px solid rgba(196,181,253,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Shield size={18} color="#c4b5fd" strokeWidth={1.8} />
+              <Shield size={18} color="#d4a853" strokeWidth={1.8} />
             </div>
             <div>
               <div style={{ fontWeight: 800, color: '#fff', fontSize: '0.95rem', fontFamily: 'Poppins, sans-serif' }}>Espace modération</div>
@@ -106,10 +106,10 @@ export default async function ModoDashboard() {
 
           {/* Mini card hasanates */}
           <Link href="/modo/profil" style={{ textDecoration: 'none', flexShrink: 0 }}>
-            <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #ede9fe', padding: '1rem 1.25rem', minWidth: 220, boxShadow: '0 4px 16px rgba(124,58,237,0.08)', cursor: 'pointer' }}>
+            <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #fdfbf0', padding: '1rem 1.25rem', minWidth: 220, boxShadow: '0 4px 16px rgba(124,58,237,0.08)', cursor: 'pointer' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 {/* Avatar */}
-                <div style={{ width: 36, height: 36, borderRadius: '10px', background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, color: 'white', fontSize: '1rem', flexShrink: 0 }}>
+                <div style={{ width: 36, height: 36, borderRadius: '10px', background: 'linear-gradient(135deg, #c9973a, #8a6025)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, color: 'white', fontSize: '1rem', flexShrink: 0 }}>
                   {session.name.charAt(0).toUpperCase()}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -141,9 +141,9 @@ export default async function ModoDashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2.5rem' }}>
 
           <Link href="/modo/ajout-rapide" style={{ textDecoration: 'none' }}>
-            <div style={{ background: 'linear-gradient(135deg, #4c1d95, #3b0764)', borderRadius: '16px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', boxShadow: '0 8px 24px rgba(76,29,149,0.4)', cursor: 'pointer', height: '100%', boxSizing: 'border-box' }}>
+            <div style={{ background: 'linear-gradient(135deg, #8a6025, #3b0764)', borderRadius: '16px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', boxShadow: '0 8px 24px rgba(76,29,149,0.4)', cursor: 'pointer', height: '100%', boxSizing: 'border-box' }}>
               <div style={{ width: 44, height: 44, borderRadius: '12px', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Sparkles size={22} color="#c4b5fd" strokeWidth={1.6} />
+                <Sparkles size={22} color="#d4a853" strokeWidth={1.6} />
               </div>
               <div>
                 <div style={{ fontWeight: 800, fontSize: '1rem', color: 'white', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide</div>
@@ -151,12 +151,12 @@ export default async function ModoDashboard() {
                   Décris en texte libre — Wassil cherche tout sur Google et crée la fiche
                 </div>
               </div>
-              <div style={{ fontSize: '0.72rem', color: '#c4b5fd', fontWeight: 700 }}>✨ +15 hasanates par ajout</div>
+              <div style={{ fontSize: '0.72rem', color: '#d4a853', fontWeight: 700 }}>✨ +15 hasanates par ajout</div>
             </div>
           </Link>
 
           <Link href="/modo/soumissions" style={{ textDecoration: 'none' }}>
-            <div style={{ background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', borderRadius: '16px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', boxShadow: '0 8px 24px rgba(124,58,237,0.3)', cursor: 'pointer', height: '100%', boxSizing: 'border-box' }}>
+            <div style={{ background: 'linear-gradient(135deg, #c9973a, #8a6025)', borderRadius: '16px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', boxShadow: '0 8px 24px rgba(124,58,237,0.3)', cursor: 'pointer', height: '100%', boxSizing: 'border-box' }}>
               <div style={{ width: 44, height: 44, borderRadius: '12px', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Inbox size={22} color="white" strokeWidth={1.6} />
               </div>
@@ -173,12 +173,12 @@ export default async function ModoDashboard() {
 
         {/* Grille catégories */}
         <h2 style={{ fontWeight: 700, fontSize: '0.82rem', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1rem', fontFamily: 'Poppins, sans-serif' }}>
-          Ajouter une fiche manuellement <span style={{ color: '#c4b5fd', fontWeight: 600 }}>+10 ✨</span>
+          Ajouter une fiche manuellement <span style={{ color: '#d4a853', fontWeight: 600 }}>+10 ✨</span>
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.875rem' }}>
           {allowedCats.map(cat => (
             <Link key={cat.key} href={`/modo/ajouter/${cat.key}`} style={{ textDecoration: 'none' }}>
-              <div style={{ backgroundColor: 'white', borderRadius: '14px', border: '1px solid #ede9fe', padding: '1.1rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 2px 8px rgba(109,40,217,0.06)', cursor: 'pointer' }}>
+              <div style={{ backgroundColor: 'white', borderRadius: '14px', border: '1px solid #fdfbf0', padding: '1.1rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 2px 8px rgba(109,40,217,0.06)', cursor: 'pointer' }}>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#1c1917', fontFamily: 'Poppins, sans-serif' }}>{cat.label}</div>
                   <div style={{ fontSize: '0.72rem', color: VIOLET, fontWeight: 600, marginTop: '2px', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>

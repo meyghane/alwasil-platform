@@ -339,8 +339,8 @@ const LIEN_TYPE_LABELS: Record<string, string> = {
 
 const LIEN_TYPE_COLORS: Record<string, string> = {
   signalement: '#ef4444',
-  juridique: '#8b5cf6',
-  association: '#5e17eb',
+  juridique: '#c9973a',
+  association: '#c9973a',
   officiel: '#3b82f6',
 };
 
@@ -371,7 +371,7 @@ export default function JusticePage() {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <ShieldCheck size={28} color="#8b5cf6" />
+          <ShieldCheck size={28} color="#c9973a" />
           <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Justice & Droits — Adl (عَدْل)</h1>
         </div>
         <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
@@ -404,9 +404,9 @@ export default function JusticePage() {
           <button key={t.key} onClick={() => { setMainTab(t.key); setSearch(''); }}
             style={{
               padding: '0.75rem 1.25rem', border: 'none',
-              borderBottom: mainTab === t.key ? '2px solid #8b5cf6' : '2px solid transparent',
+              borderBottom: mainTab === t.key ? '2px solid #c9973a' : '2px solid transparent',
               backgroundColor: 'transparent',
-              color: mainTab === t.key ? '#8b5cf6' : 'var(--text-secondary)',
+              color: mainTab === t.key ? '#c9973a' : 'var(--text-secondary)',
               fontWeight: mainTab === t.key ? 700 : 400,
               fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s',
             }}>
@@ -433,7 +433,7 @@ export default function JusticePage() {
               const isActive = faqCat === cat.key;
               return (
                 <button key={cat.key} onClick={() => setFaqCat(cat.key)}
-                  style={{ padding: '0.4rem 0.9rem', borderRadius: '999px', border: isActive ? '2px solid #8b5cf6' : '1.5px solid var(--border-color)', backgroundColor: isActive ? '#8b5cf6' : 'white', color: isActive ? 'white' : 'var(--text-secondary)', fontSize: '0.82rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s' }}>
+                  style={{ padding: '0.4rem 0.9rem', borderRadius: '999px', border: isActive ? '2px solid #c9973a' : '1.5px solid var(--border-color)', backgroundColor: isActive ? '#c9973a' : 'white', color: isActive ? 'white' : 'var(--text-secondary)', fontSize: '0.82rem', fontWeight: isActive ? 700 : 400, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.15s' }}>
                   {cat.label}
                 </button>
               );
@@ -449,12 +449,12 @@ export default function JusticePage() {
                     onClick={() => setOpenFaq(isOpen ? null : f.id)}
                     style={{ width: '100%', padding: '1.25rem', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
                     <div style={{ flex: 1 }}>
-                      <span style={{ display: 'inline-block', backgroundColor: '#f3f0ff', color: '#8b5cf6', padding: '0.1rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700, marginBottom: '0.4rem' }}>
+                      <span style={{ display: 'inline-block', backgroundColor: '#f3f0ff', color: '#c9973a', padding: '0.1rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700, marginBottom: '0.4rem' }}>
                         {FAQ_CATS.find(c => c.key === f.category)?.label ?? f.category}
                       </span>
                       <p style={{ fontWeight: 600, fontSize: '0.95rem', lineHeight: 1.4, margin: 0, color: 'var(--text-primary)' }}>{f.question}</p>
                     </div>
-                    <div style={{ flexShrink: 0, color: '#8b5cf6', marginTop: '0.25rem' }}>
+                    <div style={{ flexShrink: 0, color: '#c9973a', marginTop: '0.25rem' }}>
                       {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                     </div>
                   </button>
@@ -488,7 +488,7 @@ export default function JusticePage() {
                           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                             {f.sources.map(s => (
                               <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer"
-                                style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: '#8b5cf6', backgroundColor: '#f3f0ff', padding: '0.2rem 0.6rem', borderRadius: '4px', textDecoration: 'none' }}>
+                                style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: '#c9973a', backgroundColor: '#f3f0ff', padding: '0.2rem 0.6rem', borderRadius: '4px', textDecoration: 'none' }}>
                                 {s.label} <ExternalLink size={10} />
                               </a>
                             ))}
@@ -522,7 +522,7 @@ export default function JusticePage() {
               { key: 'association', label: '🤝 Associations' },
               { key: 'officiel', label: '🏛️ Officiel' },
             ].map(t => {
-              const color = t.key !== 'all' ? LIEN_TYPE_COLORS[t.key] : '#8b5cf6';
+              const color = t.key !== 'all' ? LIEN_TYPE_COLORS[t.key] : '#c9973a';
               const isActive = lienType === t.key;
               return (
                 <button key={t.key} onClick={() => setLienType(t.key)}
@@ -592,7 +592,7 @@ export default function JusticePage() {
                 step: '3',
                 title: 'Partagez et mobilisez',
                 content: 'Plus le même signalement est envoyé par de nombreuses personnes, plus l\'ARCOM est contrainte d\'agir. Partagez le lien de signalement dans vos groupes et réseaux.',
-                color: '#10b981',
+                color: '#d4a853',
               },
             ].map(s => (
               <div key={s.step} className="card" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
@@ -628,7 +628,7 @@ export default function JusticePage() {
                     <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: '0.1rem 0 0' }}>{item.desc}</p>
                   </div>
                   <a href={item.url} target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#8b5cf6', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#c9973a', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>
                     Accéder <ExternalLink size={11} />
                   </a>
                 </div>
@@ -657,7 +657,7 @@ export default function JusticePage() {
           Proposez une question à ajouter dans la FAQ ou prenez contact avec un avocat de confiance.
         </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/contact?type=question-juridique" className="btn btn-primary" style={{ backgroundColor: '#8b5cf6', borderColor: '#8b5cf6', textDecoration: 'none' }}>
+          <Link href="/contact?type=question-juridique" className="btn btn-primary" style={{ backgroundColor: '#c9973a', borderColor: '#c9973a', textDecoration: 'none' }}>
             Proposer une question
           </Link>
           <a href="https://www.defenseurdesdroits.fr" target="_blank" rel="noopener noreferrer" className="btn btn-outline"

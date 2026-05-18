@@ -13,7 +13,7 @@ export default async function AjouterPage({ params }: { params: Promise<{ catego
   if (!form) notFound();
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f5f3ff 0%, #faf9ff 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #fdfbf0 0%, #faf9ff 100%)' }}>
 
       {/* Header violet */}
       <div style={{ background: 'linear-gradient(135deg, #3b0764 0%, #1e0545 100%)', borderBottom: '1px solid rgba(196,181,253,0.15)' }}>
@@ -34,13 +34,13 @@ export default async function AjouterPage({ params }: { params: Promise<{ catego
         <div style={{
           backgroundColor: 'white',
           borderRadius: '16px',
-          border: '1px solid #ede9fe',
+          border: '1px solid #fdfbf0',
           overflow: 'hidden',
           boxShadow: '0 4px 20px rgba(109,40,217,0.08)',
         }}>
           {/* Form header violet */}
           <div style={{
-            background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
+            background: 'linear-gradient(135deg, #c9973a 0%, #a87830 100%)',
             padding: '1.25rem 1.75rem',
           }}>
             <div style={{ fontWeight: 800, color: 'white', fontSize: '1.05rem' }}>{form.label}</div>

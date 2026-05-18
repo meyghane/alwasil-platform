@@ -31,7 +31,7 @@ const PARTICLES = [
   { x: '95%', y: '20%', s: 1, d: 0.6,  o: 0.5 },
 ];
 
-export default function PageHeader({ title, titleAr, description, color = '#7c3aed', count, countLabel }: PageHeaderProps) {
+export default function PageHeader({ title, titleAr, description, color = '#c9973a', count, countLabel }: PageHeaderProps) {
   return (
     <div style={{
       position: 'relative',

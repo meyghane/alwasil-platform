@@ -69,18 +69,18 @@ export async function POST(req: NextRequest) {
         subject: '[Al-Wasil] Réinitialisation de ton mot de passe',
         html: `
           <div style="font-family:sans-serif;max-width:500px;margin:0 auto">
-            <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);padding:24px;border-radius:12px 12px 0 0;text-align:center">
+            <div style="background:linear-gradient(135deg,#c9973a,#8a6025);padding:24px;border-radius:12px 12px 0 0;text-align:center">
               <h1 style="color:white;margin:0;font-size:1.2rem">Al-Wasil</h1>
               <p style="color:rgba(255,255,255,0.7);margin:4px 0 0;font-size:0.85rem">Réinitialisation du mot de passe</p>
             </div>
-            <div style="padding:24px;border:1px solid #ede9fe;border-top:none;border-radius:0 0 12px 12px">
+            <div style="padding:24px;border:1px solid #fdfbf0;border-top:none;border-radius:0 0 12px 12px">
               <p style="color:#374151;font-size:0.9rem;line-height:1.6">
                 Bonjour,<br><br>
                 Une demande de réinitialisation de mot de passe a été faite pour ton compte Al-Wasil.<br><br>
                 Clique sur le bouton ci-dessous pour choisir un nouveau mot de passe. Ce lien expire dans <strong>1 heure</strong>.
               </p>
               <div style="text-align:center;margin:24px 0">
-                <a href="${resetUrl}" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:12px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;display:inline-block">
+                <a href="${resetUrl}" style="background:linear-gradient(135deg,#c9973a,#8a6025);color:white;padding:12px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;display:inline-block">
                   Réinitialiser mon mot de passe
                 </a>
               </div>

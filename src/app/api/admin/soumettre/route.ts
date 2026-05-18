@@ -107,12 +107,12 @@ export async function POST(req: NextRequest) {
               ${fieldsHtml}
             </table>
 
-            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px;margin-bottom:20px">
-              <p style="margin:0;font-size:0.875rem;color:#15803d;font-weight:600">Pour publier cette fiche sur le site :</p>
-              <ol style="margin:8px 0 0;padding-left:20px;color:#166534;font-size:0.85rem;line-height:1.8">
+            <div style="background:#f0fdf4;border:1px solid #f0dea0;border-radius:8px;padding:16px;margin-bottom:20px">
+              <p style="margin:0;font-size:0.875rem;color:#a87830;font-weight:600">Pour publier cette fiche sur le site :</p>
+              <ol style="margin:8px 0 0;padding-left:20px;color:#8a6025;font-size:0.85rem;line-height:1.8">
                 <li>Ouvrir le Google Sheet (bouton ci-dessous)</li>
                 <li>Aller dans l'onglet <strong>"Soumissions"</strong></li>
-                <li>Changer le statut de <code style="background:#dcfce7;padding:1px 5px;border-radius:3px">"à vérifier"</code> → <code style="background:#dcfce7;padding:1px 5px;border-radius:3px">"en ligne"</code></li>
+                <li>Changer le statut de <code style="background:#fdfbf0;padding:1px 5px;border-radius:3px">"à vérifier"</code> → <code style="background:#fdfbf0;padding:1px 5px;border-radius:3px">"en ligne"</code></li>
                 <li>L'Apps Script copie automatiquement la ligne dans l'onglet <strong>${form.sheetTab}</strong></li>
               </ol>
             </div>

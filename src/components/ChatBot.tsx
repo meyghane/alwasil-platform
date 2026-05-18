@@ -10,7 +10,7 @@ type Message = {
 
 function renderMarkdown(text: string): string {
   return text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#059669;font-weight:600;text-decoration:underline">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#c9973a;font-weight:600;text-decoration:underline">$1</a>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br/>');
 }
@@ -197,7 +197,7 @@ export default function ChatBot() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0, marginTop: '2px',
                   }}>
-                    <Bot size={15} color="#7c3aed" />
+                    <Bot size={15} color="#c9973a" />
                   </div>
                 )}
                 <div style={{
@@ -233,7 +233,7 @@ export default function ChatBot() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, marginTop: '2px',
                 }}>
-                  <Bot size={15} color="#7c3aed" />
+                  <Bot size={15} color="#c9973a" />
                 </div>
                 <div style={{
                   maxWidth: '80%',
@@ -243,7 +243,7 @@ export default function ChatBot() {
                   fontSize: '0.875rem',
                   lineHeight: 1.55,
                 }}
-                  dangerouslySetInnerHTML={{ __html: renderMarkdown(streamingText) + '<span style="display:inline-block;width:2px;height:14px;background:#059669;margin-left:2px;animation:blink 0.8s infinite">▌</span>' }}
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(streamingText) + '<span style="display:inline-block;width:2px;height:14px;background:#c9973a;margin-left:2px;animation:blink 0.8s infinite">▌</span>' }}
                 />
               </div>
             )}

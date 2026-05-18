@@ -21,9 +21,9 @@ function calcHasanates(stats: { soumises: number; validees: number; ajoutsRapide
 
 function getLevel(h: number) {
   if (h >= 1000) return { label: 'Pilier', ar: 'ركيزة', color: '#f59e0b', next: null, progress: 100 };
-  if (h >= 500)  return { label: 'Bâtisseur', ar: 'بانٍ', color: '#7c3aed', next: 1000, progress: Math.round(((h - 500) / 500) * 100) };
-  if (h >= 200)  return { label: 'Nāfi\'', ar: 'نافع', color: '#059669', next: 500, progress: Math.round(((h - 200) / 300) * 100) };
-  if (h >= 75)   return { label: 'Mousāhim', ar: 'مساهم', color: '#0284c7', next: 200, progress: Math.round(((h - 75) / 125) * 100) };
+  if (h >= 500)  return { label: 'Bâtisseur', ar: 'بانٍ', color: '#c9973a', next: 1000, progress: Math.round(((h - 500) / 500) * 100) };
+  if (h >= 200)  return { label: 'Nāfi\'', ar: 'نافع', color: '#c9973a', next: 500, progress: Math.round(((h - 200) / 300) * 100) };
+  if (h >= 75)   return { label: 'Mousāhim', ar: 'مساهم', color: '#a87830', next: 200, progress: Math.round(((h - 75) / 125) * 100) };
   return { label: 'Moubtadi\'', ar: 'مبتدئ', color: '#6b7280', next: 75, progress: Math.round((h / 75) * 100) };
 }
 

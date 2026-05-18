@@ -64,7 +64,7 @@ export async function GET(req: NextRequest) {
   } catch {}
 
   return new NextResponse(
-    html('✅ Fiche publiée !', `La fiche a été ajoutée dans l'onglet <strong>${data.sheetTab}</strong>.<br>Elle sera visible sur le site dans la prochaine heure.`, '#00bf63'),
+    html('✅ Fiche publiée !', `La fiche a été ajoutée dans l'onglet <strong>${data.sheetTab}</strong>.<br>Elle sera visible sur le site dans la prochaine heure.`, '#c9973a'),
     { headers: { 'content-type': 'text/html' } }
   );
 }

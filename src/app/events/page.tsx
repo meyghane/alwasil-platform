@@ -73,7 +73,7 @@ export default function EventsPage() {
         title="Événements" 
         titleAr="لِقَاء" 
         description="L'agenda communautaire : conférences, séminaires, et rencontres en France." 
-        color="#0d9488" 
+        color="#c9973a" 
         emoji="📅" 
       />
 
@@ -172,17 +172,17 @@ export default function EventsPage() {
           padding: '3rem 2rem',
           borderRadius: '16px',
           backgroundColor: '#f0fdfa',
-          border: '1px solid #ccfbf1',
+          border: '1px solid #fdfbf0',
           textAlign: 'center',
         }}>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.75rem', color: '#134e4a' }}>Vous organisez un événement ?</h3>
-          <p style={{ color: '#0d9488', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
+          <p style={{ color: '#c9973a', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
             Référencez vos conférences, séminaires ou maraudes gratuitement sur Al-Wasil.
           </p>
           <Link href="/contact?type=evenement" className="btn btn-primary" style={{ 
             textDecoration: 'none',
             padding: '0.75rem 2rem',
-            backgroundColor: '#0d9488',
+            backgroundColor: '#c9973a',
             borderRadius: '8px',
             fontWeight: 600
           }}>
@@ -287,7 +287,7 @@ function EventCard({ event }: { event: Event }) {
 
       {/* Footer */}
       <div style={{ padding: '0 1.1rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
-        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: event.isFree ? '#0d9488' : '#b45309' }}>
+        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: event.isFree ? '#c9973a' : '#b45309' }}>
           {event.isFree ? '✓ Gratuit' : event.price}
         </span>
         {past ? (

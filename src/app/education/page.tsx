@@ -59,7 +59,7 @@ export default function EducationPage() {
         title="Apprentissage"
         titleAr="عِلْم"
         description="Répertoire des instituts, mosquées et professeurs pour l'étude de l'Islam et de la langue arabe."
-        color="#0d9488"
+        color="#c9973a"
         emoji="📚"
       />
 
@@ -153,18 +153,18 @@ export default function EducationPage() {
           marginTop: '5rem',
           padding: '3rem 2rem',
           borderRadius: '16px',
-          backgroundColor: '#f5f3ff',
-          border: '1px solid #ccfbf1',
+          backgroundColor: '#fdfbf0',
+          border: '1px solid #fdfbf0',
           textAlign: 'center',
         }}>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.75rem', color: '#134e4a' }}>Un institut manque à l'appel ?</h3>
-          <p style={{ color: '#6d28d9', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
+          <p style={{ color: '#a87830', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
             Contribuez à l'annuaire Al-Wasil en proposant un nouvel établissement d'enseignement.
           </p>
           <Link href="/contact?type=general" className="btn btn-primary" style={{ 
             textDecoration: 'none',
             padding: '0.75rem 2rem',
-            backgroundColor: '#6d28d9',
+            backgroundColor: '#a87830',
             borderRadius: '8px',
             fontWeight: 600
           }}>
@@ -239,9 +239,9 @@ function InstitutCard({ inst }: { inst: Institut }) {
           {inst.verified && (
             <span style={{
               fontSize: '0.65rem', fontWeight: 700,
-              color: '#7c3aed', backgroundColor: 'white',
+              color: '#c9973a', backgroundColor: 'white',
               padding: '2px 8px', borderRadius: '20px',
-              border: '1px solid #a7f3d0',
+              border: '1px solid #f0dea0',
               display: 'inline-flex', alignItems: 'center', gap: '3px',
             }}>
               <CheckCircle size={10} strokeWidth={2} /> Vérifié

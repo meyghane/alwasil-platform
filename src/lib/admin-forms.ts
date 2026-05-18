@@ -37,7 +37,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
     label: 'Piscine burkini',
     emoji: '🏊',
     sheetTab: 'Piscines',
-    color: '#0ea5e9',
+    color: '#c9973a',
     fields: [
       { key: 'name',         label: 'Nom de la piscine',   type: 'text',     required: true },
       { key: 'type',         label: 'Type',                type: 'select',   required: true, options: [{ value: 'municipale', label: 'Municipale' }, { value: 'privee', label: 'Privée' }, { value: 'associative', label: 'Associative' }] },
@@ -61,7 +61,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
     label: 'Institut / Mosquée',
     emoji: '📚',
     sheetTab: 'Education',
-    color: '#5e17eb',
+    color: '#c9973a',
     fields: [
       { key: 'name',        label: 'Nom',          type: 'text',        required: true },
       { key: 'type',        label: 'Type',         type: 'select',      required: true, options: [{ value: 'institut', label: 'Institut' }, { value: 'mosquee', label: 'Mosquée' }, { value: 'professeur', label: 'Professeur' }, { value: 'en-ligne', label: 'Formation en ligne' }, { value: 'cercle', label: 'Cercle de science' }] },
@@ -131,7 +131,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
     label: 'Praticien — Psy',
     emoji: '🧠',
     sheetTab: 'Sante_psy',
-    color: '#8b5cf6',
+    color: '#c9973a',
     fields: [
       { key: 'name',         label: 'Nom complet',         type: 'text',        required: true },
       { key: 'title',        label: 'Titre',               type: 'text',        required: true, placeholder: 'Psychologue, Psychothérapeute...' },
@@ -180,7 +180,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
     label: 'Praticien — Roqya',
     emoji: '📿',
     sheetTab: 'Sante_roqya',
-    color: '#059669',
+    color: '#c9973a',
     fields: [
       { key: 'name',         label: 'Nom / Pseudo',        type: 'text',     required: true },
       { key: 'title',        label: 'Titre',               type: 'text',     placeholder: 'Cheikh, Mouqri\', Imam' },
@@ -245,7 +245,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
     label: 'Agence Hajj / Omra',
     emoji: '✈️',
     sheetTab: 'HajjOmra_agences',
-    color: '#0d9488',
+    color: '#c9973a',
     fields: [
       { key: 'name',        label: 'Nom de l\'agence',  type: 'text',     required: true },
       { key: 'location',    label: 'Ville',             type: 'text',     required: true },

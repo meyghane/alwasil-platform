@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sparkles, ArrowLeft, Send, CheckCircle, AlertTriangle, ExternalLink, RotateCcw } from 'lucide-react';
 
-const VIOLET = '#7c3aed';
+const VIOLET = '#c9973a';
 const DARK   = '#0f0225';
 
 type FicheGeneree = {
@@ -66,10 +66,10 @@ export default function AjoutRapidePage() {
   }
 
   const conf = fiche?.confidence ? Math.round(Number(fiche.confidence) * 100) : null;
-  const confColor = conf && conf >= 80 ? '#059669' : conf && conf >= 60 ? '#d97706' : '#dc2626';
+  const confColor = conf && conf >= 80 ? '#c9973a' : conf && conf >= 60 ? '#d97706' : '#dc2626';
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f5f3ff 0%, #faf9ff 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #fdfbf0 0%, #faf9ff 100%)' }}>
 
       {/* Header */}
       <div style={{ background: 'linear-gradient(135deg, #3b0764 0%, #1e0545 100%)', borderBottom: '1px solid rgba(196,181,253,0.15)' }}>
@@ -79,7 +79,7 @@ export default function AjoutRapidePage() {
           </button>
           <div style={{ width: 1, height: 16, backgroundColor: 'rgba(255,255,255,0.2)' }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Sparkles size={16} color="#c4b5fd" strokeWidth={1.8} />
+            <Sparkles size={16} color="#d4a853" strokeWidth={1.8} />
             <span style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide — Wassil</span>
           </div>
         </div>
@@ -100,10 +100,10 @@ export default function AjoutRapidePage() {
         {/* Formulaire */}
         {status !== 'done' && (
           <form onSubmit={handleSubmit}>
-            <div style={{ backgroundColor: 'white', borderRadius: '20px', border: '1px solid #ede9fe', overflow: 'hidden', boxShadow: '0 4px 24px rgba(124,58,237,0.08)', marginBottom: '1rem' }}>
+            <div style={{ backgroundColor: 'white', borderRadius: '20px', border: '1px solid #fdfbf0', overflow: 'hidden', boxShadow: '0 4px 24px rgba(124,58,237,0.08)', marginBottom: '1rem' }}>
 
               {/* Bandeau Wassil */}
-              <div style={{ background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ background: 'linear-gradient(135deg, #c9973a, #8a6025)', padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <div style={{ width: 36, height: 36, borderRadius: '10px', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}>🤖</div>
                 <div>
                   <div style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>Wassil est à l&apos;écoute</div>
@@ -122,7 +122,7 @@ export default function AjoutRapidePage() {
                   required
                   rows={5}
                   placeholder="Ex: &ldquo;La piscine de Choisy-le-Roi accepte les burkinis le mardi matin de 7h à 8h&rdquo;&#10;&#10;Ou : &ldquo;Cours de tajwid à Paris 19 chez Abou Moussa, prix libre, tous niveaux&rdquo;&#10;&#10;Ou encore un lien Instagram, un message copié-collé..."
-                  style={{ width: '100%', padding: '1rem', border: '2px solid #ede9fe', borderRadius: '12px', fontSize: '0.92rem', outline: 'none', resize: 'vertical', fontFamily: 'Poppins, sans-serif', lineHeight: 1.6, boxSizing: 'border-box', color: '#1c1917', backgroundColor: '#faf9ff' }}
+                  style={{ width: '100%', padding: '1rem', border: '2px solid #fdfbf0', borderRadius: '12px', fontSize: '0.92rem', outline: 'none', resize: 'vertical', fontFamily: 'Poppins, sans-serif', lineHeight: 1.6, boxSizing: 'border-box', color: '#1c1917', backgroundColor: '#faf9ff' }}
                 />
 
                 {/* URL optionnelle */}
@@ -135,13 +135,13 @@ export default function AjoutRapidePage() {
                     value={url}
                     onChange={e => setUrl(e.target.value)}
                     placeholder="https://..."
-                    style={{ width: '100%', padding: '0.75rem 1rem', border: '2px solid #ede9fe', borderRadius: '10px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box', fontFamily: 'Poppins, sans-serif', backgroundColor: '#faf9ff' }}
+                    style={{ width: '100%', padding: '0.75rem 1rem', border: '2px solid #fdfbf0', borderRadius: '10px', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box', fontFamily: 'Poppins, sans-serif', backgroundColor: '#faf9ff' }}
                   />
                 </div>
 
                 {/* Exemples */}
-                <div style={{ marginTop: '1rem', padding: '0.875rem 1rem', backgroundColor: '#f5f3ff', borderRadius: '10px', border: '1px solid #ede9fe' }}>
-                  <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#7c3aed', marginBottom: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Exemples rapides</div>
+                <div style={{ marginTop: '1rem', padding: '0.875rem 1rem', backgroundColor: '#fdfbf0', borderRadius: '10px', border: '1px solid #fdfbf0' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#c9973a', marginBottom: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Exemples rapides</div>
                   {[
                     '"Piscine Molitor Paris 16 accepte les burkinis"',
                     '"Conférence de Tariq Ramadan à Lyon le 20 juin"',
@@ -163,7 +163,7 @@ export default function AjoutRapidePage() {
             )}
 
             <button type="submit" disabled={status === 'loading' || texte.trim().length < 5}
-              style={{ width: '100%', padding: '1rem', background: status === 'loading' ? '#a78bfa' : 'linear-gradient(135deg, #7c3aed, #5b21b6)', color: 'white', border: 'none', borderRadius: '14px', fontWeight: 800, fontSize: '1rem', cursor: status === 'loading' ? 'not-allowed' : 'pointer', fontFamily: 'Poppins, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', boxShadow: '0 4px 16px rgba(124,58,237,0.3)', transition: 'opacity 0.2s' }}>
+              style={{ width: '100%', padding: '1rem', background: status === 'loading' ? '#d4a853' : 'linear-gradient(135deg, #c9973a, #8a6025)', color: 'white', border: 'none', borderRadius: '14px', fontWeight: 800, fontSize: '1rem', cursor: status === 'loading' ? 'not-allowed' : 'pointer', fontFamily: 'Poppins, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', boxShadow: '0 4px 16px rgba(124,58,237,0.3)', transition: 'opacity 0.2s' }}>
               {status === 'loading' ? (
                 <>🤖 Wassil cherche sur le web...</>
               ) : (
@@ -183,10 +183,10 @@ export default function AjoutRapidePage() {
         {status === 'done' && fiche && (
           <div>
             {/* Badge résultat */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', padding: '1rem 1.25rem', backgroundColor: 'white', borderRadius: '14px', border: '1px solid #bbf7d0', boxShadow: '0 2px 8px rgba(5,150,105,0.08)' }}>
-              <CheckCircle size={28} color="#059669" strokeWidth={1.8} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', padding: '1rem 1.25rem', backgroundColor: 'white', borderRadius: '14px', border: '1px solid #f0dea0', boxShadow: '0 2px 8px rgba(5,150,105,0.08)' }}>
+              <CheckCircle size={28} color="#c9973a" strokeWidth={1.8} />
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#065f46', fontFamily: 'Poppins, sans-serif' }}>Wassil a généré la fiche ✅</div>
+                <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#8a6025', fontFamily: 'Poppins, sans-serif' }}>Wassil a généré la fiche ✅</div>
                 <div style={{ fontSize: '0.78rem', color: '#6b7280', marginTop: '2px' }}>
                   En attente de validation dans <strong>/admin/soumissions</strong>
                 </div>
@@ -200,8 +200,8 @@ export default function AjoutRapidePage() {
             </div>
 
             {/* Contenu généré */}
-            <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #ede9fe', overflow: 'hidden', boxShadow: '0 4px 16px rgba(124,58,237,0.08)', marginBottom: '1.5rem' }}>
-              <div style={{ background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #fdfbf0', overflow: 'hidden', boxShadow: '0 4px 16px rgba(124,58,237,0.08)', marginBottom: '1.5rem' }}>
+              <div style={{ background: 'linear-gradient(135deg, #c9973a, #8a6025)', padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div>
                   <div style={{ color: 'white', fontWeight: 800, fontSize: '1rem', fontFamily: 'Poppins, sans-serif' }}>
                     {String(fiche.titre || '(sans titre)')}
@@ -227,7 +227,7 @@ export default function AjoutRapidePage() {
                       ['Tarif', fiche.tarif], ['Contact', fiche.contact], ['Site web', fiche.site_web],
                       ['Tags', fiche.tags], ['Burkini', fiche.burkini],
                     ].filter(([, v]) => v).map(([k, v]) => (
-                      <tr key={String(k)} style={{ borderBottom: '1px solid #f5f3ff' }}>
+                      <tr key={String(k)} style={{ borderBottom: '1px solid #fdfbf0' }}>
                         <td style={{ padding: '6px 0', fontWeight: 700, color: '#6b7280', width: 120 }}>{String(k)}</td>
                         <td style={{ padding: '6px 0', color: '#1c1917' }}>
                           {String(k) === 'Site web' ? (
@@ -242,7 +242,7 @@ export default function AjoutRapidePage() {
                 </table>
 
                 {fiche.note_djamil && (
-                  <div style={{ marginTop: '1rem', padding: '0.875rem', backgroundColor: '#f5f3ff', borderRadius: '10px', border: '1px solid #ede9fe' }}>
+                  <div style={{ marginTop: '1rem', padding: '0.875rem', backgroundColor: '#fdfbf0', borderRadius: '10px', border: '1px solid #fdfbf0' }}>
                     <div style={{ fontSize: '0.72rem', fontWeight: 700, color: VIOLET, marginBottom: '0.25rem' }}>💬 Note de Wassil</div>
                     <p style={{ margin: 0, fontSize: '0.82rem', color: '#6b7280', lineHeight: 1.6 }}>{String(fiche.note_djamil)}</p>
                   </div>
@@ -252,11 +252,11 @@ export default function AjoutRapidePage() {
 
             {/* Actions */}
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <a href="/admin/soumissions" style={{ flex: 1, padding: '0.875rem', background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', color: 'white', borderRadius: '12px', fontWeight: 700, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none', fontFamily: 'Poppins, sans-serif' }}>
+              <a href="/admin/soumissions" style={{ flex: 1, padding: '0.875rem', background: 'linear-gradient(135deg, #c9973a, #8a6025)', color: 'white', borderRadius: '12px', fontWeight: 700, fontSize: '0.9rem', textAlign: 'center', textDecoration: 'none', fontFamily: 'Poppins, sans-serif' }}>
                 Voir dans les soumissions →
               </a>
               <button onClick={() => { setStatus('idle'); setTexte(''); setUrl(''); setFiche(null); }}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.875rem 1.25rem', backgroundColor: '#f5f3ff', color: VIOLET, border: '2px solid #ede9fe', borderRadius: '12px', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.875rem 1.25rem', backgroundColor: '#fdfbf0', color: VIOLET, border: '2px solid #fdfbf0', borderRadius: '12px', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
                 <RotateCcw size={15} strokeWidth={2} /> Nouvel ajout
               </button>
             </div>

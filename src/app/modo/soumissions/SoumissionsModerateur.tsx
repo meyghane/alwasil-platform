@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { UserSession, hasPermission } from '@/lib/user-auth';
 import { CheckCircle, XCircle, ChevronDown, ChevronUp, ArrowLeft, AlertTriangle } from 'lucide-react';
 
-const VIOLET = '#7c3aed';
+const VIOLET = '#c9973a';
 
 type Soumission = {
   id: string;
@@ -65,7 +65,7 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f5f3ff' }}>
+    <div style={{ minHeight: '100vh', background: '#fdfbf0' }}>
 
       {/* Header */}
       <div style={{ background: 'linear-gradient(135deg, #3b0764 0%, #1e0545 100%)', padding: '1rem' }}>
@@ -84,7 +84,7 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
 
         {/* Filtres */}
         <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-          {([['à vérifier', 'À vérifier', '#fef3c7', '#92400e'], ['en ligne', 'En ligne', '#d1fae5', '#065f46'], ['pas en ligne', 'Rejetées', '#fee2e2', '#991b1b'], ['all', 'Toutes', '#ede9fe', '#5b21b6']] as const).map(([val, label, bg, color]) => (
+          {([['à vérifier', 'À vérifier', '#fef3c7', '#92400e'], ['en ligne', 'En ligne', '#fdfbf0', '#8a6025'], ['pas en ligne', 'Rejetées', '#fee2e2', '#991b1b'], ['all', 'Toutes', '#fdfbf0', '#8a6025']] as const).map(([val, label, bg, color]) => (
             <button key={val} onClick={() => setFilter(val)}
               style={{ padding: '0.5rem 1rem', borderRadius: '8px', border: `2px solid ${filter === val ? VIOLET : 'transparent'}`, backgroundColor: filter === val ? VIOLET : bg, color: filter === val ? 'white' : color, fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
               {label} ({counts[val]})
@@ -106,7 +106,7 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
               const busy   = processing === item.id;
 
               return (
-                <div key={item.id} style={{ backgroundColor: 'white', borderRadius: '12px', border: `1px solid ${isSpam ? '#fca5a5' : '#ede9fe'}`, boxShadow: isSpam ? '0 2px 8px rgba(239,68,68,0.12)' : '0 2px 8px rgba(109,40,217,0.06)', overflow: 'hidden' }}>
+                <div key={item.id} style={{ backgroundColor: 'white', borderRadius: '12px', border: `1px solid ${isSpam ? '#fca5a5' : '#fdfbf0'}`, boxShadow: isSpam ? '0 2px 8px rgba(239,68,68,0.12)' : '0 2px 8px rgba(109,40,217,0.06)', overflow: 'hidden' }}>
 
                   {/* Entête de la card */}
                   <div style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -118,12 +118,12 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
                           {item.nom || item.name || item.titre || '(sans titre)'}
                         </span>
                         {item.ville && <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>— {item.ville}</span>}
-                        <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#f5f3ff', color: VIOLET }}>{item.categorie}</span>
+                        <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#fdfbf0', color: VIOLET }}>{item.categorie}</span>
                         {isSpam && <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#fee2e2', color: '#991b1b' }}>SPAM</span>}
                       </div>
                       <div style={{ fontSize: '0.72rem', color: '#9ca3af', marginTop: '2px' }}>
                         {item.soumis_par} · {item.soumis_le}
-                        <span style={{ marginLeft: '0.5rem', fontWeight: 600, color: item.status === 'à vérifier' ? '#92400e' : item.status === 'en ligne' ? '#065f46' : '#991b1b' }}>
+                        <span style={{ marginLeft: '0.5rem', fontWeight: 600, color: item.status === 'à vérifier' ? '#92400e' : item.status === 'en ligne' ? '#8a6025' : '#991b1b' }}>
                           · {item.status}
                         </span>
                       </div>
@@ -132,7 +132,7 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexShrink: 0 }}>
                       {item.status !== 'en ligne' && (
                         <button onClick={() => updateStatus(item.id, 'en ligne')} disabled={busy}
-                          style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.4rem 0.875rem', backgroundColor: '#d1fae5', color: '#065f46', border: '1px solid #6ee7b7', borderRadius: '8px', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
+                          style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.4rem 0.875rem', backgroundColor: '#fdfbf0', color: '#8a6025', border: '1px solid #6ee7b7', borderRadius: '8px', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
                           <CheckCircle size={13} strokeWidth={2.5} /> Valider
                         </button>
                       )}
@@ -143,15 +143,15 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
                         </button>
                       )}
                       <button onClick={() => setExpanded(isOpen ? null : item.id)}
-                        style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', border: '1px solid #ede9fe', backgroundColor: 'white', cursor: 'pointer' }}>
-                        {isOpen ? <ChevronUp size={14} color="#7c3aed" /> : <ChevronDown size={14} color="#7c3aed" />}
+                        style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', border: '1px solid #fdfbf0', backgroundColor: 'white', cursor: 'pointer' }}>
+                        {isOpen ? <ChevronUp size={14} color="#c9973a" /> : <ChevronDown size={14} color="#c9973a" />}
                       </button>
                     </div>
                   </div>
 
                   {/* Détails */}
                   {isOpen && (
-                    <div style={{ padding: '0 1.25rem 1.25rem', borderTop: '1px solid #f5f3ff' }}>
+                    <div style={{ padding: '0 1.25rem 1.25rem', borderTop: '1px solid #fdfbf0' }}>
                       <table style={{ width: '100%', fontSize: '0.8rem', borderCollapse: 'collapse', marginTop: '0.75rem' }}>
                         <tbody>
                           {Object.entries(item)

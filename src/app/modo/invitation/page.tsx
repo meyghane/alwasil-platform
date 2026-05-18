@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { CheckCircle, Eye, EyeOff } from 'lucide-react';
 
-const VIOLET = '#7c3aed';
+const VIOLET = '#c9973a';
 
 async function sha256(str: string): Promise<string> {
   const data = new TextEncoder().encode(str);
@@ -116,7 +116,7 @@ function InvitationForm() {
           </div>
 
           <button type="submit" disabled={saving}
-            style={{ padding: '0.9rem', background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: saving ? 'not-allowed' : 'pointer', fontFamily: 'Poppins, sans-serif', marginTop: '0.25rem', opacity: saving ? 0.7 : 1, boxShadow: '0 4px 16px rgba(124,58,237,0.4)' }}>
+            style={{ padding: '0.9rem', background: 'linear-gradient(135deg, #c9973a, #8a6025)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: saving ? 'not-allowed' : 'pointer', fontFamily: 'Poppins, sans-serif', marginTop: '0.25rem', opacity: saving ? 0.7 : 1, boxShadow: '0 4px 16px rgba(124,58,237,0.4)' }}>
             {saving ? 'Création...' : 'Créer mon compte →'}
           </button>
         </>

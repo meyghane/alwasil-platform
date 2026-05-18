@@ -5,11 +5,11 @@ import { Clock, ArrowRight, PenLine } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 
 const CAT_COLORS: Record<string, string> = {
-  'Apprentissage':  '#7c3aed',
-  'Justice & Droits': '#6d28d9',
-  'Bien-être':      '#8b5cf6',
-  'Santé':          '#4c1d95',
-  'Communauté':     '#5b21b6',
+  'Apprentissage':  '#c9973a',
+  'Justice & Droits': '#a87830',
+  'Bien-être':      '#c9973a',
+  'Santé':          '#8a6025',
+  'Communauté':     '#8a6025',
 };
 
 const articles = [
@@ -29,7 +29,7 @@ const featured = articles.filter(a => a.featured);
 const rest     = articles.filter(a => !a.featured);
 
 function ArticleCard({ article, large = false }: { article: typeof articles[0]; large?: boolean }) {
-  const color = CAT_COLORS[article.category] ?? '#7c3aed';
+  const color = CAT_COLORS[article.category] ?? '#c9973a';
   return (
     <Link href={`/blog/${article.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
       <article style={{
@@ -80,7 +80,7 @@ function ArticleCard({ article, large = false }: { article: typeof articles[0]; 
           {/* Tags */}
           <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
             {article.tags.slice(0, 4).map(t => (
-              <span key={t} style={{ backgroundColor: '#f5f3ff', color: '#6d28d9', padding: '2px 8px', borderRadius: '4px', fontSize: '0.67rem', fontWeight: 600 }}>#{t}</span>
+              <span key={t} style={{ backgroundColor: '#fdfbf0', color: '#a87830', padding: '2px 8px', borderRadius: '4px', fontSize: '0.67rem', fontWeight: 600 }}>#{t}</span>
             ))}
           </div>
 
@@ -113,7 +113,7 @@ export default function BlogPage() {
         {/* ── À La Une ─── */}
         <div style={{ marginBottom: '3rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-            <span style={{ width: '3px', height: '18px', backgroundColor: '#7c3aed', borderRadius: '9999px', display: 'block' }} />
+            <span style={{ width: '3px', height: '18px', backgroundColor: '#c9973a', borderRadius: '9999px', display: 'block' }} />
             <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#1c1917', textTransform: 'uppercase' }}>
               À la une
             </span>
@@ -126,7 +126,7 @@ export default function BlogPage() {
         {/* ── Tous les articles ─── */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-            <span style={{ width: '3px', height: '18px', backgroundColor: '#7c3aed', borderRadius: '9999px', display: 'block' }} />
+            <span style={{ width: '3px', height: '18px', backgroundColor: '#c9973a', borderRadius: '9999px', display: 'block' }} />
             <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#1c1917', textTransform: 'uppercase' }}>
               Tous les articles
             </span>
@@ -137,9 +137,9 @@ export default function BlogPage() {
         </div>
 
         {/* ── CTA ─── */}
-        <div style={{ padding: '2rem', backgroundColor: '#f5f3ff', borderRadius: '16px', border: '1px solid #ddd6fe', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ padding: '2rem', backgroundColor: '#fdfbf0', borderRadius: '16px', border: '1px solid #f0dea0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ width: 44, height: 44, borderRadius: '12px', backgroundColor: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ width: 44, height: 44, borderRadius: '12px', backgroundColor: '#c9973a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <PenLine size={20} color="white" strokeWidth={1.8} />
             </div>
             <div>
@@ -147,7 +147,7 @@ export default function BlogPage() {
               <p style={{ color: '#57534e', fontSize: '0.85rem', margin: 0 }}>Partage ton expertise : droits, santé, apprentissage, bons plans…</p>
             </div>
           </div>
-          <Link href="/contact?type=blog" style={{ padding: '0.7rem 1.5rem', backgroundColor: '#7c3aed', color: 'white', fontWeight: 700, fontSize: '0.875rem', textDecoration: 'none', borderRadius: '10px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <Link href="/contact?type=blog" style={{ padding: '0.7rem 1.5rem', backgroundColor: '#c9973a', color: 'white', fontWeight: 700, fontSize: '0.875rem', textDecoration: 'none', borderRadius: '10px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             Proposer un article <ArrowRight size={14} />
           </Link>
         </div>

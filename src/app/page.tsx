@@ -46,7 +46,7 @@ const SECTIONS: {
 }[] = [
   {
     href: '/education', icon: BookOpen,
-    color: '#4a0e58', bg: '#d1fae5',
+    color: '#4a0e58', bg: '#fdfbf0',
     title: 'Éducation', arabic: 'العلم',
     description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.',
     tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'],
@@ -62,7 +62,7 @@ const SECTIONS: {
   },
   {
     href: '/solidarity', icon: HeartHandshake,
-    color: '#2c0835', bg: '#d1fae5',
+    color: '#2c0835', bg: '#fdfbf0',
     title: 'Solidarité', arabic: 'التكافل',
     description: 'Cagnottes, maraudes, visites aux malades et voyages humanitaires.',
     tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Palestine', 'Voyages'],
@@ -78,7 +78,7 @@ const SECTIONS: {
   },
   {
     href: '/sante', icon: Stethoscope,
-    color: '#3a0a45', bg: '#d1fae5',
+    color: '#3a0a45', bg: '#fdfbf0',
     title: 'Santé', arabic: 'الشفاء',
     description: 'Psychologues orientés communauté, hijama certifiés et roqya.',
     tags: ['Psychologues', 'Hijama', 'Roqya'],
@@ -94,7 +94,7 @@ const SECTIONS: {
   },
   {
     href: '/piscines', icon: Waves,
-    color: '#662a94', bg: '#d1fae5',
+    color: '#662a94', bg: '#fdfbf0',
     title: 'Piscines Burkini', arabic: 'السباحة',
     description: 'Créneaux burkini et maillots couvrants en Île-de-France.',
     tags: ['Créneaux femmes', 'Burkini', 'IdF'],
@@ -110,7 +110,7 @@ const SECTIONS: {
   },
   {
     href: '/justice', icon: ShieldCheck,
-    color: '#3a0a45', bg: '#d1fae5',
+    color: '#3a0a45', bg: '#fdfbf0',
     title: 'Justice & Droits', arabic: 'العدل',
     description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.',
     tags: ['Voile au travail', 'ARCOM', 'Discrimination'],
@@ -118,7 +118,7 @@ const SECTIONS: {
   },
   {
     href: '#', icon: MessageCircle,
-    color: 'rgba(255,255,255,0.85)', bg: '#f5f3ff',
+    color: 'rgba(255,255,255,0.85)', bg: '#fdfbf0',
     title: 'Communauté', arabic: 'الأمة',
     description: 'Annuaire de compétences, marrainage, muqabala et espace de brainstorming.',
     tags: ['Marrainage', 'Muqabala', 'Compétences', 'Entraide'],

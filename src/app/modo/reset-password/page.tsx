@@ -4,7 +4,7 @@ import { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { CheckCircle, Lock, ArrowLeft } from 'lucide-react';
 
-const VIOLET = '#7c3aed';
+const VIOLET = '#c9973a';
 
 function ResetForm() {
   const params   = useSearchParams();
@@ -51,11 +51,11 @@ function ResetForm() {
 
   if (step === 'done') return (
     <div style={{ textAlign: 'center', padding: '2rem' }}>
-      <CheckCircle size={48} color="#059669" strokeWidth={1.6} style={{ margin: '0 auto 1rem', display: 'block' }} />
+      <CheckCircle size={48} color="#c9973a" strokeWidth={1.6} style={{ margin: '0 auto 1rem', display: 'block' }} />
       <h2 style={{ fontWeight: 800, color: 'white', marginBottom: '0.5rem', fontFamily: 'Poppins, sans-serif' }}>Email envoyé</h2>
       <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.88rem', marginBottom: '2rem', lineHeight: 1.6 }}>{msg}</p>
       <button onClick={() => router.push('/modo/login')}
-        style={{ padding: '0.75rem 2rem', background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
+        style={{ padding: '0.75rem 2rem', background: 'linear-gradient(135deg, #c9973a, #8a6025)', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
         Retour à la connexion
       </button>
     </div>
@@ -93,7 +93,7 @@ function ResetForm() {
       {error && <div style={{ padding: '0.75rem', backgroundColor: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', fontSize: '0.84rem', color: '#fca5a5' }}>{error}</div>}
 
       <button type="submit" disabled={loading}
-        style={{ padding: '0.875rem', background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'Poppins, sans-serif', marginTop: '0.25rem', opacity: loading ? 0.7 : 1 }}>
+        style={{ padding: '0.875rem', background: 'linear-gradient(135deg, #c9973a, #8a6025)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'Poppins, sans-serif', marginTop: '0.25rem', opacity: loading ? 0.7 : 1 }}>
         {loading ? 'Envoi...' : token ? 'Changer le mot de passe' : 'Envoyer le lien'}
       </button>
 
@@ -109,7 +109,7 @@ export default function ResetPasswordPage() {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #3b0764 0%, #1e0545 50%, #0a0118 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', fontFamily: 'Poppins, sans-serif' }}>
       <div style={{ backgroundColor: 'rgba(15,2,37,0.85)', backdropFilter: 'blur(20px)', borderRadius: '20px', padding: '2.5rem', width: '100%', maxWidth: '400px', border: '1px solid rgba(196,181,253,0.2)', boxShadow: '0 32px 80px rgba(0,0,0,0.5)' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 52, height: 52, background: 'linear-gradient(135deg, #7c3aed, #5b21b6)', borderRadius: '14px', marginBottom: '0.75rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 52, height: 52, background: 'linear-gradient(135deg, #c9973a, #8a6025)', borderRadius: '14px', marginBottom: '0.75rem' }}>
             <Lock size={24} color="white" strokeWidth={1.8} />
           </div>
         </div>

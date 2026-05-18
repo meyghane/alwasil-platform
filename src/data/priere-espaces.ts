@@ -56,7 +56,7 @@ export const TYPE_LABELS: Record<TypeLieu, string> = {
 };
 
 export const TYPE_COLORS: Record<TypeLieu, string> = {
-  particulier: '#5e17eb',
+  particulier: '#c9973a',
   commercant: '#6366f1',
   restaurant: '#f59e0b',
   bureau: '#3b82f6',

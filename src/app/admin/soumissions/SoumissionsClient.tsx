@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, RefreshCw, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 
-const V = '#7c3aed';
+const V = '#c9973a';
 
 type Soumission = {
   id: string;
@@ -21,7 +21,7 @@ type Soumission = {
 
 const STATUS_CONFIG = {
   'à vérifier': { color: '#f59e0b', bg: '#fffbeb', label: 'À vérifier', dot: '🟡' },
-  'en ligne':    { color: '#059669', bg: '#f0fdf4', label: 'En ligne',   dot: '🟢' },
+  'en ligne':    { color: '#c9973a', bg: '#f0fdf4', label: 'En ligne',   dot: '🟢' },
   'pas en ligne':{ color: '#6b7280', bg: '#f9fafb', label: 'Rejeté',    dot: '⚫' },
 };
 
@@ -75,18 +75,18 @@ export default function SoumissionsClient() {
             <button key={f} onClick={() => setFilter(f)}
               style={{
                 padding: '0.4rem 1rem', borderRadius: '20px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem',
-                border: isActive ? `2px solid ${V}` : '1.5px solid #ede9fe',
+                border: isActive ? `2px solid ${V}` : '1.5px solid #fdfbf0',
                 backgroundColor: isActive ? V : 'white',
                 color: isActive ? 'white' : '#6b7280',
                 display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
               }}>
               {f === 'all' ? 'Tout' : f === 'à vérifier' ? 'À vérifier' : f === 'en ligne' ? 'En ligne' : 'Rejeté'}
-              <span style={{ backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : '#f5f3ff', color: isActive ? 'white' : V, borderRadius: '20px', padding: '0 6px', fontSize: '0.72rem', fontWeight: 800 }}>{count}</span>
+              <span style={{ backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : '#fdfbf0', color: isActive ? 'white' : V, borderRadius: '20px', padding: '0 6px', fontSize: '0.72rem', fontWeight: 800 }}>{count}</span>
             </button>
           );
         })}
 
-        <button onClick={load} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', borderRadius: '8px', border: '1px solid #ede9fe', backgroundColor: 'white', color: '#6b7280', fontSize: '0.78rem', cursor: 'pointer' }}>
+        <button onClick={load} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', borderRadius: '8px', border: '1px solid #fdfbf0', backgroundColor: 'white', color: '#6b7280', fontSize: '0.78rem', cursor: 'pointer' }}>
           <RefreshCw size={12} /> Rafraîchir
         </button>
       </div>
@@ -112,7 +112,7 @@ export default function SoumissionsClient() {
             return (
               <div key={item.id} style={{
                 backgroundColor: 'white', borderRadius: '12px',
-                border: `1px solid ${item.status === 'à vérifier' ? '#fde68a' : '#ede9fe'}`,
+                border: `1px solid ${item.status === 'à vérifier' ? '#fde68a' : '#fdfbf0'}`,
                 overflow: 'hidden',
                 boxShadow: item.status === 'à vérifier' ? '0 2px 8px rgba(245,158,11,0.08)' : '0 1px 4px rgba(109,40,217,0.05)',
               }}>
@@ -128,7 +128,7 @@ export default function SoumissionsClient() {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                       <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1c1917' }}>{nom}</span>
-                      <span style={{ backgroundColor: '#f5f3ff', color: V, padding: '1px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}>
+                      <span style={{ backgroundColor: '#fdfbf0', color: V, padding: '1px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}>
                         {item.categorie}
                       </span>
                     </div>
@@ -145,19 +145,19 @@ export default function SoumissionsClient() {
                         <button
                           onClick={() => updateStatus(item.id, 'en ligne')}
                           disabled={isLoading}
-                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#059669', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer', opacity: isLoading ? 0.6 : 1 }}>
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#c9973a', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer', opacity: isLoading ? 0.6 : 1 }}>
                           <CheckCircle size={13} /> Valider
                         </button>
                         <button
                           onClick={() => updateStatus(item.id, 'pas en ligne')}
                           disabled={isLoading}
-                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#f5f3ff', color: '#6b7280', border: '1px solid #ede9fe', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', opacity: isLoading ? 0.6 : 1 }}>
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#fdfbf0', color: '#6b7280', border: '1px solid #fdfbf0', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', opacity: isLoading ? 0.6 : 1 }}>
                           <XCircle size={13} /> Rejeter
                         </button>
                       </>
                     )}
                     {item.status === 'en ligne' && (
-                      <span style={{ fontSize: '0.75rem', color: '#059669', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <span style={{ fontSize: '0.75rem', color: '#c9973a', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                         <CheckCircle size={13} /> En ligne
                       </span>
                     )}
@@ -170,7 +170,7 @@ export default function SoumissionsClient() {
 
                 {/* Détails dépliables */}
                 {isExpanded && (
-                  <div style={{ borderTop: '1px solid #f5f3ff', padding: '1rem 1.25rem', backgroundColor: '#faf9ff' }}>
+                  <div style={{ borderTop: '1px solid #fdfbf0', padding: '1rem 1.25rem', backgroundColor: '#faf9ff' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.5rem' }}>
                       {Object.entries(item)
                         .filter(([k]) => !['id', 'status', 'soumis_le', 'soumis_par', 'categorie', 'destinationTab', 'sheetTab'].includes(k))

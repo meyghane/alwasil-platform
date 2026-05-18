@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Mail, Star, CheckCircle, MessageSquare, MapPin, Bell, Heart } from 'lucide-react';
 
-const TEAL = '#5e17eb';
+const TEAL = '#c9973a';
 
 const PERKS = [
   { icon: <Star size={15} />, label: 'Laisser un avis vérifié sur un praticien, librairie, agence Hajj' },
@@ -65,8 +65,8 @@ export default function ConnexionPage() {
 
       {submitted ? (
         <div style={{ textAlign: 'center', padding: '2.5rem 2rem', borderRadius: '1.25rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8' }}>
-          <CheckCircle size={42} color="#10b981" style={{ marginBottom: '1rem' }} />
-          <h3 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#065f46' }}>Tu es sur la liste ! 🎉</h3>
+          <CheckCircle size={42} color="#d4a853" style={{ marginBottom: '1rem' }} />
+          <h3 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#8a6025' }}>Tu es sur la liste ! 🎉</h3>
           <p style={{ color: '#047857', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
             On te préviendra par email dès l&apos;ouverture des comptes.<br />
             Barak Allahou fikoum !

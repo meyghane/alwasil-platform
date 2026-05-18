@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
           .join('')}
       </table>
       <p style="margin-top:24px">
-        <a href="https://alwasil-platform.vercel.app/admin/soumissions" style="background:#7c3aed;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700">
+        <a href="https://alwasil-platform.vercel.app/admin/soumissions" style="background:#c9973a;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700">
           👉 Valider dans l'admin
         </a>
       </p>

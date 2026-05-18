@@ -35,7 +35,7 @@ function renderBlock(block: ArticleBlock, i: number) {
   switch (block.type) {
     case 'intro':
       return (
-        <p key={i} style={{ fontSize: '1.05rem', lineHeight: 1.75, color: '#374151', borderLeft: '3px solid #5e17eb', paddingLeft: '1.25rem', margin: '0 0 2rem' }}>
+        <p key={i} style={{ fontSize: '1.05rem', lineHeight: 1.75, color: '#374151', borderLeft: '3px solid #c9973a', paddingLeft: '1.25rem', margin: '0 0 2rem' }}>
           {block.content}
         </p>
       );
@@ -66,7 +66,7 @@ function renderBlock(block: ArticleBlock, i: number) {
         <div key={i} style={{ backgroundColor: '#f3eeff', border: '1px solid #c4a8f8', borderRadius: '12px', padding: '1.25rem 1.5rem', margin: '1.5rem 0', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
           <span style={{ fontSize: '1.5rem', flexShrink: 0 }}>{block.icon}</span>
           <div>
-            <p style={{ fontWeight: 700, color: '#5e17eb', marginBottom: '0.4rem', fontSize: '0.9rem' }}>{block.title}</p>
+            <p style={{ fontWeight: 700, color: '#c9973a', marginBottom: '0.4rem', fontSize: '0.9rem' }}>{block.title}</p>
             <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: '#374151', margin: 0 }}>{block.content}</p>
           </div>
         </div>
@@ -112,10 +112,10 @@ function renderBlock(block: ArticleBlock, i: number) {
       return (
         <div key={i} style={{ backgroundColor: '#f3eeff', border: '1px solid #c4a8f8', borderRadius: '12px', padding: '1.25rem 1.5rem', margin: '2rem 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
           <div>
-            <p style={{ fontWeight: 700, color: '#5e17eb', marginBottom: '0.2rem', fontSize: '0.95rem' }}>{block.label}</p>
+            <p style={{ fontWeight: 700, color: '#c9973a', marginBottom: '0.2rem', fontSize: '0.95rem' }}>{block.label}</p>
             {block.desc && <p style={{ color: '#64748b', fontSize: '0.825rem', margin: 0 }}>{block.desc}</p>}
           </div>
-          <Link href={block.href} style={{ padding: '0.55rem 1.25rem', backgroundColor: '#5e17eb', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '0.875rem', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+          <Link href={block.href} style={{ padding: '0.55rem 1.25rem', backgroundColor: '#c9973a', color: 'white', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '0.875rem', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
             Voir <ExternalLink size={13} />
           </Link>
         </div>
@@ -157,7 +157,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             <Clock size={13} /> {article.readTime} de lecture
           </span>
-          <span style={{ color: '#5e17eb', fontWeight: 500 }}>Al-Wasil</span>
+          <span style={{ color: '#c9973a', fontWeight: 500 }}>Al-Wasil</span>
         </div>
         <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.75rem' }}>
           {article.tags.map(t => (
