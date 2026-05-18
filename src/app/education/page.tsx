@@ -177,18 +177,18 @@ export default function EducationPage() {
 }
 
 const TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; icon: LucideIcon }> = {
-  'institut':   { label: 'Institut',           color: '#7c3aed', bg: '#ede9fe', icon: BookOpen },
-  'mosquee':    { label: 'Mosquée',            color: '#6d28d9', bg: '#f5f3ff', icon: Landmark },
-  'professeur': { label: 'Professeur',         color: '#7c3aed', bg: '#f5f3ff', icon: GraduationCap },
-  'en-ligne':   { label: 'Formation en ligne', color: '#4c1d95', bg: '#ede9fe', icon: Monitor },
-  'cercle':     { label: 'Cercle de science',  color: '#8b5cf6', bg: '#ede9fe', icon: Users },
+  'institut':   { label: 'Institut',           color: '#c9973a', bg: '#fdfbf0', icon: BookOpen },
+  'mosquee':    { label: 'Mosquée',            color: '#4a0e58', bg: '#f8f0ff', icon: Landmark },
+  'professeur': { label: 'Professeur',         color: '#a87830', bg: '#faf5e8', icon: GraduationCap },
+  'en-ligne':   { label: 'Formation en ligne', color: '#8a6025', bg: '#faf3e0', icon: Monitor },
+  'cercle':     { label: 'Cercle de science',  color: '#7b2d6e', bg: '#fdf0f8', icon: Users },
 };
 
 const AUDIENCE_CONFIG: Record<string, { label: string; icon: LucideIcon; color: string; bg: string }> = {
-  hommes:  { label: 'Hommes',  icon: User,  color: '#7c3aed', bg: '#ede9fe' },
-  femmes:  { label: 'Femmes',  icon: User,  color: '#7c3aed', bg: '#f5f3ff' },
-  enfants: { label: 'Enfants', icon: Baby,  color: '#4c1d95', bg: '#ede9fe' },
-  mixte:   { label: 'Mixte',   icon: Users, color: '#6d28d9', bg: '#f5f3ff' },
+  hommes:  { label: 'Hommes',  icon: User,  color: '#4a0e58', bg: '#f8f0ff' },
+  femmes:  { label: 'Femmes',  icon: User,  color: '#7b2d6e', bg: '#fdf0f8' },
+  enfants: { label: 'Enfants', icon: Baby,  color: '#a87830', bg: '#faf5e8' },
+  mixte:   { label: 'Mixte',   icon: Users, color: '#8a6025', bg: '#faf3e0' },
 };
 
 function InstitutCard({ inst }: { inst: Institut }) {

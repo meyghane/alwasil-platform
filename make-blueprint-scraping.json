@@ -1,0 +1,42 @@
+{
+  "name": "Al-Wasil — Scraping Auto (via Vercel)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": { "designer": { "x": 0, "y": 0 } },
+      "parameters": { "hook": "COLLER_L_URL_WEBHOOK_ICI", "maxResults": 1 }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": { "designer": { "x": 300, "y": 0 } },
+      "parameters": { "handleErrors": false },
+      "mapper": {
+        "url": "https://al-wasil.fr/api/auto/scrape",
+        "method": "GET",
+        "qs": [{ "key": "cat", "value": "{{1.cat}}" }],
+        "headers": [],
+        "bodyType": "raw",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": 3,
+      "module": "telegram-bot-api:ActionSendMessage",
+      "version": 1,
+      "metadata": { "designer": { "x": 600, "y": 0 } },
+      "mapper": {
+        "chat_id": "1113927837",
+        "text": "Résultat scraping {{1.cat}} :\nTrouvés : {{2.data.found}}\nÉcrits : {{2.data.written}}\nStatut : {{2.status}}"
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": { "roundtrips": 1, "maxErrors": 3, "autoCommit": true }
+  }
+}

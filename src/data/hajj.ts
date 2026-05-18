@@ -45,17 +45,17 @@ export type HajjPackage = {
 };
 
 export const VOYAGE_TYPE_LABELS: Record<VoyageType, string> = {
-  'hajj': '🕋 Hajj 2026',
-  'omra-ramadan': '🌙 Omra Ramadan',
-  'omra-hors-saison': '✈️ Omra (hors saison)',
-  'omra-express': '⚡ Omra Express',
+  'hajj': 'Hajj 2026',
+  'omra-ramadan': 'Omra Ramadan',
+  'omra-hors-saison': 'Omra hors saison',
+  'omra-express': 'Omra Express',
 };
 
 export const VOYAGE_TYPE_COLORS: Record<VoyageType, string> = {
-  'hajj': '#059669',
-  'omra-ramadan': '#7c3aed',
-  'omra-hors-saison': '#0ea5e9',
-  'omra-express': '#f97316',
+  'hajj':           '#c9973a',  // or principal — le pèlerinage sacré
+  'omra-ramadan':   '#4a0e58',  // violet profond — nuit du Ramadan
+  'omra-hors-saison': '#a87830', // or ambré — voyage spirituel
+  'omra-express':   '#8a6025',  // bronze — formule courte
 };
 
 export const hajjAgences: HajjAgence[] = [

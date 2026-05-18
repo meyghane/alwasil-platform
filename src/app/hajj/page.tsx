@@ -156,17 +156,17 @@ export default function HajjPage() {
               const agence = hajjAgences.find(a => a.id === pkg.agenceId);
               const placesRatio = pkg.placesRestantes && pkg.places ? pkg.placesRestantes / pkg.places : 1;
               return (
-                <div key={pkg.id} className="card" style={{ padding: 0, overflow: 'hidden', borderTop: `3px solid ${typeColor}` }}>
+                <div key={pkg.id} className="card" style={{ padding: 0, overflow: 'hidden', border: `1px solid ${typeColor}33`, borderTop: `3px solid ${typeColor}`, background: `linear-gradient(180deg, ${typeColor}08 0%, #ffffff 60%)` }}>
                   {/* Top */}
                   <div style={{ padding: '1.25rem 1.25rem 0.875rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
                       <div>
-                        <span style={{ backgroundColor: `${typeColor}18`, color: typeColor, padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700 }}>
+                        <span style={{ backgroundColor: `${typeColor}18`, color: typeColor, padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700, border: `1px solid ${typeColor}33` }}>
                           {VOYAGE_TYPE_LABELS[pkg.type]}
                         </span>
                         {pkg.featured && (
                           <span style={{ marginLeft: '0.35rem', backgroundColor: '#fef3c7', color: '#b45309', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>
-                            ⭐ Mis en avant
+                            Mis en avant
                           </span>
                         )}
                       </div>

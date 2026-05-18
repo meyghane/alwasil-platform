@@ -1,11 +1,13 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { BookOpen, ChevronDown, ChevronUp, Download, Eye, MapPin, User, Users, X } from 'lucide-react';
+import { BookOpen, ChevronDown, ChevronUp, Download, MapPin, User, Users,
+  Droplets, Clock, FileText, Building2, Heart, Shield, BookMarked, type LucideIcon } from 'lucide-react';
 
-const TEAL = '#5e17eb';
-const TEAL_LIGHT = '#f3eeff';
-const TEAL_BORDER = '#c4a8f8';
+const TEAL = '#c9973a';
+const TEAL_LIGHT = '#fdfbf0';
+const TEAL_BORDER = '#f0dea0';
+const TEAL_DARK = '#0a0806';
 
 // ── Données contenu ────────────────────────────────────────────
 
@@ -18,16 +20,16 @@ const PILIERS = [
 ];
 
 const WUDU_STEPS = [
-  { num: 1, titre: 'L\'intention (Niyyah)', desc: 'Formule l\'intention dans ton cœur de faire les ablutions pour la prière. Pas besoin de la prononcer à voix haute.', icon: '🤲' },
-  { num: 2, titre: 'Bismillah', desc: 'Commence par dire "Bismillah" (Au nom d\'Allah).', icon: '🗣️' },
-  { num: 3, titre: 'Se laver les mains', desc: 'Laver les deux mains jusqu\'aux poignets, 3 fois. Commencer par la droite.', icon: '🙌' },
-  { num: 4, titre: 'Se rincer la bouche', desc: 'Prendre de l\'eau dans la bouche, la faire tourner puis la cracher, 3 fois.', icon: '💧' },
-  { num: 5, titre: 'Se rincer les narines', desc: 'Aspirer de l\'eau dans les narines puis la rejeter, 3 fois.', icon: '💧' },
-  { num: 6, titre: 'Se laver le visage', desc: 'Laver tout le visage (du haut du front jusqu\'au menton, d\'une oreille à l\'autre), 3 fois.', icon: '😊' },
-  { num: 7, titre: 'Se laver les avant-bras', desc: 'Laver le bras droit jusqu\'au coude inclus, 3 fois. Puis le gauche, 3 fois.', icon: '💪' },
-  { num: 8, titre: 'Passer les mains sur la tête', desc: 'Passer les deux mains humides sur la tête (de l\'avant vers l\'arrière), une seule fois.', icon: '🙏' },
-  { num: 9, titre: 'Se laver les oreilles', desc: 'Avec la même eau, nettoyer l\'intérieur et l\'extérieur des oreilles, une fois.', icon: '👂' },
-  { num: 10, titre: 'Se laver les pieds', desc: 'Laver le pied droit jusqu\'à la cheville incluse, 3 fois (en passant entre les orteils). Puis le gauche.', icon: '🦶' },
+  { num: 1, titre: 'L\'intention (Niyyah)', desc: 'Formule l\'intention dans ton cœur de faire les ablutions pour la prière. Pas besoin de la prononcer à voix haute.' },
+  { num: 2, titre: 'Bismillah', desc: 'Commence par dire "Bismillah" (Au nom d\'Allah).' },
+  { num: 3, titre: 'Se laver les mains', desc: 'Laver les deux mains jusqu\'aux poignets, 3 fois. Commencer par la droite.' },
+  { num: 4, titre: 'Se rincer la bouche', desc: 'Prendre de l\'eau dans la bouche, la faire tourner puis la cracher, 3 fois.' },
+  { num: 5, titre: 'Se rincer les narines', desc: 'Aspirer de l\'eau dans les narines puis la rejeter, 3 fois.' },
+  { num: 6, titre: 'Se laver le visage', desc: 'Laver tout le visage (du haut du front jusqu\'au menton, d\'une oreille à l\'autre), 3 fois.' },
+  { num: 7, titre: 'Se laver les avant-bras', desc: 'Laver le bras droit jusqu\'au coude inclus, 3 fois. Puis le gauche, 3 fois.' },
+  { num: 8, titre: 'Passer les mains sur la tête', desc: 'Passer les deux mains humides sur la tête (de l\'avant vers l\'arrière), une seule fois.' },
+  { num: 9, titre: 'Se laver les oreilles', desc: 'Avec la même eau, nettoyer l\'intérieur et l\'extérieur des oreilles, une fois.' },
+  { num: 10, titre: 'Se laver les pieds', desc: 'Laver le pied droit jusqu\'à la cheville incluse, 3 fois (en passant entre les orteils). Puis le gauche.' },
 ];
 
 const PRIERES = [
@@ -100,13 +102,16 @@ const DEPARTEMENTS_MOSQUEES: Record<string, { nom: string; ville: string; lien: 
 
 // ── Composant accordéon ────────────────────────────────────────
 
-function Section({ title, emoji, children, defaultOpen = false }: { title: string; emoji: string; children: React.ReactNode; defaultOpen?: boolean }) {
+function Section({ title, icon: Icon, children, defaultOpen = false }: { title: string; icon: LucideIcon; children: React.ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div style={{ border: '1px solid var(--border-color)', borderRadius: '0.875rem', overflow: 'hidden', marginBottom: '0.75rem' }}>
-      <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: open ? TEAL_LIGHT : 'white', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', fontWeight: 700, fontSize: '0.95rem', color: open ? TEAL : '#1c1917' }}>
-          <span style={{ fontSize: '1.2rem' }}>{emoji}</span> {title}
+    <div style={{ border: `1px solid ${open ? TEAL_BORDER : '#e7e5e4'}`, borderRadius: '0.875rem', overflow: 'hidden', marginBottom: '0.75rem' }}>
+      <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: open ? TEAL_LIGHT : 'white', border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s' }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '0.95rem', color: open ? TEAL : '#1c1917' }}>
+          <div style={{ width: 32, height: 32, borderRadius: '8px', backgroundColor: open ? `${TEAL}18` : '#f5f5f4', border: `1px solid ${open ? TEAL_BORDER : '#e7e5e4'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Icon size={16} color={open ? TEAL : '#78716c'} strokeWidth={1.8} />
+          </div>
+          {title}
         </span>
         {open ? <ChevronUp size={18} color={TEAL} /> : <ChevronDown size={18} color="#78716c" />}
       </button>
@@ -127,8 +132,7 @@ export default function GuidePage() {
   const [showPreview, setShowPreview] = useState(false);
 
   const handleDownloadPDF = useCallback(() => {
-    // Ouvre une nouvelle fenêtre avec le guide en mode impression propre
-    const w = window.open('', '_blank', 'width=900,height=700');
+    const w = window.open('', '_blank', 'width=820,height=900');
     if (!w) { window.print(); return; }
     w.document.write(`<!DOCTYPE html><html lang="fr">
 <head>
@@ -137,18 +141,21 @@ export default function GuidePage() {
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Poppins, sans-serif; color: #1c1917; background: #fff; padding: 2rem; max-width: 700px; margin: 0 auto; }
-  h1 { font-size: 2rem; font-weight: 900; color: #7c3aed; margin-bottom: 0.5rem; }
-  h2 { font-size: 1.1rem; font-weight: 700; color: #7c3aed; margin: 1.5rem 0 0.75rem; border-bottom: 2px solid #ede9fe; padding-bottom: 0.4rem; }
-  p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.75rem; color: #44403c; }
+  body { font-family: Poppins, sans-serif; color: #1c1917; background: #fff; padding: 2rem; max-width: 680px; margin: 0 auto; }
+  .save-hint { background: #fdfbf0; border: 1px solid #f0dea0; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #7a6848; }
+  .save-hint strong { color: #c9973a; }
+  h1 { font-size: 1.75rem; font-weight: 900; color: #0a0806; margin-bottom: 0.4rem; }
+  h2 { font-size: 1rem; font-weight: 700; color: #c9973a; margin: 1.5rem 0 0.75rem; border-bottom: 2px solid #f0dea0; padding-bottom: 0.4rem; }
+  p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 0.75rem; color: #44403c; }
   .item { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: flex-start; }
-  .num { width: 28px; height: 28px; border-radius: 50%; background: #7c3aed; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
-  .badge { background: #f5f3ff; border: 1px solid #ddd6fe; color: #7c3aed; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 0.5rem; }
-  footer { margin-top: 3rem; text-align: center; color: #a8a29e; font-size: 0.75rem; border-top: 1px solid #e7e5e4; padding-top: 1rem; }
-  @media print { body { padding: 1rem; } }
+  .num { width: 28px; height: 28px; border-radius: 50%; background: #c9973a; color: #0a0806; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
+  .badge { background: #fdfbf0; border: 1px solid #f0dea0; color: #c9973a; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 0.75rem; }
+  footer { margin-top: 3rem; text-align: center; color: #a8a29e; font-size: 0.72rem; border-top: 1px solid #e7e5e4; padding-top: 1rem; }
+  @media print { .save-hint { display: none; } body { padding: 0.5rem; } }
 </style>
 </head>
 <body>
+<div class="save-hint"><strong>Pour télécharger :</strong> Fichier → Imprimer (Cmd+P / Ctrl+P) → choisir <strong>"Enregistrer en PDF"</strong> comme destination.</div>
 <div class="badge">Al-Wasil — Mes Premiers Pas</div>
 <h1>Guide pour débuter en Islam</h1>
 <p>Les fondamentaux sur lesquels tous les savants s'accordent, sans divergences d'écoles.</p>
@@ -160,7 +167,6 @@ ${PILIERS.map((p, i) => `<div class="item"><div class="num">${i+1}</div><div><st
 ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><strong>${s.titre}</strong><br/><span style="font-size:0.85rem;color:#57534e">${s.desc}</span></div></div>`).join('')}
 
 <footer>© Al-Wasil — alwasil-platform.vercel.app — Guide généré le ${new Date().toLocaleDateString('fr-FR')}</footer>
-<script>window.onload = () => { setTimeout(() => window.print(), 500); }</script>
 </body></html>`);
     w.document.close();
   }, []);
@@ -196,15 +202,8 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
         </div>
       </div>
 
-      {/* Bouton PDF */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1.5rem' }}>
-        <button onClick={() => window.print()} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 1rem', border: '1px solid var(--border-color)', borderRadius: '0.625rem', backgroundColor: 'white', color: 'var(--text-secondary)', fontSize: '0.82rem', cursor: 'pointer', fontWeight: 500 }}>
-          <Download size={14} /> Télécharger en PDF
-        </button>
-      </div>
-
       {/* ── SECTION 1 : Les 5 Piliers ── */}
-      <Section title="Les 5 piliers de l'Islam" emoji="🕌" defaultOpen>
+      <Section title="Les 5 piliers de l'Islam" icon={Shield} defaultOpen>
         <div style={{ display: 'grid', gap: '0.75rem' }}>
           {PILIERS.map((p, i) => (
             <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', padding: '0.875rem', backgroundColor: '#fafaf9', borderRadius: '0.625rem', border: '1px solid var(--border-color)' }}>
@@ -222,7 +221,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
       </Section>
 
       {/* ── SECTION 2 : La Shahada ── */}
-      <Section title="La Shahada — Le témoignage de foi" emoji="🤲">
+      <Section title="La Shahada — Le témoignage de foi" icon={Heart}>
         <div style={{ textAlign: 'center', padding: '1.5rem', backgroundColor: TEAL_LIGHT, borderRadius: '0.75rem', border: `1px solid ${TEAL_BORDER}`, marginBottom: '1rem' }}>
           <p style={{ fontSize: '1.8rem', fontFamily: 'serif', direction: 'rtl', lineHeight: 1.8, color: '#1c1917', margin: '0 0 0.75rem' }}>
             أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ
@@ -240,13 +239,13 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
       </Section>
 
       {/* ── SECTION 3 : Les Ablutions ── */}
-      <Section title="Les Ablutions (Wudu — الوُضُوء)" emoji="💧">
+      <Section title="Les Ablutions (Wudu — الوُضُوء)" icon={Droplets}>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.65 }}>
           Les ablutions sont obligatoires avant la prière, le toucher du Coran et la circumambulation (tawaf). Elles sont invalidées par : les selles/urines, les gaz intestinaux, le sommeil profond, le saignement abondant.
         </p>
         {gender === 'f' && (
           <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdf2f8', border: '1px solid #f9a8d4', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#9d174d' }}>
-            🧕 <strong>Pour les sœurs :</strong> L'étape 8 (passage sur la tête) se fait par-dessus le voile si tu es en wudu et que tu le portes déjà. Si tu n'as pas de voile, passe les mains sur les cheveux normalement.
+            <strong>Pour les sœurs :</strong> L'étape 8 (passage sur la tête) se fait par-dessus le voile si tu es en wudu et que tu le portes déjà. Si tu n'as pas de voile, passe les mains sur les cheveux normalement.
           </div>
         )}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
@@ -254,7 +253,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
             <div key={step.num} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start', padding: '0.75rem', backgroundColor: '#fafaf9', borderRadius: '0.625rem', border: '1px solid var(--border-color)' }}>
               <div style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: TEAL, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.78rem', flexShrink: 0 }}>{step.num}</div>
               <div>
-                <div style={{ fontWeight: 600, fontSize: '0.88rem', marginBottom: '0.2rem' }}>{step.icon} {step.titre}</div>
+                <div style={{ fontWeight: 600, fontSize: '0.88rem', marginBottom: '0.2rem' }}>{step.titre}</div>
                 <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>{step.desc}</p>
               </div>
             </div>
@@ -263,7 +262,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
       </Section>
 
       {/* ── SECTION 4 : Les 5 Prières ── */}
-      <Section title="Les 5 Prières obligatoires" emoji="🕐">
+      <Section title="Les 5 Prières obligatoires" icon={Clock}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '0.75rem', marginBottom: '1.25rem' }}>
           {PRIERES.map(p => (
             <div key={p.nom} style={{ padding: '0.875rem', backgroundColor: '#fafaf9', borderRadius: '0.75rem', border: '1px solid var(--border-color)', textAlign: 'center' }}>
@@ -277,15 +276,15 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
           ))}
         </div>
         <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
-          💡 Les heures exactes varient selon les saisons et ta ville. Utilise une application comme <strong>Muslim Pro</strong>, <strong>Adan</strong> ou <strong>Mawaqit</strong> pour avoir les horaires précis en temps réel.
+          Les heures exactes varient selon les saisons et ta ville. Utilise une application comme <strong>Muslim Pro</strong>, <strong>Adan</strong> ou <strong>Mawaqit</strong> pour avoir les horaires précis en temps réel.
         </p>
       </Section>
 
       {/* ── SECTION 5 : Comment prier ── */}
-      <Section title="Comment faire sa prière — les étapes" emoji="🙏">
+      <Section title="Comment faire sa prière — les étapes" icon={BookOpen}>
         {gender === 'f' && (
           <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdf2f8', border: '1px solid #f9a8d4', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#9d174d' }}>
-            🧕 <strong>Pour les sœurs :</strong> La position des bras, des mains et des pieds diffère légèrement (par exemple, les bras restent plus proches du corps). Un guide spécifique avec images est recommandé — recherche "comment prier pour les femmes" sur YouTube.
+            <strong>Pour les sœurs :</strong> La position des bras, des mains et des pieds diffère légèrement (par exemple, les bras restent plus proches du corps). Un guide spécifique avec images est recommandé — recherche "comment prier pour les femmes" sur YouTube.
           </div>
         )}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -302,7 +301,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
       </Section>
 
       {/* ── SECTION 6 : Al-Fatiha ── */}
-      <Section title="Al-Fatiha — La sourate à réciter dans chaque rak'at" emoji="📖">
+      <Section title="Al-Fatiha — La sourate à réciter dans chaque rak'at" icon={FileText}>
         <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
           Al-Fatiha est obligatoire dans chaque rak'at de chaque prière. La mémoriser est la première chose à apprendre.
         </p>
@@ -318,7 +317,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
       </Section>
 
       {/* ── SECTION 7 : Premières sourates ── */}
-      <Section title="Premières sourates à apprendre" emoji="✨">
+      <Section title="Premières sourates à apprendre" icon={BookMarked}>
         <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
           Après Al-Fatiha, voici 3 sourates courtes à mémoriser pour enrichir ta prière.
         </p>
@@ -346,8 +345,27 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
         </div>
       </Section>
 
+      {/* CTA Télécharger EN PDF */}
+      <div style={{ margin: '2rem 0 0.75rem' }}>
+        <button onClick={handleDownloadPDF} style={{
+          width: '100%', padding: '1.1rem 2rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+          background: `linear-gradient(135deg, ${TEAL}, #a87830)`,
+          color: TEAL_DARK, border: 'none', borderRadius: '12px',
+          fontSize: '1.05rem', fontWeight: 800, cursor: 'pointer',
+          boxShadow: '0 4px 16px rgba(201,151,58,0.3)',
+          fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.01em',
+        }}>
+          <Download size={20} strokeWidth={2.5} />
+          Télécharger <span style={{ textDecoration: 'underline', marginLeft: 4 }}>EN</span> PDF
+        </button>
+        <p style={{ textAlign: 'center', fontSize: '0.72rem', color: '#9ca3af', marginTop: '0.5rem' }}>
+          Une fenêtre s'ouvre — choisis "Enregistrer en PDF" comme imprimante
+        </p>
+      </div>
+
       {/* ── SECTION 8 : Trouver une mosquée ── */}
-      <Section title="Trouver une mosquée près de chez toi" emoji="🕌">
+      <Section title="Trouver une mosquée près de chez toi" icon={Building2}>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.65 }}>
           Nous te recommandons de te rapprocher d'une mosquée pour être accompagné dans ton apprentissage. Sélectionne ton département :
         </p>
