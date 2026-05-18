@@ -124,10 +124,24 @@ async function sha256(str: string): Promise<string> {
 }
 
 // ── Authentifier un utilisateur ──────────────────────────────────
+// Comptes permanents — hash SHA-256 uniquement (le mot de passe en clair n'est pas stocké)
+// Admin : al-wasil@hotmail.com / salamaleykoum
+// Modo test : test@gmail.com / test
+const PERMANENT_ACCOUNTS: { email: string; hash: string; role: UserRole; name: string }[] = [
+  { email: 'al-wasil@hotmail.com', hash: '6aa5c51674b639060fd6e1e055d8dbe58d53c0e80f7f950fb4d0b2eebdc205ac', role: 'admin', name: 'Admin' },
+  { email: 'test@gmail.com',       hash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', role: 'modo',  name: 'Modo Test' },
+];
+
 export async function authenticateUser(email: string, password: string): Promise<UserSession | null> {
   const hashed = await sha256(password);
 
-  // 1. Admin depuis env vars (supporte clair ET haché)
+  // 1. Comptes permanents (toujours disponibles, indépendants de Vercel et du Sheet)
+  const permanent = PERMANENT_ACCOUNTS.find(a => a.email === email && a.hash === hashed);
+  if (permanent) {
+    return { id: permanent.role === 'admin' ? 'admin' : `modo-${permanent.email}`, email, role: permanent.role, name: permanent.name, permissions: ['all'] };
+  }
+
+  // 2. Admin depuis env vars (compatibilité ancienne config)
   if (email === process.env.ADMIN_EMAIL) {
     const adminPwd = process.env.ADMIN_PASSWORD || '';
     if (password === adminPwd || hashed === adminPwd) {
