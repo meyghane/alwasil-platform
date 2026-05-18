@@ -1,0 +1,1 @@
+{"contents":[{"role":"user","parts":[{"text":"List 5 upcoming Islamic events in France near Paris. Return ONLY a JSON array. Each item must have these exact keys: titre, date_iso, heure, ville, departement, organisateur, categorie, description, url_source, gratuit"}]}],"generationConfig":{"temperature":0.1,"maxOutputTokens":2048}}

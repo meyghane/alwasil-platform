@@ -488,6 +488,64 @@ function setupRevalidateSecret() {
   Logger.log('✅ REVALIDATE_SECRET configuré');
 }
 
+// ── Backfill : crée les entrées Historique manquantes ─────────
+// À exécuter UNE SEULE FOIS pour rétroactivement logger toutes
+// les fiches déjà présentes dans les onglets du Sheet PRIVÉ.
+
+function backfillHistorique() {
+  var ss = SpreadsheetApp.openById(SHEET_ID);
+  var allSheets = ss.getSheets();
+  var SKIP_TABS = ['Historique', 'Comptes', 'Soumissions', 'Paramètres', 'Sheet1', 'Feuille1'];
+
+  // Préparer l'onglet Historique
+  var hist = ss.getSheetByName('Historique');
+  if (!hist) {
+    hist = ss.insertSheet('Historique');
+    hist.appendRow(['ID', 'CATEGORIE', 'ONGLET', 'NOM', 'ACTION', 'DATE', 'PAR']);
+    hist.getRange(1, 1, 1, 7).setFontWeight('bold');
+  }
+
+  // Récupérer les IDs déjà dans l'Historique pour éviter les doublons
+  var existingIds = {};
+  if (hist.getLastRow() > 1) {
+    var histData = hist.getRange(2, 1, hist.getLastRow() - 1, 1).getValues();
+    histData.forEach(function(row) { existingIds[String(row[0])] = true; });
+  }
+
+  var totalAdded = 0;
+  var importedAt = new Date().toISOString();
+
+  allSheets.forEach(function(sheet) {
+    var tabName = sheet.getName();
+    if (SKIP_TABS.indexOf(tabName) !== -1) return;
+    if (sheet.getLastRow() < 2) return;
+
+    var data    = sheet.getDataRange().getValues();
+    var headers = data[0].map(function(h) { return String(h).toLowerCase(); });
+    var idIdx   = Math.max(headers.indexOf('id'), 0);
+    var nomIdx  = ['nom', 'titre', 'name'].reduce(function(found, k) {
+      return found !== -1 ? found : headers.indexOf(k);
+    }, -1);
+    var catIdx  = headers.indexOf('categorie');
+
+    for (var i = 1; i < data.length; i++) {
+      var row    = data[i];
+      var rowId  = String(row[idIdx] || ('backfill-' + tabName + '-' + i));
+      if (existingIds[rowId]) continue; // déjà loggé
+
+      var nom  = nomIdx !== -1 ? String(row[nomIdx] || '') : rowId;
+      var cat  = catIdx !== -1 ? String(row[catIdx] || tabName) : tabName;
+
+      hist.appendRow([rowId, cat, tabName, nom, 'IMPORT', importedAt, 'Wassil']);
+      existingIds[rowId] = true;
+      totalAdded++;
+    }
+  });
+
+  Logger.log('✅ Backfill terminé — ' + totalAdded + ' entrées ajoutées dans Historique');
+  return totalAdded;
+}
+
 // ── Helper ────────────────────────────────────────────────────
 
 function jsonOk(obj) {
