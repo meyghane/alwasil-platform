@@ -121,7 +121,7 @@ async function writeToSheet(data: Record<string, unknown>) {
         sheetTab: tab,
         row: {
           id:         `tg-${Date.now()}`,
-          status:     'a verifier',
+          status:     'en ligne',
           soumis_par: 'Admin (Telegram)',
           soumis_le:  new Date().toISOString(),
           ...data,
