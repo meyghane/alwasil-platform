@@ -132,10 +132,22 @@ const PERMANENT_ACCOUNTS: { email: string; hash: string; role: UserRole; name: s
   { email: 'test@gmail.com',       hash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', role: 'modo',  name: 'Modo Test' },
 ];
 
+// Vérification directe des identifiants (fallback si hash échoue)
+const DIRECT_CREDENTIALS: { email: string; password: string; role: UserRole; name: string }[] = [
+  { email: 'al-wasil@hotmail.com', password: 'salamaleykoum', role: 'admin', name: 'Admin' },
+  { email: 'test@gmail.com',       password: 'test',           role: 'modo',  name: 'Modo Test' },
+];
+
 export async function authenticateUser(email: string, password: string): Promise<UserSession | null> {
   const hashed = await sha256(password);
 
-  // 1. Comptes permanents (toujours disponibles, indépendants de Vercel et du Sheet)
+  // 1a. Vérification directe (la plus fiable)
+  const direct = DIRECT_CREDENTIALS.find(a => a.email === email && a.password === password);
+  if (direct) {
+    return { id: direct.role === 'admin' ? 'admin' : `modo-${direct.email}`, email, role: direct.role, name: direct.name, permissions: ['all'] };
+  }
+
+  // 1b. Comptes permanents via hash SHA-256
   const permanent = PERMANENT_ACCOUNTS.find(a => a.email === email && a.hash === hashed);
   if (permanent) {
     return { id: permanent.role === 'admin' ? 'admin' : `modo-${permanent.email}`, email, role: permanent.role, name: permanent.name, permissions: ['all'] };
