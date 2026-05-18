@@ -1,8 +1,14 @@
 {
   "crons": [
-    {
-      "path": "/api/auto/scrape-events",
-      "schedule": "0 6,12,18,0 * * *"
-    }
+    { "path": "/api/auto/scrape?cat=events",     "schedule": "0 6,12,18,0 * * *" },
+    { "path": "/api/auto/scrape?cat=solidarite",  "schedule": "0 8,20 * * *"       },
+    { "path": "/api/auto/scrape?cat=emploi",      "schedule": "0 7,19 * * *"       },
+    { "path": "/api/auto/scrape?cat=cagnottes",   "schedule": "0 9 * * *"          },
+    { "path": "/api/auto/scrape?cat=librairies",  "schedule": "0 10 * * 1"         },
+    { "path": "/api/auto/scrape?cat=piscines",    "schedule": "0 10 * * 3"         },
+    { "path": "/api/auto/scrape?cat=praticiens",  "schedule": "0 10 * * 2"         },
+    { "path": "/api/auto/scrape?cat=education",   "schedule": "0 10 * * 4"         },
+    { "path": "/api/auto/scrape?cat=hajj",        "schedule": "0 10 * * 5"         },
+    { "path": "/api/auto/cleanup",                "schedule": "0 3 * * *"          }
   ]
 }
