@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -8,83 +9,90 @@ import PrayerTimesBar from '@/components/PrayerTimesBar';
 const BASE_URL = 'https://alwasil-platform.vercel.app';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
-  title: {
-    default: 'Al-Wasil — La plateforme de la communauté musulmane en France',
-    template: '%s | Al-Wasil',
-  },
-  description: 'Emploi voile accepté, librairies islamiques, piscines burkini, Hajj & Omra, psychologues, hijama, roqya, événements et solidarité. La plateforme de référence pour les musulmans de France.',
-  keywords: [
-    'librairie islamique Paris', 'piscine burkini Île-de-France', 'emploi voile accepté',
-    'hijama certifié Paris', 'psychologue musulman', 'roqya char\'iyya France',
-    'Hajj 2026 France', 'Omra pas cher', 'agence Hajj comparateur',
-    'cagnotte islamique', 'événements islamiques France', 'cours arabe Paris',
-    'solidarité musulmane', 'plateforme communauté musulmane France', 'Al-Wasil',
-  ],
-  authors: [{ name: 'Al-Wasil' }],
-  creator: 'Al-Wasil Platform',
-  openGraph: {
-    type: 'website',
-    locale: 'fr_FR',
-    url: BASE_URL,
-    siteName: 'Al-Wasil',
-    title: 'Al-Wasil — La plateforme de la communauté musulmane en France',
-    description: 'Emploi voile accepté, librairies islamiques, piscines burkini, Hajj & Omra, psychologues, hijama, événements et solidarité.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Al-Wasil' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Al-Wasil — Communauté musulmane France',
-    description: 'Emploi voile OK, librairies, piscines burkini, Hajj, psychologues, hijama…',
-    images: ['/og-image.png'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
-  },
-  alternates: { canonical: BASE_URL },
+ metadataBase: new URL(BASE_URL),
+ title: {
+ default: 'Al-Wasil — La plateforme de la communauté musulmane en France',
+ template: '%s | Al-Wasil',
+ },
+ description: 'Emploi voile accepté, librairies islamiques, piscines burkini, Hajj & Omra, psychologues, hijama, roqya, événements et solidarité. La plateforme de référence pour les musulmans de France.',
+ keywords: [
+ 'librairie islamique Paris', 'piscine burkini Île-de-France', 'emploi voile accepté',
+ 'hijama certifié Paris', 'psychologue musulman', 'roqya char\'iyya France',
+ 'Hajj 2026 France', 'Omra pas cher', 'agence Hajj comparateur',
+ 'cagnotte islamique', 'événements islamiques France', 'cours arabe Paris',
+ 'solidarité musulmane', 'plateforme communauté musulmane France', 'Al-Wasil',
+ ],
+ authors: [{ name: 'Al-Wasil' }],
+ creator: 'Al-Wasil Platform',
+ openGraph: {
+ type: 'website',
+ locale: 'fr_FR',
+ url: BASE_URL,
+ siteName: 'Al-Wasil',
+ title: 'Al-Wasil — La plateforme de la communauté musulmane en France',
+ description: 'Emploi voile accepté, librairies islamiques, piscines burkini, Hajj & Omra, psychologues, hijama, événements et solidarité.',
+ images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Al-Wasil' }],
+ },
+ twitter: {
+ card: 'summary_large_image',
+ title: 'Al-Wasil — Communauté musulmane France',
+ description: 'Emploi voile OK, librairies, piscines burkini, Hajj, psychologues, hijama…',
+ images: ['/og-image.png'],
+ },
+ robots: {
+ index: true,
+ follow: true,
+ googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
+ },
+ alternates: { canonical: BASE_URL },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="fr">
-      <head>
-        {/* Google Tag Manager */}
-        <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PD96NMKQ');` }} />
-        {/* JSON-LD — Organisation */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
-              name: 'Al-Wasil',
-              alternateName: 'الواصل',
-              url: BASE_URL,
-              description: 'Plateforme communautaire pour les musulmans de France : emploi, santé, éducation, solidarité, Hajj, librairies, piscines burkini.',
-              inLanguage: 'fr-FR',
-              audience: { '@type': 'Audience', audienceType: 'Muslims in France' },
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: { '@type': 'EntryPoint', urlTemplate: `${BASE_URL}/education?q={search_term_string}` },
-                'query-input': 'required name=search_term_string',
-              },
-            }),
-          }}
-        />
-      </head>
-      <body>
-        {/* Google Tag Manager (noscript) */}
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PD96NMKQ" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
-        <Navigation />
-        <PrayerTimesBar />
-        <main style={{ minHeight: 'calc(100vh - 4rem - 300px)' }}>
-          {children}
-        </main>
-        <Footer />
-        <ChatBotWrapper />
-      </body>
-    </html>
-  );
+ return (
+ <html lang="fr">
+ <head>
+ {/* JSON-LD — Organisation */}
+ <script
+ type="application/ld+json"
+ dangerouslySetInnerHTML={{
+ __html: JSON.stringify({
+ '@context': 'https://schema.org',
+ '@type': 'WebSite',
+ name: 'Al-Wasil',
+ alternateName: 'الواصل',
+ url: BASE_URL,
+ description: 'Plateforme communautaire pour les musulmans de France : emploi, santé, éducation, solidarité, Hajj, librairies, piscines burkini.',
+ inLanguage: 'fr-FR',
+ audience: { '@type': 'Audience', audienceType: 'Muslims in France' },
+ potentialAction: {
+ '@type': 'SearchAction',
+ target: { '@type': 'EntryPoint', urlTemplate: `${BASE_URL}/education?q={search_term_string}` },
+ 'query-input': 'required name=search_term_string',
+ },
+ }),
+ }}
+ />
+ </head>
+ <body>
+ {/* GTM noscript fallback */}
+ <noscript>
+ <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PD96NMKQ"
+ height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} />
+ </noscript>
+ {/* GTM Script — next/script pour chargement correct en Next.js */}
+ <Script
+ id="gtm"
+ strategy="afterInteractive"
+ dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PD96NMKQ');` }}
+ />
+ <Navigation />
+ <PrayerTimesBar />
+ <main style={{ minHeight: 'calc(100vh - 4rem - 300px)' }}>
+ {children}
+ </main>
+ <Footer />
+ <ChatBotWrapper />
+ </body>
+ </html>
+ );
 }

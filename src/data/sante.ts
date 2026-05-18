@@ -2,495 +2,495 @@ export type SanteSector = 'psy' | 'hijama' | 'roqya' | 'medecin' | 'sage-femme' 
 export type ConsultMode = 'presentiel' | 'visio' | 'both';
 
 export type PraticienPsy = {
-  id: string;
-  name: string;
-  title: string; // Psychologue, Psychothérapeute, Coach...
-  specialites: string[];
-  langues: string[];
-  location: string;
-  department: string;
-  visio: boolean;
-  tariف?: string;
-  conventionné: boolean;
-  secteur?: '1' | '2' | '3' | 'non-conventionné';
-  description: string;
-  approche: string[]; // TCC, EMDR, psychanalyse, etc.
-  muslimFocus: boolean; // orienté communauté / comprend le contexte islamique
-  arabophone: boolean;
-  gender: 'f' | 'm' | 'mixte';
-  contact?: string;
-  website?: string;
-  tags: string[];
-  rating?: number;
-  reviews?: number;
+ id: string;
+ name: string;
+ title: string; // Psychologue, Psychothérapeute, Coach...
+ specialites: string[];
+ langues: string[];
+ location: string;
+ department: string;
+ visio: boolean;
+ tariف?: string;
+ conventionné: boolean;
+ secteur?: '1' | '2' | '3' | 'non-conventionné';
+ description: string;
+ approche: string[]; // TCC, EMDR, psychanalyse, etc.
+ muslimFocus: boolean; // orienté communauté / comprend le contexte islamique
+ arabophone: boolean;
+ gender: 'f' | 'm' | 'mixte';
+ contact?: string;
+ website?: string;
+ tags: string[];
+ rating?: number;
+ reviews?: number;
 };
 
 export type PraticienHijama = {
-  id: string;
-  name: string;
-  location: string;
-  department: string;
-  visio: false;
-  tarif?: string;
-  gender: 'f' | 'm' | 'mixte';
-  certifié: boolean;
-  certifOrg?: string; // organisme de certification
-  description: string;
-  disponibilité: string; // ex: "Sam-Dim", "Sur RDV"
-  contact?: string;
-  instagram?: string;
-  website?: string;
-  tags: string[];
+ id: string;
+ name: string;
+ location: string;
+ department: string;
+ visio: false;
+ tarif?: string;
+ gender: 'f' | 'm' | 'mixte';
+ certifié: boolean;
+ certifOrg?: string; // organisme de certification
+ description: string;
+ disponibilité: string; // ex: "Sam-Dim", "Sur RDV"
+ contact?: string;
+ instagram?: string;
+ website?: string;
+ tags: string[];
 };
 
 export type PraticienRoqya = {
-  id: string;
-  name: string;
-  title: string; // Cheikh, Mouqri', Imam...
-  location: string;
-  department?: string;
-  visio: boolean;
-  tarif: string; // souvent gratuit/donation
-  gender: 'f' | 'm';
-  école?: string; // salafi, maliki, etc.
-  langues: string[];
-  description: string;
-  disponibilité: string;
-  contact?: string;
-  tags: string[];
-  warning?: string; // avertissement si besoin
+ id: string;
+ name: string;
+ title: string; // Cheikh, Mouqri', Imam...
+ location: string;
+ department?: string;
+ visio: boolean;
+ tarif: string; // souvent gratuit/donation
+ gender: 'f' | 'm';
+ école?: string; // salafi, maliki, etc.
+ langues: string[];
+ description: string;
+ disponibilité: string;
+ contact?: string;
+ tags: string[];
+ warning?: string; // avertissement si besoin
 };
 
 // ─── PSYCHOLOGUES ───────────────────────────────────────────
 
 export const psyProfiles: PraticienPsy[] = [
-  {
-    id: 'psy1',
-    name: 'Dr Yasmine Benali',
-    title: 'Psychologue clinicienne',
-    specialites: ['Anxiété', 'Dépression', 'Deuil', 'Trauma'],
-    langues: ['Français', 'Arabe', 'Anglais'],
-    location: 'Paris 11e',
-    department: '75',
-    visio: true,
-    tariف: '70€/séance (45min)',
-    conventionné: false,
-    secteur: 'non-conventionné',
-    description: 'Psychologue clinicienne spécialisée dans l\'accompagnement de personnes issues de la communauté musulmane. Comprend les enjeux identitaires, les conflits de valeurs et les problématiques de double culture.',
-    approche: ['TCC', 'ACT', 'Mindfulness'],
-    muslimFocus: true,
-    arabophone: true,
-    gender: 'f',
-    contact: '+33 6 12 34 56 78',
-    website: 'https://www.doctolib.fr',
-    tags: ['TCC', 'anxiété', 'double-culture', 'identité', 'trauma'],
-    rating: 4.9,
-    reviews: 42,
-  },
-  {
-    id: 'psy2',
-    name: 'Rachid Hammouchi',
-    title: 'Psychothérapeute & Coach',
-    specialites: ['Gestion du stress', 'Confiance en soi', 'Couple', 'Addiction'],
-    langues: ['Français', 'Arabe dialectal', 'Tamazight'],
-    location: 'Aubervilliers (93)',
-    department: '93',
-    visio: true,
-    tariف: '55€/séance',
-    conventionné: false,
-    secteur: 'non-conventionné',
-    description: 'Psychothérapeute et coach de vie, accompagne depuis 8 ans des hommes et femmes musulmans sur les thèmes de la confiance en soi, des relations et de la spiritualité intégrée.',
-    approche: ['Coaching intégratif', 'PNL', 'Thérapie narrative'],
-    muslimFocus: true,
-    arabophone: true,
-    gender: 'm',
-    contact: '+33 6 23 45 67 89',
-    website: 'https://www.doctolib.fr',
-    tags: ['coaching', 'couple', 'stress', 'homme', 'confiance'],
-    rating: 4.7,
-    reviews: 28,
-  },
-  {
-    id: 'psy3',
-    name: 'Amira Tazi',
-    title: 'Psychologue — spécialiste enfants & ados',
-    specialites: ['Enfants', 'Adolescents', 'Troubles scolaires', 'TDA/H', 'Harcèlement'],
-    langues: ['Français', 'Arabe'],
-    location: 'Évry-Courcouronnes (91)',
-    department: '91',
-    visio: false,
-    tariف: '60€/séance',
-    conventionné: false,
-    description: 'Spécialisée dans les enfants et adolescents issus de familles musulmanes. Comprend les enjeux éducatifs, religieux et sociaux. Accompagnement des parents aussi proposé.',
-    approche: ['TCC', 'Thérapie par le jeu', 'Approche systémique'],
-    muslimFocus: true,
-    arabophone: true,
-    gender: 'f',
-    contact: '+33 6 34 56 78 90',
-    tags: ['enfants', 'ados', 'TDA-H', 'scolaire', '91'],
-    rating: 4.8,
-    reviews: 19,
-  },
-  {
-    id: 'psy4',
-    name: 'Dr Soufiane Mekki',
-    title: 'Psychiatre',
-    specialites: ['Dépression', 'Trouble bipolaire', 'Schizophrénie', 'Anxiété sévère'],
-    langues: ['Français', 'Arabe', 'Anglais'],
-    location: 'Bobigny (93)',
-    department: '93',
-    visio: false,
-    tariف: '30€ (secteur 1)',
-    conventionné: true,
-    secteur: '1',
-    description: 'Psychiatre conventionné secteur 1, sensibilisé aux problématiques culturelles et religieuses. Prescripteur avec une approche bienveillante et non-stigmatisante.',
-    approche: ['Médicamenteux', 'Psychoéducation', 'Suivi thérapeutique'],
-    muslimFocus: true,
-    arabophone: true,
-    gender: 'm',
-    contact: '+33 1 48 96 12 34',
-    website: 'https://www.doctolib.fr',
-    tags: ['psychiatre', 'remboursé', 'dépression', 'médication', '93'],
-    rating: 4.6,
-    reviews: 55,
-  },
-  {
-    id: 'psy5',
-    name: 'Nadia Ouhab',
-    title: 'Psychologue — trauma & EMDR',
-    specialites: ['Trauma', 'PTSD', 'Violence conjugale', 'Deuil', 'Exil'],
-    langues: ['Français', 'Kabyle', 'Arabe'],
-    location: 'Villeurbanne (69)',
-    department: '69',
-    visio: true,
-    tariف: '65€/séance',
-    conventionné: false,
-    description: 'Accompagnement de femmes victimes de violence, de personnes en deuil ou ayant vécu des traumatismes. Forte expérience avec les familles maghrébines et les parcours migratoires.',
-    approche: ['EMDR', 'Thérapie sensorimotrice', 'TCC'],
-    muslimFocus: true,
-    arabophone: true,
-    gender: 'f',
-    contact: '+33 6 45 67 89 01',
-    website: 'https://www.doctolib.fr',
-    tags: ['EMDR', 'trauma', 'femmes', 'violence', 'deuil', 'lyon'],
-    rating: 5.0,
-    reviews: 14,
-  },
-  {
-    id: 'psy6',
-    name: 'Hakim Berrada',
-    title: 'Conseiller conjugal & familial',
-    specialites: ['Couple', 'Divorce islamique', 'Communication familiale', 'Parentalité'],
-    langues: ['Français', 'Arabe', 'Anglais'],
-    location: 'Marseille (13)',
-    department: '13',
-    visio: true,
-    tariف: '50€/séance individuelle — 70€/séance couple',
-    conventionné: false,
-    description: 'Conseiller conjugal et familial formé en France et au Maroc. Spécialiste des conflits de couple intégrant les valeurs islamiques. Médiation avant divorce, communication non-violente, reconstruction.',
-    approche: ['CNV', 'Médiation', 'Approche islamique intégrée'],
-    muslimFocus: true,
-    arabophone: true,
-    gender: 'm',
-    contact: '+33 6 56 78 90 12',
-    website: 'https://www.doctolib.fr',
-    tags: ['couple', 'mariage', 'divorce', 'famille', 'marseille'],
-    rating: 4.8,
-    reviews: 31,
-  },
+ {
+ id: 'psy1',
+ name: 'Dr Yasmine Benali',
+ title: 'Psychologue clinicienne',
+ specialites: ['Anxiété', 'Dépression', 'Deuil', 'Trauma'],
+ langues: ['Français', 'Arabe', 'Anglais'],
+ location: 'Paris 11e',
+ department: '75',
+ visio: true,
+ tariف: '70€/séance (45min)',
+ conventionné: false,
+ secteur: 'non-conventionné',
+ description: 'Psychologue clinicienne spécialisée dans l\'accompagnement de personnes issues de la communauté musulmane. Comprend les enjeux identitaires, les conflits de valeurs et les problématiques de double culture.',
+ approche: ['TCC', 'ACT', 'Mindfulness'],
+ muslimFocus: true,
+ arabophone: true,
+ gender: 'f',
+ contact: '+33 6 12 34 56 78',
+ website: 'https://www.doctolib.fr',
+ tags: ['TCC', 'anxiété', 'double-culture', 'identité', 'trauma'],
+ rating: 4.9,
+ reviews: 42,
+ },
+ {
+ id: 'psy2',
+ name: 'Rachid Hammouchi',
+ title: 'Psychothérapeute & Coach',
+ specialites: ['Gestion du stress', 'Confiance en soi', 'Couple', 'Addiction'],
+ langues: ['Français', 'Arabe dialectal', 'Tamazight'],
+ location: 'Aubervilliers (93)',
+ department: '93',
+ visio: true,
+ tariف: '55€/séance',
+ conventionné: false,
+ secteur: 'non-conventionné',
+ description: 'Psychothérapeute et coach de vie, accompagne depuis 8 ans des hommes et femmes musulmans sur les thèmes de la confiance en soi, des relations et de la spiritualité intégrée.',
+ approche: ['Coaching intégratif', 'PNL', 'Thérapie narrative'],
+ muslimFocus: true,
+ arabophone: true,
+ gender: 'm',
+ contact: '+33 6 23 45 67 89',
+ website: 'https://www.doctolib.fr',
+ tags: ['coaching', 'couple', 'stress', 'homme', 'confiance'],
+ rating: 4.7,
+ reviews: 28,
+ },
+ {
+ id: 'psy3',
+ name: 'Amira Tazi',
+ title: 'Psychologue — spécialiste enfants & ados',
+ specialites: ['Enfants', 'Adolescents', 'Troubles scolaires', 'TDA/H', 'Harcèlement'],
+ langues: ['Français', 'Arabe'],
+ location: 'Évry-Courcouronnes (91)',
+ department: '91',
+ visio: false,
+ tariف: '60€/séance',
+ conventionné: false,
+ description: 'Spécialisée dans les enfants et adolescents issus de familles musulmanes. Comprend les enjeux éducatifs, religieux et sociaux. Accompagnement des parents aussi proposé.',
+ approche: ['TCC', 'Thérapie par le jeu', 'Approche systémique'],
+ muslimFocus: true,
+ arabophone: true,
+ gender: 'f',
+ contact: '+33 6 34 56 78 90',
+ tags: ['enfants', 'ados', 'TDA-H', 'scolaire', '91'],
+ rating: 4.8,
+ reviews: 19,
+ },
+ {
+ id: 'psy4',
+ name: 'Dr Soufiane Mekki',
+ title: 'Psychiatre',
+ specialites: ['Dépression', 'Trouble bipolaire', 'Schizophrénie', 'Anxiété sévère'],
+ langues: ['Français', 'Arabe', 'Anglais'],
+ location: 'Bobigny (93)',
+ department: '93',
+ visio: false,
+ tariف: '30€ (secteur 1)',
+ conventionné: true,
+ secteur: '1',
+ description: 'Psychiatre conventionné secteur 1, sensibilisé aux problématiques culturelles et religieuses. Prescripteur avec une approche bienveillante et non-stigmatisante.',
+ approche: ['Médicamenteux', 'Psychoéducation', 'Suivi thérapeutique'],
+ muslimFocus: true,
+ arabophone: true,
+ gender: 'm',
+ contact: '+33 1 48 96 12 34',
+ website: 'https://www.doctolib.fr',
+ tags: ['psychiatre', 'remboursé', 'dépression', 'médication', '93'],
+ rating: 4.6,
+ reviews: 55,
+ },
+ {
+ id: 'psy5',
+ name: 'Nadia Ouhab',
+ title: 'Psychologue — trauma & EMDR',
+ specialites: ['Trauma', 'PTSD', 'Violence conjugale', 'Deuil', 'Exil'],
+ langues: ['Français', 'Kabyle', 'Arabe'],
+ location: 'Villeurbanne (69)',
+ department: '69',
+ visio: true,
+ tariف: '65€/séance',
+ conventionné: false,
+ description: 'Accompagnement de femmes victimes de violence, de personnes en deuil ou ayant vécu des traumatismes. Forte expérience avec les familles maghrébines et les parcours migratoires.',
+ approche: ['EMDR', 'Thérapie sensorimotrice', 'TCC'],
+ muslimFocus: true,
+ arabophone: true,
+ gender: 'f',
+ contact: '+33 6 45 67 89 01',
+ website: 'https://www.doctolib.fr',
+ tags: ['EMDR', 'trauma', 'femmes', 'violence', 'deuil', 'lyon'],
+ rating: 5.0,
+ reviews: 14,
+ },
+ {
+ id: 'psy6',
+ name: 'Hakim Berrada',
+ title: 'Conseiller conjugal & familial',
+ specialites: ['Couple', 'Divorce islamique', 'Communication familiale', 'Parentalité'],
+ langues: ['Français', 'Arabe', 'Anglais'],
+ location: 'Marseille (13)',
+ department: '13',
+ visio: true,
+ tariف: '50€/séance individuelle — 70€/séance couple',
+ conventionné: false,
+ description: 'Conseiller conjugal et familial formé en France et au Maroc. Spécialiste des conflits de couple intégrant les valeurs islamiques. Médiation avant divorce, communication non-violente, reconstruction.',
+ approche: ['CNV', 'Médiation', 'Approche islamique intégrée'],
+ muslimFocus: true,
+ arabophone: true,
+ gender: 'm',
+ contact: '+33 6 56 78 90 12',
+ website: 'https://www.doctolib.fr',
+ tags: ['couple', 'mariage', 'divorce', 'famille', 'marseille'],
+ rating: 4.8,
+ reviews: 31,
+ },
 ];
 
 // ─── HIJAMA ─────────────────────────────────────────────────
 
 export const hijamaProfiles: PraticienHijama[] = [
-  {
-    id: 'h1',
-    name: 'Centre Al-Shifa',
-    location: 'Saint-Denis (93)',
-    department: '93',
-    visio: false,
-    tarif: 'À partir de 40€',
-    gender: 'mixte',
-    certifié: true,
-    certifOrg: 'BCHA (British Cupping and Hijama Association)',
-    description: 'Centre spécialisé hijama avec praticiens hommes et femmes. Matériel stérile à usage unique, protocoles sunnah respectés. Séances individuelles ou en groupe.',
-    disponibilité: 'Mar–Sam, sur RDV',
-    instagram: '#',
-    website: '#',
-    tags: ['saint-denis', '93', 'centre', 'homme-femme', 'certifié'],
-  },
-  {
-    id: 'h2',
-    name: 'Oum Khalid — Hijama pour femmes',
-    location: 'Aubervilliers (93)',
-    department: '93',
-    visio: false,
-    tarif: '35–50€ selon formule',
-    gender: 'f',
-    certifié: true,
-    certifOrg: 'Formation Hijama Institut Paris',
-    description: 'Praticienne spécialisée dans la hijama pour femmes uniquement. Cadre intimiste et bienveillant. Expliquer les étapes avant la séance, conseils post-hijama inclus.',
-    disponibilité: 'Week-end + jeudi soir',
-    instagram: '#',
-    tags: ['femmes-only', '93', 'aubervilliers', 'intimiste'],
-  },
-  {
-    id: 'h3',
-    name: 'Abou Zayd Cupping',
-    location: 'Vitry-sur-Seine (94)',
-    department: '94',
-    visio: false,
-    tarif: '45€ (sèche) / 55€ (avec saignée)',
-    gender: 'm',
-    certifié: true,
-    certifOrg: 'HCA France',
-    description: 'Praticien homme, certifié, formation internationale. Hijama sèche et hijama avec saignée (sunnah). Points sunnah + points thérapeutiques selon besoin. Conseils diététiques offerts.',
-    disponibilité: 'Lun–Sam, 9h–19h',
-    instagram: '#',
-    tags: ['homme', '94', 'vitry', 'saignée', 'sunnah'],
-  },
-  {
-    id: 'h4',
-    name: 'Hijama Bien-Être Lyon',
-    location: 'Vénissieux (69)',
-    department: '69',
-    visio: false,
-    tarif: '40€',
-    gender: 'mixte',
-    certifié: true,
-    certifOrg: 'Institut de Médecine Prophétique',
-    description: 'Centre de hijama à Lyon, accueil hommes et femmes (créneaux séparés). Approche médecine prophétique, huiles essentielles sunnah (habba sawda). Tarif réduit pour étudiants.',
-    disponibilité: 'Sam–Dim + mardi soir',
-    tags: ['lyon', 'vénissieux', 'médecine-prophétique', 'habba-sawda'],
-  },
-  {
-    id: 'h5',
-    name: 'Nour Al-Shifa — Hijama domicile',
-    location: 'Île-de-France (déplacement)',
-    department: '75',
-    visio: false,
-    tarif: '60€ (déplacement inclus)',
-    gender: 'f',
-    certifié: true,
-    certifOrg: 'Formation BCHA UK',
-    description: 'Praticienne certifiée se déplaçant à domicile en Île-de-France. Idéal pour femmes qui préfèrent être chez elles. Matériel stérile apporté, séance en toute confidentialité.',
-    disponibilité: 'Sur RDV — délai 1 semaine',
-    instagram: '#',
-    tags: ['domicile', 'île-de-france', 'femmes', 'déplacement'],
-  },
+ {
+ id: 'h1',
+ name: 'Centre Al-Shifa',
+ location: 'Saint-Denis (93)',
+ department: '93',
+ visio: false,
+ tarif: 'À partir de 40€',
+ gender: 'mixte',
+ certifié: true,
+ certifOrg: 'BCHA (British Cupping and Hijama Association)',
+ description: 'Centre spécialisé hijama avec praticiens hommes et femmes. Matériel stérile à usage unique, protocoles sunnah respectés. Séances individuelles ou en groupe.',
+ disponibilité: 'Mar–Sam, sur RDV',
+ instagram: '#',
+ website: '#',
+ tags: ['saint-denis', '93', 'centre', 'homme-femme', 'certifié'],
+ },
+ {
+ id: 'h2',
+ name: 'Oum Khalid — Hijama pour femmes',
+ location: 'Aubervilliers (93)',
+ department: '93',
+ visio: false,
+ tarif: '35–50€ selon formule',
+ gender: 'f',
+ certifié: true,
+ certifOrg: 'Formation Hijama Institut Paris',
+ description: 'Praticienne spécialisée dans la hijama pour femmes uniquement. Cadre intimiste et bienveillant. Expliquer les étapes avant la séance, conseils post-hijama inclus.',
+ disponibilité: 'Week-end + jeudi soir',
+ instagram: '#',
+ tags: ['femmes-only', '93', 'aubervilliers', 'intimiste'],
+ },
+ {
+ id: 'h3',
+ name: 'Abou Zayd Cupping',
+ location: 'Vitry-sur-Seine (94)',
+ department: '94',
+ visio: false,
+ tarif: '45€ (sèche) / 55€ (avec saignée)',
+ gender: 'm',
+ certifié: true,
+ certifOrg: 'HCA France',
+ description: 'Praticien homme, certifié, formation internationale. Hijama sèche et hijama avec saignée (sunnah). Points sunnah + points thérapeutiques selon besoin. Conseils diététiques offerts.',
+ disponibilité: 'Lun–Sam, 9h–19h',
+ instagram: '#',
+ tags: ['homme', '94', 'vitry', 'saignée', 'sunnah'],
+ },
+ {
+ id: 'h4',
+ name: 'Hijama Bien-Être Lyon',
+ location: 'Vénissieux (69)',
+ department: '69',
+ visio: false,
+ tarif: '40€',
+ gender: 'mixte',
+ certifié: true,
+ certifOrg: 'Institut de Médecine Prophétique',
+ description: 'Centre de hijama à Lyon, accueil hommes et femmes (créneaux séparés). Approche médecine prophétique, huiles essentielles sunnah (habba sawda). Tarif réduit pour étudiants.',
+ disponibilité: 'Sam–Dim + mardi soir',
+ tags: ['lyon', 'vénissieux', 'médecine-prophétique', 'habba-sawda'],
+ },
+ {
+ id: 'h5',
+ name: 'Nour Al-Shifa — Hijama domicile',
+ location: 'Île-de-France (déplacement)',
+ department: '75',
+ visio: false,
+ tarif: '60€ (déplacement inclus)',
+ gender: 'f',
+ certifié: true,
+ certifOrg: 'Formation BCHA UK',
+ description: 'Praticienne certifiée se déplaçant à domicile en Île-de-France. Idéal pour femmes qui préfèrent être chez elles. Matériel stérile apporté, séance en toute confidentialité.',
+ disponibilité: 'Sur RDV — délai 1 semaine',
+ instagram: '#',
+ tags: ['domicile', 'île-de-france', 'femmes', 'déplacement'],
+ },
 ];
 
 // ─── SAGE-FEMMES & MÉDECINS ──────────────────────────────────
 
 export type PraticienMedical = {
-  id: string;
-  name: string;
-  title: string; // Sage-femme, Médecin généraliste, Gynécologue...
-  secteurMedical: 'sage-femme' | 'medecin-generaliste' | 'gynecologue' | 'kine' | 'dentiste' | 'infirmiere';
-  specialites: string[];
-  langues: string[];
-  location: string;
-  department: string;
-  visio: boolean;
-  tariف?: string;
-  conventionné: boolean;
-  secteur?: '1' | '2' | '3' | 'non-conventionné';
-  description: string;
-  gender: 'f' | 'm';
-  arabophone: boolean;
-  accepteVoile: boolean; // cabinet respectueux, personnel féminin si possible
-  muslimFocus: boolean;
-  contact?: string;
-  website?: string;
-  tags: string[];
-  rating?: number;
-  reviews?: number;
+ id: string;
+ name: string;
+ title: string; // Sage-femme, Médecin généraliste, Gynécologue...
+ secteurMedical: 'sage-femme' | 'medecin-generaliste' | 'gynecologue' | 'kine' | 'dentiste' | 'infirmiere';
+ specialites: string[];
+ langues: string[];
+ location: string;
+ department: string;
+ visio: boolean;
+ tariف?: string;
+ conventionné: boolean;
+ secteur?: '1' | '2' | '3' | 'non-conventionné';
+ description: string;
+ gender: 'f' | 'm';
+ arabophone: boolean;
+ accepteVoile: boolean; // cabinet respectueux, personnel féminin si possible
+ muslimFocus: boolean;
+ contact?: string;
+ website?: string;
+ tags: string[];
+ rating?: number;
+ reviews?: number;
 };
 
 export const medicalProfiles: PraticienMedical[] = [
-  {
-    id: 'med1',
-    name: 'Karima Haddad',
-    title: 'Sage-femme libérale',
-    secteurMedical: 'sage-femme',
-    specialites: ['Suivi de grossesse', 'Préparation à l\'accouchement', 'Post-partum', 'Allaitement'],
-    langues: ['Français', 'Arabe'],
-    location: 'Saint-Denis (93)',
-    department: '93',
-    visio: true,
-    tariف: 'Remboursé Sécu (secteur 1)',
-    conventionné: true,
-    secteur: '1',
-    description: 'Sage-femme libérale accompagnant les femmes musulmanes avec bienveillance et respect de leurs valeurs. Suivi personnalisé grossesse, préparation à l\'accouchement, accompagnement allaitement. Consulte en hidjab.',
-    gender: 'f',
-    arabophone: true,
-    accepteVoile: true,
-    muslimFocus: true,
-    contact: '+33 6 11 22 33 44',
-    website: 'https://www.doctolib.fr',
-    tags: ['grossesse', 'accouchement', 'allaitement', 'remboursé', '93', 'sage-femme'],
-    rating: 4.9,
-    reviews: 38,
-  },
-  {
-    id: 'med2',
-    name: 'Fatima Zerrouk',
-    title: 'Sage-femme — spécialiste post-partum',
-    secteurMedical: 'sage-femme',
-    specialites: ['Post-partum', 'Baby blues', 'Rééducation périnéale', 'Contraception naturelle'],
-    langues: ['Français', 'Arabe', 'Kabyle'],
-    location: 'Aubervilliers (93)',
-    department: '93',
-    visio: false,
-    tariف: 'Remboursé Sécu',
-    conventionné: true,
-    secteur: '1',
-    description: 'Sage-femme spécialisée dans le post-partum et l\'accompagnement des jeunes mamans. Sensibilisée au contexte culturel et religieux : discuter contraception halal, allaitement pendant le Ramadan, dépression post-partum.',
-    gender: 'f',
-    arabophone: true,
-    accepteVoile: true,
-    muslimFocus: true,
-    contact: '+33 6 22 33 44 55',
-    tags: ['post-partum', 'rééducation', 'périnéale', 'baby-blues', '93'],
-    rating: 4.8,
-    reviews: 22,
-  },
-  {
-    id: 'med3',
-    name: 'Leila Mansouri',
-    title: 'Sage-femme — accompagnement global',
-    secteurMedical: 'sage-femme',
-    specialites: ['Suivi gynécologique', 'Frottis', 'Contraception', 'Grossesse', 'Ménopause'],
-    langues: ['Français', 'Arabe'],
-    location: 'Évry-Courcouronnes (91)',
-    department: '91',
-    visio: true,
-    tariف: 'Remboursé Sécu + dépassements possibles',
-    conventionné: true,
-    secteur: '1',
-    description: 'Sage-femme assurant un suivi gynécologique complet pour les femmes qui préfèrent éviter un médecin homme. Frottis, contraception, grossesse, ménopause : tout dans un cadre sécurisé et bienveillant.',
-    gender: 'f',
-    arabophone: true,
-    accepteVoile: true,
-    muslimFocus: true,
-    contact: '+33 6 33 44 55 66',
-    website: 'https://www.doctolib.fr',
-    tags: ['gynécologie', 'contraception', 'frottis', '91', 'suivi-complet'],
-    rating: 4.7,
-    reviews: 15,
-  },
-  {
-    id: 'med4',
-    name: 'Dr Samira Benkhaled',
-    title: 'Médecin généraliste',
-    secteurMedical: 'medecin-generaliste',
-    specialites: ['Médecine générale', 'Diabète', 'Nutrition', 'Suivi femmes'],
-    langues: ['Français', 'Arabe', 'Anglais'],
-    location: 'Clichy-sous-Bois (93)',
-    department: '93',
-    visio: false,
-    tariف: '26.50€ (secteur 1 — remboursé)',
-    conventionné: true,
-    secteur: '1',
-    description: 'Médecin généraliste sensibilisée aux enjeux de santé des populations musulmanes : jeûne du Ramadan avec pathologies chroniques, nutrition halal, discussions de santé en accord avec les valeurs religieuses.',
-    gender: 'f',
-    arabophone: true,
-    accepteVoile: true,
-    muslimFocus: true,
-    contact: '+33 1 43 12 34 56',
-    website: 'https://www.doctolib.fr',
-    tags: ['généraliste', 'ramadan', 'diabète', 'nutrition', '93', 'remboursé'],
-    rating: 4.8,
-    reviews: 67,
-  },
-  {
-    id: 'med5',
-    name: 'Dr Youssef Laaribi',
-    title: 'Médecin généraliste',
-    secteurMedical: 'medecin-generaliste',
-    specialites: ['Médecine générale', 'Santé mentale', 'Addictologie', 'Médecine du sport'],
-    langues: ['Français', 'Arabe', 'Tamazight'],
-    location: 'Marseille 13e',
-    department: '13',
-    visio: true,
-    tariف: '26.50€ (secteur 1 — remboursé)',
-    conventionné: true,
-    secteur: '1',
-    description: 'Médecin généraliste à l\'écoute, comprenant les contraintes culturelles et religieuses. Accompagnement déstigmatisant sur la santé mentale, les addictions, les problèmes liés au jeûne ou à l\'alimentation halal.',
-    gender: 'm',
-    arabophone: true,
-    accepteVoile: true,
-    muslimFocus: true,
-    contact: '+33 4 91 23 45 67',
-    website: 'https://www.doctolib.fr',
-    tags: ['généraliste', 'visio', 'addictologie', 'santé-mentale', 'marseille'],
-    rating: 4.6,
-    reviews: 44,
-  },
+ {
+ id: 'med1',
+ name: 'Karima Haddad',
+ title: 'Sage-femme libérale',
+ secteurMedical: 'sage-femme',
+ specialites: ['Suivi de grossesse', 'Préparation à l\'accouchement', 'Post-partum', 'Allaitement'],
+ langues: ['Français', 'Arabe'],
+ location: 'Saint-Denis (93)',
+ department: '93',
+ visio: true,
+ tariف: 'Remboursé Sécu (secteur 1)',
+ conventionné: true,
+ secteur: '1',
+ description: 'Sage-femme libérale accompagnant les femmes musulmanes avec bienveillance et respect de leurs valeurs. Suivi personnalisé grossesse, préparation à l\'accouchement, accompagnement allaitement. Consulte en hidjab.',
+ gender: 'f',
+ arabophone: true,
+ accepteVoile: true,
+ muslimFocus: true,
+ contact: '+33 6 11 22 33 44',
+ website: 'https://www.doctolib.fr',
+ tags: ['grossesse', 'accouchement', 'allaitement', 'remboursé', '93', 'sage-femme'],
+ rating: 4.9,
+ reviews: 38,
+ },
+ {
+ id: 'med2',
+ name: 'Fatima Zerrouk',
+ title: 'Sage-femme — spécialiste post-partum',
+ secteurMedical: 'sage-femme',
+ specialites: ['Post-partum', 'Baby blues', 'Rééducation périnéale', 'Contraception naturelle'],
+ langues: ['Français', 'Arabe', 'Kabyle'],
+ location: 'Aubervilliers (93)',
+ department: '93',
+ visio: false,
+ tariف: 'Remboursé Sécu',
+ conventionné: true,
+ secteur: '1',
+ description: 'Sage-femme spécialisée dans le post-partum et l\'accompagnement des jeunes mamans. Sensibilisée au contexte culturel et religieux : discuter contraception halal, allaitement pendant le Ramadan, dépression post-partum.',
+ gender: 'f',
+ arabophone: true,
+ accepteVoile: true,
+ muslimFocus: true,
+ contact: '+33 6 22 33 44 55',
+ tags: ['post-partum', 'rééducation', 'périnéale', 'baby-blues', '93'],
+ rating: 4.8,
+ reviews: 22,
+ },
+ {
+ id: 'med3',
+ name: 'Leila Mansouri',
+ title: 'Sage-femme — accompagnement global',
+ secteurMedical: 'sage-femme',
+ specialites: ['Suivi gynécologique', 'Frottis', 'Contraception', 'Grossesse', 'Ménopause'],
+ langues: ['Français', 'Arabe'],
+ location: 'Évry-Courcouronnes (91)',
+ department: '91',
+ visio: true,
+ tariف: 'Remboursé Sécu + dépassements possibles',
+ conventionné: true,
+ secteur: '1',
+ description: 'Sage-femme assurant un suivi gynécologique complet pour les femmes qui préfèrent éviter un médecin homme. Frottis, contraception, grossesse, ménopause : tout dans un cadre sécurisé et bienveillant.',
+ gender: 'f',
+ arabophone: true,
+ accepteVoile: true,
+ muslimFocus: true,
+ contact: '+33 6 33 44 55 66',
+ website: 'https://www.doctolib.fr',
+ tags: ['gynécologie', 'contraception', 'frottis', '91', 'suivi-complet'],
+ rating: 4.7,
+ reviews: 15,
+ },
+ {
+ id: 'med4',
+ name: 'Dr Samira Benkhaled',
+ title: 'Médecin généraliste',
+ secteurMedical: 'medecin-generaliste',
+ specialites: ['Médecine générale', 'Diabète', 'Nutrition', 'Suivi femmes'],
+ langues: ['Français', 'Arabe', 'Anglais'],
+ location: 'Clichy-sous-Bois (93)',
+ department: '93',
+ visio: false,
+ tariف: '26.50€ (secteur 1 — remboursé)',
+ conventionné: true,
+ secteur: '1',
+ description: 'Médecin généraliste sensibilisée aux enjeux de santé des populations musulmanes : jeûne du Ramadan avec pathologies chroniques, nutrition halal, discussions de santé en accord avec les valeurs religieuses.',
+ gender: 'f',
+ arabophone: true,
+ accepteVoile: true,
+ muslimFocus: true,
+ contact: '+33 1 43 12 34 56',
+ website: 'https://www.doctolib.fr',
+ tags: ['généraliste', 'ramadan', 'diabète', 'nutrition', '93', 'remboursé'],
+ rating: 4.8,
+ reviews: 67,
+ },
+ {
+ id: 'med5',
+ name: 'Dr Youssef Laaribi',
+ title: 'Médecin généraliste',
+ secteurMedical: 'medecin-generaliste',
+ specialites: ['Médecine générale', 'Santé mentale', 'Addictologie', 'Médecine du sport'],
+ langues: ['Français', 'Arabe', 'Tamazight'],
+ location: 'Marseille 13e',
+ department: '13',
+ visio: true,
+ tariف: '26.50€ (secteur 1 — remboursé)',
+ conventionné: true,
+ secteur: '1',
+ description: 'Médecin généraliste à l\'écoute, comprenant les contraintes culturelles et religieuses. Accompagnement déstigmatisant sur la santé mentale, les addictions, les problèmes liés au jeûne ou à l\'alimentation halal.',
+ gender: 'm',
+ arabophone: true,
+ accepteVoile: true,
+ muslimFocus: true,
+ contact: '+33 4 91 23 45 67',
+ website: 'https://www.doctolib.fr',
+ tags: ['généraliste', 'visio', 'addictologie', 'santé-mentale', 'marseille'],
+ rating: 4.6,
+ reviews: 44,
+ },
 ];
 
 // ─── ROQYA ──────────────────────────────────────────────────
 
 export const roqyaProfiles: PraticienRoqya[] = [
-  {
-    id: 'r1',
-    name: 'Cheikh Abdallah As-Suyuti',
-    title: 'Mouqri\' certifié',
-    location: 'Montreuil (93)',
-    department: '93',
-    visio: true,
-    tarif: 'Don libre (sadaqa)',
-    gender: 'm',
-    école: 'Sunnah (méthodologie des savants)',
-    langues: ['Arabe', 'Français'],
-    description: 'Pratique la roqya char\'iyya selon la sunnah du Prophète ﷺ. Lecture du Coran uniquement, pas de talismans ni de méthodes innovées. Formation auprès de savants reconnus. Accompagnement spirituel inclus.',
-    disponibilité: 'Mer–Sam sur RDV',
-    tags: ['roqya-char\'iyya', 'sunnah', 'visio-ok', 'coran', '93'],
-    warning: undefined,
-  },
-  {
-    id: 'r2',
-    name: 'Oum Ibrahim — Roqya pour femmes',
-    title: 'Praticienne Roqya',
-    location: 'Paris 18e',
-    department: '75',
-    visio: true,
-    tarif: 'Gratuit / donation libre',
-    gender: 'f',
-    école: 'Méthodologie Ahl As-Sunnah',
-    langues: ['Français', 'Arabe', 'Wolof'],
-    description: 'Femme proposant la roqya char\'iyya exclusivement pour sœurs. Lecture du Coran, doua\' et conseils spirituels. Accompagnement bienveillant pour les sœurs souffrant de sorcellerie, mauvais œil ou possession.',
-    disponibilité: 'Vendredi–Dimanche',
-    tags: ['femmes', 'roqya', 'visio-ok', 'wolof', 'paris'],
-  },
-  {
-    id: 'r3',
-    name: 'Imam Yassine Idrissi',
-    title: 'Imam & praticien roqya',
-    location: 'Stains (93)',
-    department: '93',
-    visio: false,
-    tarif: 'Don libre',
-    gender: 'm',
-    école: 'Maliki',
-    langues: ['Arabe', 'Français', 'Tamazight'],
-    description: 'Imam de mosquée pratiquant la roqya sur rendez-vous après la prière du Asr. Approche douce, écoute, lecture et conseils. Pas de séances en dehors de la mosquée.',
-    disponibilité: 'Dim–Jeu après Asr (environ 17h)',
-    tags: ['imam', 'mosquée', 'maliki', '93', 'stains'],
-  },
-  {
-    id: 'r4',
-    name: 'Cheikh Abu Mus\'ab',
-    title: 'Spécialiste roqya — sihr & ayn',
-    location: 'Lyon (69)',
-    department: '69',
-    visio: true,
-    tarif: 'Don libre',
-    gender: 'm',
-    école: 'Sunnah',
-    langues: ['Arabe', 'Français'],
-    description: 'Praticien expérimenté spécialisé dans les cas de sorcellerie (sihr) et mauvais œil (ayn). Protocole complet : diagnostic, lecture, conseils. Suivi sur plusieurs séances si nécessaire. Visio acceptée pour premiers échanges.',
-    disponibilité: 'Sur RDV uniquement',
-    tags: ['sihr', 'ayn', 'sorcellerie', 'lyon', 'visio'],
-  },
+ {
+ id: 'r1',
+ name: 'Cheikh Abdallah As-Suyuti',
+ title: 'Mouqri\' certifié',
+ location: 'Montreuil (93)',
+ department: '93',
+ visio: true,
+ tarif: 'Don libre (sadaqa)',
+ gender: 'm',
+ école: 'Sunnah (méthodologie des savants)',
+ langues: ['Arabe', 'Français'],
+ description: 'Pratique la roqya char\'iyya selon la sunnah du Prophète ﷺ. Lecture du Coran uniquement, pas de talismans ni de méthodes innovées. Formation auprès de savants reconnus. Accompagnement spirituel inclus.',
+ disponibilité: 'Mer–Sam sur RDV',
+ tags: ['roqya-char\'iyya', 'sunnah', 'visio-ok', 'coran', '93'],
+ warning: undefined,
+ },
+ {
+ id: 'r2',
+ name: 'Oum Ibrahim — Roqya pour femmes',
+ title: 'Praticienne Roqya',
+ location: 'Paris 18e',
+ department: '75',
+ visio: true,
+ tarif: 'Gratuit / donation libre',
+ gender: 'f',
+ école: 'Méthodologie Ahl As-Sunnah',
+ langues: ['Français', 'Arabe', 'Wolof'],
+ description: 'Femme proposant la roqya char\'iyya exclusivement pour sœurs. Lecture du Coran, doua\' et conseils spirituels. Accompagnement bienveillant pour les sœurs souffrant de sorcellerie, mauvais œil ou possession.',
+ disponibilité: 'Vendredi–Dimanche',
+ tags: ['femmes', 'roqya', 'visio-ok', 'wolof', 'paris'],
+ },
+ {
+ id: 'r3',
+ name: 'Imam Yassine Idrissi',
+ title: 'Imam & praticien roqya',
+ location: 'Stains (93)',
+ department: '93',
+ visio: false,
+ tarif: 'Don libre',
+ gender: 'm',
+ école: 'Maliki',
+ langues: ['Arabe', 'Français', 'Tamazight'],
+ description: 'Imam de mosquée pratiquant la roqya sur rendez-vous après la prière du Asr. Approche douce, écoute, lecture et conseils. Pas de séances en dehors de la mosquée.',
+ disponibilité: 'Dim–Jeu après Asr (environ 17h)',
+ tags: ['imam', 'mosquée', 'maliki', '93', 'stains'],
+ },
+ {
+ id: 'r4',
+ name: 'Cheikh Abu Mus\'ab',
+ title: 'Spécialiste roqya — sihr & ayn',
+ location: 'Lyon (69)',
+ department: '69',
+ visio: true,
+ tarif: 'Don libre',
+ gender: 'm',
+ école: 'Sunnah',
+ langues: ['Arabe', 'Français'],
+ description: 'Praticien expérimenté spécialisé dans les cas de sorcellerie (sihr) et mauvais œil (ayn). Protocole complet : diagnostic, lecture, conseils. Suivi sur plusieurs séances si nécessaire. Visio acceptée pour premiers échanges.',
+ disponibilité: 'Sur RDV uniquement',
+ tags: ['sihr', 'ayn', 'sorcellerie', 'lyon', 'visio'],
+ },
 ];

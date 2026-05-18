@@ -23,76 +23,76 @@ Tu parles uniquement français. Tu es bienveillant, concis et bien informé sur 
 - Tu peux utiliser inshallah, barakallah naturellement`;
 
 export async function POST(request: Request) {
-  const { messages } = await request.json();
+ const { messages } = await request.json();
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return Response.json({ error: 'GEMINI_API_KEY non configurée dans .env.local et Vercel' }, { status: 500 });
-  }
+ const apiKey = process.env.GEMINI_API_KEY;
+ if (!apiKey) {
+ return Response.json({ error: 'GEMINI_API_KEY non configurée dans .env.local et Vercel' }, { status: 500 });
+ }
 
-  // Format Gemini : "model" au lieu de "assistant"
-  const contents = messages.map((m: { role: string; content: string }) => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: m.content }],
-  }));
+ // Format Gemini : "model" au lieu de "assistant"
+ const contents = messages.map((m: { role: string; content: string }) => ({
+ role: m.role === 'assistant' ? 'model' : 'user',
+ parts: [{ text: m.content }],
+ }));
 
-  const body = {
-    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-    contents,
-    generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
-  };
+ const body = {
+ system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+ contents,
+ generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
+ };
 
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:streamGenerateContent?key=${apiKey}&alt=sse`,
-    { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
-  );
+ const res = await fetch(
+ `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:streamGenerateContent?key=${apiKey}&alt=sse`,
+ { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
+ );
 
-  if (!res.ok) {
-    const err = await res.text();
-    console.error('[chat] Gemini error:', err);
-    return Response.json({ error: 'Erreur Gemini API' }, { status: 500 });
-  }
+ if (!res.ok) {
+ const err = await res.text();
+ console.error('[chat] Gemini error:', err);
+ return Response.json({ error: 'Erreur Gemini API' }, { status: 500 });
+ }
 
-  // Transposer SSE Gemini → notre format SSE { text }
-  const encoder = new TextEncoder();
-  const readable = new ReadableStream({
-    async start(controller) {
-      const reader = res.body!.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
+ // Transposer SSE Gemini → notre format SSE { text }
+ const encoder = new TextEncoder();
+ const readable = new ReadableStream({
+ async start(controller) {
+ const reader = res.body!.getReader();
+ const decoder = new TextDecoder();
+ let buffer = '';
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+ while (true) {
+ const { done, value } = await reader.read();
+ if (done) break;
 
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() ?? '';
+ buffer += decoder.decode(value, { stream: true });
+ const lines = buffer.split('\n');
+ buffer = lines.pop() ?? '';
 
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const jsonStr = line.slice(6).trim();
-          if (!jsonStr || jsonStr === '[DONE]') continue;
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (text) {
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
-            }
-          } catch { /* chunk malformé, ignoré */ }
-        }
-      }
+ for (const line of lines) {
+ if (!line.startsWith('data: ')) continue;
+ const jsonStr = line.slice(6).trim();
+ if (!jsonStr || jsonStr === '[DONE]') continue;
+ try {
+ const parsed = JSON.parse(jsonStr);
+ const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
+ if (text) {
+ controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+ }
+ } catch { /* chunk malformé, ignoré */ }
+ }
+ }
 
-      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-      controller.close();
-    },
-  });
+ controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+ controller.close();
+ },
+ });
 
-  return new Response(readable, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      Connection: 'keep-alive',
-    },
-  });
+ return new Response(readable, {
+ headers: {
+ 'Content-Type': 'text/event-stream',
+ 'Cache-Control': 'no-cache',
+ Connection: 'keep-alive',
+ },
+ });
 }
