@@ -1,1 +1,8 @@
-{}
+{
+  "crons": [
+    {
+      "path": "/api/auto/scrape-events",
+      "schedule": "0 6,12,18,0 * * *"
+    }
+  ]
+}
