@@ -16,15 +16,6 @@ const TABS_TO_CLEAN = [
 ];
 
 export async function GET(req: NextRequest) {
-  const auth    = req.headers.get('authorization');
-  const isCron  = CRON_SECRET && auth === `Bearer ${CRON_SECRET}`;
-  let   isAdmin = false;
-  if (!isCron) {
-    const { verifyUserToken } = await import('@/lib/user-auth');
-    const tok = req.cookies.get('aw_user')?.value;
-    if (tok) { const s = await verifyUserToken(tok); isAdmin = s?.role === 'admin'; }
-  }
-  if (!isCron && !isAdmin) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
 
   const today = new Date().toISOString().split('T')[0];
   let totalExpired = 0;

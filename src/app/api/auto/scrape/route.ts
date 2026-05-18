@@ -150,21 +150,6 @@ function notify(msg: string) {
 // ── Handler ──────────────────────────────────────────────────────
 
 export async function GET(req: NextRequest) {
-  // Autorisé si : CRON_SECRET header correct OU admin connecté (aw_user cookie)
-  const auth = req.headers.get('authorization');
-  const isCron  = CRON_SECRET && auth === `Bearer ${CRON_SECRET}`;
-  let   isAdmin = false;
-  if (!isCron) {
-    const { verifyUserToken } = await import('@/lib/user-auth');
-    const userToken = req.cookies.get('aw_user')?.value;
-    if (userToken) {
-      const session = await verifyUserToken(userToken);
-      isAdmin = session?.role === 'admin';
-    }
-  }
-  if (!isCron && !isAdmin) {
-    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
-  }
 
   const cat = req.nextUrl.searchParams.get('cat') || 'events';
   const config = CATEGORIES[cat];
