@@ -2,20 +2,22 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Zap, RefreshCw, CheckCircle, AlertCircle, Clock, Play } from 'lucide-react';
+import { ArrowLeft, Zap, RefreshCw, CheckCircle, AlertCircle, Clock, Play,
+  Calendar, Heart, Briefcase, HandCoins, Stethoscope, Library, Waves, BookOpen, Plane } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 const GOLD = '#c9973a';
 
-const SCRAPERS = [
-  { cat: 'events',     label: 'Événements',  freq: '4×/jour',      icon: '📅' },
-  { cat: 'solidarite', label: 'Solidarité',  freq: '2×/jour',      icon: '🤝' },
-  { cat: 'emploi',     label: 'Emploi',      freq: '2×/jour',      icon: '💼' },
-  { cat: 'cagnottes',  label: 'Cagnottes',   freq: '1×/jour',      icon: '💝' },
-  { cat: 'praticiens', label: 'Praticiens',  freq: '1×/semaine',   icon: '🧠' },
-  { cat: 'librairies', label: 'Librairies',  freq: '1×/semaine',   icon: '📚' },
-  { cat: 'piscines',   label: 'Piscines',    freq: '1×/semaine',   icon: '🏊' },
-  { cat: 'education',  label: 'Éducation',   freq: '1×/semaine',   icon: '📖' },
-  { cat: 'hajj',       label: 'Hajj & Omra', freq: '1×/semaine',   icon: '🕋' },
+const SCRAPERS: { cat: string; label: string; freq: string; Icon: LucideIcon }[] = [
+  { cat: 'events',     label: 'Événements',  freq: '4x/jour',     Icon: Calendar     },
+  { cat: 'solidarite', label: 'Solidarité',  freq: '2x/jour',     Icon: Heart        },
+  { cat: 'emploi',     label: 'Emploi',      freq: '2x/jour',     Icon: Briefcase    },
+  { cat: 'cagnottes',  label: 'Cagnottes',   freq: '1x/jour',     Icon: HandCoins    },
+  { cat: 'praticiens', label: 'Praticiens',  freq: '1x/semaine',  Icon: Stethoscope  },
+  { cat: 'librairies', label: 'Librairies',  freq: '1x/semaine',  Icon: Library      },
+  { cat: 'piscines',   label: 'Piscines',    freq: '1x/semaine',  Icon: Waves        },
+  { cat: 'education',  label: 'Education',   freq: '1x/semaine',  Icon: BookOpen     },
+  { cat: 'hajj',       label: 'Hajj & Omra', freq: '1x/semaine',  Icon: Plane        },
 ];
 
 type RunResult = { cat: string; found: number; written: number; status: 'ok' | 'error' | 'loading' | 'idle'; lastRun?: string };
@@ -79,7 +81,7 @@ export default function AutoPage() {
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button onClick={runCleanup} disabled={!!running}
               style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', fontSize: '0.78rem', cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
-              🧹 Nettoyer expirés
+              <RefreshCw size={12} strokeWidth={2} /> Nettoyer expirés
             </button>
             <button onClick={runAll} disabled={!!running}
               style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', backgroundColor: GOLD, color: '#0a0806', border: 'none', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: running ? 'not-allowed' : 'pointer', opacity: running ? 0.6 : 1, fontFamily: 'Poppins, sans-serif' }}>
@@ -116,7 +118,9 @@ export default function AutoPage() {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.875rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '1.25rem' }}>{s.icon}</span>
+                    <div style={{ width: 32, height: 32, borderRadius: '8px', backgroundColor: '#fdfbf0', border: '1px solid #f0dea0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <s.Icon size={15} color={GOLD} strokeWidth={1.8} />
+                    </div>
                     <div>
                       <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f0a00', fontFamily: 'Poppins, sans-serif' }}>{s.label}</div>
                       <div style={{ fontSize: '0.68rem', color: '#7a6848', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
@@ -132,10 +136,10 @@ export default function AutoPage() {
                 {r && (
                   <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
                     <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: '#fdfbf0', border: '1px solid #f0dea0', color: '#7a6848' }}>
-                      🔍 {r.found} trouvés
+                      {r.found} trouvés
                     </span>
                     <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: r.written > 0 ? '#f0fdf4' : '#f9fafb', border: `1px solid ${r.written > 0 ? '#bbf7d0' : '#e5e7eb'}`, color: r.written > 0 ? '#059669' : '#6b7280' }}>
-                      ✅ {r.written} écrits
+                      {r.written} écrits
                     </span>
                     {r.lastRun && <span style={{ fontSize: '0.68rem', color: '#9ca3af', marginLeft: 'auto' }}>{r.lastRun}</span>}
                   </div>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import ChatBot from '@/components/ChatBot';
+import ChatBotWrapper from '@/components/ChatBotWrapper';
 import PrayerTimesBar from '@/components/PrayerTimesBar';
 
 const BASE_URL = 'https://alwasil-platform.vercel.app';
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
-        <ChatBot />
+        <ChatBotWrapper />
       </body>
     </html>
   );
