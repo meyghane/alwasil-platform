@@ -523,76 +523,65 @@ export default function Home() {
  </div>
  </section>
 
- {/* ─── TÉMOIGNAGES ──────────────────────────────────────── */}
- <section style={{ backgroundColor: V[50], padding: '4rem 0', borderTop: `1px solid ${V[200]}` }}>
- <div className="container">
- <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+ {/* ─── TÉMOIGNAGES — fond cosmique + lanternes ─────────── */}
+ <section style={{
+ background: 'linear-gradient(160deg, #0a0806 0%, #100c04 50%, #0a0806 100%)',
+ padding: '5rem 0',
+ position: 'relative',
+ overflow: 'hidden',
+ }}>
+ {/* Halos dorés */}
+ <div style={{ position: 'absolute', top: '10%', left: '5%', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,151,58,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+ <div style={{ position: 'absolute', bottom: '10%', right: '5%', width: '250px', height: '250px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,151,58,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+ {/* Lanternes flottantes */}
+ {[
+ { x: '8%',  y: '15%', size: 28, delay: '0s',   dur: '7s'  },
+ { x: '88%', y: '20%', size: 22, delay: '1.5s',  dur: '8s'  },
+ { x: '15%', y: '70%', size: 18, delay: '3s',    dur: '6s'  },
+ { x: '82%', y: '65%', size: 24, delay: '0.8s',  dur: '9s'  },
+ { x: '50%', y: '8%',  size: 16, delay: '2s',    dur: '7.5s'},
+ { x: '35%', y: '82%', size: 20, delay: '4s',    dur: '8s'  },
+ ].map((l, i) => (
+ <div key={i} style={{
+ position: 'absolute', left: l.x, top: l.y, pointerEvents: 'none',
+ opacity: 0.18,
+ animation: `particle-float ${l.dur} ease-in-out ${l.delay} infinite`,
+ }}>
+ <svg width={l.size} height={l.size * 1.5} viewBox="0 0 20 30" fill="none">
+ <line x1="10" y1="0" x2="10" y2="4" stroke="#d4a853" strokeWidth="1.5" strokeLinecap="round"/>
+ <rect x="6" y="4" width="8" height="2" rx="1" fill="#d4a853"/>
+ <path d="M4 6 Q3 13 4 20 L16 20 Q17 13 16 6 Z" fill="rgba(212,168,83,0.2)" stroke="#d4a853" strokeWidth="1"/>
+ <line x1="4" y1="11" x2="16" y2="11" stroke="#d4a853" strokeWidth="0.6" opacity="0.5"/>
+ <line x1="4" y1="16" x2="16" y2="16" stroke="#d4a853" strokeWidth="0.6" opacity="0.5"/>
+ <rect x="6" y="20" width="8" height="2" rx="1" fill="#d4a853"/>
+ <ellipse cx="10" cy="27" rx="4" ry="2" fill="rgba(212,168,83,0.4)"/>
+ </svg>
+ </div>
+ ))}
+
+ <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+ <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
  <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>
  Ils utilisent Al-Wasil
  </span>
- <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem' }}>
+ <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.025em', marginTop: '0.5rem' }}>
  Ce que dit la communauté
  </h2>
  </div>
 
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
  {[
- {
- quote: "J'ai trouvé une piscine avec créneau burkini à 10 min de chez moi en 2 minutes. Avant je passais des heures à chercher.",
- name: 'Amira B.',
- role: 'Utilisatrice · Seine-Saint-Denis',
- tag: 'Piscines burkini',
- },
- {
- quote: "On a trouvé notre employeur actuel via Al-Wasil. Le voile est accepté, la prière aussi. Ça change tout.",
- name: 'Khadija M.',
- role: 'Utilisatrice · Paris 18e',
- tag: 'Emploi',
- },
- {
- quote: "On utilise Al-Wasil pour promouvoir nos maraudes. On a 3× plus de bénévoles depuis qu'on est référencés.",
- name: 'Association An-Nour',
- role: 'Organisateur · Bobigny',
- tag: 'Solidarité',
- },
+ { quote: "J'ai trouvé une piscine avec créneau burkini à 10 min de chez moi en 2 minutes. Avant je passais des heures à chercher.", name: 'Amira B.', role: 'Utilisatrice · Seine-Saint-Denis', tag: 'Piscines burkini', initial: 'A' },
+ { quote: "On a trouvé notre employeur actuel via Al-Wasil. Le voile est accepté, la prière aussi. Ça change tout.", name: 'Khadija M.', role: 'Utilisatrice · Paris 18e', tag: 'Emploi', initial: 'K' },
+ { quote: "On utilise Al-Wasil pour promouvoir nos maraudes. On a 3× plus de bénévoles depuis qu'on est référencés.", name: 'Association An-Nour', role: 'Organisateur · Bobigny', tag: 'Solidarité', initial: 'N' },
  ].map((t, i) => (
- <div key={i} style={{
- backgroundColor: '#fff',
- borderRadius: '14px',
- padding: '1.5rem',
- border: `1px solid ${V[200]}`,
- display: 'flex', flexDirection: 'column', gap: '1rem',
- boxShadow: '0 2px 8px rgba(20,14,4,0.06)',
- }}>
- {/* Quote */}
- <p style={{
- fontSize: '0.9rem', color: V.text, lineHeight: 1.7,
- fontStyle: 'italic', flex: 1,
- }}>
- &ldquo;{t.quote}&rdquo;
- </p>
-
- {/* Auteur */}
- <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
- <div>
- <p style={{ fontWeight: 700, fontSize: '0.875rem', color: V.dark, margin: 0 }}>{t.name}</p>
- <p style={{ fontSize: '0.72rem', color: V.muted, margin: 0 }}>{t.role}</p>
- </div>
- <span style={{
- fontSize: '0.65rem', fontWeight: 700,
- backgroundColor: V[50], color: V.primary,
- padding: '3px 10px', borderRadius: '20px',
- border: `1px solid ${V[200]}`,
- }}>
- {t.tag}
- </span>
- </div>
- </div>
+ <TestimonialCard key={i} {...t} />
  ))}
  </div>
 
- <p style={{ textAlign: 'center', fontSize: '0.78rem', color: V.muted, marginTop: '1.5rem' }}>
- Ces témoignages seront remplacés par de vrais retours de la communauté.{' '}
+ <p style={{ textAlign: 'center', fontSize: '0.78rem', color: 'rgba(201,151,58,0.45)', marginTop: '2rem' }}>
+ Ces témoignages seront remplacés par de vrais retours.{' '}
  <Link href="/contact?type=general" style={{ color: V.primary, textDecoration: 'none', fontWeight: 600 }}>
  Partager ton expérience →
  </Link>
@@ -796,35 +785,92 @@ function RubriqueCard({ href, icon: Icon, color, title, arabic, description, tag
  return <Link href={href} style={{ textDecoration: 'none', display: 'block' }}>{inner}</Link>;
 }
 
-// ── EventCard ─────────────────────────────────────────────────────
+// ── TestimonialCard — hover fancy ────────────────────────────────
+function TestimonialCard({ quote, name, role, tag, initial }: {
+ quote: string; name: string; role: string; tag: string; initial: string;
+}) {
+ const [hov, setHov] = useState(false);
+ return (
+ <div
+ onMouseEnter={() => setHov(true)}
+ onMouseLeave={() => setHov(false)}
+ style={{
+ backgroundColor: hov ? 'rgba(201,151,58,0.08)' : 'rgba(255,255,255,0.04)',
+ backdropFilter: 'blur(12px)',
+ borderRadius: '16px',
+ padding: '1.75rem',
+ border: `1px solid ${hov ? 'rgba(201,151,58,0.4)' : 'rgba(255,255,255,0.08)'}`,
+ display: 'flex', flexDirection: 'column', gap: '1.25rem',
+ boxShadow: hov ? '0 0 32px rgba(201,151,58,0.15), 0 8px 32px rgba(0,0,0,0.4)' : '0 2px 16px rgba(0,0,0,0.2)',
+ transform: hov ? 'translateY(-4px) scale(1.01)' : 'translateY(0)',
+ transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
+ cursor: 'default',
+ }}>
+ {/* Guillemets décoratifs */}
+ <div style={{ fontSize: '3rem', lineHeight: 0.6, color: hov ? V.primary : 'rgba(201,151,58,0.25)', fontFamily: 'Georgia, serif', marginBottom: '0.25rem', transition: 'color 0.3s' }}>"</div>
+ <p style={{ fontSize: '0.9rem', color: hov ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.65)', lineHeight: 1.75, fontStyle: 'italic', flex: 1, margin: 0, transition: 'color 0.3s' }}>
+ {quote}
+ </p>
+ <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+ <div style={{ width: 36, height: 36, borderRadius: '50%', background: `linear-gradient(135deg, ${V.primary}, #a87830)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#0a0806', fontSize: '0.85rem', flexShrink: 0 }}>
+ {initial}
+ </div>
+ <div style={{ flex: 1, minWidth: 0 }}>
+ <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#fff' }}>{name}</div>
+ <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>{role}</div>
+ </div>
+ <span style={{ fontSize: '0.62rem', fontWeight: 700, padding: '3px 9px', borderRadius: '20px', backgroundColor: `rgba(201,151,58,0.15)`, color: V.primary, border: `1px solid rgba(201,151,58,0.3)`, whiteSpace: 'nowrap' }}>
+ {tag}
+ </span>
+ </div>
+ </div>
+ );
+}
+
+// Unsplash images par catégorie d'événement
+const EVENT_IMAGES: Record<string, string> = {
+ conference: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+ maraude:    'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600&q=80',
+ cours:      'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80',
+ iftar:      'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80',
+ webinaire:  'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=600&q=80',
+ collecte:   'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=600&q=80',
+ autre:      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+};
+
+// ── EventCard — avec image cover ──────────────────────────────────
 function EventCard({ title, date, location, organizer, tag, color }: {
  title: string; date: string; location: string;
  organizer: string; tag: string; color: string;
 }) {
+ const [hov, setHov] = useState(false);
+ const catKey = tag.toLowerCase().replace(/é/g,'e').replace(/è/g,'e') as keyof typeof EVENT_IMAGES;
+ const img = EVENT_IMAGES[catKey] || EVENT_IMAGES.autre;
  return (
- <div style={{
+ <div
+ onMouseEnter={() => setHov(true)}
+ onMouseLeave={() => setHov(false)}
+ style={{
  backgroundColor: '#fff',
- border: `1px solid ${V.border}`,
- borderRadius: '12px', overflow: 'hidden',
+ border: `1px solid ${hov ? color : V.border}`,
+ borderRadius: '14px', overflow: 'hidden',
  display: 'flex', flexDirection: 'column',
+ boxShadow: hov ? `0 8px 28px rgba(201,151,58,0.18)` : '0 2px 8px rgba(0,0,0,0.05)',
+ transform: hov ? 'translateY(-4px)' : 'translateY(0)',
+ transition: 'all 0.25s ease',
  }}>
- <div style={{ height: '3px', backgroundColor: color }} />
- <div style={{ padding: '1.125rem' }}>
- <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
- <span style={{
- fontSize: '0.63rem', fontWeight: 700,
- letterSpacing: '0.05em', textTransform: 'uppercase',
- color: color, backgroundColor: `${color}12`,
- padding: '0.2rem 0.55rem', borderRadius: '4px',
- }}>
- {tag}
- </span>
- <span style={{ fontSize: '0.72rem', color: V.muted, fontWeight: 500 }}>{date}</span>
+ {/* Image cover */}
+ <div style={{ position: 'relative', height: '140px', overflow: 'hidden' }}>
+ <img src={img} alt={tag} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: hov ? 'scale(1.06)' : 'scale(1)', transition: 'transform 0.4s ease' }} />
+ <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%)' }} />
+ <span style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#fff', backgroundColor: color, padding: '2px 8px', borderRadius: '4px' }}>{tag}</span>
+ <span style={{ position: 'absolute', bottom: '0.75rem', right: '0.75rem', fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', fontWeight: 500 }}>{date}</span>
  </div>
- <h3 style={{ fontSize: '0.9rem', fontWeight: 700, lineHeight: 1.35, color: V.dark, margin: '0 0 0.55rem' }}>
+ <div style={{ padding: '1rem' }}>
+ <h3 style={{ fontSize: '0.9rem', fontWeight: 700, lineHeight: 1.35, color: V.dark, margin: '0 0 0.5rem' }}>
  {title}
  </h3>
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: V.muted, marginBottom: '0.3rem' }}>
+ <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: V.muted, marginBottom: '0.25rem' }}>
  <MapPin size={11} /> {location}
  </div>
  <p style={{ fontSize: '0.75rem', color: V.muted, margin: 0 }}>

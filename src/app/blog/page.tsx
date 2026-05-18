@@ -13,12 +13,12 @@ const CAT_COLORS: Record<string, string> = {
 };
 
 const articles = [
- { slug: 'cours-arabe-en-ligne-france', title: 'Cours d\'arabe en ligne : les meilleures options pour les musulmans en France (2026)', category: 'Apprentissage', date: '2026-03-20', readTime: '6 min', excerpt: 'Apprendre l\'arabe depuis chez soi est aujourd\'hui possible grâce à de nombreuses plateformes. On fait le tour des meilleures options francophones, arabophones et hybrides.', tags: ['arabe', 'en ligne', 'cours', 'apprentissage'], featured: true },
- { slug: 'porter-voile-travail-droits-france', title: 'Porter le voile au travail en France : vos droits expliqués clairement', category: 'Justice & Droits', date: '2026-03-15', readTime: '8 min', excerpt: 'Secteur privé, public, client final — les règles ne sont pas les mêmes partout. Ce guide résume vos droits, les cas de discrimination et les recours possibles.', tags: ['voile', 'travail', 'droits', 'laïcité'], featured: true },
- { slug: 'piscines-burkini-ile-de-france-2026', title: 'Piscines burkini en Île-de-France : créneaux, horaires et bons plans (2026)', category: 'Bien-être', date: '2026-03-10', readTime: '5 min', excerpt: 'Trouver un créneau burkini en IDF n\'est pas toujours simple. On recense toutes les piscines qui proposent des créneaux réservés, avec horaires et tarifs à jour.', tags: ['piscine', 'burkini', 'IDF', 'femmes'], featured: false },
- { slug: 'prayer-space-travail-france', title: 'Espace de prière au travail : comment le demander et quels sont vos droits ?', category: 'Justice & Droits', date: '2026-03-05', readTime: '7 min', excerpt: 'La loi française ne prévoit pas d\'obligation pour l\'employeur, mais rien n\'interdit non plus. Voici comment négocier un espace de prière et ce que dit la jurisprudence.', tags: ['prière', 'travail', 'droits'], featured: false },
- { slug: 'instituts-islamiques-france-comparatif',title: 'Comparatif des instituts islamiques en France : IESH, Oussoul Eddine, Al-Kalam…', category: 'Apprentissage', date: '2026-02-28', readTime: '10 min', excerpt: 'Quel institut choisir pour apprendre les sciences islamiques ? Comparaison des programmes, formats (présentiel/distanciel), niveaux et tarifs.', tags: ['instituts', 'sciences islamiques', 'comparatif'], featured: true },
- { slug: 'hijama-paris-idf-guide', title: 'Hijama à Paris et en IDF : trouver un praticien sérieux - guide complet', category: 'Santé', date: '2026-02-20', readTime: '6 min', excerpt: 'La hijama (cupping thérapeutique) connaît un vrai renouveau. Mais comment trouver un praticien formé et sérieux ? Ce guide répond à toutes vos questions.', tags: ['hijama', 'santé', 'Paris', 'IDF'], featured: false },
+ { slug: 'cours-arabe-en-ligne-france', title: 'Cours d\'arabe en ligne : les meilleures options pour les musulmans en France (2026)', category: 'Apprentissage', date: '2026-03-20', readTime: '6 min', excerpt: 'Apprendre l\'arabe depuis chez soi est aujourd\'hui possible grâce à de nombreuses plateformes. On fait le tour des meilleures options francophones, arabophones et hybrides.', tags: ['arabe', 'en ligne', 'cours', 'apprentissage'], featured: true, image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=700&q=80' },
+ { slug: 'porter-voile-travail-droits-france', title: 'Porter le voile au travail en France : vos droits expliqués clairement', category: 'Justice & Droits', date: '2026-03-15', readTime: '8 min', excerpt: 'Secteur privé, public, client final — les règles ne sont pas les mêmes partout. Ce guide résume vos droits, les cas de discrimination et les recours possibles.', tags: ['voile', 'travail', 'droits', 'laïcité'], featured: true, image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=700&q=80' },
+ { slug: 'piscines-burkini-ile-de-france-2026', title: 'Piscines burkini en Île-de-France : créneaux, horaires et bons plans (2026)', category: 'Bien-être', date: '2026-03-10', readTime: '5 min', excerpt: 'Trouver un créneau burkini en IDF n\'est pas toujours simple. On recense toutes les piscines qui proposent des créneaux réservés, avec horaires et tarifs à jour.', tags: ['piscine', 'burkini', 'IDF', 'femmes'], featured: false, image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=700&q=80' },
+ { slug: 'prayer-space-travail-france', title: 'Espace de prière au travail : comment le demander et quels sont vos droits ?', category: 'Justice & Droits', date: '2026-03-05', readTime: '7 min', excerpt: 'La loi française ne prévoit pas d\'obligation pour l\'employeur, mais rien n\'interdit non plus. Voici comment négocier un espace de prière et ce que dit la jurisprudence.', tags: ['prière', 'travail', 'droits'], featured: false, image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80' },
+ { slug: 'instituts-islamiques-france-comparatif', title: 'Comparatif des instituts islamiques en France : IESH, Oussoul Eddine, Al-Kalam…', category: 'Apprentissage', date: '2026-02-28', readTime: '10 min', excerpt: 'Quel institut choisir pour apprendre les sciences islamiques ? Comparaison des programmes, formats (présentiel/distanciel), niveaux et tarifs.', tags: ['instituts', 'sciences islamiques', 'comparatif'], featured: true, image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=700&q=80' },
+ { slug: 'hijama-paris-idf-guide', title: 'Hijama à Paris et en IDF : trouver un praticien sérieux - guide complet', category: 'Santé', date: '2026-02-20', readTime: '6 min', excerpt: 'La hijama (cupping thérapeutique) connaît un vrai renouveau. Mais comment trouver un praticien formé et sérieux ? Ce guide répond à toutes vos questions.', tags: ['hijama', 'santé', 'Paris', 'IDF'], featured: false, image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=700&q=80' },
 ];
 
 function formatDate(iso: string) {
@@ -39,20 +39,31 @@ function ArticleCard({ article, large = false }: { article: typeof articles[0]; 
  overflow: 'hidden',
  display: 'flex', flexDirection: 'column',
  height: '100%',
- boxShadow: '0 2px 8px rgba(109,40,217,0.06)',
- transition: 'transform 0.18s, box-shadow 0.18s',
+ boxShadow: '0 2px 8px rgba(201,151,58,0.06)',
+ transition: 'transform 0.22s ease, box-shadow 0.22s ease',
  }}
  onMouseOver={e => {
- (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)';
- (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(109,40,217,0.14)';
+ (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+ (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 32px rgba(201,151,58,0.18)';
  }}
  onMouseOut={e => {
  (e.currentTarget as HTMLElement).style.transform = '';
- (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(109,40,217,0.06)';
+ (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(201,151,58,0.06)';
  }}
  >
- {/* Barre catégorie */}
- <div style={{ height: '3px', backgroundColor: color }} />
+ {/* Image cover */}
+ {article.image && (
+ <div style={{ position: 'relative', height: large ? '200px' : '160px', overflow: 'hidden' }}>
+ <img src={article.image} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
+ onMouseOver={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.06)'; }}
+ onMouseOut={e => { (e.currentTarget as HTMLElement).style.transform = ''; }}
+ />
+ <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.4) 100%)' }} />
+ <span style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', fontSize: '0.6rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#fff', backgroundColor: color, padding: '2px 8px', borderRadius: '4px' }}>{article.category}</span>
+ </div>
+ )}
+ {/* Barre catégorie (si pas d'image) */}
+ {!article.image && <div style={{ height: '3px', backgroundColor: color }} />}
 
  <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
  {/* Header */}
