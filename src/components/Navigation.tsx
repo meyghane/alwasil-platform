@@ -202,44 +202,49 @@ export default function Navigation() {
  }
  .dropdown-menu {
  position: absolute;
- top: calc(100% + 4px);
+ top: calc(100% + 8px);
  left: 50%;
  transform: translateX(-50%);
- background-color: white;
- border: 1px solid #e7e5e4;
+ background: #0f0c07;
+ border: 1px solid rgba(201, 151, 58, 0.22);
+ border-top: 2px solid rgba(201, 151, 58, 0.6);
  border-radius: 12px;
- box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
- padding: 0.5rem;
- min-width: 240px;
+ box-shadow: 0 24px 48px -8px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.5);
+ padding: 6px;
+ min-width: 260px;
  z-index: 100;
  }
  .dropdown-item {
  display: flex;
  align-items: flex-start;
  gap: 0.75rem;
- padding: 0.7rem 0.8rem;
+ padding: 0.75rem 0.875rem;
  border-radius: 8px;
  text-decoration: none;
- transition: background 0.2s;
+ transition: background 0.15s, border-left-color 0.15s;
+ border-left: 2px solid transparent;
  }
  .dropdown-item:hover {
- background-color: #f0fdfa;
+ background: rgba(201, 151, 58, 0.09);
+ border-left-color: rgba(201, 151, 58, 0.55);
  }
  .dropdown-icon {
  color: ${PRIMARY};
- margin-top: 2px;
+ margin-top: 3px;
  flex-shrink: 0;
+ opacity: 0.85;
  }
  .dropdown-label {
  font-size: 0.875rem;
  font-weight: 600;
- color: #1c1917;
+ color: rgba(255, 255, 255, 0.92);
+ letter-spacing: -0.01em;
  }
  .dropdown-desc {
- font-size: 0.72rem;
- color: #78716c;
- margin-top: 1px;
- line-height: 1.3;
+ font-size: 0.7rem;
+ color: rgba(255, 255, 255, 0.38);
+ margin-top: 2px;
+ line-height: 1.4;
  }
  .login-link {
  font-size: 0.875rem;
@@ -283,7 +288,8 @@ export default function Navigation() {
  z-index: 40;
  }
  .mobile-drawer {
- background-color: #ffffff;
+ background-color: #0f0c07;
+ border-top: 1px solid rgba(201, 151, 58, 0.18);
  padding: 1.5rem;
  display: flex;
  flex-direction: column;
@@ -298,15 +304,15 @@ export default function Navigation() {
  padding: 0.5rem;
  font-size: 1rem;
  font-weight: 600;
- color: #1c1917;
+ color: rgba(255,255,255,0.85);
  text-decoration: none;
  }
  .mobile-group-title {
- font-size: 0.75rem;
+ font-size: 0.7rem;
  font-weight: 700;
- color: #a8a29e;
+ color: rgba(201, 151, 58, 0.6);
  text-transform: uppercase;
- letter-spacing: 0.1em;
+ letter-spacing: 0.12em;
  padding: 0.5rem;
  margin-bottom: 0.25rem;
  }
@@ -317,12 +323,12 @@ export default function Navigation() {
  padding: 0.75rem 0.5rem;
  font-size: 0.95rem;
  font-weight: 500;
- color: #44403c;
+ color: rgba(255,255,255,0.65);
  border-radius: 8px;
  text-decoration: none;
  }
  .mobile-footer {
- border-top: 1px solid #f5f5f4;
+ border-top: 1px solid rgba(255,255,255,0.07);
  padding-top: 1.25rem;
  display: flex;
  gap: 0.75rem;
@@ -330,9 +336,9 @@ export default function Navigation() {
  .mobile-btn-outline {
  flex: 1;
  padding: 0.75rem;
- border: 1px solid #e7e5e4;
+ border: 1px solid rgba(255,255,255,0.2);
  border-radius: 8px;
- color: #1c1917;
+ color: rgba(255,255,255,0.8);
  font-weight: 600;
  text-align: center;
  text-decoration: none;
