@@ -8,6 +8,22 @@ import PrayerTimesBar from '@/components/PrayerTimesBar';
 
 const BASE_URL = 'https://alwasil-platform.vercel.app';
 
+const JSON_LD_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Al-Wasil',
+  alternateName: 'الواصل',
+  url: BASE_URL,
+  description: 'Plateforme communautaire pour les musulmans de France : emploi, santé, éducation, solidarité, Hajj, librairies, piscines burkini.',
+  inLanguage: 'fr-FR',
+  audience: { '@type': 'Audience', audienceType: 'Muslims in France' },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${BASE_URL}/education?q={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
 export const metadata: Metadata = {
  metadataBase: new URL(BASE_URL),
  title: {
@@ -51,26 +67,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
  return (
  <html lang="fr">
  <head>
- {/* JSON-LD — Organisation */}
  <script
  type="application/ld+json"
- dangerouslySetInnerHTML={{
- __html: JSON.stringify({
- '@context': 'https://schema.org',
- '@type': 'WebSite',
- name: 'Al-Wasil',
- alternateName: 'الواصل',
- url: BASE_URL,
- description: 'Plateforme communautaire pour les musulmans de France : emploi, santé, éducation, solidarité, Hajj, librairies, piscines burkini.',
- inLanguage: 'fr-FR',
- audience: { '@type': 'Audience', audienceType: 'Muslims in France' },
- potentialAction: {
- '@type': 'SearchAction',
- target: { '@type': 'EntryPoint', urlTemplate: `${BASE_URL}/education?q={search_term_string}` },
- 'query-input': 'required name=search_term_string',
- },
- }),
- }}
+ dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_SCHEMA) }}
  />
  </head>
  <GoogleTagManager gtmId="GTM-PD96NMKQ" />
