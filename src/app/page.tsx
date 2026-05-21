@@ -154,7 +154,7 @@ export default function Home() {
           <div key={i} style={{ position: 'absolute', left: p.x, top: p.y, width: `${p.s}px`, height: `${p.s}px`, borderRadius: '50%', backgroundColor: '#d4a853', opacity: 0.4, pointerEvents: 'none', animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite` }} />
         ))}
 
-        {/* Mosaïque arabe — couche base, toujours visible très faiblement */}
+        {/* Mosaïque arabe — une seule couche, opacité subtile */}
         <div style={{
           position: 'absolute', inset: 0,
           display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start',
@@ -162,30 +162,7 @@ export default function Home() {
           pointerEvents: 'none', overflow: 'hidden',
           transform: 'rotate(-8deg) scale(1.15)',
           transformOrigin: 'center center',
-          opacity: 0.05,
-        }}>
-          {Array.from({ length: 120 }).map((_, i) => (
-            <span key={i} style={{
-              fontFamily: "'Amiri', 'Scheherazade New', 'Traditional Arabic', serif",
-              fontSize: '1.6rem', fontWeight: 700,
-              color: '#d4a853', letterSpacing: '0.1em',
-              userSelect: 'none', whiteSpace: 'nowrap',
-            }}>
-              الواصل
-            </span>
-          ))}
-        </div>
-
-        {/* Mosaïque arabe — couche révélée par le halo (screen blend) */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start',
-          gap: '0.5rem', padding: '1rem',
-          pointerEvents: 'none', overflow: 'hidden',
-          transform: 'rotate(-8deg) scale(1.15)',
-          transformOrigin: 'center center',
-          opacity: 0.55,
-          mixBlendMode: 'screen',
+          opacity: 0.08,
         }}>
           {Array.from({ length: 120 }).map((_, i) => (
             <span key={i} style={{
