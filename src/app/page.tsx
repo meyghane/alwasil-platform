@@ -146,14 +146,15 @@ export default function Home() {
         background: 'linear-gradient(150deg, #100c04 0%, #0a0806 45%, #050404 100%)',
         position: 'relative', overflow: 'hidden',
       }}>
-        <div style={{ position: 'absolute', top: '-15%', left: '-8%', width: '50%', height: '75%', background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.45) 0%, rgba(20,14,4,0.18) 45%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: 0, right: 0, width: '35%', height: '60%', background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.15) 0%, transparent 65%)', pointerEvents: 'none' }} />
+        {/* Halo principal — animé, dérive lentement */}
+        <div style={{ position: 'absolute', top: '-15%', left: '-8%', width: '55%', height: '80%', background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.45) 0%, rgba(20,14,4,0.18) 45%, transparent 70%)', pointerEvents: 'none', animation: 'halo-drift 18s ease-in-out infinite alternate' }} />
+        <div style={{ position: 'absolute', bottom: 0, right: 0, width: '35%', height: '60%', background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
 
         {PARTICLES.map((p, i) => (
           <div key={i} style={{ position: 'absolute', left: p.x, top: p.y, width: `${p.s}px`, height: `${p.s}px`, borderRadius: '50%', backgroundColor: '#d4a853', opacity: 0.4, pointerEvents: 'none', animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite` }} />
         ))}
 
-        {/* Mosaïque arabe — الواصل répété en transparence */}
+        {/* Mosaïque arabe — couche base, toujours visible très faiblement */}
         <div style={{
           position: 'absolute', inset: 0,
           display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start',
@@ -161,17 +162,37 @@ export default function Home() {
           pointerEvents: 'none', overflow: 'hidden',
           transform: 'rotate(-8deg) scale(1.15)',
           transformOrigin: 'center center',
-          opacity: 0.09,
+          opacity: 0.05,
         }}>
           {Array.from({ length: 120 }).map((_, i) => (
             <span key={i} style={{
               fontFamily: "'Amiri', 'Scheherazade New', 'Traditional Arabic', serif",
-              fontSize: '1.6rem',
-              fontWeight: 700,
-              color: '#d4a853',
-              letterSpacing: '0.1em',
-              userSelect: 'none',
-              whiteSpace: 'nowrap',
+              fontSize: '1.6rem', fontWeight: 700,
+              color: '#d4a853', letterSpacing: '0.1em',
+              userSelect: 'none', whiteSpace: 'nowrap',
+            }}>
+              الواصل
+            </span>
+          ))}
+        </div>
+
+        {/* Mosaïque arabe — couche révélée par le halo (screen blend) */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start',
+          gap: '0.5rem', padding: '1rem',
+          pointerEvents: 'none', overflow: 'hidden',
+          transform: 'rotate(-8deg) scale(1.15)',
+          transformOrigin: 'center center',
+          opacity: 0.55,
+          mixBlendMode: 'screen',
+        }}>
+          {Array.from({ length: 120 }).map((_, i) => (
+            <span key={i} style={{
+              fontFamily: "'Amiri', 'Scheherazade New', 'Traditional Arabic', serif",
+              fontSize: '1.6rem', fontWeight: 700,
+              color: '#d4a853', letterSpacing: '0.1em',
+              userSelect: 'none', whiteSpace: 'nowrap',
             }}>
               الواصل
             </span>
@@ -283,25 +304,24 @@ export default function Home() {
         </div>
       </div>
 
-      <section style={{ padding: '0 0 4rem', backgroundColor: '#fff' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-            {SECTIONS.map(s => (
-              <RubriqueCard
-                key={s.href}
-                href={s.href}
-                color={s.color}
-                bg={s.bg}
-                title={s.title}
-                arabic={s.arabic}
-                description={s.description}
-                tags={s.tags}
-                soon={s.soon}
-                image={s.image}
-                iconNode={<s.icon size={17} color="#d4a853" strokeWidth={1.8} />}
-              />
-            ))}
-          </div>
+      {/* Grille full-bleed — 3 colonnes, flush, sans arrondis */}
+      <section style={{ backgroundColor: '#fff' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0 }}>
+          {SECTIONS.map(s => (
+            <RubriqueCard
+              key={s.href}
+              href={s.href}
+              color={s.color}
+              bg={s.bg}
+              title={s.title}
+              arabic={s.arabic}
+              description={s.description}
+              tags={s.tags}
+              soon={s.soon}
+              image={s.image}
+              iconNode={<s.icon size={17} color="#d4a853" strokeWidth={1.8} />}
+            />
+          ))}
         </div>
       </section>
 

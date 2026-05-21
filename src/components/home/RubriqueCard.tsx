@@ -24,9 +24,8 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
       onMouseLeave={() => setHovered(false)}
       style={{
         position: 'relative',
-        borderRadius: '16px',
         overflow: 'hidden',
-        height: '230px',
+        height: '260px',
         cursor: soon ? 'default' : 'pointer',
         opacity: soon ? 0.7 : 1,
       }}
@@ -58,7 +57,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
         padding: '1.1rem 1.25rem',
       }}>
         <div style={{
-          width: 38, height: 38, borderRadius: '50%',
+          width: 38, height: 38, borderRadius: '4px',
           border: '1.5px solid rgba(212,168,83,0.65)',
           backgroundColor: 'rgba(20,14,4,0.18)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -109,7 +108,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
               backgroundColor: 'rgba(20,14,4,0.28)',
               color: 'rgba(255,255,255,0.85)',
               border: '1px solid rgba(212,168,83,0.35)',
-              padding: '2px 8px', borderRadius: '20px',
+              padding: '2px 8px', borderRadius: '2px',
             }}>
               {tag}
             </span>
@@ -119,6 +118,6 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
     </div>
   );
 
-  if (soon) return <div>{card}</div>;
+  if (soon) return <div style={{ display: 'block' }}>{card}</div>;
   return <Link href={href} style={{ textDecoration: 'none', display: 'block' }}>{card}</Link>;
 }
