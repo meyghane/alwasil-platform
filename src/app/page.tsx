@@ -357,10 +357,19 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
             {TESTIMONIALS.map((t, i) => <TestimonialCard key={i} {...t} />)}
           </div>
-          <p style={{ textAlign: 'center', fontSize: '0.78rem', color: 'rgba(201,151,58,0.45)', marginTop: '2rem' }}>
-            Ces témoignages seront remplacés par de vrais retours.{' '}
-            <Link href="/contact?type=general" style={{ color: V.primary, textDecoration: 'none', fontWeight: 600 }}>Partager ton expérience →</Link>
-          </p>
+          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+            <Link href="/contact?type=temoignage" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+              padding: '0.65rem 1.5rem',
+              border: '1px solid rgba(201,151,58,0.4)',
+              color: V.primary, textDecoration: 'none',
+              fontWeight: 600, fontSize: '0.85rem',
+              borderRadius: '6px',
+              backgroundColor: 'rgba(201,151,58,0.08)',
+            }}>
+              Partager ton expérience →
+            </Link>
+          </div>
         </div>
       </section>
 
