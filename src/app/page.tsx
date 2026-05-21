@@ -161,7 +161,7 @@ export default function Home() {
           pointerEvents: 'none', overflow: 'hidden',
           transform: 'rotate(-8deg) scale(1.15)',
           transformOrigin: 'center center',
-          opacity: 0.045,
+          opacity: 0.09,
         }}>
           {Array.from({ length: 120 }).map((_, i) => (
             <span key={i} style={{
