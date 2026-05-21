@@ -153,6 +153,31 @@ export default function Home() {
           <div key={i} style={{ position: 'absolute', left: p.x, top: p.y, width: `${p.s}px`, height: `${p.s}px`, borderRadius: '50%', backgroundColor: '#d4a853', opacity: 0.4, pointerEvents: 'none', animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite` }} />
         ))}
 
+        {/* Mosaïque arabe — الواصل répété en transparence */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start',
+          gap: '0.5rem', padding: '1rem',
+          pointerEvents: 'none', overflow: 'hidden',
+          transform: 'rotate(-8deg) scale(1.15)',
+          transformOrigin: 'center center',
+          opacity: 0.045,
+        }}>
+          {Array.from({ length: 120 }).map((_, i) => (
+            <span key={i} style={{
+              fontFamily: "'Amiri', 'Scheherazade New', 'Traditional Arabic', serif",
+              fontSize: '1.6rem',
+              fontWeight: 700,
+              color: '#d4a853',
+              letterSpacing: '0.1em',
+              userSelect: 'none',
+              whiteSpace: 'nowrap',
+            }}>
+              الواصل
+            </span>
+          ))}
+        </div>
+
         <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3.5rem', alignItems: 'center', position: 'relative', zIndex: 1 }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.9)', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.03em', marginBottom: '2rem', border: '1px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)' }}>
