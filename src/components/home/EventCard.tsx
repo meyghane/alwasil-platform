@@ -35,7 +35,7 @@ export default function EventCard({ title, date, location, organizer, tag, color
       style={{
         backgroundColor: '#fff',
         border: `1px solid ${hov ? color : V.border}`,
-        overflow: 'hidden',
+        borderRadius: '6px', overflow: 'hidden',
         display: 'flex', flexDirection: 'column',
         boxShadow: hov ? '0 8px 28px rgba(201,151,58,0.18)' : '0 2px 8px rgba(0,0,0,0.05)',
         transform: hov ? 'translateY(-4px)' : 'translateY(0)',
