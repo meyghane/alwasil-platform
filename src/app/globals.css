@@ -261,3 +261,89 @@ a {
     0 0 45px rgba(201,151,58,0.10),
     0 8px 32px rgba(0,0,0,0.5);
 }
+
+/* ── RESPONSIVE GRIDS ─────────────────────────────────────────── */
+
+/* Hero : 2 colonnes → 1 colonne sur mobile */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3.5rem;
+  align-items: center;
+}
+
+/* Mosaïque 3×3 hero : toujours 3 colonnes mais plus petite sur mobile */
+.hero-mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Steps 3 colonnes → 1 colonne sur mobile */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* Sections "Rubriques" : 3 col desktop → 2 col tablet → 1 col mobile */
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+/* Events grid */
+.events-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Testimonials */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* Featured hero 2-up */
+.featured-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .sections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .featured-duo {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sections-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-mosaic {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+  /* Ensure no element overflows viewport */
+  section, .container, main {
+    max-width: 100vw;
+  }
+}

@@ -25,14 +25,14 @@ type StatItem = { count: number; label: string; icon: LucideIcon };
 
 // ── Data ──────────────────────────────────────────────────────────
 const SECTIONS: Section[] = [
-  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#fdfbf0', title: 'Éducation', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
-  { href: '/events', icon: Calendar, color: '#3a0a45', bg: '#ecfdf5', title: 'Événements', arabic: 'اللقاء', description: 'Conférences, séminaires et portes ouvertes en France.', tags: ['Conférences', 'Séminaires', 'En ligne'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80' },
-  { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#fdfbf0', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, visites aux malades et voyages humanitaires.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Palestine', 'Voyages'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
+  { href: '/events', icon: Calendar, color: '#3a0a45', bg: '#ecfdf5', title: 'Événements', arabic: 'اللقاء', description: 'Conférences, séminaires, maraudes et rencontres communautaires en France.', tags: ['Conférences', 'Maraudes', 'Séminaires', 'En ligne'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80' },
+  { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#fdfbf0', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, collectes et initiatives solidaires partout en France.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Gaza'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
   { href: '/jobs', icon: Briefcase, color: '#4a0e58', bg: '#ecfdf5', title: 'Emploi', arabic: 'الأمل', description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.', tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'], image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80' },
+  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#fdfbf0', title: 'Éducation', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
+  { href: '/hajj', icon: Plane, color: '#4a0e58', bg: '#ecfdf5', title: 'Hajj & Omra', arabic: 'الحج', description: 'Comparez les agences, offres 2026 et guide du pèlerin.', tags: ['Hajj 2026', 'Omra', 'Comparateur'], image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80' },
   { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#fdfbf0', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
   { href: '/librairies', icon: Library, color: '#2c0835', bg: '#ecfdf5', title: 'Librairies', arabic: 'المكتبة', description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.', tags: ['Corans', 'Livres', 'Enfants'], image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80' },
   { href: '/piscines', icon: Waves, color: '#662a94', bg: '#fdfbf0', title: 'Piscines Burkini', arabic: 'السباحة', description: 'Créneaux burkini et maillots couvrants en Île-de-France.', tags: ['Créneaux femmes', 'Burkini', 'IdF'], image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80' },
-  { href: '/hajj', icon: Plane, color: '#4a0e58', bg: '#ecfdf5', title: 'Hajj & Omra', arabic: 'الحج', description: 'Comparez les agences, offres 2026 et guide du pèlerin.', tags: ['Hajj 2026', 'Omra', 'Comparateur'], image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80' },
   { href: '/justice', icon: ShieldCheck, color: '#3a0a45', bg: '#fdfbf0', title: 'Justice & Droits', arabic: 'العدل', description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.', tags: ['Voile au travail', 'ARCOM', 'Discrimination'], image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80' },
   { href: '#', icon: MessageCircle, color: 'rgba(255,255,255,0.85)', bg: '#fdfbf0', title: 'Communauté', arabic: 'الأمة', description: 'Annuaire de compétences, marrainage, muqabala et espace de brainstorming.', tags: ['Marrainage', 'Muqabala', 'Compétences', 'Entraide'], image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80', soon: true },
 ];
@@ -176,11 +176,11 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3.5rem', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+        <div className="container hero-grid" style={{ position: 'relative', zIndex: 1 }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.9)', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.03em', marginBottom: '2rem', border: '1px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)' }}>
-              <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#fff', display: 'inline-block' }} />
-              La communauté musulmane française, centralisée.
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#d4a853', display: 'inline-block' }} />
+              Qu&apos;est-ce que je cherche aujourd&apos;hui ?
             </div>
 
             <h1 style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.03em', color: '#fff', marginBottom: '1rem' }}>
@@ -208,7 +208,7 @@ export default function Home() {
           </div>
 
           {/* Mosaïque 3×3 */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
+          <div className="hero-mosaic">
             {SECTIONS.slice(0, 9).map(s => (
               <Link key={s.href} href={s.href} className="led-card-outer" style={{ aspectRatio: '1', textDecoration: 'none' }}>
                 <div className="led-spin" />
@@ -253,7 +253,7 @@ export default function Home() {
             <p style={{ color: V.muted, fontSize: '0.95rem', maxWidth: '420px', margin: '0 auto' }}>Pas d&apos;inscription, pas de compte. Trouve ce que tu cherches en quelques secondes.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+          <div className="steps-grid">
             {STEPS.map((s, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
@@ -272,18 +272,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── RUBRIQUES ──────────────────────────────────────── */}
-      <div id="rubriques" style={{ backgroundColor: '#fff', padding: '3.5rem 0 0' }}>
-        <div className="container" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+      {/* ─── FEATURED : ÉVÉNEMENTS + SOLIDARITÉ ──────────────── */}
+      <section id="rubriques" style={{ backgroundColor: '#fafaf8', padding: '3rem 0', borderBottom: `1px solid ${V.border}` }}>
+        <div className="container">
+          <div style={{ marginBottom: '1.75rem' }}>
+            <span style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', color: V.primary, textTransform: 'uppercase' }}>Les plus recherchés</span>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.35rem' }}>Événements &amp; Solidarité</h2>
+          </div>
+          <div className="featured-duo">
+            {/* Événements */}
+            <Link href="/events" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', height: '260px', cursor: 'pointer', boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80" alt="Événements islamiques" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,8,4,0.92) 0%, rgba(10,8,4,0.3) 60%, transparent 100%)' }} />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', backgroundColor: 'rgba(201,151,58,0.2)', border: '1px solid rgba(201,151,58,0.5)', borderRadius: '4px', padding: '3px 10px', marginBottom: '0.65rem', width: 'fit-content' }}>
+                    <Calendar size={12} color="#d4a853" />
+                    <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#d4a853', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Événements</span>
+                  </div>
+                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.3rem', margin: '0 0 0.5rem', lineHeight: 1.2 }}>Conférences, maraudes &amp; rencontres</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.82rem', margin: '0 0 1rem', lineHeight: 1.5 }}>Tous les événements islamiques en Île-de-France et en France</p>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#d4a853', fontWeight: 700, fontSize: '0.82rem' }}>
+                    Voir tous les événements <ArrowRight size={14} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+            {/* Solidarité */}
+            <Link href="/solidarity" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', height: '260px', cursor: 'pointer', boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
+                <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=900&q=80" alt="Solidarité" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,8,4,0.92) 0%, rgba(10,8,4,0.3) 60%, transparent 100%)' }} />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', backgroundColor: 'rgba(220,38,38,0.2)', border: '1px solid rgba(220,38,38,0.4)', borderRadius: '4px', padding: '3px 10px', marginBottom: '0.65rem', width: 'fit-content' }}>
+                    <HeartHandshake size={12} color="#f87171" />
+                    <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#f87171', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Solidarité</span>
+                  </div>
+                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.3rem', margin: '0 0 0.5rem', lineHeight: 1.2 }}>Maraudes, cagnottes &amp; collectes</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.82rem', margin: '0 0 1rem', lineHeight: 1.5 }}>Agir ensemble pour ceux qui en ont besoin, partout en France</p>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#f87171', fontWeight: 700, fontSize: '0.82rem' }}>
+                    Rejoindre une initiative <ArrowRight size={14} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TOUTES LES RUBRIQUES ───────────────────────────── */}
+      <div style={{ backgroundColor: '#fff', padding: '3rem 0 0' }}>
+        <div className="container" style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>Toutes les rubriques</span>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem', marginBottom: '0.5rem' }}>Que cherches-tu aujourd&apos;hui ?</h2>
-          <p style={{ color: V.muted, fontSize: '0.9rem', maxWidth: '480px', margin: '0 auto' }}>{SECTIONS.length} rubriques · chacune mise à jour par la communauté</p>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem', marginBottom: '0.4rem' }}>Que cherches-tu aujourd&apos;hui ?</h2>
+          <p style={{ color: V.muted, fontSize: '0.88rem', maxWidth: '480px', margin: '0 auto' }}>{SECTIONS.length} rubriques · mises à jour par la communauté</p>
         </div>
       </div>
 
-      {/* Grille full-bleed — 3 colonnes, flush, sans arrondis */}
+      {/* Grille full-bleed — responsive */}
       <section style={{ backgroundColor: '#fff' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0 }}>
+        <div className="sections-grid">
           {SECTIONS.map(s => (
             <RubriqueCard
               key={s.href}
@@ -323,7 +371,7 @@ export default function Home() {
               </p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${UPCOMING_EVENTS.length}, 1fr)`, gap: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
               {UPCOMING_EVENTS.map(ev => <EventCard key={ev.title} {...ev} />)}
             </div>
           )}
@@ -354,7 +402,7 @@ export default function Home() {
             <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>Ils utilisent Al-Wasil</span>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.025em', marginTop: '0.5rem' }}>Ce que dit la communauté</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+          <div className="testimonials-grid">
             {TESTIMONIALS.map((t, i) => <TestimonialCard key={i} {...t} />)}
           </div>
           <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>

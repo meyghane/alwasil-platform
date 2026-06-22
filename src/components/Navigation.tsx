@@ -14,23 +14,10 @@ type NavItem = { href: string; icon: React.ReactNode; label: string; desc?: stri
 type NavGroup = { label: string; items: NavItem[] } | { href: string; icon: React.ReactNode; label: string };
 
 const NAV: NavGroup[] = [
+ { href: '/events', icon: <Calendar size={16} />, label: 'Événements' },
+ { href: '/solidarity', icon: <HandHeart size={16} />, label: 'Solidarité' },
  {
- label: 'Vie Spirituelle',
- items: [
- { href: '/hajj', icon: <Plane size={16} />, label: 'Hajj & Omra', desc: 'Agences, comparatifs et guides' },
- { href: '/guide', icon: <Info size={16} />, label: 'Mes Premiers Pas', desc: 'Bases de l\'islam pour débuter' },
- ],
- },
- {
- label: 'Savoir',
- items: [
- { href: '/education', icon: <BookOpen size={16} />, label: 'Apprentissage', desc: 'Cours, instituts, arabe, Coran' },
- { href: '/librairies', icon: <Library size={16} />, label: 'Librairies', desc: 'Librairies islamiques en France' },
- { href: '/blog', icon: <PenLine size={16} />, label: 'Blog & Articles', desc: 'Guides pratiques et actualités' },
- ],
- },
- {
- label: 'Services & Emploi',
+ label: 'Emploi & Services',
  items: [
  { href: '/jobs', icon: <Briefcase size={16} />, label: 'Emploi', desc: 'Offres voile OK, prière acceptée' },
  { href: '/sante', icon: <Heart size={16} />, label: 'Santé', desc: 'Psy, hijama, praticiens musulmans' },
@@ -39,10 +26,13 @@ const NAV: NavGroup[] = [
  ],
  },
  {
- label: 'Communauté',
+ label: 'Savoir & Spiritualité',
  items: [
- { href: '/events', icon: <Calendar size={16} />, label: 'Événements', desc: 'Conférences, iftars, rencontres' },
- { href: '/solidarity', icon: <HandHeart size={16} />, label: 'Solidarité', desc: 'Cagnottes, maraudes, associations' },
+ { href: '/education', icon: <BookOpen size={16} />, label: 'Apprentissage', desc: 'Cours, instituts, arabe, Coran' },
+ { href: '/hajj', icon: <Plane size={16} />, label: 'Hajj & Omra', desc: 'Agences, comparatifs et guides' },
+ { href: '/librairies', icon: <Library size={16} />, label: 'Librairies', desc: 'Librairies islamiques en France' },
+ { href: '/guide', icon: <Info size={16} />, label: 'Premiers Pas', desc: 'Bases de l\'islam pour débuter' },
+ { href: '/blog', icon: <PenLine size={16} />, label: 'Blog', desc: 'Guides pratiques et actualités' },
  ],
  },
 ];
