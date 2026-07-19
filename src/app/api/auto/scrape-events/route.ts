@@ -7,8 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
 const APPS_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
-const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
-const TG_CHAT = process.env.TELEGRAM_CHAT_ID || '';
+// Telegram removed — notifications via email digest (GitHub Actions)
 const CRON_SECRET = process.env.CRON_SECRET || '';
 
 const STRATEGIES = [
@@ -147,21 +146,6 @@ export async function GET(req: NextRequest) {
  EVENTS_FOUND: written,
  URLS: filtered.map(e => e.url_source).join(', '),
  },
- }),
- }).catch(() => {});
- }
-
- // 7. Notification Telegram
- if (TG_TOKEN && TG_CHAT && written > 0) {
- const lines = filtered.slice(0, 3)
- .map(e => ` ${e.titre}\n ${e.ville} — ${e.date_iso}`)
- .join('\n\n');
- fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({
- chat_id: TG_CHAT,
- text: ` Wassil a trouvé ${written} événement(s) !\n\n${lines}\n\n https://al-wasil.fr/admin/soumissions`,
  }),
  }).catch(() => {});
  }
