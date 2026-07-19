@@ -1,6 +1,6 @@
 // HelloAsso scraper — cagnottes + événements associations musulmanes
 import { CheerioCrawler, RequestList } from 'crawlee';
-import type { ScrapedItem } from '../types.js';
+import type { ScrapedItem } from '../types';
 
 const SEARCH_TERMS = ['islam', 'musulman', 'mosquée', 'maraude', 'halal', 'coran'];
 
@@ -88,8 +88,8 @@ export async function scrapeHelloAsso(): Promise<ScrapedItem[]> {
         console.log(`[helloasso] ${request.url} → ${relevant.length} items`);
       }
     },
-    failedRequestHandler({ request, error }) {
-      console.warn(`[helloasso] Failed: ${request.url}`, error.message);
+    failedRequestHandler({ request }: { request: { url: string } }) {
+      console.warn(`[helloasso] Failed: ${request.url}`);
     },
   });
 

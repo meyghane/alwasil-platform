@@ -1,12 +1,12 @@
 // Al-Wasil — Daily Scraper (GitHub Actions)
 // Runs on GitHub servers, not your Mac — 100% free
-import { checkAlreadyRanToday, getExistingTitles, writeItem, logRun } from './utils/sheets.js';
-import { scrapeEventsWithGemini } from './utils/gemini.js';
-import { scrapeHelloAsso } from './scrapers/helloasso.js';
-import { scrapeLaunchGood } from './scrapers/launchgood.js';
-import { sendDigestEmail } from './utils/email.js';
-import { MANUAL_REVIEW, AUTO_APPROVED, SHEET_TAB } from './types.js';
-import type { ScrapedItem } from './types.js';
+import { checkAlreadyRanToday, getExistingTitles, writeItem, logRun } from './utils/sheets';
+import { scrapeEventsWithGemini } from './utils/gemini';
+import { scrapeHelloAsso } from './scrapers/helloasso';
+import { scrapeLaunchGood } from './scrapers/launchgood';
+import { sendDigestEmail } from './utils/email';
+import { MANUAL_REVIEW, AUTO_APPROVED, SHEET_TAB } from './types';
+import type { ScrapedItem } from './types';
 
 async function main() {
   const today = new Date().toISOString().split('T')[0];

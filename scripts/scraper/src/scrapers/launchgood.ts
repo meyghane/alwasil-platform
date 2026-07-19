@@ -1,6 +1,6 @@
 // LaunchGood scraper — cagnottes islamiques France
 import { CheerioCrawler, RequestList } from 'crawlee';
-import type { ScrapedItem } from '../types.js';
+import type { ScrapedItem } from '../types';
 
 const URLS = [
   'https://www.launchgood.com/discover?c=fr',
@@ -68,8 +68,8 @@ export async function scrapeLaunchGood(): Promise<ScrapedItem[]> {
         console.log(`[launchgood] ${request.url} → ${relevant.length} items`);
       }
     },
-    failedRequestHandler({ request, error }) {
-      console.warn(`[launchgood] Failed: ${request.url}`, error.message);
+    failedRequestHandler({ request }: { request: { url: string } }) {
+      console.warn(`[launchgood] Failed: ${request.url}`);
     },
   });
 

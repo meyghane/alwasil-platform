@@ -1,7 +1,7 @@
 // Email digest quotidien — boutons Valider/Refuser par item
 import crypto from 'crypto';
-import type { ScrapedItem } from '../types.js';
-import { MANUAL_REVIEW } from '../types.js';
+import type { ScrapedItem } from '../types';
+import { MANUAL_REVIEW } from '../types';
 
 const RESEND_KEY = process.env.RESEND_API_KEY || '';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'al-wasil@hotmail.com';
