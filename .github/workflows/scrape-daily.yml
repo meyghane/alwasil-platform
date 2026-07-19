@@ -40,16 +40,17 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       # Tentative 1 — retry automatique jusqu'à 3 fois si une source plante
+      # Toutes les clés sont dans un seul secret JSON : SCRAPING_ALWASIL_ALL
       - name: Run scraper (attempt 1)
         id: scrape1
         working-directory: scripts/scraper
         continue-on-error: true
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          APPS_SCRIPT_WEBHOOK_URL: ${{ secrets.APPS_SCRIPT_WEBHOOK_URL }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          MODERATE_SECRET: ${{ secrets.MODERATE_SECRET }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
+          APPS_SCRIPT_WEBHOOK_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).APPS_SCRIPT_WEBHOOK_URL }}
+          RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
+          MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
+          ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
           SITE_URL: https://al-wasil.fr
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: npm run scrape
@@ -64,11 +65,11 @@ jobs:
         working-directory: scripts/scraper
         continue-on-error: true
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          APPS_SCRIPT_WEBHOOK_URL: ${{ secrets.APPS_SCRIPT_WEBHOOK_URL }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          MODERATE_SECRET: ${{ secrets.MODERATE_SECRET }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
+          APPS_SCRIPT_WEBHOOK_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).APPS_SCRIPT_WEBHOOK_URL }}
+          RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
+          MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
+          ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
           SITE_URL: https://al-wasil.fr
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: npm run scrape
@@ -81,11 +82,11 @@ jobs:
         if: steps.scrape2.outcome == 'failure'
         working-directory: scripts/scraper
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          APPS_SCRIPT_WEBHOOK_URL: ${{ secrets.APPS_SCRIPT_WEBHOOK_URL }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          MODERATE_SECRET: ${{ secrets.MODERATE_SECRET }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
+          APPS_SCRIPT_WEBHOOK_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).APPS_SCRIPT_WEBHOOK_URL }}
+          RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
+          MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
+          ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
           SITE_URL: https://al-wasil.fr
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: npm run scrape
