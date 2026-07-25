@@ -2,11 +2,8 @@ name: Scraping Quotidien Al-Wasil
 
 on:
   schedule:
-    # 3 tentatives par jour : 8h, 14h, 20h Paris (UTC+1 = UTC-1)
+    # 1x/jour à 8h Paris (7h UTC), avec retries en cas d'échec dans le même run
     - cron: '0 7 * * *'
-    - cron: '0 13 * * *'
-    - cron: '0 19 * * *'
-  # Bouton manuel dans l'onglet Actions de GitHub
   workflow_dispatch:
     inputs:
       force:
@@ -18,7 +15,7 @@ jobs:
   scrape:
     name: Scraping & Email Digest
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -35,10 +32,6 @@ jobs:
         working-directory: scripts/scraper
         run: npm ci
 
-      - name: Install Playwright Chromium
-        working-directory: scripts/scraper
-        run: npx playwright install chromium --with-deps
-
       # Tentative 1 — retry automatique jusqu'à 3 fois si une source plante
       # Toutes les clés sont dans un seul secret JSON : SCRAPING_ALWASIL_ALL
       - name: Run scraper (attempt 1)
@@ -47,7 +40,7 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
-          APPS_SCRIPT_WEBHOOK_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).APPS_SCRIPT_WEBHOOK_URL }}
+          DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
           RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
           MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
           ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
@@ -66,7 +59,7 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
-          APPS_SCRIPT_WEBHOOK_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).APPS_SCRIPT_WEBHOOK_URL }}
+          DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
           RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
           MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
           ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
@@ -83,7 +76,7 @@ jobs:
         working-directory: scripts/scraper
         env:
           GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
-          APPS_SCRIPT_WEBHOOK_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).APPS_SCRIPT_WEBHOOK_URL }}
+          DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
           RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
           MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
           ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
