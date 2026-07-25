@@ -53,3 +53,14 @@ export const moderationLog = pgTable('moderation_log', {
   actor: text('actor').notNull(),
   actedAt: timestamp('acted_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+// Log des runs de découverte automatique (routine Claude quotidienne) — permet
+// à Méghane de suivre sa conso de tokens et rationner si besoin.
+export const scrapeRuns = pgTable('scrape_runs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  runType: text('run_type').notNull().default('claude-routine'),
+  tokensUsed: integer('tokens_used'),
+  itemsFound: integer('items_found').notNull().default(0),
+  itemsInserted: integer('items_inserted').notNull().default(0),
+  ranAt: timestamp('ran_at', { withTimezone: true }).notNull().defaultNow(),
+});
