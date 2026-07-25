@@ -6,13 +6,16 @@ import {
   Search, CheckCircle, Zap, Plus,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { allInstituts } from '@/data/institutes';
-import { allEvents } from '@/data/events';
-import { jobOffers } from '@/data/jobs';
+import type { Institut } from '@/data/institutes';
+import type { Event } from '@/data/events';
+import type { JobOffer } from '@/data/jobs';
+import { getInstituts, getEvents, getJobOffers } from '@/lib/db-queries';
 import { V } from '@/lib/tokens';
 import RubriqueCard from '@/components/home/RubriqueCard';
 import TestimonialCard from '@/components/home/TestimonialCard';
 import EventCard from '@/components/home/EventCard';
+
+export const revalidate = 3600;
 
 // ── Types ─────────────────────────────────────────────────────────
 type Section = {
@@ -89,12 +92,12 @@ const TESTIMONIALS = [
 ];
 
 // ── Stats ─────────────────────────────────────────────────────────
-function buildStats(): StatItem[] {
-  const upcomingCount = allEvents.filter(e => new Date(e.date) >= new Date()).length;
+function buildStats(events: Event[], instituts: Institut[], jobOffers: JobOffer[]): StatItem[] {
+  const upcomingCount = events.filter(e => new Date(e.date) >= new Date()).length;
   return [
     { count: 1040,               label: 'mosquées référencées en France',              icon: Building2 },
     { count: upcomingCount,      label: 'événements islamiques à venir en IDF',         icon: Calendar },
-    { count: allInstituts.length, label: 'instituts & professeurs de Coran',            icon: BookOpen },
+    { count: instituts.length,   label: 'instituts & professeurs de Coran',            icon: BookOpen },
     { count: 8,                  label: 'piscines burkini référencées en IDF',          icon: Waves },
     { count: 20,                 label: 'praticiens de santé sensibilisés',             icon: Stethoscope },
     { count: 10,                 label: 'cagnottes communautaires actives',             icon: HandCoins },
@@ -110,11 +113,11 @@ function buildStats(): StatItem[] {
 }
 
 // ── Upcoming events (3 prochains) ─────────────────────────────────
-function buildUpcomingEvents() {
+function buildUpcomingEvents(events: Event[]) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  return allEvents
+  return events
     .filter(e => new Date(e.date) >= today)
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 3)
@@ -133,9 +136,14 @@ function buildUpcomingEvents() {
 }
 
 // ── Page ──────────────────────────────────────────────────────────
-export default function Home() {
-  const STATS = buildStats();
-  const UPCOMING_EVENTS = buildUpcomingEvents();
+export default async function Home() {
+  const [instituts, events, jobOffers] = await Promise.all([
+    getInstituts(),
+    getEvents(),
+    getJobOffers(),
+  ]);
+  const STATS = buildStats(events, instituts, jobOffers);
+  const UPCOMING_EVENTS = buildUpcomingEvents(events);
 
   return (
     <div style={{ fontFamily: "'Inter', system-ui, -apple-system, sans-serif", backgroundColor: '#fff', color: V.dark }}>

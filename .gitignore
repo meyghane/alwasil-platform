@@ -47,3 +47,4 @@ next-env.d.ts
 dev.log
 *.log
 scripts/scraper/node_modules/
+.env*

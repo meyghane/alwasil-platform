@@ -1,0 +1,1 @@
+ALTER TABLE "items" ADD COLUMN "metadata" jsonb DEFAULT '{}'::jsonb;
