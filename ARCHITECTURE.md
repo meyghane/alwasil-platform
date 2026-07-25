@@ -1,6 +1,6 @@
 # ARCHITECTURE — Al-Wasil (الواصل)
 
-> Document technique. Justifie chaque décision. Dernière révision : 24 juillet 2026.
+> Document technique. Justifie chaque décision. Dernière révision : 26 juillet 2026.
 
 ## 1. Stack définitive
 
@@ -10,11 +10,13 @@
 | Frontend | Next.js 16.2 App Router, React 19, TS strict, CSS inline | Inchangé, déjà en place |
 | Base de données | **Neon Postgres** (Vercel Marketplace integration) | Free tier réel, scale-to-zero, branching, intégration native Vercel — recommandé 2026 pour ce cas d'usage |
 | ORM | **Drizzle ORM** | Léger, compatible edge/serverless, migrations SQL lisibles, bonne intégration driver Neon serverless (`@neondatabase/serverless`) |
-| Scraping | GitHub Actions (existant, conservé) | Gratuit, granularité suffisante, déjà en place et partiellement debuggé |
-| Sources scraping | API HelloAsso (officielle) + flux RSS | Décision validée : zéro scraping de sources qui l'interdisent en CGU |
-| Enrichissement | Gemini API (existant) | Nettoyage titre/description/tags/département, détection spam |
+| Découverte d'événements | **Routine Claude Code cloud** (quotidienne, WebSearch) | Remplace Gemini API le 26/07/2026 — Google exige un moyen de paiement lié au projet Cloud pour débloquer le moindre quota gratuit (confirmé sur 3 clés/projets différents), sans plafond de dépense dur possible sans infra à part. La routine tourne sur l'abonnement Claude Pro déjà maîtrisé, zéro risque de facturation surprise (service qui s'arrête au lieu de facturer au-delà) |
+| Sources scraping structuré (HelloAsso) | En attente — accès partenaire à demander | La recherche transverse par mot-clé de l'API HelloAsso nécessite un compte "partenaire" (contact direct avec leur équipe, pas de self-service) |
+| Enrichissement | Fait directement par la routine (structuration JSON) | Remplace l'appel Gemini séparé |
 | Modération | Email digest Resend (existant, Valider/Refuser) | Conservé tel quel — Méghane clique, rien d'autre |
 | Publicité | Google AdSense (après Epic D) | — |
+
+**Note historique** : GitHub Actions + Gemini API a été l'architecture initiale d'Epic B (25/07/2026) avant de buter sur le blocage de facturation Google. Le workflow `.github/workflows/scrape-daily.yml` reste dans le repo en `workflow_dispatch` manuel (dépannage ponctuel) mais son cron automatique est désactivé.
 
 ## 2. Ce qui disparaît
 

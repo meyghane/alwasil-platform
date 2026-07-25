@@ -1,9 +1,10 @@
 name: Scraping Quotidien Al-Wasil
 
 on:
-  schedule:
-    # 1x/jour à 8h Paris (7h UTC), avec retries en cas d'échec dans le même run
-    - cron: '0 7 * * *'
+  # Cron désactivé le 26/07/2026 : la découverte d'événements est remplacée par
+  # une routine Claude Code cloud (WebSearch, sans dépendance Gemini bloquée par
+  # Google — quota billing requis). Ce workflow reste disponible en manuel
+  # (workflow_dispatch) si besoin de dépannage ponctuel.
   workflow_dispatch:
     inputs:
       force:

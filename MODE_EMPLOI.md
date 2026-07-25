@@ -8,10 +8,11 @@ Le site se remplit tout seul chaque jour (scraping automatique). Tu reçois un e
 
 ## Ce qui est 100% automatique
 
-- **Chaque jour** (horaires différents selon la catégorie), un robot va chercher des nouveaux événements, offres d'emploi, cagnottes etc. sur des sources autorisées (API officielles, flux RSS — pas de sources qui l'interdisent dans leurs règles).
-- Une IA (Gemini) nettoie chaque fiche : titre, description, tags, ville/département, et détecte si c'est du spam.
+- **Chaque jour à 8h**, un agent Claude programmé (une "routine" cloud) cherche sur le web de nouveaux événements islamiques à venir en France, structure les infos, et les envoie au site.
+- Chaque run écrit une ligne dans une table de log (`scrape_runs`) avec le nombre de tokens consommés, pour que tu puisses suivre la conso dans le temps et me demander de réduire la fréquence ou le nombre de recherches si besoin.
 - Les événements passés sont supprimés automatiquement chaque nuit.
-- Emploi, piscines et hajj sont publiés automatiquement sans passer par toi (moins de risque d'erreur sur ces catégories).
+
+**Pourquoi une routine Claude et pas Gemini (Google) ?** On a testé Gemini d'abord, mais Google bloque tout accès gratuit à son API tant qu'aucune carte bancaire n'est liée au projet, et même avec une carte il n'existe aucun plafond de dépense garanti (juste des alertes email, pas un vrai blocage). On a préféré rester sur ton abonnement Claude Pro que tu maîtrises déjà, où le pire cas est "le service s'arrête", jamais une facture surprise.
 
 ## Ce que TOI tu dois faire
 
@@ -20,7 +21,7 @@ Le site se remplit tout seul chaque jour (scraping automatique). Tu reçois un e
 
 ## Où voir si tout tourne bien
 
-- **Statut du scraping** : github.com/meyghane/alwasil-platform → onglet "Actions" → voir les runs du jour, vert = OK, rouge = erreur (à me signaler).
+- **Statut de la routine quotidienne** : claude.ai/code/routines → "Al-Wasil — Découverte quotidienne d'événements" → historique des runs.
 - **Dashboard admin** : al-wasil.fr/admin (login : al-wasil@hotmail.com / salamaleykoum).
 - **Le site en direct** : al-wasil.fr
 
@@ -57,6 +58,6 @@ Rien à retenir — tout est dans ma mémoire persistante (fichiers `project_alw
 - **pSEO** : générer plein de pages automatiquement (ex: une page par ville) pour être trouvé sur Google
 - **Thin content** : trop de pages vides ou quasi-identiques → Google pénalise tout le site pour ça, d'où l'importance de n'ouvrir une ville/région que quand elle a du vrai contenu
 
-## Où on en est (24 juillet 2026)
+## Où on en est (26 juillet 2026)
 
-Phase Discovery + Planning terminée (PRD + Architecture validés). Prochaine étape : **Epic A — migration vers une vraie base de données Neon Postgres**, fondation de tout le reste. Rien n'a encore été codé sur cette migration — on démarre au prochain sprint.
+Epic A (base de données Neon Postgres) et Epic B (découverte automatique d'événements) terminés. La routine Claude quotidienne est créée et testée. Prochaines étapes possibles : Epic C (expansion géographique hors IDF), Epic D (préparation AdSense), ou contacter HelloAsso pour un accès partenaire API si tu veux élargir les sources.
