@@ -25,10 +25,11 @@ export type GeminiEvent = {
 };
 
 async function callGemini(prompt: string): Promise<GeminiEvent[]> {
+  // gemini-1.5-flash a été retiré par Google (404) — modèles actuels au 25/07/2026
   const models: Array<[string, boolean]> = [
+    ['gemini-2.5-flash', true],
     ['gemini-2.0-flash', true],
-    ['gemini-1.5-flash', true],
-    ['gemini-1.5-flash', false],
+    ['gemini-2.0-flash', false],
   ];
 
   for (const [model, useSearch] of models) {
