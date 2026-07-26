@@ -10,13 +10,22 @@
 | Frontend | Next.js 16.2 App Router, React 19, TS strict, CSS inline | Inchangé, déjà en place |
 | Base de données | **Neon Postgres** (Vercel Marketplace integration) | Free tier réel, scale-to-zero, branching, intégration native Vercel — recommandé 2026 pour ce cas d'usage |
 | ORM | **Drizzle ORM** | Léger, compatible edge/serverless, migrations SQL lisibles, bonne intégration driver Neon serverless (`@neondatabase/serverless`) |
-| Découverte d'événements | **Routine Claude Code cloud** (quotidienne, WebSearch) | Remplace Gemini API le 26/07/2026 — Google exige un moyen de paiement lié au projet Cloud pour débloquer le moindre quota gratuit (confirmé sur 3 clés/projets différents), sans plafond de dépense dur possible sans infra à part. La routine tourne sur l'abonnement Claude Pro déjà maîtrisé, zéro risque de facturation surprise (service qui s'arrête au lieu de facturer au-delà) |
+| Découverte d'événements | **En pause** (26/07/2026) | Voir section 1bis — deux approches tentées, deux blocages structurels différents, aucune dépendance externe payante activée |
 | Sources scraping structuré (HelloAsso) | En attente — accès partenaire à demander | La recherche transverse par mot-clé de l'API HelloAsso nécessite un compte "partenaire" (contact direct avec leur équipe, pas de self-service) |
-| Enrichissement | Fait directement par la routine (structuration JSON) | Remplace l'appel Gemini séparé |
 | Modération | Email digest Resend (existant, Valider/Refuser) | Conservé tel quel — Méghane clique, rien d'autre |
 | Publicité | Google AdSense (après Epic D) | — |
 
-**Note historique** : GitHub Actions + Gemini API a été l'architecture initiale d'Epic B (25/07/2026) avant de buter sur le blocage de facturation Google. Le workflow `.github/workflows/scrape-daily.yml` reste dans le repo en `workflow_dispatch` manuel (dépannage ponctuel) mais son cron automatique est désactivé.
+## 1bis. Historique découverte automatique d'événements (Epic B, 25-26/07/2026)
+
+Trois approches tentées dans l'ordre, chacune abandonnée pour une raison précise :
+
+1. **GitHub Actions + Gemini API** — implémenté et fonctionnel techniquement (plus de crash, bug historique "exit code 1" résolu), mais Google bloque tout accès gratuit à l'API Gemini sans moyen de paiement lié au projet Cloud (`limit: 0` confirmé sur 3 clés/projets différents), et même avec une carte il n'existe aucun plafond de dépense dur (juste des alertes email). Écarté par choix de Méghane (pas de risque financier accepté).
+
+2. **Routine Claude Code cloud (WebSearch) + appel HTTPS direct vers `/api/scraper/ingest-events`** — la recherche fonctionne (ex: 205k tokens, 7 événements réels trouvés), mais l'environnement sandbox bloque tout accès réseau sortant vers des domaines arbitraires (403 sur la connexion CONNECT). Le endpoint `/api/scraper/ingest-events` reste néanmoins en place et fonctionnel (testé en direct avec succès).
+
+3. **Routine Claude Code cloud + relais Git** (écrire un fichier dans `scripts/pending-events/`, `git push`, puis un GitHub Action le récupère) — le mécanisme GitHub Action lui-même fonctionne parfaitement (testé 2x avec succès manuel). Mais la routine cloud n'a qu'un accès **lecture seule** au dépôt GitHub (fetch/pull OK, `git push` → 403). Structurellement bloqué, pas un bug.
+
+**Conclusion** : l'environnement cloud "routine" semble volontairement cloisonné (pas de réseau sortant libre, pas d'écriture repo) — probablement une mesure de sécurité anti-abus côté Anthropic, pas un réglage self-service qu'on peut lever depuis les outils actuels. Le endpoint `/api/scraper/ingest-events` et la table `scrape_runs` restent en place, prêts à être réutilisés si une piste de livraison viable est trouvée plus tard (ex: GitHub Actions + Anthropic API en pay-per-token, à évaluer avec un vrai plafond de dépense confirmé avant d'y toucher).
 
 ## 2. Ce qui disparaît
 

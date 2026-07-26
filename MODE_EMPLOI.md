@@ -8,11 +8,16 @@ Le site se remplit tout seul chaque jour (scraping automatique). Tu reçois un e
 
 ## Ce qui est 100% automatique
 
-- **Chaque jour à 8h**, un agent Claude programmé (une "routine" cloud) cherche sur le web de nouveaux événements islamiques à venir en France, structure les infos, et les envoie au site.
-- Chaque run écrit une ligne dans une table de log (`scrape_runs`) avec le nombre de tokens consommés, pour que tu puisses suivre la conso dans le temps et me demander de réduire la fréquence ou le nombre de recherches si besoin.
 - Les événements passés sont supprimés automatiquement chaque nuit.
+- La modération (email Valider/Refuser) fonctionne dès qu'il y a du contenu à valider.
 
-**Pourquoi une routine Claude et pas Gemini (Google) ?** On a testé Gemini d'abord, mais Google bloque tout accès gratuit à son API tant qu'aucune carte bancaire n'est liée au projet, et même avec une carte il n'existe aucun plafond de dépense garanti (juste des alertes email, pas un vrai blocage). On a préféré rester sur ton abonnement Claude Pro que tu maîtrises déjà, où le pire cas est "le service s'arrête", jamais une facture surprise.
+## Découverte automatique de nouveaux événements — EN PAUSE
+
+On a testé deux façons de faire chercher des événements automatiquement (Gemini/Google, puis une routine Claude programmée) et les deux ont buté sur des blocages qu'on ne peut pas lever facilement :
+- Google bloque son API sans carte bancaire, et même avec une carte il n'y a aucun plafond de dépense garanti
+- La routine Claude cloud peut chercher sur le web mais ne peut ni appeler le site ni pousser sur GitHub (sécurité de l'environnement, pas un bug)
+
+Résultat : **rien n'a été activé qui coûte de l'argent ou qui tourne sans contrôle.** Le site continue de fonctionner avec son contenu actuel (190 fiches). Si tu veux relancer ce chantier plus tard, voir `ARCHITECTURE.md` section 1bis pour l'historique complet et les pistes restantes (ex: GitHub Actions + ta clé Anthropic existante, à condition de vérifier d'abord un vrai plafond de dépense).
 
 ## Ce que TOI tu dois faire
 
@@ -21,7 +26,6 @@ Le site se remplit tout seul chaque jour (scraping automatique). Tu reçois un e
 
 ## Où voir si tout tourne bien
 
-- **Statut de la routine quotidienne** : claude.ai/code/routines → "Al-Wasil — Découverte quotidienne d'événements" → historique des runs.
 - **Dashboard admin** : al-wasil.fr/admin (login : al-wasil@hotmail.com / salamaleykoum).
 - **Le site en direct** : al-wasil.fr
 
