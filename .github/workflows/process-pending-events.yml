@@ -1,0 +1,62 @@
+name: Traiter les événements en attente (relais routine)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/pending-events/*.json'
+  workflow_dispatch:
+
+jobs:
+  process:
+    name: Envoyer à l'API + nettoyer
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Traiter chaque fichier en attente
+        env:
+          SCRAPER_INGEST_SECRET: ${{ secrets.SCRAPER_INGEST_SECRET }}
+        run: |
+          set -e
+          shopt -s nullglob
+          files=(scripts/pending-events/*.json)
+
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "Aucun fichier en attente."
+            exit 0
+          fi
+
+          for f in "${files[@]}"; do
+            echo "--- Traitement de $f ---"
+            code=$(curl -s -o /tmp/response.json -w "%{http_code}" -X POST \
+              "https://al-wasil.fr/api/scraper/ingest-events" \
+              -H "Content-Type: application/json" \
+              -H "X-Scraper-Secret: $SCRAPER_INGEST_SECRET" \
+              --data-binary "@$f")
+            echo "HTTP $code"
+            cat /tmp/response.json
+            echo ""
+
+            if [ "$code" = "200" ]; then
+              git rm -q "$f"
+            else
+              echo "::warning::Échec pour $f (HTTP $code), fichier conservé pour retry."
+            fi
+          done
+
+      - name: Commit du nettoyage
+        run: |
+          git config user.name "al-wasil-bot"
+          git config user.email "bot@al-wasil.fr"
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: fichiers événements traités (auto)"
+            git push
+          else
+            echo "Rien à committer."
+          fi
