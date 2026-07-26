@@ -1,1 +1,0 @@
-{"events":[{"title":"[TEST PIPELINE] Ceci est un test du relais Git","category":"autre","description":"Item de test pour valider le pipeline routine -> git -> GitHub Actions -> API -> Postgres. A supprimer.","date":"2026-12-31","city":"Paris","department":"75","organizer":"Test pipeline","isFree":true}],"tokensUsed":0}
