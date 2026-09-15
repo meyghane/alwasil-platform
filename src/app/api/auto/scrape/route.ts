@@ -3,6 +3,7 @@
 // Appelé par Vercel Cron avec des fréquences différentes par catégorie
 
 import { NextRequest, NextResponse } from 'next/server';
+import { isAdminLoggedIn } from '@/lib/admin-auth';
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
 const APPS_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
@@ -86,8 +87,8 @@ const CATEGORIES: Record<string, CatConfig> = {
 
 async function callGemini(prompt: string): Promise<Record<string, unknown>[]> {
  for (const [model, useSearch] of [
- ['gemini-2.0-flash', true],
- ['gemini-1.5-flash', false],
+ ['gemini-2.5-flash', true],
+ ['gemini-2.5-flash-lite', true],
  ] as [string, boolean][]) {
  try {
  const body: Record<string, unknown> = {
@@ -150,10 +151,14 @@ function notify(msg: string) {
 // ── Handler ──────────────────────────────────────────────────────
 
 export async function GET(req: NextRequest) {
+ const authorization = req.headers.get('authorization');
+ const isCron = !!CRON_SECRET && authorization === `Bearer ${CRON_SECRET}`;
+ if (!isCron && !(await isAdminLoggedIn())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
 
  const cat = req.nextUrl.searchParams.get('cat') || 'events';
  const config = CATEGORIES[cat];
  if (!config) return NextResponse.json({ error: `Catégorie inconnue: ${cat}` }, { status: 400 });
+ if (!GEMINI_KEY || !APPS_URL) return NextResponse.json({ ok: false, cat, found: 0, written: 0, error: 'Configuration incomplète : clé Gemini ou connexion Google Sheets absente.' }, { status: 503 });
 
  // 1. Charger les doublons existants
  const existing = await getExisting(config.sheetTab, config.dedup);
@@ -167,7 +172,7 @@ export async function GET(req: NextRequest) {
  // 3. Appeler Gemini
  const items = await callGemini(fullPrompt);
  if (items.length === 0) {
- return NextResponse.json({ ok: true, cat, found: 0, written: 0 });
+ return NextResponse.json({ ok: false, cat, found: 0, written: 0, error: 'Aucun résultat exploitable retourné par la recherche.' }, { status: 502 });
  }
 
  // 4. Filtrer les doublons
