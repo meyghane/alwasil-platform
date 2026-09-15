@@ -40,7 +40,7 @@ jobs:
         working-directory: scripts/scraper
         continue-on-error: true
         env:
-          GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
           RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
           MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
@@ -59,7 +59,7 @@ jobs:
         working-directory: scripts/scraper
         continue-on-error: true
         env:
-          GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
           RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
           MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
@@ -76,7 +76,7 @@ jobs:
         if: steps.scrape2.outcome == 'failure'
         working-directory: scripts/scraper
         env:
-          GEMINI_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
           RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
           MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
