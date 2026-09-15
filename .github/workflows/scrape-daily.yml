@@ -41,10 +41,10 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
-          RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
-          MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
-          ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
+          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
+          RESEND_API_KEY: '${{ secrets.RESEND_API_KEY }}'
+          MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
+          ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
           SITE_URL: https://al-wasil.fr
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: npm run scrape
@@ -60,10 +60,10 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
-          RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
-          MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
-          ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
+          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
+          RESEND_API_KEY: '${{ secrets.RESEND_API_KEY }}'
+          MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
+          ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
           SITE_URL: https://al-wasil.fr
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: npm run scrape
@@ -77,10 +77,10 @@ jobs:
         working-directory: scripts/scraper
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DATABASE_URL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).DATABASE_URL }}
-          RESEND_API_KEY: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).RESEND_API_KEY }}
-          MODERATE_SECRET: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).MODERATE_SECRET }}
-          ADMIN_EMAIL: ${{ fromJSON(secrets.SCRAPING_ALWASIL_ALL).ADMIN_EMAIL }}
+          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
+          RESEND_API_KEY: '${{ secrets.RESEND_API_KEY }}'
+          MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
+          ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
           SITE_URL: https://al-wasil.fr
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: npm run scrape
