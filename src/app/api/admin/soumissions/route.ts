@@ -4,6 +4,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 import { getUserSession } from '@/lib/user-auth';
+import { db } from '@/db';
+import { items } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
 
@@ -40,7 +43,22 @@ export async function GET() {
  return normalized;
  });
 
- return NextResponse.json({ ...data, soumissions });
+ const automatic = await db.select().from(items).where(eq(items.status, 'pending'));
+ const neonSoumissions = automatic.map((item) => ({
+ id: item.id,
+ categorie: item.category,
+ destinationTab: 'Neon · items',
+ status: 'à vérifier',
+ soumis_le: item.createdAt.toISOString(),
+ soumis_par: item.source,
+ name: item.title,
+ titre: item.title,
+ ville: item.city || undefined,
+ description: item.description || undefined,
+ url_source: item.sourceUrl || undefined,
+ source_system: 'neon',
+ }));
+ return NextResponse.json({ ...data, soumissions: [...neonSoumissions, ...soumissions] });
  } catch {
  return NextResponse.json({ soumissions: [], error: 'Apps Script non disponible' });
  }
@@ -60,6 +78,12 @@ export async function PATCH(req: NextRequest) {
 
  if (!['en ligne', 'pas en ligne', 'à vérifier', 'expiré'].includes(status)) {
  return NextResponse.json({ error: 'Status invalide' }, { status: 400 });
+ }
+
+ const neonItem = await db.select({ id: items.id }).from(items).where(eq(items.id, id)).limit(1);
+ if (neonItem.length > 0) {
+ await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: new Date() }).where(eq(items.id, id));
+ return NextResponse.json({ ok: true, id, status, source: 'neon' });
  }
 
  try {
