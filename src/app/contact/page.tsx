@@ -180,6 +180,7 @@ const FORM_CONFIG: Record<FormType, {
  { name: 'budget', label: 'Budget indicatif / personne', type: 'select', options: ['< 1 500€', '1 500–3 000€', '3 000–6 000€', '6 000€+'] },
  { name: 'depart', label: 'Ville de départ souhaitée', type: 'select', options: ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Autre'] },
  { name: 'message', label: 'Demandes particulières', type: 'textarea' },
+ { name: 'consentFollowUp', label: 'J’accepte qu’Al‑Wasil et le partenaire sélectionné me recontactent au sujet de cette demande.', type: 'checkbox', required: true },
  ],
  },
  avis: {
@@ -245,6 +246,10 @@ function ContactForm() {
  const params = useSearchParams();
  const router = useRouter();
  const rawType = params.get('type') ?? 'general';
+ const offerId = params.get('offer_id') ?? '';
+ const partnerId = params.get('partner_id') ?? '';
+ const prefilledElement = params.get('element') ?? '';
+ const prefilledPage = params.get('page') ?? '';
  const type = (FORM_CONFIG[rawType as FormType] ? rawType : 'general') as FormType;
  const config = FORM_CONFIG[type];
 
@@ -254,7 +259,14 @@ function ContactForm() {
  const [error, setError] = useState('');
  const [sujetAutre, setSujetAutre] = useState('');
 
- useEffect(() => { setValues({}); setSent(false); setSujetAutre(''); }, [type]);
+ useEffect(() => {
+  setValues({
+   ...(prefilledElement ? { element: prefilledElement } : {}),
+   ...(prefilledPage ? { page: prefilledPage } : {}),
+  });
+  setSent(false);
+  setSujetAutre('');
+ }, [type, prefilledElement, prefilledPage]);
 
  // Quand le dropdown sujet change → redirection si catégorie spécialisée
  function handleSujetChange(val: string) {
@@ -273,7 +285,7 @@ function ContactForm() {
  const res = await fetch('/api/contact', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ type, fields: { ...values, sujet_precision: sujetAutre || undefined } }),
+ body: JSON.stringify({ type, offerId: offerId || undefined, partnerId: partnerId || undefined, fields: { ...values, sujet_precision: sujetAutre || undefined } }),
  });
  if (!res.ok) throw new Error('Erreur serveur');
  setSent(true);
@@ -285,6 +297,7 @@ function ContactForm() {
  }
 
  const ACCENT = config.color;
+ const consentMissing = type === 'hajj-devis' && values.consentFollowUp !== 'true';
  const needsAutreField = values['sujet'] === 'autre' || values['sujet'] === 'suggestion' || values['sujet'] === 'avis' || values['sujet'] === 'mosquee';
 
  return (
@@ -383,6 +396,8 @@ function ContactForm() {
  </div>
  )}
  </>
+ ) : field.type === 'checkbox' ? (
+ <label style={{ display: 'flex', gap: '0.55rem', alignItems: 'flex-start', fontSize: '0.78rem', color: 'var(--text-secondary)' }}><input type="checkbox" required={field.required} checked={values[field.name] === 'true'} onChange={e => setValues(p => ({ ...p, [field.name]: String(e.target.checked) }))} /> <span>{field.label}</span></label>
  ) : field.type === 'textarea' ? (
  <textarea
  required={field.required}
@@ -415,7 +430,7 @@ function ContactForm() {
  </div>
  ))}
 
- <button type="submit" disabled={sending} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: sending ? '#9ca3af' : ACCENT, color: 'white', border: 'none', padding: '0.875rem', borderRadius: '0.75rem', fontSize: '0.95rem', fontWeight: 700, cursor: sending ? 'not-allowed' : 'pointer', marginTop: '0.5rem' }}>
+ <button type="submit" disabled={sending || consentMissing} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: sending || consentMissing ? '#c9bba4' : ACCENT, color: 'white', border: 'none', padding: '0.875rem', borderRadius: '0.75rem', fontSize: '0.95rem', fontWeight: 700, cursor: sending || consentMissing ? 'not-allowed' : 'pointer', marginTop: '0.5rem' }}>
  <Send size={16} /> {sending ? 'Envoi en cours…' : 'Envoyer ma demande'}
  </button>
  {error && (

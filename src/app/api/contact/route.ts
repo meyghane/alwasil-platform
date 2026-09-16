@@ -1,18 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { db } from '@/db';
+import { leads, leadEvents, reports } from '@/db/schema';
+const recentSubmissions = new Map<string, number>();
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
  try {
  const body = await req.json();
- const { type, fields } = body;
+ const { type, fields, offerId, partnerId } = body;
+ const key = `${req.headers.get('x-forwarded-for') ?? 'local'}:${type}`;
+ const previous = recentSubmissions.get(key) ?? 0;
+ if (Date.now() - previous < 30_000) return NextResponse.json({ error: 'Merci de patienter avant une nouvelle demande.' }, { status: 429 });
+ if (type === 'hajj-devis' && (!fields?.nom || !fields?.email || !fields?.type)) return NextResponse.json({ error: 'Champs Hajj requis manquants' }, { status: 400 });
+ if (type === 'hajj-devis' && fields.consentFollowUp !== 'true') return NextResponse.json({ error: 'Le consentement de suivi est requis.' }, { status: 400 });
+ // Le refus d'un formulaire incomplet ne doit pas consommer le délai anti-spam.
+ recentSubmissions.set(key, Date.now());
+
+ let leadId: string | undefined;
+ if (type === 'correction') {
+   try {
+     await db.insert(reports).values({
+       type,
+       page: fields?.page ? String(fields.page).slice(0, 120) : undefined,
+       element: fields?.element ? String(fields.element).slice(0, 240) : undefined,
+       message: fields?.correction ? String(fields.correction).slice(0, 2000) : (fields?.message ? String(fields.message).slice(0, 2000) : undefined),
+       email: fields?.email ? String(fields.email).slice(0, 240) : undefined,
+     });
+   } catch (error) { console.error('[contact] report persistence error:', error); }
+ }
+ if (type === 'hajj-devis') {
+   const [lead] = await db.insert(leads).values({ offerId: offerId || undefined, partnerId: partnerId || undefined, name: String(fields.nom).slice(0, 120), email: String(fields.email).slice(0, 240), phone: fields.phone ? String(fields.phone).slice(0, 40) : undefined, travelType: String(fields.type), qualification: fields, source: 'hajj-offer', consentFollowUp: true }).returning({ id: leads.id });
+   leadId = lead.id;
+   await db.insert(leadEvents).values({ leadId, event: 'created', actor: 'public_form', payload: { offerId, partnerId } });
+ }
 
  const TO_EMAIL = process.env.CONTACT_EMAIL || 'meyghvne@gmail.com';
  const now = new Date().toLocaleString('fr-FR');
 
  // ── 1. Email via Resend ─────────────────────────────────────
- const subject = `[Al-Wasil] Nouvelle soumission : ${type}`;
+ const subject = `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` — ${leadId}` : ''}`;
  const html = `
  <h2>Nouvelle soumission via Al-Wasil — ${type}</h2>
  <table style="border-collapse:collapse;width:100%">
