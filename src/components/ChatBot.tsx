@@ -10,7 +10,7 @@ type Message = {
 
 function renderMarkdown(text: string): string {
  return text
- .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#c9973a;font-weight:600;text-decoration:underline">$1</a>')
+ .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#7652CA;font-weight:600;text-decoration:underline">$1</a>')
  .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
  .replace(/\n/g, '<br/>');
 }
@@ -107,7 +107,7 @@ export default function ChatBot() {
  width: '56px',
  height: '56px',
  borderRadius: '50%',
- backgroundColor: '#c9973a',
+ backgroundColor: '#7652CA',
  color: 'white',
  border: 'none',
  cursor: 'pointer',
@@ -145,7 +145,7 @@ export default function ChatBot() {
  }}>
  {/* Header */}
  <div style={{
- backgroundColor: '#c9973a',
+ backgroundColor: '#7652CA',
  color: 'white',
  padding: '1rem 1.25rem',
  display: 'flex',
@@ -197,12 +197,12 @@ export default function ChatBot() {
  display: 'flex', alignItems: 'center', justifyContent: 'center',
  flexShrink: 0, marginTop: '2px',
  }}>
- <Bot size={15} color="#c9973a" />
+ <Bot size={15} color="#7652CA" />
  </div>
  )}
  <div style={{
  maxWidth: '80%',
- backgroundColor: msg.role === 'user' ? '#c9973a' : '#f5f5f4',
+ backgroundColor: msg.role === 'user' ? '#7652CA' : '#f5f5f4',
  color: msg.role === 'user' ? 'white' : 'var(--text-primary)',
  padding: '0.6rem 0.875rem',
  borderRadius: msg.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
@@ -214,7 +214,7 @@ export default function ChatBot() {
  {msg.role === 'user' && (
  <div style={{
  width: '28px', height: '28px', borderRadius: '50%',
- backgroundColor: '#c9973a',
+ backgroundColor: '#7652CA',
  display: 'flex', alignItems: 'center', justifyContent: 'center',
  flexShrink: 0, marginTop: '2px',
  }}>
@@ -233,7 +233,7 @@ export default function ChatBot() {
  display: 'flex', alignItems: 'center', justifyContent: 'center',
  flexShrink: 0, marginTop: '2px',
  }}>
- <Bot size={15} color="#c9973a" />
+ <Bot size={15} color="#7652CA" />
  </div>
  <div style={{
  maxWidth: '80%',
@@ -243,7 +243,7 @@ export default function ChatBot() {
  fontSize: '0.875rem',
  lineHeight: 1.55,
  }}
- dangerouslySetInnerHTML={{ __html: renderMarkdown(streamingText) + '<span style="display:inline-block;width:2px;height:14px;background:#c9973a;margin-left:2px;animation:blink 0.8s infinite">▌</span>' }}
+ dangerouslySetInnerHTML={{ __html: renderMarkdown(streamingText) + '<span style="display:inline-block;width:2px;height:14px;background:#7652CA;margin-left:2px;animation:blink 0.8s infinite">▌</span>' }}
  />
  </div>
  )}
@@ -255,7 +255,7 @@ export default function ChatBot() {
  {[0, 1, 2].map(i => (
  <div key={i} style={{
  width: '6px', height: '6px', borderRadius: '50%',
- backgroundColor: '#c9973a',
+ backgroundColor: '#7652CA',
  animation: `bounce 1s ${i * 0.15}s infinite`,
  opacity: 0.6,
  }} />

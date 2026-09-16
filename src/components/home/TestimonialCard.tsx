@@ -19,14 +19,14 @@ export default function TestimonialCard({ quote, name, role, tag, initial }: Pro
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        backgroundColor: hov ? 'rgba(201,151,58,0.08)' : 'rgba(255,255,255,0.04)',
+        backgroundColor: hov ? 'rgba(118,82,202,0.08)' : 'rgba(255,255,255,0.04)',
         backdropFilter: 'blur(12px)',
         borderRadius: '16px',
         padding: '1.75rem',
-        border: `1px solid ${hov ? 'rgba(201,151,58,0.4)' : 'rgba(255,255,255,0.08)'}`,
+        border: `1px solid ${hov ? 'rgba(118,82,202,0.4)' : 'rgba(255,255,255,0.08)'}`,
         display: 'flex', flexDirection: 'column', gap: '1.25rem',
         boxShadow: hov
-          ? '0 0 32px rgba(201,151,58,0.15), 0 8px 32px rgba(0,0,0,0.4)'
+          ? '0 0 32px rgba(118,82,202,0.15), 0 8px 32px rgba(0,0,0,0.4)'
           : '0 2px 16px rgba(0,0,0,0.2)',
         transform: hov ? 'translateY(-4px) scale(1.01)' : 'translateY(0)',
         transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
@@ -35,7 +35,7 @@ export default function TestimonialCard({ quote, name, role, tag, initial }: Pro
     >
       <div style={{
         fontSize: '3rem', lineHeight: 0.6,
-        color: hov ? V.primary : 'rgba(201,151,58,0.25)',
+        color: hov ? V.primary : 'rgba(118,82,202,0.25)',
         fontFamily: 'Georgia, serif',
         marginBottom: '0.25rem',
         transition: 'color 0.3s',
@@ -74,9 +74,9 @@ export default function TestimonialCard({ quote, name, role, tag, initial }: Pro
         <span style={{
           fontSize: '0.62rem', fontWeight: 700,
           padding: '3px 9px', borderRadius: '20px',
-          backgroundColor: 'rgba(201,151,58,0.15)',
+          backgroundColor: 'rgba(118,82,202,0.15)',
           color: V.primary,
-          border: '1px solid rgba(201,151,58,0.3)',
+          border: '1px solid rgba(118,82,202,0.3)',
           whiteSpace: 'nowrap',
         }}>
           {tag}

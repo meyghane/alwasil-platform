@@ -4,10 +4,10 @@ import { useState, useCallback } from 'react';
 import { BookOpen, ChevronDown, ChevronUp, Download, MapPin, User, Users,
  Droplets, Clock, FileText, Building2, Heart, Shield, BookMarked, type LucideIcon } from 'lucide-react';
 
-const TEAL = '#c9973a';
-const TEAL_LIGHT = '#fdfbf0';
-const TEAL_BORDER = '#f0dea0';
-const TEAL_DARK = '#0a0806';
+const TEAL = '#7652CA';
+const TEAL_LIGHT = '#f0ebfa';
+const TEAL_BORDER = '#e2d7f5';
+const TEAL_DARK = '#080808';
 
 // ── Données contenu ────────────────────────────────────────────
 
@@ -33,9 +33,9 @@ const WUDU_STEPS = [
 ];
 
 const PRIERES = [
- { nom: 'Fajr', ar: 'الفجر', heure: 'Avant le lever du soleil', rakat: 2, couleur: '#c9973a' },
+ { nom: 'Fajr', ar: 'الفجر', heure: 'Avant le lever du soleil', rakat: 2, couleur: '#7652CA' },
  { nom: 'Dhohr', ar: 'الظهر', heure: 'Début d\'après-midi', rakat: 4, couleur: '#d97706' },
- { nom: 'Asr', ar: 'العصر', heure: 'Fin d\'après-midi', rakat: 4, couleur: '#a87830' },
+ { nom: 'Asr', ar: 'العصر', heure: 'Fin d\'après-midi', rakat: 4, couleur: '#6540b5' },
  { nom: 'Maghrib', ar: 'المغرب', heure: 'Après le coucher du soleil', rakat: 3, couleur: '#dc2626' },
  { nom: 'Icha', ar: 'العشاء', heure: 'La nuit', rakat: 4, couleur: '#1e3a5f' },
 ];
@@ -107,13 +107,13 @@ function Section({ title, icon: Icon, children, defaultOpen = false }: { title: 
  return (
  <div style={{ border: `1px solid ${open ? TEAL_BORDER : '#e7e5e4'}`, borderRadius: '0.875rem', overflow: 'hidden', marginBottom: '0.75rem' }}>
  <button onClick={() => setOpen(!open)} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: open ? TEAL_LIGHT : 'white', border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s' }}>
- <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '0.95rem', color: open ? TEAL : '#1c1917' }}>
+ <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 700, fontSize: '0.95rem', color: open ? TEAL : '#080808' }}>
  <div style={{ width: 32, height: 32, borderRadius: '8px', backgroundColor: open ? `${TEAL}18` : '#f5f5f4', border: `1px solid ${open ? TEAL_BORDER : '#e7e5e4'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
- <Icon size={16} color={open ? TEAL : '#78716c'} strokeWidth={1.8} />
+ <Icon size={16} color={open ? TEAL : '#59565f'} strokeWidth={1.8} />
  </div>
  {title}
  </span>
- {open ? <ChevronUp size={18} color={TEAL} /> : <ChevronDown size={18} color="#78716c" />}
+ {open ? <ChevronUp size={18} color={TEAL} /> : <ChevronDown size={18} color="#59565f" />}
  </button>
  {open && (
  <div style={{ padding: '1.25rem', borderTop: `1px solid ${TEAL_BORDER}`, backgroundColor: 'white' }}>
@@ -141,15 +141,15 @@ export default function GuidePage() {
 <style>
  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
  * { box-sizing: border-box; margin: 0; padding: 0; }
- body { font-family: Poppins, sans-serif; color: #1c1917; background: #fff; padding: 2rem; max-width: 680px; margin: 0 auto; }
- .save-hint { background: #fdfbf0; border: 1px solid #f0dea0; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #7a6848; }
- .save-hint strong { color: #c9973a; }
- h1 { font-size: 1.75rem; font-weight: 900; color: #0a0806; margin-bottom: 0.4rem; }
- h2 { font-size: 1rem; font-weight: 700; color: #c9973a; margin: 1.5rem 0 0.75rem; border-bottom: 2px solid #f0dea0; padding-bottom: 0.4rem; }
+ body { font-family: Poppins, sans-serif; color: #080808; background: #fff; padding: 2rem; max-width: 680px; margin: 0 auto; }
+ .save-hint { background: #f0ebfa; border: 1px solid #e2d7f5; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #59565f; }
+ .save-hint strong { color: #7652CA; }
+ h1 { font-size: 1.75rem; font-weight: 900; color: #080808; margin-bottom: 0.4rem; }
+ h2 { font-size: 1rem; font-weight: 700; color: #7652CA; margin: 1.5rem 0 0.75rem; border-bottom: 2px solid #e2d7f5; padding-bottom: 0.4rem; }
  p { font-size: 0.88rem; line-height: 1.7; margin-bottom: 0.75rem; color: #44403c; }
  .item { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: flex-start; }
- .num { width: 28px; height: 28px; border-radius: 50%; background: #c9973a; color: #0a0806; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
- .badge { background: #fdfbf0; border: 1px solid #f0dea0; color: #c9973a; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 0.75rem; }
+ .num { width: 28px; height: 28px; border-radius: 50%; background: #7652CA; color: #080808; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
+ .badge { background: #f0ebfa; border: 1px solid #e2d7f5; color: #7652CA; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 0.75rem; }
  footer { margin-top: 3rem; text-align: center; color: #a8a29e; font-size: 0.72rem; border-top: 1px solid #e7e5e4; padding-top: 1rem; }
  @media print { .save-hint { display: none; } body { padding: 0.5rem; } }
 </style>
@@ -223,10 +223,10 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  {/* ── SECTION 2 : La Shahada ── */}
  <Section title="La Shahada — Le témoignage de foi" icon={Heart}>
  <div style={{ textAlign: 'center', padding: '1.5rem', backgroundColor: TEAL_LIGHT, borderRadius: '0.75rem', border: `1px solid ${TEAL_BORDER}`, marginBottom: '1rem' }}>
- <p style={{ fontSize: '1.8rem', fontFamily: 'serif', direction: 'rtl', lineHeight: 1.8, color: '#1c1917', margin: '0 0 0.75rem' }}>
+ <p style={{ fontSize: '1.8rem', fontFamily: 'serif', direction: 'rtl', lineHeight: 1.8, color: '#080808', margin: '0 0 0.75rem' }}>
  أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ
  </p>
- <p style={{ fontSize: '0.85rem', color: '#78716c', fontStyle: 'italic', margin: '0 0 0.5rem' }}>
+ <p style={{ fontSize: '0.85rem', color: '#59565f', fontStyle: 'italic', margin: '0 0 0.5rem' }}>
  Ashhadu an la ilaha illa llah wa-ashhadu anna Muhammadan rasulu llah
  </p>
  <p style={{ fontSize: '0.9rem', fontWeight: 600, color: TEAL, margin: 0 }}>
@@ -244,7 +244,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  Les ablutions sont obligatoires avant la prière, le toucher du Coran et la circumambulation (tawaf). Elles sont invalidées par : les selles/urines, les gaz intestinaux, le sommeil profond, le saignement abondant.
  </p>
  {gender === 'f' && (
- <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdfbf0', border: '1px solid #d4a853', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#8a6025' }}>
+ <div style={{ padding: '0.75rem 1rem', backgroundColor: '#f0ebfa', border: '1px solid #c9b6ec', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#543398' }}>
  <strong>Pour les sœurs :</strong> L'étape 8 (passage sur la tête) se fait par-dessus le voile si tu es en wudu et que tu le portes déjà. Si tu n'as pas de voile, passe les mains sur les cheveux normalement.
  </div>
  )}
@@ -267,7 +267,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  {PRIERES.map(p => (
  <div key={p.nom} style={{ padding: '0.875rem', backgroundColor: '#fafaf9', borderRadius: '0.75rem', border: '1px solid var(--border-color)', textAlign: 'center' }}>
  <div style={{ fontSize: '1.2rem', fontFamily: 'serif', direction: 'rtl', color: p.couleur, marginBottom: '0.25rem' }}>{p.ar}</div>
- <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1c1917' }}>{p.nom}</div>
+ <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#080808' }}>{p.nom}</div>
  <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>{p.heure}</div>
  <div style={{ marginTop: '0.4rem', display: 'inline-block', backgroundColor: p.couleur + '18', color: p.couleur, padding: '0.1rem 0.5rem', borderRadius: '999px', fontSize: '0.72rem', fontWeight: 700 }}>
  {p.rakat} rak'at
@@ -283,7 +283,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  {/* ── SECTION 5 : Comment prier ── */}
  <Section title="Comment faire sa prière — les étapes" icon={BookOpen}>
  {gender === 'f' && (
- <div style={{ padding: '0.75rem 1rem', backgroundColor: '#fdfbf0', border: '1px solid #d4a853', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#8a6025' }}>
+ <div style={{ padding: '0.75rem 1rem', backgroundColor: '#f0ebfa', border: '1px solid #c9b6ec', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#543398' }}>
  <strong>Pour les sœurs :</strong> La position des bras, des mains et des pieds diffère légèrement (par exemple, les bras restent plus proches du corps). Un guide spécifique avec images est recommandé — recherche "comment prier pour les femmes" sur YouTube.
  </div>
  )}
@@ -308,8 +308,8 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
  {FATIHA.ar.map((verset, i) => (
  <div key={i} style={{ padding: '0.875rem 1rem', backgroundColor: i === 0 ? TEAL_LIGHT : '#fafaf9', borderRadius: '0.625rem', border: `1px solid ${i === 0 ? TEAL_BORDER : 'var(--border-color)'}` }}>
- <p style={{ fontSize: '1.25rem', fontFamily: 'serif', direction: 'rtl', textAlign: 'right', color: '#1c1917', margin: '0 0 0.35rem', lineHeight: 1.8 }}>{verset}</p>
- <p style={{ fontSize: '0.78rem', color: '#78716c', fontStyle: 'italic', margin: '0 0 0.2rem' }}>{FATIHA.translit[i]}</p>
+ <p style={{ fontSize: '1.25rem', fontFamily: 'serif', direction: 'rtl', textAlign: 'right', color: '#080808', margin: '0 0 0.35rem', lineHeight: 1.8 }}>{verset}</p>
+ <p style={{ fontSize: '0.78rem', color: '#59565f', fontStyle: 'italic', margin: '0 0 0.2rem' }}>{FATIHA.translit[i]}</p>
  <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: 0 }}>{FATIHA.fr[i]}</p>
  </div>
  ))}
@@ -334,8 +334,8 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  <div style={{ padding: '0.875rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
  {s.ar.map((v, vi) => (
  <div key={vi} style={{ padding: '0.5rem 0.75rem', backgroundColor: '#fafaf9', borderRadius: '0.5rem' }}>
- <p style={{ fontSize: '1.1rem', fontFamily: 'serif', direction: 'rtl', textAlign: 'right', color: '#1c1917', margin: '0 0 0.2rem', lineHeight: 1.8 }}>{v}</p>
- <p style={{ fontSize: '0.75rem', color: '#78716c', fontStyle: 'italic', margin: '0 0 0.15rem' }}>{s.translit[vi]}</p>
+ <p style={{ fontSize: '1.1rem', fontFamily: 'serif', direction: 'rtl', textAlign: 'right', color: '#080808', margin: '0 0 0.2rem', lineHeight: 1.8 }}>{v}</p>
+ <p style={{ fontSize: '0.75rem', color: '#59565f', fontStyle: 'italic', margin: '0 0 0.15rem' }}>{s.translit[vi]}</p>
  <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>{s.fr[vi]}</p>
  </div>
  ))}
@@ -350,10 +350,10 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  <button onClick={handleDownloadPDF} style={{
  width: '100%', padding: '1.1rem 2rem',
  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
- background: `linear-gradient(135deg, ${TEAL}, #a87830)`,
+ background: `linear-gradient(135deg, ${TEAL}, #6540b5)`,
  color: TEAL_DARK, border: 'none', borderRadius: '12px',
  fontSize: '1.05rem', fontWeight: 800, cursor: 'pointer',
- boxShadow: '0 4px 16px rgba(201,151,58,0.3)',
+ boxShadow: '0 4px 16px rgba(118,82,202,0.3)',
  fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.01em',
  }}>
  <Download size={20} strokeWidth={2.5} />

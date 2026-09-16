@@ -65,8 +65,8 @@ export const FRIENDLY_LABELS: Record<FriendlyLevel, string> = {
 };
 
 export const FRIENDLY_COLORS: Record<FriendlyLevel, string> = {
- 'voile-ok': '#c9973a',
- 'priere-ok': '#c9973a',
+ 'voile-ok': '#7652CA',
+ 'priere-ok': '#7652CA',
  'full-friendly': '#f59e0b',
 };
 

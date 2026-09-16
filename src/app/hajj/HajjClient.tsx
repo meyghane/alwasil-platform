@@ -82,7 +82,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  return (
  <div>
- <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Comparez les agences françaises, offres 2026 et guide complet du pèlerin." color="#c9973a" emoji="" />
+ <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Comparez les agences françaises, offres 2026 et guide complet du pèlerin." color="#7652CA" emoji="" />
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
 
  {/* Tabs */}
@@ -91,7 +91,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  const Icon = t.icon;
  return (
  <button key={t.key} onClick={() => setTab(t.key)}
- style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #c9973a' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#c9973a' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+ style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #7652CA' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#7652CA' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
  <Icon size={14} strokeWidth={1.8} />
  {t.label}
  </button>
@@ -105,7 +105,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  {/* Filters */}
  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.875rem' }}>
  {TYPE_FILTERS.map(f => {
- const color = f.key !== 'all' ? VOYAGE_TYPE_COLORS[f.key] : '#c9973a';
+ const color = f.key !== 'all' ? VOYAGE_TYPE_COLORS[f.key] : '#7652CA';
  const isActive = typeFilter === f.key;
  return (
  <button key={f.key} onClick={() => setTypeFilter(f.key)}
@@ -178,7 +178,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}>{pkg.name}</h3>
  <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
  par <AgenceNameById id={pkg.agenceId} agences={hajjAgences} />
- {agence?.agrée && <span style={{ marginLeft: '0.4rem', fontSize: '0.68rem', backgroundColor: '#fdfbf0', color: '#8a6025', padding: '0.1rem 0.35rem', borderRadius: '3px', fontWeight: 700 }}> Agréé</span>}
+ {agence?.agrée && <span style={{ marginLeft: '0.4rem', fontSize: '0.68rem', backgroundColor: '#f0ebfa', color: '#543398', padding: '0.1rem 0.35rem', borderRadius: '3px', fontWeight: 700 }}> Agréé</span>}
  </p>
 
  {/* Prix */}
@@ -217,8 +217,8 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <div style={{ padding: '0.875rem 1.25rem', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', backgroundColor: '#fafaf9' }}>
  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.35rem' }}>
  {pkg.includes.slice(0, 6).map(inc => (
- <div key={inc} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.3rem', fontSize: '0.72rem', color: '#8a6025' }}>
- <CheckCircle size={11} color="#d4a853" style={{ flexShrink: 0, marginTop: '2px' }} />
+ <div key={inc} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.3rem', fontSize: '0.72rem', color: '#543398' }}>
+ <CheckCircle size={11} color="#c9b6ec" style={{ flexShrink: 0, marginTop: '2px' }} />
  <span>{inc}</span>
  </div>
  ))}
@@ -281,7 +281,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <div style={{ flex: 1 }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
  <h3 style={{ fontWeight: 700, fontSize: '1rem' }}>{a.name}</h3>
- {a.agrée && <span style={{ backgroundColor: '#fdfbf0', color: '#8a6025', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}> Agréé</span>}
+ {a.agrée && <span style={{ backgroundColor: '#f0ebfa', color: '#543398', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}> Agréé</span>}
  </div>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
  <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.78rem', color: '#f59e0b' }}>
@@ -301,14 +301,14 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
  {a.tags.map(tag => (
- <span key={tag} style={{ backgroundColor: '#f0fff8', color: '#c9973a', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.72rem' }}>#{tag}</span>
+ <span key={tag} style={{ backgroundColor: '#f0fff8', color: '#7652CA', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.72rem' }}>#{tag}</span>
  ))}
  </div>
 
  <div style={{ display: 'flex', gap: '0.5rem' }}>
  {a.website && (
  <a href={a.website} target="_blank" rel="noopener noreferrer"
- style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#c9973a', color: 'white', padding: '0.5rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+ style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#7652CA', color: 'white', padding: '0.5rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
  <Globe size={14} /> Visiter <ExternalLink size={12} />
  </a>
  )}
@@ -332,7 +332,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  {
  icon: '',
  title: 'Documents obligatoires',
- color: '#c9973a',
+ color: '#7652CA',
  items: [
  'Passeport valide (min. 6 mois après le retour)',
  'Visa Hajj ou Omra (obtenu via votre agence)',
@@ -359,7 +359,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  {
  icon: '',
  title: 'Calendrier — Hajj 2026',
- color: '#c9973a',
+ color: '#7652CA',
  items: [
  '8 Dhul Hijja : Départ vers Mina (Yawm al-Tarwiyah)',
  '9 Dhul Hijja : Arafat — Le jour le plus important du Hajj',
@@ -372,7 +372,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  {
  icon: '',
  title: 'Essentiels à emporter',
- color: '#c9973a',
+ color: '#7652CA',
  items: [
  'Ihram (hommes) ou vêtements couvrants (femmes)',
  'Chaussures légères/sandales pour le Haram',

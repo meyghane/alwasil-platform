@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
  HandHeart, ExternalLink, Search, MapPin, Heart,
@@ -91,6 +91,19 @@ export default function SolidarityClient({
  associations,
 }: SolidarityClientProps) {
  const [tab, setTab] = useState<Tab>('cagnottes');
+ useEffect(() => {
+   const syncTab = () => {
+     const requested = window.location.hash.slice(1);
+     if (['mosquee', 'orphelins', 'palestine'].includes(requested)) {
+       setTab('cagnottes');
+       setCatFilter(requested as CagnotteCategory);
+     }
+     if (['cagnottes', 'maraudes', 'visites', 'voyages', 'associations'].includes(requested)) setTab(requested as Tab);
+   };
+   syncTab();
+   window.addEventListener('hashchange', syncTab);
+   return () => window.removeEventListener('hashchange', syncTab);
+ }, []);
  const [catFilter, setCatFilter] = useState<CagnotteCategory | 'all'>('all');
  const [deptFilter, setDeptFilter] = useState('Tout');
  const [search, setSearch] = useState('');
@@ -147,9 +160,9 @@ export default function SolidarityClient({
  style={{
  padding: '0.75rem 1.25rem',
  border: 'none',
- borderBottom: tab === t.key ? '2px solid #c9973a' : '2px solid transparent',
+ borderBottom: tab === t.key ? '2px solid #7652CA' : '2px solid transparent',
  backgroundColor: 'transparent',
- color: tab === t.key ? '#c9973a' : 'var(--text-secondary)',
+ color: tab === t.key ? '#7652CA' : 'var(--text-secondary)',
  fontWeight: tab === t.key ? 700 : 400,
  fontSize: '0.88rem',
  cursor: 'pointer',
@@ -306,14 +319,14 @@ export default function SolidarityClient({
  <div style={{ marginBottom: '1.5rem' }}>
  <DeptFilter value={deptFilter} onChange={setDeptFilter} />
  </div>
- <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #d4a853' }}>
+ <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #c9b6ec' }}>
  Visiter un malade ou une personne âgée est une sunnah du Prophète ﷺ. Ces initiatives vous permettent de le faire de manière organisée, en EHPAD, hôpital, ou à domicile.
  </div>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
  {filteredVisites.map(v => (
  <div key={v.id} className="card" style={{ padding: '1.25rem' }}>
  <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
- <span style={{ backgroundColor: '#f0fff8', color: '#d4a853', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700 }}>
+ <span style={{ backgroundColor: '#f0fff8', color: '#c9b6ec', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700 }}>
  {TYPE_LIEU_LABELS[v.typeLieu]}
  </span>
  <span style={{ backgroundColor: '#f5f5f4', color: 'var(--text-secondary)', padding: '0.15rem 0.65rem', borderRadius: '4px', fontSize: '0.72rem' }}>
@@ -338,13 +351,13 @@ export default function SolidarityClient({
  </div>
  {v.contactUrl && (
  <a href={v.contactUrl} target="_blank" rel="noopener noreferrer"
- style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '1rem', backgroundColor: '#d4a853', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: 'fit-content' }}>
+ style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '1rem', backgroundColor: '#c9b6ec', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: 'fit-content' }}>
  Je m&apos;inscris <ExternalLink size={12} />
  </a>
  )}
  {v.phone && (
  <a href={`tel:${v.phone}`}
- style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '0.5rem', color: '#d4a853', fontSize: '0.82rem', textDecoration: 'none' }}>
+ style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginTop: '0.5rem', color: '#c9b6ec', fontSize: '0.82rem', textDecoration: 'none' }}>
  <Phone size={13} /> {v.phone}
  </a>
  )}

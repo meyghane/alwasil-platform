@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {
-  ArrowRight, ChevronRight, Users, BookOpen, Calendar, Briefcase,
+  ArrowRight, Users, BookOpen, Calendar, Briefcase,
   Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
   HeartHandshake, UserCheck, Landmark, ShieldCheck, MessageCircle,
   Search, CheckCircle, Zap, Plus, GraduationCap, Sparkles,
@@ -10,11 +10,12 @@ import type { Institut } from '@/data/institutes';
 import type { Event } from '@/data/events';
 import type { JobOffer } from '@/data/jobs';
 import { getInstituts, getEvents, getJobOffers } from '@/lib/db-queries';
-import { V } from '@/lib/tokens';
+import { HOME_THEME as V } from '@/lib/home-theme';
 import RubriqueCard from '@/components/home/RubriqueCard';
 import EventCard from '@/components/home/EventCard';
 import EditorialHero from '@/components/home/EditorialHero';
 import CommunityStories from '@/components/home/CommunityStories';
+import SolidarityPreview from '@/components/home/SolidarityPreview';
 import PrayerTimesBar from '@/components/PrayerTimesBar';
 
 export const revalidate = 3600;
@@ -43,21 +44,16 @@ const QUICK_CATEGORIES = [
 const SECTIONS: Section[] = [
   { href: '/events', icon: Calendar, color: '#3a0a45', bg: '#ecfdf5', title: 'Événements', arabic: 'اللقاء', description: 'Conférences, séminaires, maraudes et rencontres communautaires en France.', tags: ['Conférences', 'Maraudes', 'Séminaires', 'En ligne'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80' },
   { href: '/hajj', icon: Plane, color: '#4a0e58', bg: '#ecfdf5', title: 'Hajj & Omra', arabic: 'الحج', description: 'Comparez les agences, offres 2026 et guide du pèlerin.', tags: ['Hajj 2026', 'Omra', 'Comparateur'], image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80' },
-  { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#fdfbf0', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, collectes et initiatives solidaires partout en France.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Gaza'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
-  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#fdfbf0', title: 'Éducation', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
+  { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#f0ebfa', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, collectes et initiatives solidaires partout en France.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Gaza'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
+  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#f0ebfa', title: 'Éducation', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
   { href: '/librairies', icon: Library, color: '#2c0835', bg: '#ecfdf5', title: 'Librairies', arabic: 'المكتبة', description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.', tags: ['Corans', 'Livres', 'Enfants'], image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80' },
   { href: '/jobs', icon: Briefcase, color: '#4a0e58', bg: '#ecfdf5', title: 'Emploi', arabic: 'الأمل', description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.', tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'], image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80' },
-  { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#fdfbf0', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
-  { href: '/piscines', icon: Waves, color: '#662a94', bg: '#fdfbf0', title: 'Piscines Burkini', arabic: 'السباحة', description: 'Créneaux burkini et maillots couvrants en Île-de-France.', tags: ['Créneaux femmes', 'Burkini', 'IdF'], image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80' },
-  { href: '/justice', icon: ShieldCheck, color: '#3a0a45', bg: '#fdfbf0', title: 'Justice & Droits', arabic: 'العدل', description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.', tags: ['Voile au travail', 'ARCOM', 'Discrimination'], image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80' },
-  { href: '#', icon: MessageCircle, color: 'rgba(255,255,255,0.85)', bg: '#fdfbf0', title: 'Communauté', arabic: 'الأمة', description: 'Annuaire de compétences, marrainage, muqabala et espace de brainstorming.', tags: ['Marrainage', 'Muqabala', 'Compétences', 'Entraide'], image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80', soon: true },
+  { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#f0ebfa', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
+  { href: '/piscines', icon: Waves, color: '#662a94', bg: '#f0ebfa', title: 'Piscines Burkini', arabic: 'السباحة', description: 'Créneaux burkini et maillots couvrants en Île-de-France.', tags: ['Créneaux femmes', 'Burkini', 'IdF'], image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80' },
+  { href: '/justice', icon: ShieldCheck, color: '#3a0a45', bg: '#f0ebfa', title: 'Justice & Droits', arabic: 'العدل', description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.', tags: ['Voile au travail', 'ARCOM', 'Discrimination'], image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80' },
+  { href: '#', icon: MessageCircle, color: 'rgba(255,255,255,0.85)', bg: '#f0ebfa', title: 'Communauté', arabic: 'الأمة', description: 'Annuaire de compétences, marrainage, muqabala et espace de brainstorming.', tags: ['Marrainage', 'Muqabala', 'Compétences', 'Entraide'], image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80', soon: true },
 ];
 
-const TAG_COLORS: Record<string, string> = {
-  conference: '#b34d2c', maraude: '#96401f', cours: '#d1603a',
-  iftar: '#e6b48c', webinaire: '#78341a', jeunesse: '#b34d2c',
-  famille: '#d1603a', collecte: '#96401f', autre: '#b34d2c',
-};
 const CAT_LABELS: Record<string, string> = {
   conference: 'Conférence', maraude: 'Maraude', cours: 'Cours',
   iftar: 'Iftar', webinaire: 'Webinaire', jeunesse: 'Jeunesse',
@@ -106,7 +102,7 @@ function buildUpcomingEvents(events: Event[]) {
   return events
     .filter(e => new Date(e.date) >= today)
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, 4)
+    .slice(0, 6)
     .map(e => {
       const d = new Date(e.date);
       const dateStr = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'long' });
@@ -115,8 +111,8 @@ function buildUpcomingEvents(events: Event[]) {
         date: `${dateStr.charAt(0).toUpperCase() + dateStr.slice(1)} · ${e.timeStart}`,
         location: e.location + (e.city ? `, ${e.city}` : ''),
         organizer: e.organizer,
+        category: e.category,
         tag: CAT_LABELS[e.category] ?? 'Événement',
-        color: TAG_COLORS[e.category] ?? V.primary,
       };
     });
 }
@@ -132,41 +128,43 @@ export default async function Home() {
   const UPCOMING_EVENTS = buildUpcomingEvents(events);
 
   return (
-    <div style={{ fontFamily: "'Inter', system-ui, -apple-system, sans-serif", backgroundColor: '#fff', color: V.dark }}>
+    <div style={{ fontFamily: "'Poppins', sans-serif", backgroundColor: '#fff', color: V.dark }}>
 
       <EditorialHero />
       <PrayerTimesBar />
 
       {/* ─── ÉVÉNEMENTS (priorité n°1) ───────────────────────── */}
-      <section id="evenements" style={{ padding: '4rem 0', backgroundColor: '#fff' }}>
-        <div className="container">
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>Le plus recherché</span>
-              <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.35rem' }}>Événements à venir</h2>
-            </div>
-            <Link href="/events" style={{ fontSize: '0.85rem', fontWeight: 700, color: V.primary, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              Tout voir <ChevronRight size={15} />
-            </Link>
+      <section id="evenements" style={{ padding: 'clamp(54px, 7vw, 96px) 0', backgroundColor: '#f5f3f8', color: '#080808', overflow: 'hidden' }}>
+        <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 clamp(18px, 4vw, 56px)' }}>
+          <div style={{ maxWidth: 920, margin: '0 auto 40px', textAlign: 'center' }}>
+            <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.13em', color: '#7652CA', textTransform: 'uppercase' }}>Se retrouver · Échanger · Apprendre</span>
+            <h2 style={{ fontSize: 'clamp(38px, 6vw, 78px)', fontWeight: 500, lineHeight: 0.94, color: '#080808', letterSpacing: '-0.06em', margin: '18px 0 0', textTransform: 'uppercase' }}>Les prochains rendez-vous<br/><span style={{ color: '#7652CA' }}>de la communauté.</span></h2>
           </div>
 
           {UPCOMING_EVENTS.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: V.surface, borderRadius: '16px', border: `1px solid ${V.border}` }}>
+            <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: '#fff', borderRadius: 18, border: `1px solid ${V.border}` }}>
               <p style={{ color: V.muted, margin: 0, fontSize: '0.9rem' }}>
                 Aucun événement à venir pour le moment.{' '}
                 <Link href="/contact?type=evenement" style={{ color: V.primary, fontWeight: 600, textDecoration: 'none' }}>Proposer un événement →</Link>
               </p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.1rem' }}>
-              {UPCOMING_EVENTS.map(ev => <EventCard key={ev.title} {...ev} />)}
+            <div style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'clamp(250px, 28vw, 330px)', gap: 14, overflowX: 'auto', scrollSnapType: 'x proximity', padding: '6px 0 24px', scrollbarWidth: 'thin' }}>
+              <div style={{ minHeight: 390, borderRadius: 20, background: '#080808', color: '#fff', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', scrollSnapAlign: 'start' }}>
+                <span style={{ width: 44, height: 44, borderRadius: '50%', display: 'grid', placeItems: 'center', background: '#ECFF58', color: '#080808' }}><Sparkles size={20} aria-hidden="true" /></span>
+                <div><p style={{ color: '#ECFF58', fontSize: 11, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 12 }}>Agenda Al-Wasil</p><h3 style={{ fontSize: 29, lineHeight: 1.05, fontWeight: 500, letterSpacing: '-.045em', marginBottom: 14 }}>Six occasions de se retrouver.</h3><p style={{ color: '#d2d2d2', fontSize: 13, lineHeight: 1.6 }}>Conférences, maraudes, ateliers et rencontres : fais défiler les prochains rendez-vous.</p></div>
+              </div>
+              {UPCOMING_EVENTS.map(ev => <EventCard key={`${ev.title}-${ev.date}`} {...ev} />)}
+              <Link href="/events" style={{ minHeight: 390, borderRadius: 20, background: '#ECFF58', color: '#080808', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', scrollSnapAlign: 'start' }}>
+                <ArrowRight size={38}/><span style={{ fontSize: 32, lineHeight: 1, fontWeight: 600, letterSpacing: '-.05em' }}>Voir plus<br/>d’événements</span><span style={{ fontSize: 13 }}>Ouvrir tout l’agenda →</span>
+              </Link>
             </div>
           )}
         </div>
       </section>
 
       {/* ─── RENTRÉE 2026 (module saisonnier) ───────────────── */}
-      <section style={{ padding: '3.5rem 0', background: `linear-gradient(135deg, ${V[100]} 0%, ${V[200]} 100%)` }}>
+      <section style={{ padding: '3.5rem 0', background: V[100] }}>
         <div className="container">
           <div style={{ marginBottom: '1.75rem' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: '#fff', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700, color: V[600], marginBottom: '0.75rem' }}>
@@ -203,33 +201,10 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ─── SOLIDARITÉ (présente, plus calme) ──────────────── */}
-      <section style={{ padding: '3.5rem 0', backgroundColor: '#fff' }}>
-        <div className="container">
-          <Link href="/solidarity" style={{ textDecoration: 'none', display: 'block' }}>
-            <div style={{
-              position: 'relative', borderRadius: '16px', overflow: 'hidden',
-              minHeight: '180px', display: 'flex', alignItems: 'center',
-              backgroundColor: V.surface, border: `1px solid ${V.border}`,
-              padding: '1.75rem 2rem', gap: '1.5rem', flexWrap: 'wrap',
-            }}>
-              <div style={{ width: 52, height: 52, borderRadius: '14px', backgroundColor: '#fff', border: `1px solid ${V.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <HeartHandshake size={24} color={V.primary} strokeWidth={1.8} />
-              </div>
-              <div style={{ flex: 1, minWidth: '240px' }}>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: V.dark, margin: '0 0 0.35rem' }}>Solidarité &amp; cagnottes</h3>
-                <p style={{ fontSize: '0.85rem', color: V.muted, margin: 0, maxWidth: '480px' }}>Maraudes, cagnottes vérifiées, collectes d&apos;urgence. Agir ensemble, partout en France.</p>
-              </div>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: V.primary, fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
-                Voir tout <ArrowRight size={14} />
-              </span>
-            </div>
-          </Link>
-        </div>
-      </section>
+      <SolidarityPreview />
 
       {/* ─── HAJJ & OMRA (identité dédiée) ───────────────────── */}
-      <section style={{ padding: '4rem 0', background: 'linear-gradient(135deg, #1c1917 0%, #2d2620 100%)' }}>
+      <section style={{ padding: '4rem 0', background: V.dark }}>
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
             <div style={{ flex: 1, minWidth: '280px' }}>
@@ -241,7 +216,7 @@ export default async function Home() {
                 Comparez les agences agréées, les formules et les prix. Vous êtes une agence Hajj/Omra ? Faites-vous référencer sur Al-Wasil.
               </p>
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <Link href="/hajj" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: V.primary, color: '#fff', fontWeight: 700, fontSize: '0.85rem', textDecoration: 'none', borderRadius: '9999px' }}>
+                <Link href="/hajj" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: V.lime, color: V.dark, fontWeight: 700, fontSize: '0.85rem', textDecoration: 'none', borderRadius: '9999px' }}>
                   Comparer les agences <ArrowRight size={14} />
                 </Link>
                 <Link href="/annonceurs" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: 'transparent', color: '#fff', fontWeight: 600, fontSize: '0.85rem', textDecoration: 'none', borderRadius: '9999px', border: '1px solid rgba(255,255,255,0.25)' }}>
@@ -308,8 +283,8 @@ export default async function Home() {
             <RubriqueCard
               key={s.href}
               href={s.href}
-              color={s.color}
-              bg={s.bg}
+              color={V.primary}
+              bg={V.surface}
               title={s.title}
               arabic={s.arabic}
               description={s.description}
@@ -323,7 +298,7 @@ export default async function Home() {
       </section>
 
       {/* ─── TICKER STATS ───────────────────────────────────── */}
-      <section style={{ background: `linear-gradient(180deg, ${V.dark} 0%, #100e0c 100%)`, padding: '0.85rem 0', overflow: 'hidden' }}>
+      <section style={{ background: V.dark, padding: '0.85rem 0', overflow: 'hidden' }}>
         <div style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '80px', zIndex: 2, background: `linear-gradient(to right, ${V.dark}, transparent)`, pointerEvents: 'none' }} />
           <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '80px', zIndex: 2, background: `linear-gradient(to left, ${V.dark}, transparent)`, pointerEvents: 'none' }} />
@@ -332,7 +307,7 @@ export default async function Home() {
               const Icon = s.icon;
               return (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', padding: '0 2.25rem', borderRight: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, whiteSpace: 'nowrap' }}>
-                  <Icon size={14} color={V[300]} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                  <Icon size={14} color={V.lime} strokeWidth={1.8} style={{ flexShrink: 0 }} />
                   <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>Plus de {s.count}</span>
                   <span style={{ fontSize: '0.72rem', fontWeight: 400, color: 'rgba(255,255,255,0.55)' }}>{s.label}</span>
                 </div>
@@ -345,7 +320,7 @@ export default async function Home() {
       <CommunityStories />
 
       {/* ─── CONTRIBUTION CTA ───────────────────────────────── */}
-      <section style={{ background: `linear-gradient(150deg, ${V.dark} 0%, #221d18 45%, ${V.dark} 100%)`, padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ background: V.primary, padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '-20%', left: '-5%', width: '50%', height: '120%', background: `radial-gradient(ellipse at center, ${V.primary}22 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -354,7 +329,7 @@ export default async function Home() {
             <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', margin: '0.75rem 0 0.875rem' }}>
               Chaque fiche ajoutée = une ressource<br />de plus pour quelqu&apos;un qui en a besoin.
             </h2>
-            <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.6)', maxWidth: '500px', margin: '0 auto', lineHeight: 1.7 }}>
+            <p style={{ fontSize: '0.95rem', color: '#fff', maxWidth: '500px', margin: '0 auto', lineHeight: 1.7 }}>
               Al-Wasil est construit par la communauté, pour la communauté. Plus il y a de données, plus il est utile.
               <strong style={{ color: 'rgba(255,255,255,0.85)' }}> Tu fais partie de cette boucle.</strong>
             </p>
@@ -368,17 +343,17 @@ export default async function Home() {
                 </div>
                 <div>
                   <p style={{ color: '#fff', fontWeight: 600, fontSize: '0.875rem', margin: '0 0 2px' }}>{item.label}</p>
-                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.75rem', margin: 0 }}>{item.sub}</p>
+                  <p style={{ color: '#fff', fontSize: '0.75rem', margin: 0 }}>{item.sub}</p>
                 </div>
               </Link>
             ))}
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <Link href="/contact?type=general" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.9rem 2rem', backgroundColor: '#fff', color: V.dark, fontWeight: 700, fontSize: '0.95rem', textDecoration: 'none', borderRadius: '9999px', boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
+            <Link href="/contact?type=general" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.9rem 2rem', backgroundColor: V.lime, color: V.dark, fontWeight: 700, fontSize: '0.95rem', textDecoration: 'none', borderRadius: '9999px' }}>
               <Plus size={16} /> Contribuer à Al-Wasil
             </Link>
-            <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.75rem', marginTop: '1rem' }}>Gratuit · Sans compte · En 2 minutes</p>
+            <p style={{ color: '#fff', fontSize: '0.75rem', marginTop: '1rem' }}>Gratuit · Sans compte · En 2 minutes</p>
           </div>
         </div>
       </section>

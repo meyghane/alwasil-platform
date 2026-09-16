@@ -16,9 +16,9 @@ type SanteClientProps = {
  medicalProfiles: PraticienMedical[];
 };
 
-const ACCENT = '#c9973a'; // rose-500 — couleur santé
+const ACCENT = '#7652CA'; // rose-500 — couleur santé
 const HIJAMA_COLOR = '#dc2626';
-const ROQYA_COLOR = '#c9973a';
+const ROQYA_COLOR = '#7652CA';
 const MEDICAL_COLOR = '#0891b2'; // cyan-600
 
 function StarRating({ rating, reviews }: { rating?: number; reviews?: number }) {
@@ -89,7 +89,7 @@ export default function SanteClient({
 
  return (
  <div>
- <PageHeader title="Santé" titleAr="شِفَاء" description="Psychologues orientés communauté, praticiens hijama certifiés et sages-femmes en Île-de-France." color="#a87830" emoji="" />
+ <PageHeader title="Santé" titleAr="شِفَاء" description="Psychologues orientés communauté, praticiens hijama certifiés et sages-femmes en Île-de-France." color="#6540b5" emoji="" />
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
  {/* Tabs */}
@@ -145,7 +145,7 @@ export default function SanteClient({
  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.3rem' }}>
  <StarRating rating={p.rating} reviews={p.reviews} />
  {p.conventionné && (
- <span style={{ backgroundColor: '#fdfbf0', color: '#8a6025', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}> Conventionné S{p.secteur}</span>
+ <span style={{ backgroundColor: '#f0ebfa', color: '#543398', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}> Conventionné S{p.secteur}</span>
  )}
  </div>
  </div>
@@ -173,7 +173,7 @@ export default function SanteClient({
  <span style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
  {p.visio && <span style={{ color: '#3b82f6' }}><Video size={11} style={{ display: 'inline' }} /> Visio OK</span>}
  {p.arabophone && <span> Arabophone</span>}
- {p.tariف && <span style={{ color: '#d4a853', fontWeight: 600 }}> {p.tariف}</span>}
+ {p.tariف && <span style={{ color: '#c9b6ec', fontWeight: 600 }}> {p.tariف}</span>}
  </span>
  <span> {p.langues.join(' · ')}</span>
  </div>
@@ -244,11 +244,11 @@ export default function SanteClient({
  </span>
  </div>
  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'flex-end' }}>
- <span style={{ fontSize: '0.7rem', backgroundColor: h.gender === 'f' ? '#fdfbf0' : h.gender === 'm' ? '#eff6ff' : '#f0fff8', color: h.gender === 'f' ? '#8a6025' : h.gender === 'm' ? '#8a6025' : '#8a6025', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
+ <span style={{ fontSize: '0.7rem', backgroundColor: h.gender === 'f' ? '#f0ebfa' : h.gender === 'm' ? '#eff6ff' : '#f0fff8', color: h.gender === 'f' ? '#543398' : h.gender === 'm' ? '#543398' : '#543398', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
  {h.gender === 'f' ? ' Femmes' : h.gender === 'm' ? ' Hommes' : ' Mixte'}
  </span>
  {h.certifié && (
- <span style={{ fontSize: '0.7rem', backgroundColor: '#fdfbf0', color: '#8a6025', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>
+ <span style={{ fontSize: '0.7rem', backgroundColor: '#f0ebfa', color: '#543398', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>
  <CheckCircle size={10} style={{ display: 'inline', marginRight: '2px' }} />Certifié
  </span>
  )}
@@ -324,7 +324,7 @@ export default function SanteClient({
  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.3rem' }}>
  <StarRating rating={m.rating} reviews={m.reviews} />
  {m.conventionné && (
- <span style={{ backgroundColor: '#fdfbf0', color: '#8a6025', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}> Conventionné S{m.secteur}</span>
+ <span style={{ backgroundColor: '#f0ebfa', color: '#543398', padding: '0.1rem 0.45rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}> Conventionné S{m.secteur}</span>
  )}
  </div>
  </div>
@@ -344,7 +344,7 @@ export default function SanteClient({
  {m.visio && <span style={{ color: '#3b82f6' }}><Video size={11} style={{ display: 'inline' }} /> Visio OK</span>}
  {m.arabophone && <span> Arabophone</span>}
  {m.accepteVoile && <span style={{ color: '#0891b2' }}> Cadre respectueux</span>}
- {m.tariف && <span style={{ color: '#d4a853', fontWeight: 600 }}> {m.tariف}</span>}
+ {m.tariف && <span style={{ color: '#c9b6ec', fontWeight: 600 }}> {m.tariف}</span>}
  </span>
  <span> {m.langues.join(' · ')}</span>
  </div>
@@ -416,7 +416,7 @@ export default function SanteClient({
  <p style={{ fontSize: '0.78rem', color: ROQYA_COLOR, fontWeight: 600, margin: 0 }}>{r.title}</p>
  </div>
  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'flex-end' }}>
- <span style={{ fontSize: '0.7rem', backgroundColor: r.gender === 'f' ? '#fdfbf0' : '#eff6ff', color: r.gender === 'f' ? '#8a6025' : '#8a6025', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
+ <span style={{ fontSize: '0.7rem', backgroundColor: r.gender === 'f' ? '#f0ebfa' : '#eff6ff', color: r.gender === 'f' ? '#543398' : '#543398', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
  {r.gender === 'f' ? ' Pour sœurs' : ' Hommes & Femmes'}
  </span>
  {r.visio && (
@@ -433,7 +433,7 @@ export default function SanteClient({
  <span><MapPin size={11} style={{ display: 'inline' }} /> {r.location}</span>
  <span> {r.disponibilité}</span>
  <span> {r.langues.join(' · ')}</span>
- <span style={{ color: '#d4a853', fontWeight: 700 }}> {r.tarif}</span>
+ <span style={{ color: '#c9b6ec', fontWeight: 700 }}> {r.tarif}</span>
  {r.école && <span> Approche : {r.école}</span>}
  </div>
 

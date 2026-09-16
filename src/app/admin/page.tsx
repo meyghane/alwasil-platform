@@ -22,9 +22,9 @@ const CAT_ICONS: Record<string, typeof Waves> = {
  hajj: Plane,
 };
 
-const GOLD = '#c9973a';
-const DARK = '#0a0806';
-const CREAM = '#fdfbf0';
+const GOLD = '#7652CA';
+const DARK = '#080808';
+const CREAM = '#f0ebfa';
 
 function getCatIcon(key: string) {
  return CAT_ICONS[key] ?? Plus;
@@ -34,26 +34,26 @@ export default async function AdminPage() {
  if (!(await isAdminLoggedIn())) redirect('/admin/login');
 
  return (
- <div style={{ minHeight: '100vh', background: `linear-gradient(160deg, ${CREAM} 0%, #fffef8 100%)` }}>
+ <div style={{ minHeight: '100vh', background: `linear-gradient(160deg, ${CREAM} 0%, #faf8ff 100%)` }}>
 
  {/* Header noir/or */}
  <div style={{
- background: `linear-gradient(135deg, ${DARK} 0%, #100c04 100%)`,
- borderBottom: '1px solid rgba(201,151,58,0.2)',
+ background: `linear-gradient(135deg, ${DARK} 0%, #080808 100%)`,
+ borderBottom: '1px solid rgba(118,82,202,0.2)',
  }}>
  <div className="container" style={{ padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
  <div style={{
  width: 38, height: 38, borderRadius: '10px',
- background: 'rgba(201,151,58,0.12)',
- border: `1px solid rgba(201,151,58,0.3)`,
+ background: 'rgba(118,82,202,0.12)',
+ border: `1px solid rgba(118,82,202,0.3)`,
  display: 'flex', alignItems: 'center', justifyContent: 'center',
  }}>
  <LayoutDashboard size={18} color={GOLD} strokeWidth={1.8} />
  </div>
  <div>
  <div style={{ fontWeight: 800, color: '#fff', fontSize: '0.95rem' }}>Al-Wasil Admin</div>
- <div style={{ fontSize: '0.68rem', color: 'rgba(201,151,58,0.5)' }}>Espace administration</div>
+ <div style={{ fontSize: '0.68rem', color: 'rgba(118,82,202,0.5)' }}>Espace administration</div>
  </div>
  </div>
 
@@ -62,8 +62,8 @@ export default async function AdminPage() {
  display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
  fontSize: '0.78rem', color: GOLD, textDecoration: 'none',
  padding: '0.4rem 0.875rem',
- backgroundColor: 'rgba(201,151,58,0.12)',
- border: `1px solid rgba(201,151,58,0.3)`,
+ backgroundColor: 'rgba(118,82,202,0.12)',
+ border: `1px solid rgba(118,82,202,0.3)`,
  borderRadius: '8px',
  }}>
  <Zap size={13} strokeWidth={2} /> Autos
@@ -88,7 +88,7 @@ export default async function AdminPage() {
  }}>
  <Inbox size={13} strokeWidth={2} /> Soumissions
  </Link>
- <Link href="/admin/leads" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: '#c9973a', textDecoration: 'none', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(201,151,58,0.12)', border: '1px solid rgba(201,151,58,0.3)', borderRadius: '8px' }}>
+ <Link href="/admin/leads" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: '#7652CA', textDecoration: 'none', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(118,82,202,0.12)', border: '1px solid rgba(118,82,202,0.3)', borderRadius: '8px' }}>
  <Plane size={13} strokeWidth={2} /> Leads Hajj
  </Link>
  <Link href="/admin/fraicheur" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.8)', textDecoration: 'none', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px' }}>Fraîcheur</Link>
@@ -116,14 +116,14 @@ export default async function AdminPage() {
 
  {/* Ajout Rapide — bandeau Wassil */}
  <Link href="/modo/ajout-rapide" style={{ textDecoration: 'none', display: 'block', marginBottom: '1.5rem' }}>
- <div style={{ background: `linear-gradient(135deg, ${DARK}, #1a1408)`, borderRadius: '16px', padding: '1.25rem 1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: `0 8px 24px rgba(201,151,58,0.15)`, border: `1px solid rgba(201,151,58,0.2)` }}>
+ <div style={{ background: `linear-gradient(135deg, ${DARK}, #1a1408)`, borderRadius: '16px', padding: '1.25rem 1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: `0 8px 24px rgba(118,82,202,0.15)`, border: `1px solid rgba(118,82,202,0.2)` }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
- <div style={{ width: 44, height: 44, borderRadius: '12px', background: 'rgba(201,151,58,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `1px solid rgba(201,151,58,0.3)` }}>
+ <div style={{ width: 44, height: 44, borderRadius: '12px', background: 'rgba(118,82,202,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: `1px solid rgba(118,82,202,0.3)` }}>
  <Sparkles size={22} color={GOLD} strokeWidth={1.6} />
  </div>
  <div>
  <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'white', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide — Wassil</div>
- <div style={{ fontSize: '0.75rem', color: 'rgba(201,151,58,0.6)', marginTop: '2px' }}>Décris en texte libre → Wassil cherche sur Google et crée la fiche automatiquement</div>
+ <div style={{ fontSize: '0.75rem', color: 'rgba(118,82,202,0.6)', marginTop: '2px' }}>Décris en texte libre → Wassil cherche sur Google et crée la fiche automatiquement</div>
  </div>
  </div>
  <div style={{ fontSize: '0.78rem', color: GOLD, fontWeight: 700, flexShrink: 0 }}>Essayer →</div>
@@ -135,7 +135,7 @@ export default async function AdminPage() {
  <h1 style={{ fontWeight: 900, fontSize: '1.75rem', color: DARK, margin: '0 0 0.4rem', letterSpacing: '-0.02em' }}>
  Tableau de bord
  </h1>
- <p style={{ color: '#7a6848', fontSize: '0.88rem', margin: 0 }}>
+ <p style={{ color: '#59565f', fontSize: '0.88rem', margin: 0 }}>
  Le site se remplit automatiquement. Ici, tu contrôles uniquement la qualité.
  </p>
  </div>
@@ -143,34 +143,34 @@ export default async function AdminPage() {
  <div style={{ marginBottom: '2rem' }}>
   <h2 style={{ fontWeight: 800, fontSize: '1.1rem', color: DARK, margin: '0 0 .75rem' }}>Centre de contrôle qualité</h2>
   <div className="admin-quality-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '.75rem' }}>
-   {[['/admin/soumissions','Nouvelles fiches','Valider ou archiver'],['/admin/signalements','Signalements','Traiter les retours visiteurs'],['/admin/couverture','Couverture','Repérer les départements incomplets'],['/admin/fraicheur','Fraîcheur','Voir les fiches à vérifier'],['/admin/auto','Automatisations','Suivre les exécutions'],['/admin/journal','Journal','Comprendre les erreurs automatiques']].map(([href,title,desc]) => <Link key={href} href={href} style={{ textDecoration:'none', background:'white', border:'1px solid #f0dea0', borderRadius:12, padding:'1rem' }}><div style={{fontWeight:800,color:DARK,fontSize:'.85rem'}}>{title}</div><div style={{fontSize:'.72rem',color:'#78716c',marginTop:'.35rem'}}>{desc}</div></Link>)}
+   {[['/admin/soumissions','Nouvelles fiches','Valider ou archiver'],['/admin/signalements','Signalements','Traiter les retours visiteurs'],['/admin/couverture','Couverture','Repérer les départements incomplets'],['/admin/fraicheur','Fraîcheur','Voir les fiches à vérifier'],['/admin/auto','Automatisations','Suivre les exécutions'],['/admin/journal','Journal','Comprendre les erreurs automatiques']].map(([href,title,desc]) => <Link key={href} href={href} style={{ textDecoration:'none', background:'white', border:'1px solid #e2d7f5', borderRadius:12, padding:'1rem' }}><div style={{fontWeight:800,color:DARK,fontSize:'.85rem'}}>{title}</div><div style={{fontSize:'.72rem',color:'#59565f',marginTop:'.35rem'}}>{desc}</div></Link>)}
   </div>
  </div>
 
  {/* Équipe */}
- <div style={{ backgroundColor: 'white', borderRadius: '16px', border: `1px solid #f0dea0`, padding: '1.25rem 1.5rem', marginBottom: '2rem', boxShadow: `0 2px 8px rgba(201,151,58,0.08)` }}>
+ <div style={{ backgroundColor: 'white', borderRadius: '16px', border: `1px solid #e2d7f5`, padding: '1.25rem 1.5rem', marginBottom: '2rem', boxShadow: `0 2px 8px rgba(118,82,202,0.08)` }}>
  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
- <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#7a6848', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+ <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#59565f', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
  Classement de l&apos;équipe
  </div>
  <Link href="/admin/comptes" style={{ fontSize: '0.75rem', color: GOLD, textDecoration: 'none', fontWeight: 600 }}>Gérer l&apos;équipe →</Link>
  </div>
  <div style={{ display: 'flex', gap: '0.75rem' }}>
- <div style={{ flex: 1, backgroundColor: CREAM, borderRadius: '12px', border: `1px solid #f0dea0`, padding: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
- <div style={{ width: 38, height: 38, borderRadius: '10px', background: `linear-gradient(135deg, ${GOLD}, #a87830)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, color: DARK, fontSize: '1rem', flexShrink: 0 }}>
+ <div style={{ flex: 1, backgroundColor: CREAM, borderRadius: '12px', border: `1px solid #e2d7f5`, padding: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+ <div style={{ width: 38, height: 38, borderRadius: '10px', background: `linear-gradient(135deg, ${GOLD}, #6540b5)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, color: DARK, fontSize: '1rem', flexShrink: 0 }}>
  A
  </div>
  <div style={{ flex: 1, minWidth: 0 }}>
- <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#1c1917' }}>Admin</div>
+ <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#080808' }}>Admin</div>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '2px' }}>
- <div style={{ flex: 1, height: 4, backgroundColor: '#f0dea0', borderRadius: '99px', overflow: 'hidden' }}>
+ <div style={{ flex: 1, height: 4, backgroundColor: '#e2d7f5', borderRadius: '99px', overflow: 'hidden' }}>
  <div style={{ height: '100%', width: '0%', background: `linear-gradient(90deg, ${GOLD}, #fbbf24)`, borderRadius: '99px' }} />
  </div>
  <span style={{ fontSize: '0.68rem', fontWeight: 700, color: GOLD, flexShrink: 0 }}>0 pts</span>
  </div>
  </div>
  </div>
- <div style={{ flex: 2, backgroundColor: CREAM, borderRadius: '12px', border: `1px dashed #f0dea0`, padding: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '0.25rem' }}>
+ <div style={{ flex: 2, backgroundColor: CREAM, borderRadius: '12px', border: `1px dashed #e2d7f5`, padding: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '0.25rem' }}>
  <div style={{ fontSize: '0.78rem', color: '#9ca3af', textAlign: 'center' }}>Le classement se remplit quand des modérateurs ajoutent des fiches</div>
  <Link href="/admin/comptes" style={{ fontSize: '0.72rem', color: GOLD, textDecoration: 'none', fontWeight: 600 }}>Inviter un modo →</Link>
  </div>
@@ -186,10 +186,10 @@ export default async function AdminPage() {
  <div className="admin-cat-card" style={{
  backgroundColor: 'white',
  borderRadius: '14px',
- border: `1px solid #f0dea0`,
+ border: `1px solid #e2d7f5`,
  padding: '1.25rem',
  display: 'flex', flexDirection: 'column', gap: '0.75rem',
- boxShadow: `0 2px 8px rgba(201,151,58,0.06)`,
+ boxShadow: `0 2px 8px rgba(118,82,202,0.06)`,
  cursor: 'pointer',
  transition: 'all 0.2s',
  }}>
@@ -197,13 +197,13 @@ export default async function AdminPage() {
  <div style={{
  width: 40, height: 40, borderRadius: '10px', flexShrink: 0,
  backgroundColor: CREAM,
- border: `1px solid #f0dea0`,
+ border: `1px solid #e2d7f5`,
  display: 'flex', alignItems: 'center', justifyContent: 'center',
  }}>
  <Icon size={18} color={GOLD} strokeWidth={1.8} />
  </div>
  <div>
- <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#1c1917' }}>{cat.label}</div>
+ <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#080808' }}>{cat.label}</div>
  <div style={{ fontSize: '0.67rem', color: '#a8a29e' }}>→ {cat.sheetTab}</div>
  </div>
  </div>
@@ -217,7 +217,7 @@ export default async function AdminPage() {
  </div>
 
  {/* Comment ça marche */}
- <div style={{ padding: '1.5rem', backgroundColor: 'white', border: `1px solid #f0dea0`, borderRadius: '14px', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+ <div style={{ padding: '1.5rem', backgroundColor: 'white', border: `1px solid #e2d7f5`, borderRadius: '14px', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
  <div style={{ width: 36, height: 36, borderRadius: '8px', flexShrink: 0, backgroundColor: GOLD, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
  <Info size={16} color={DARK} strokeWidth={2} />
  </div>

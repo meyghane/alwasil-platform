@@ -5,11 +5,11 @@ import { Clock, ArrowRight, PenLine } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 
 const CAT_COLORS: Record<string, string> = {
- 'Apprentissage': '#c9973a',
- 'Justice & Droits': '#a87830',
- 'Bien-être': '#c9973a',
- 'Santé': '#8a6025',
- 'Communauté': '#8a6025',
+ 'Apprentissage': '#7652CA',
+ 'Justice & Droits': '#6540b5',
+ 'Bien-être': '#7652CA',
+ 'Santé': '#543398',
+ 'Communauté': '#543398',
 };
 
 const articles = [
@@ -29,7 +29,7 @@ const featured = articles.filter(a => a.featured);
 const rest = articles.filter(a => !a.featured);
 
 function ArticleCard({ article, large = false }: { article: typeof articles[0]; large?: boolean }) {
- const color = CAT_COLORS[article.category] ?? '#c9973a';
+ const color = CAT_COLORS[article.category] ?? '#7652CA';
  return (
  <Link href={`/blog/${article.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
  <article style={{
@@ -39,16 +39,16 @@ function ArticleCard({ article, large = false }: { article: typeof articles[0]; 
  overflow: 'hidden',
  display: 'flex', flexDirection: 'column',
  height: '100%',
- boxShadow: '0 2px 8px rgba(201,151,58,0.06)',
+ boxShadow: '0 2px 8px rgba(118,82,202,0.06)',
  transition: 'transform 0.22s ease, box-shadow 0.22s ease',
  }}
  onMouseOver={e => {
  (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
- (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 32px rgba(201,151,58,0.18)';
+ (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 32px rgba(118,82,202,0.18)';
  }}
  onMouseOut={e => {
  (e.currentTarget as HTMLElement).style.transform = '';
- (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(201,151,58,0.06)';
+ (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(118,82,202,0.06)';
  }}
  >
  {/* Image cover */}
@@ -77,7 +77,7 @@ function ArticleCard({ article, large = false }: { article: typeof articles[0]; 
  </div>
 
  {/* Titre */}
- <h3 style={{ fontSize: large ? '1.2rem' : '0.95rem', fontWeight: 800, lineHeight: 1.3, color: '#1c1917', margin: 0, flex: large ? 0 : 1 }}>
+ <h3 style={{ fontSize: large ? '1.2rem' : '0.95rem', fontWeight: 800, lineHeight: 1.3, color: '#080808', margin: 0, flex: large ? 0 : 1 }}>
  {article.title}
  </h3>
 
@@ -91,7 +91,7 @@ function ArticleCard({ article, large = false }: { article: typeof articles[0]; 
  {/* Tags */}
  <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
  {article.tags.slice(0, 4).map(t => (
- <span key={t} style={{ backgroundColor: '#fdfbf0', color: '#a87830', padding: '2px 8px', borderRadius: '4px', fontSize: '0.67rem', fontWeight: 600 }}>#{t}</span>
+ <span key={t} style={{ backgroundColor: '#f0ebfa', color: '#6540b5', padding: '2px 8px', borderRadius: '4px', fontSize: '0.67rem', fontWeight: 600 }}>#{t}</span>
  ))}
  </div>
 
@@ -124,8 +124,8 @@ export default function BlogPage() {
  {/* ── À La Une ─── */}
  <div style={{ marginBottom: '3rem' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
- <span style={{ width: '3px', height: '18px', backgroundColor: '#c9973a', borderRadius: '9999px', display: 'block' }} />
- <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#1c1917', textTransform: 'uppercase' }}>
+ <span style={{ width: '3px', height: '18px', backgroundColor: '#7652CA', borderRadius: '9999px', display: 'block' }} />
+ <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#080808', textTransform: 'uppercase' }}>
  À la une
  </span>
  </div>
@@ -137,8 +137,8 @@ export default function BlogPage() {
  {/* ── Tous les articles ─── */}
  <div>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
- <span style={{ width: '3px', height: '18px', backgroundColor: '#c9973a', borderRadius: '9999px', display: 'block' }} />
- <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#1c1917', textTransform: 'uppercase' }}>
+ <span style={{ width: '3px', height: '18px', backgroundColor: '#7652CA', borderRadius: '9999px', display: 'block' }} />
+ <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: '#080808', textTransform: 'uppercase' }}>
  Tous les articles
  </span>
  </div>
@@ -148,17 +148,17 @@ export default function BlogPage() {
  </div>
 
  {/* ── CTA ─── */}
- <div style={{ padding: '2rem', backgroundColor: '#fdfbf0', borderRadius: '16px', border: '1px solid #f0dea0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+ <div style={{ padding: '2rem', backgroundColor: '#f0ebfa', borderRadius: '16px', border: '1px solid #e2d7f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
- <div style={{ width: 44, height: 44, borderRadius: '12px', backgroundColor: '#c9973a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+ <div style={{ width: 44, height: 44, borderRadius: '12px', backgroundColor: '#7652CA', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
  <PenLine size={20} color="white" strokeWidth={1.8} />
  </div>
  <div>
- <p style={{ fontWeight: 700, marginBottom: '0.2rem', color: '#1c1917', fontSize: '1rem' }}>Tu veux contribuer au blog ?</p>
+ <p style={{ fontWeight: 700, marginBottom: '0.2rem', color: '#080808', fontSize: '1rem' }}>Tu veux contribuer au blog ?</p>
  <p style={{ color: '#57534e', fontSize: '0.85rem', margin: 0 }}>Partage ton expertise : droits, santé, apprentissage, bons plans…</p>
  </div>
  </div>
- <Link href="/contact?type=blog" style={{ padding: '0.7rem 1.5rem', backgroundColor: '#c9973a', color: 'white', fontWeight: 700, fontSize: '0.875rem', textDecoration: 'none', borderRadius: '10px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+ <Link href="/contact?type=blog" style={{ padding: '0.7rem 1.5rem', backgroundColor: '#7652CA', color: 'white', fontWeight: 700, fontSize: '0.875rem', textDecoration: 'none', borderRadius: '10px', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
  Proposer un article <ArrowRight size={14} />
  </Link>
  </div>

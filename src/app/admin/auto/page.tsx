@@ -6,7 +6,7 @@ import { ArrowLeft, Zap, RefreshCw, CheckCircle, AlertCircle, Clock, Play,
  Calendar, Heart, Briefcase, HandCoins, Stethoscope, Library, Waves, BookOpen, Plane } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
-const GOLD = '#c9973a';
+const GOLD = '#7652CA';
 
 const SCRAPERS: { cat: string; label: string; freq: string; Icon: LucideIcon }[] = [
  { cat: 'events', label: 'Événements', freq: '4x/jour', Icon: Calendar },
@@ -61,10 +61,10 @@ export default function AutoPage() {
  }
 
  return (
- <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #fdfbf0 0%, #fffef8 100%)' }}>
+ <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f0ebfa 0%, #faf8ff 100%)' }}>
 
  {/* Header */}
- <div style={{ background: 'linear-gradient(135deg, #100c04 0%, #0a0806 100%)', borderBottom: '1px solid rgba(201,151,58,0.2)' }}>
+ <div style={{ background: 'linear-gradient(135deg, #080808 0%, #080808 100%)', borderBottom: '1px solid rgba(118,82,202,0.2)' }}>
  <div className="container" style={{ padding: '1rem', display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'space-between' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
  <Link href="/admin" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -84,7 +84,7 @@ export default function AutoPage() {
  <RefreshCw size={12} strokeWidth={2} /> Nettoyer expirés
  </button>
  <button onClick={runAll} disabled={!!running}
- style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', backgroundColor: GOLD, color: '#0a0806', border: 'none', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: running ? 'not-allowed' : 'pointer', opacity: running ? 0.6 : 1, fontFamily: 'Poppins, sans-serif' }}>
+ style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', backgroundColor: GOLD, color: '#080808', border: 'none', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: running ? 'not-allowed' : 'pointer', opacity: running ? 0.6 : 1, fontFamily: 'Poppins, sans-serif' }}>
  <Play size={13} strokeWidth={2} /> Tout lancer
  </button>
  </div>
@@ -94,10 +94,10 @@ export default function AutoPage() {
  <div className="container" style={{ padding: '2.5rem 1rem', maxWidth: '900px' }}>
 
  <div style={{ marginBottom: '1.5rem' }}>
- <h1 style={{ fontWeight: 900, fontSize: '1.5rem', color: '#0f0a00', margin: '0 0 0.3rem', fontFamily: 'Poppins, sans-serif' }}>
+ <h1 style={{ fontWeight: 900, fontSize: '1.5rem', color: '#080808', margin: '0 0 0.3rem', fontFamily: 'Poppins, sans-serif' }}>
  Automatisations en cours
  </h1>
- <p style={{ color: '#7a6848', fontSize: '0.85rem', margin: 0 }}>
+ <p style={{ color: '#59565f', fontSize: '0.85rem', margin: 0 }}>
  Les scrapers Gemini tournent automatiquement via Vercel Cron. Lance-les manuellement ici pour tester ou forcer une mise à jour.
  </p>
  </div>
@@ -112,33 +112,33 @@ export default function AutoPage() {
  <div key={s.cat} style={{
  backgroundColor: 'white',
  borderRadius: '14px',
- border: `1px solid ${status === 'ok' ? 'rgba(201,151,58,0.3)' : status === 'error' ? '#fee2e2' : '#f0dea0'}`,
+ border: `1px solid ${status === 'ok' ? 'rgba(118,82,202,0.3)' : status === 'error' ? '#fee2e2' : '#e2d7f5'}`,
  padding: '1.25rem',
  boxShadow: '0 2px 8px rgba(15,10,0,0.06)',
  }}>
  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.875rem' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
- <div style={{ width: 32, height: 32, borderRadius: '8px', backgroundColor: '#fdfbf0', border: '1px solid #f0dea0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+ <div style={{ width: 32, height: 32, borderRadius: '8px', backgroundColor: '#f0ebfa', border: '1px solid #e2d7f5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
  <s.Icon size={15} color={GOLD} strokeWidth={1.8} />
  </div>
  <div>
- <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0f0a00', fontFamily: 'Poppins, sans-serif' }}>{s.label}</div>
- <div style={{ fontSize: '0.68rem', color: '#7a6848', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+ <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#080808', fontFamily: 'Poppins, sans-serif' }}>{s.label}</div>
+ <div style={{ fontSize: '0.68rem', color: '#59565f', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
  <Clock size={10} strokeWidth={2} /> {s.freq}
  </div>
  </div>
  </div>
- {status === 'ok' && <CheckCircle size={16} color="#c9973a" strokeWidth={2} />}
+ {status === 'ok' && <CheckCircle size={16} color="#7652CA" strokeWidth={2} />}
  {status === 'error' && <AlertCircle size={16} color="#dc2626" strokeWidth={2} />}
  {isLoading && <RefreshCw size={16} color={GOLD} strokeWidth={2} style={{ animation: 'spin 1s linear infinite' }} />}
  </div>
 
  {r && (
  <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
- <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: '#fdfbf0', border: '1px solid #f0dea0', color: '#7a6848' }}>
+ <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: '#f0ebfa', border: '1px solid #e2d7f5', color: '#59565f' }}>
  {r.found} trouvés
  </span>
- <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: r.written > 0 ? '#f0fdf4' : '#f9fafb', border: `1px solid ${r.written > 0 ? '#f0dea0' : '#e5e7eb'}`, color: r.written > 0 ? '#c9973a' : '#6b7280' }}>
+ <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: r.written > 0 ? '#f0fdf4' : '#f9fafb', border: `1px solid ${r.written > 0 ? '#e2d7f5' : '#e5e7eb'}`, color: r.written > 0 ? '#7652CA' : '#6b7280' }}>
  {r.written} écrits
  </span>
  {r.lastRun && <span style={{ fontSize: '0.68rem', color: '#9ca3af', marginLeft: 'auto' }}>{r.lastRun}</span>}
@@ -151,8 +151,8 @@ export default function AutoPage() {
  disabled={!!running}
  style={{
  width: '100%', padding: '0.5rem', borderRadius: '8px',
- backgroundColor: isLoading ? 'rgba(201,151,58,0.1)' : GOLD,
- color: isLoading ? GOLD : '#0a0806',
+ backgroundColor: isLoading ? 'rgba(118,82,202,0.1)' : GOLD,
+ color: isLoading ? GOLD : '#080808',
  border: isLoading ? `1px solid ${GOLD}` : 'none',
  fontSize: '0.78rem', fontWeight: 700, cursor: running ? 'not-allowed' : 'pointer',
  opacity: running && !isLoading ? 0.5 : 1,
@@ -171,10 +171,10 @@ export default function AutoPage() {
  })}
  </div>
 
- <div style={{ marginTop: '1.5rem', padding: '1rem 1.25rem', backgroundColor: '#fffaf0', borderRadius: '14px', border: '1px solid #f0dea0', fontSize: '0.8rem', color: '#7a6848', lineHeight: 1.7 }}>
+ <div style={{ marginTop: '1.5rem', padding: '1rem 1.25rem', backgroundColor: '#fffaf0', borderRadius: '14px', border: '1px solid #e2d7f5', fontSize: '0.8rem', color: '#59565f', lineHeight: 1.7 }}>
  <strong style={{ color: '#b45309' }}>État actuel :</strong> les cartes peuvent être lancées manuellement, mais la découverte automatique des fiches est temporairement désactivée côté planification. Les seules tâches planifiées actuellement sont le nettoyage des événements expirés et le contrôle de fraîcheur. Il faudra réactiver le workflow de scraping après validation des secrets et de Google Sheets.
  <br /><br />
- <strong style={{ color: '#0f0a00' }}>Comment ça marche :</strong> lorsqu’un scraper est activé, les nouvelles fiches arrivent dans <strong>soumissions_X</strong> avec le statut <em>à vérifier</em>. Les erreurs apparaissent directement sur la carte concernée. Pour les valider : <Link href="/admin/soumissions" style={{ color: GOLD, textDecoration: 'none', fontWeight: 600 }}>page de modération →</Link>
+ <strong style={{ color: '#080808' }}>Comment ça marche :</strong> lorsqu’un scraper est activé, les nouvelles fiches arrivent dans <strong>soumissions_X</strong> avec le statut <em>à vérifier</em>. Les erreurs apparaissent directement sur la carte concernée. Pour les valider : <Link href="/admin/soumissions" style={{ color: GOLD, textDecoration: 'none', fontWeight: 600 }}>page de modération →</Link>
  </div>
  </div>
 

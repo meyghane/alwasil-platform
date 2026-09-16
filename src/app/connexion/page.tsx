@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Mail, Star, CheckCircle, MessageSquare, MapPin, Bell, Heart } from 'lucide-react';
 
-const TEAL = '#c9973a';
+const TEAL = '#7652CA';
 
 const PERKS = [
  { icon: <Star size={15} />, label: 'Laisser un avis vérifié sur un praticien, librairie, agence Hajj' },
@@ -65,8 +65,8 @@ export default function ConnexionPage() {
 
  {submitted ? (
  <div style={{ textAlign: 'center', padding: '2.5rem 2rem', borderRadius: '1.25rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8' }}>
- <CheckCircle size={42} color="#d4a853" style={{ marginBottom: '1rem' }} />
- <h3 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#8a6025' }}>Tu es sur la liste ! </h3>
+ <CheckCircle size={42} color="#c9b6ec" style={{ marginBottom: '1rem' }} />
+ <h3 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#543398' }}>Tu es sur la liste ! </h3>
  <p style={{ color: '#047857', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
  On te préviendra par email dès l&apos;ouverture des comptes.<br />
  Barak Allahou fikoum !
@@ -84,7 +84,7 @@ export default function ConnexionPage() {
  </p>
  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
  {PERKS.map((p, i) => (
- <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', fontSize: '0.875rem', color: '#1c1917' }}>
+ <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', fontSize: '0.875rem', color: '#080808' }}>
  <span style={{ color: TEAL, flexShrink: 0 }}>{p.icon}</span>
  {p.label}
  </div>

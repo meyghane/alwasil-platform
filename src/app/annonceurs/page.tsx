@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { TrendingUp, Eye, MousePointer, Users, BarChart2, Mail, CheckCircle, Image, Tag, Zap } from 'lucide-react';
 
-const ACCENT = '#c9973a';
-const GREEN = '#c9973a';
+const ACCENT = '#7652CA';
+const GREEN = '#7652CA';
 
 type Segment = 'solo' | 'boost' | 'pro' | 'agence';
 
@@ -323,7 +323,7 @@ export default function AnnonceursPage() {
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '3rem' }}>
  {[
  { icon: <Users size={22} color={ACCENT} />, value: '12 000+', label: 'Visiteurs/mois', sub: 'en croissance' },
- { icon: <Eye size={22} color='#c9973a' />, value: '45 000+', label: 'Pages vues/mois', sub: 'audience engagée' },
+ { icon: <Eye size={22} color='#7652CA' />, value: '45 000+', label: 'Pages vues/mois', sub: 'audience engagée' },
  { icon: <MousePointer size={22} color='#f59e0b' />, value: '4,2%', label: 'Taux de clic moyen', sub: '(2× la moyenne web)' },
  { icon: <BarChart2 size={22} color='#ef4444' />, value: '8 sections', label: 'Thématiques ciblées', sub: 'Hajj, Emploi, Santé…' },
  ].map(s => (
@@ -342,9 +342,9 @@ export default function AnnonceursPage() {
  <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Une audience musulmane active, en France, cherchant des ressources concrètes pour leur quotidien.</p>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.875rem' }}>
  {[
- { label: 'Femmes', value: '62%', color: '#c9973a' },
+ { label: 'Femmes', value: '62%', color: '#7652CA' },
  { label: 'Paris & IdF', value: '68%', color: ACCENT },
- { label: '18–35 ans', value: '71%', color: '#c9973a' },
+ { label: '18–35 ans', value: '71%', color: '#7652CA' },
  { label: 'Visite hebdo', value: '54%', color: '#f59e0b' },
  ].map(s => (
  <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.875rem 1rem', borderRadius: '0.75rem', border: '1px solid var(--border-color)', backgroundColor: 'white' }}>
@@ -438,7 +438,7 @@ export default function AnnonceursPage() {
  display: 'flex', flexDirection: 'column',
  }}>
  {f.badge && (
- <span style={{ position: 'absolute', top: '1rem', right: '1rem', backgroundColor: f.featured ? ACCENT : '#f5f5f4', color: f.featured ? 'white' : '#78716c', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}>
+ <span style={{ position: 'absolute', top: '1rem', right: '1rem', backgroundColor: f.featured ? ACCENT : '#f5f5f4', color: f.featured ? 'white' : '#59565f', padding: '0.15rem 0.55rem', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}>
  {f.badge}
  </span>
  )}
@@ -491,7 +491,7 @@ export default function AnnonceursPage() {
  <thead>
  <tr style={{ backgroundColor: '#f5f5f4' }}>
  {['Format', 'Dimensions', 'Placement', 'Fichier accepté', 'Poids max', 'Note'].map(h => (
- <th key={h} style={{ padding: '0.65rem 0.875rem', textAlign: 'left', fontWeight: 700, color: '#1c1917', borderBottom: '2px solid var(--border-color)', whiteSpace: 'nowrap' }}>{h}</th>
+ <th key={h} style={{ padding: '0.65rem 0.875rem', textAlign: 'left', fontWeight: 700, color: '#080808', borderBottom: '2px solid var(--border-color)', whiteSpace: 'nowrap' }}>{h}</th>
  ))}
  </tr>
  </thead>
@@ -599,7 +599,7 @@ export default function AnnonceursPage() {
 
  {sent ? (
  <div style={{ padding: '2rem', borderRadius: '1rem', backgroundColor: '#f0fff8', border: '1px solid #a0f0c8', textAlign: 'center' }}>
- <CheckCircle size={36} color="#d4a853" style={{ marginBottom: '0.75rem' }} />
+ <CheckCircle size={36} color="#c9b6ec" style={{ marginBottom: '0.75rem' }} />
  <h3 style={{ fontWeight: 700, marginBottom: '0.4rem' }}>Message reçu </h3>
  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Nous revenons vers vous sous 24h. Barak Allahou fikoum !</p>
  </div>

@@ -8,9 +8,9 @@ import { useCallback, useEffect, useRef } from 'react';
 const stories = [
   { title: 'Événements', image: '/images/testimonials/evenements.png', quote: "J’ai trouvé une conférence près de chez moi en quelques minutes. C’était exactement le rendez-vous communautaire que je cherchais.", name: 'Sarah, Paris', href: '/events', color: '#7652CA' },
   { title: 'Solidarité', image: '/images/testimonials/solidarite.png', quote: "Je cherchais une action concrète à rejoindre. Al-Wasil m’a permis de trouver une maraude à laquelle je peux participer quand je suis disponible.", name: 'Yasmine, Lyon', href: '/solidarity', color: '#ECFF58' },
-  { title: 'Hajj & Omra', image: '/images/testimonials/hajj-omra.png', quote: "L’équipe m’a aiguillée vers une agence sérieuse et à l’écoute. Ce n’est pas seulement un comparateur : j’ai reçu de vraies réponses pour préparer mon voyage.", name: 'Nadia, Île-de-France', href: '/hajj', color: '#080808' },
-  { title: 'Éducation', image: '/images/testimonials/evenements.png', quote: "J’ai enfin trouvé un institut avec des horaires compatibles avec mon travail et un programme clair pour reprendre l’arabe.", name: 'Inès, Lille', href: '/education', color: '#7652CA' },
-  { title: 'Santé', image: '/images/testimonials/solidarite.png', quote: "J’ai pu identifier une psychologue qui comprend mes repères culturels et religieux. Cela m’a évité des semaines de recherches.", name: 'Meryem, Seine-Saint-Denis', href: '/sante', color: '#ECFF58' },
+  { title: 'Hajj & Omra', image: '/images/testimonials/hajj-flight.png', quote: "L’équipe m’a aiguillée vers une agence sérieuse et à l’écoute. Ce n’est pas seulement un comparateur : j’ai reçu de vraies réponses pour préparer mon voyage.", name: 'Nadia, Île-de-France', href: '/hajj', color: '#080808' },
+  { title: 'Éducation', image: '/images/testimonials/education-library.png', quote: "J’ai enfin trouvé un institut avec des horaires compatibles avec mon travail et un programme clair pour reprendre l’arabe.", name: 'Inès, Lille', href: '/education', color: '#7652CA' },
+  { title: 'Santé', image: '/images/testimonials/sante-hijama-men.png', quote: "J’ai pu identifier une psychologue qui comprend mes repères culturels et religieux. Cela m’a évité des semaines de recherches.", name: 'Meryem, Seine-Saint-Denis', href: '/sante', color: '#ECFF58' },
 ];
 
 export default function CommunityStories() {
@@ -27,7 +27,7 @@ export default function CommunityStories() {
         const cardCenter = card.offsetLeft + card.offsetWidth / 2;
         const distance = Math.max(-1, Math.min(1, (cardCenter - center) / element.clientWidth));
         const direction = index % 2 === 0 ? 1 : -1;
-        card.style.setProperty('--story-shift', `${direction * distance * 34}px`);
+        card.style.setProperty('--story-shift', `${direction * distance * 10}px`);
       });
     });
   }, []);
@@ -42,12 +42,12 @@ export default function CommunityStories() {
       <div><span className="community-stories__eyebrow"><MessageCircle size={15}/> AVIS DE LA COMMUNAUTÉ</span><h2 id="community-stories-title">Trouvé grâce à Al-Wasil.</h2></div>
       <div className="community-stories__controls"><button onClick={() => move(-1)} aria-label="Avis précédents"><ChevronLeft/></button><button onClick={() => move(1)} aria-label="Avis suivants"><ChevronRight/></button></div>
     </div>
-    <div className="community-stories__rail" ref={rail} onScroll={animateMosaic}>
-      {stories.map((story, index) => <article className="community-story" key={`${story.title}-${index}`}>
-        <div className="community-story__image"><Image src={story.image} alt={`Ambiance ${story.title.toLowerCase()}`} fill sizes="(max-width: 720px) 82vw, 340px" style={{objectFit:'cover'}}/><span>{story.title}</span><Link href={story.href} aria-label={`Découvrir ${story.title}`}><ArrowUpRight/></Link></div>
-        <div className="community-story__copy"><p>“{story.quote}”</p><div><strong>{story.name}</strong><span>Expérience partagée</span></div></div>
+    <div className="community-stories__rail" ref={rail} onScroll={animateMosaic} style={{ gridAutoColumns: 'clamp(280px, 85vw, 420px)', padding: '30px 0 34px' }}>
+      {stories.map((story, index) => <article className="community-story" key={`${story.title}-${index}`} style={{ gridTemplateRows: 'auto auto', minHeight: 0 }}>
+        <div className="community-story__image" style={{ aspectRatio: '2 / 1' }}><Image src={story.image} alt={`Ambiance ${story.title.toLowerCase()}`} fill sizes="(max-width: 500px) 85vw, 420px" style={{objectFit:'cover', objectPosition: 'center 35%'}}/><span>{story.title}</span><Link href={story.href} aria-label={`Découvrir ${story.title}`}><ArrowUpRight/></Link></div>
+        <div className="community-story__copy" style={{ padding: 20, minHeight: 0, gap: 16 }}><p style={{ fontSize: 16, lineHeight: 1.45, fontWeight: 500 }}>“{story.quote}”</p><div><strong>{story.name}</strong><span>Expérience partagée</span></div></div>
       </article>)}
-      <Link href="/contact?type=temoignage" className="community-stories__more"><span>PLUS D’AVIS<br/>DE LA COMMUNAUTÉ</span><ArrowRight size={36}/><small>Partagez aussi votre expérience</small></Link>
+      <Link href="/contact?type=temoignage" className="community-stories__more" style={{ minHeight: 360, height: 'auto', fontSize: 32, transform: 'none' }}><span>PLUS D’AVIS<br/>DE LA COMMUNAUTÉ</span><ArrowRight size={36}/><small>Partagez aussi votre expérience</small></Link>
     </div>
   </section>;
 }

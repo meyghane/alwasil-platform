@@ -17,6 +17,7 @@ Référence approuvée explicitement : maquette éditoriale à trois colonnes, �
 - Cartes et photos avec coins arrondis, fins espaces blancs, pas d'ombres lourdes ni relief métallique.
 
 ## Images
+- Alterner les présences masculines et féminines ; montrer au moins partiellement les visages pour conserver une dimension humaine. Pour la carte hijama : praticien et patient hommes, ventouses visibles, sans sang ni scène invasive.
 - Photos lumineuses, contemporaines, chaleureuses et dynamiques : étude, bibliothèque, communauté, architecture de mosquée.
 - Femme voilée étudiant, accents violets et environnement vivant ; éviter de transformer les photos en visuels sombres ou aquarellés.
 - Une photo continue peut être découpée en carrés arrondis devenant des ovales. Préserver les proportions des visages.

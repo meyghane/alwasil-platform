@@ -58,8 +58,8 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
       }}>
         <div style={{
           width: 38, height: 38, borderRadius: '4px',
-          border: '1.5px solid rgba(209,96,58,0.65)',
-          backgroundColor: 'rgba(20,14,4,0.18)',
+          border: '1.5px solid #9474d7',
+          backgroundColor: '#7652CA',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           marginBottom: '0.55rem',
           backdropFilter: 'blur(4px)',
@@ -85,7 +85,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
         </h3>
 
         <span style={{
-          color: 'rgba(255,255,255,0.45)', fontSize: '0.65rem',
+          color: '#ECFF58', fontSize: '0.65rem',
           fontFamily: 'serif', display: 'block', marginBottom: '0.5rem',
         }}>
           {arabic}
@@ -105,10 +105,10 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
           {tags.slice(0, 3).map(tag => (
             <span key={tag} style={{
               fontSize: '0.62rem', fontWeight: 600,
-              backgroundColor: 'rgba(20,14,4,0.28)',
-              color: 'rgba(255,255,255,0.85)',
-              border: '1px solid rgba(209,96,58,0.35)',
-              padding: '2px 8px', borderRadius: '2px',
+              backgroundColor: '#080808',
+              color: '#ECFF58',
+              border: '1px solid #ECFF58',
+              padding: '3px 9px', borderRadius: '999px',
             }}>
               {tag}
             </span>

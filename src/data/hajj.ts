@@ -52,10 +52,10 @@ export const VOYAGE_TYPE_LABELS: Record<VoyageType, string> = {
 };
 
 export const VOYAGE_TYPE_COLORS: Record<VoyageType, string> = {
- 'hajj': '#c9973a', // or principal — le pèlerinage sacré
+ 'hajj': '#7652CA', // or principal — le pèlerinage sacré
  'omra-ramadan': '#4a0e58', // violet profond — nuit du Ramadan
- 'omra-hors-saison': '#a87830', // or ambré — voyage spirituel
- 'omra-express': '#8a6025', // bronze — formule courte
+ 'omra-hors-saison': '#6540b5', // or ambré — voyage spirituel
+ 'omra-express': '#543398', // bronze — formule courte
 };
 
 export const hajjAgences: HajjAgence[] = [

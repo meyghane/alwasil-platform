@@ -121,13 +121,13 @@ export const CAGNOTTE_CAT_LABELS: Record<CagnotteCategory, string> = {
 };
 
 export const CAGNOTTE_CAT_COLORS: Record<CagnotteCategory, string> = {
- 'palestine': '#d4a853',
+ 'palestine': '#c9b6ec',
  'afrique': '#f59e0b',
  'mosquee': '#6366f1',
- 'famille': '#c9973a',
- 'education': '#c9973a',
+ 'famille': '#7652CA',
+ 'education': '#7652CA',
  'eau-puits': '#3b82f6',
- 'orphelins': '#c9973a',
+ 'orphelins': '#7652CA',
  'urgence': '#ef4444',
 };
 

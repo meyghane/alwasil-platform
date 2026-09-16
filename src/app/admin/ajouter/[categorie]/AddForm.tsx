@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { CheckCircle, Send, RotateCcw, LayoutDashboard, Check, X } from 'lucide-react';
 import type { CategoryForm } from '@/lib/admin-forms';
 
-const V = '#c9973a';
-const V_LIGHT = '#fdfbf0';
-const V_BORDER = '#fdfbf0';
+const V = '#7652CA';
+const V_LIGHT = '#f0ebfa';
+const V_BORDER = '#f0ebfa';
 
 const inputStyle: React.CSSProperties = {
  width: '100%',
@@ -18,7 +18,7 @@ const inputStyle: React.CSSProperties = {
  outline: 'none',
  boxSizing: 'border-box',
  fontFamily: 'Poppins, sans-serif',
- color: '#1c1917',
+ color: '#080808',
  backgroundColor: '#faf9ff',
  transition: 'border-color 0.15s',
 };
@@ -77,7 +77,7 @@ export default function AddForm({ categorie, form, backUrl = '/admin' }: { categ
  }}>
  <CheckCircle size={30} color={V} strokeWidth={1.8} />
  </div>
- <h2 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#1c1917' }}>
+ <h2 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: '#080808' }}>
  Fiche envoyée !
  </h2>
  <p style={{ color: '#6b7280', marginBottom: '0.5rem', fontSize: '0.875rem', lineHeight: 1.6 }}>
@@ -115,11 +115,11 @@ export default function AddForm({ categorie, form, backUrl = '/admin' }: { categ
  <div key={field.key}>
  <label style={{
  display: 'block', fontSize: '0.75rem', fontWeight: 700,
- color: '#8a6025', marginBottom: '0.4rem',
+ color: '#543398', marginBottom: '0.4rem',
  textTransform: 'uppercase', letterSpacing: '0.06em',
  }}>
  {field.label}
- {field.required && <span style={{ color: '#c9973a', marginLeft: '4px' }}>*</span>}
+ {field.required && <span style={{ color: '#7652CA', marginLeft: '4px' }}>*</span>}
  </label>
 
  {/* Textarea */}
@@ -241,7 +241,7 @@ export default function AddForm({ categorie, form, backUrl = '/admin' }: { categ
  disabled={status === 'loading'}
  style={{
  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
- padding: '0.9rem', backgroundColor: status === 'loading' ? '#d4a853' : V,
+ padding: '0.9rem', backgroundColor: status === 'loading' ? '#c9b6ec' : V,
  color: 'white', border: 'none', borderRadius: '12px',
  fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '0.95rem',
  cursor: status === 'loading' ? 'not-allowed' : 'pointer',

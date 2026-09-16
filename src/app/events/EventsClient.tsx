@@ -72,20 +72,20 @@ export default function EventsClient({ events }: EventsClientProps) {
 
  return (
  <div style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
- <PageHeader 
- title="Événements" 
- titleAr="لِقَاء" 
- description="L'agenda communautaire : conférences, séminaires, et rencontres en France." 
- color="#c9973a" 
- emoji="" 
+ <PageHeader
+ title="Événements"
+ titleAr="لِقَاء"
+ description="L'agenda communautaire : conférences, séminaires, et rencontres en France."
+ color="#7652CA"
+ emoji=""
  />
 
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1000px' }}>
 
  {/* Search & Filters Bar */}
- <div style={{ 
- display: 'flex', 
- flexDirection: 'column', 
+ <div style={{
+ display: 'flex',
+ flexDirection: 'column',
  gap: '1.25rem',
  marginBottom: '2.5rem',
  padding: '1.5rem',
@@ -125,7 +125,7 @@ export default function EventsClient({ events }: EventsClientProps) {
  padding: '0.4rem 0.8rem',
  borderRadius: '6px',
  border: '1px solid #e7e5e4',
- backgroundColor: isActive ? '#1c1917' : 'white',
+ backgroundColor: isActive ? '#080808' : 'white',
  color: isActive ? 'white' : '#57534e',
  fontSize: '0.8rem',
  fontWeight: 600,
@@ -142,7 +142,7 @@ export default function EventsClient({ events }: EventsClientProps) {
  style={{
  marginLeft: 'auto',
  fontSize: '0.8rem',
- color: '#78716c',
+ color: '#59565f',
  background: 'none',
  border: 'none',
  cursor: 'pointer',
@@ -175,17 +175,17 @@ export default function EventsClient({ events }: EventsClientProps) {
  padding: '3rem 2rem',
  borderRadius: '16px',
  backgroundColor: '#f0fdfa',
- border: '1px solid #fdfbf0',
+ border: '1px solid #f0ebfa',
  textAlign: 'center',
  }}>
  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.75rem', color: '#134e4a' }}>Vous organisez un événement ?</h3>
- <p style={{ color: '#c9973a', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
+ <p style={{ color: '#7652CA', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
  Référencez vos conférences, séminaires ou maraudes gratuitement sur Al-Wasil.
  </p>
- <Link href="/contact?type=evenement" className="btn btn-primary" style={{ 
+ <Link href="/contact?type=evenement" className="btn btn-primary" style={{
  textDecoration: 'none',
  padding: '0.75rem 2rem',
- backgroundColor: '#c9973a',
+ backgroundColor: '#7652CA',
  borderRadius: '8px',
  fontWeight: 600
  }}>
@@ -263,7 +263,7 @@ function EventCard({ event }: { event: Event }) {
  <span style={{ color: 'white', fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', opacity: 0.85 }}>{monthStr}</span>
  </div>
  <div>
- <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#1c1917' }}>
+ <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#080808' }}>
  {event.timeStart}{event.timeEnd ? ` — ${event.timeEnd}` : ''}
  </div>
  <div style={{ fontSize: '0.72rem', color: '#a8a29e', marginTop: '1px', textTransform: 'capitalize' }}>
@@ -275,12 +275,12 @@ function EventCard({ event }: { event: Event }) {
 
  {/* Corps */}
  <div style={{ padding: '0.75rem 1.1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
- <h3 style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0, color: '#1c1917', lineHeight: 1.35 }}>
+ <h3 style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0, color: '#080808', lineHeight: 1.35 }}>
  {event.title}
  </h3>
 
  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', color: '#78716c' }}>
+ <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', color: '#59565f' }}>
  <MapPin size={11} color="#a8a29e" />
  <span style={{ fontWeight: 500, color: '#44403c' }}>{event.city}</span>
  {event.department !== '00' && <span style={{ color: '#a8a29e' }}>({event.department})</span>}
@@ -289,7 +289,7 @@ function EventCard({ event }: { event: Event }) {
  </div>
 
  <p style={{
- fontSize: '0.78rem', color: '#78716c', lineHeight: 1.5, margin: 0, flex: 1,
+ fontSize: '0.78rem', color: '#59565f', lineHeight: 1.5, margin: 0, flex: 1,
  display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
  } as React.CSSProperties}>
  {event.description}
@@ -297,25 +297,25 @@ function EventCard({ event }: { event: Event }) {
 
  <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
  {event.tags.slice(0, 3).map(t => (
- <span key={t} style={{ backgroundColor: '#f5f5f4', color: '#78716c', padding: '1px 7px', borderRadius: '4px', fontSize: '0.68rem' }}>#{t}</span>
+ <span key={t} style={{ backgroundColor: '#f5f5f4', color: '#59565f', padding: '1px 7px', borderRadius: '4px', fontSize: '0.68rem' }}>#{t}</span>
  ))}
  </div>
  </div>
 
  {/* Footer */}
  <div style={{ padding: '0 1.1rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
- <span style={{ fontSize: '0.75rem', fontWeight: 700, color: event.isFree ? '#c9973a' : '#b45309' }}>
+ <span style={{ fontSize: '0.75rem', fontWeight: 700, color: event.isFree ? '#7652CA' : '#b45309' }}>
  {event.isFree ? ' Gratuit' : event.price}
  </span>
  {past ? (
  <span style={{ fontSize: '0.72rem', color: '#a8a29e' }}>Événement passé</span>
  ) : event.registrationUrl ? (
  <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer"
- style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', backgroundColor: '#1c1917', color: 'white', padding: '0.5rem 0.875rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, textDecoration: 'none' }}>
+ style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', backgroundColor: '#080808', color: 'white', padding: '0.5rem 0.875rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, textDecoration: 'none' }}>
  S'inscrire <ExternalLink size={11} />
  </a>
  ) : (
- <span style={{ fontSize: '0.72rem', color: '#78716c', fontWeight: 500 }}>Entrée libre</span>
+ <span style={{ fontSize: '0.72rem', color: '#59565f', fontWeight: 500 }}>Entrée libre</span>
  )}
  <Link href={`/contact?type=correction&page=${encodeURIComponent('Événements')}&element=${encodeURIComponent(event.title)}`} style={{ fontSize: '0.68rem', color: '#a8a29e', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
  Signaler une erreur

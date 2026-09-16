@@ -61,7 +61,7 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  title="Apprentissage"
  titleAr="عِلْم"
  description="Répertoire des instituts, mosquées et professeurs pour l'étude de l'Islam et de la langue arabe."
- color="#c9973a"
+ color="#7652CA"
  emoji=""
  />
 
@@ -110,7 +110,7 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  padding: '0.4rem 0.8rem',
  borderRadius: '6px',
  border: '1px solid #e7e5e4',
- backgroundColor: isActive ? '#1c1917' : 'white',
+ backgroundColor: isActive ? '#080808' : 'white',
  color: isActive ? 'white' : '#57534e',
  fontSize: '0.8rem',
  fontWeight: 600,
@@ -127,7 +127,7 @@ export default function EducationClient({ instituts }: EducationClientProps) {
 
  {/* Results Info */}
  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
- <p style={{ color: '#78716c', fontSize: '0.875rem', fontWeight: 500 }}>
+ <p style={{ color: '#59565f', fontSize: '0.875rem', fontWeight: 500 }}>
  {filtered.length} établissement{filtered.length > 1 ? 's' : ''} référencé{filtered.length > 1 ? 's' : ''}
  </p>
  </div>
@@ -155,18 +155,18 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  marginTop: '5rem',
  padding: '3rem 2rem',
  borderRadius: '16px',
- backgroundColor: '#fdfbf0',
- border: '1px solid #fdfbf0',
+ backgroundColor: '#f0ebfa',
+ border: '1px solid #f0ebfa',
  textAlign: 'center',
  }}>
  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.75rem', color: '#134e4a' }}>Un institut manque à l'appel ?</h3>
- <p style={{ color: '#a87830', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
+ <p style={{ color: '#6540b5', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '500px', marginInline: 'auto' }}>
  Contribuez à l'annuaire Al-Wasil en proposant un nouvel établissement d'enseignement.
  </p>
  <Link href="/contact?type=general" className="btn btn-primary" style={{ 
  textDecoration: 'none',
  padding: '0.75rem 2rem',
- backgroundColor: '#a87830',
+ backgroundColor: '#6540b5',
  borderRadius: '8px',
  fontWeight: 600
  }}>
@@ -179,18 +179,18 @@ export default function EducationClient({ instituts }: EducationClientProps) {
 }
 
 const TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; icon: LucideIcon }> = {
- 'institut': { label: 'Institut', color: '#c9973a', bg: '#fdfbf0', icon: BookOpen },
+ 'institut': { label: 'Institut', color: '#7652CA', bg: '#f0ebfa', icon: BookOpen },
  'mosquee': { label: 'Mosquée', color: '#4a0e58', bg: '#f8f0ff', icon: Landmark },
- 'professeur': { label: 'Professeur', color: '#a87830', bg: '#faf5e8', icon: GraduationCap },
- 'en-ligne': { label: 'Formation en ligne', color: '#8a6025', bg: '#faf3e0', icon: Monitor },
+ 'professeur': { label: 'Professeur', color: '#6540b5', bg: '#faf5e8', icon: GraduationCap },
+ 'en-ligne': { label: 'Formation en ligne', color: '#543398', bg: '#faf3e0', icon: Monitor },
  'cercle': { label: 'Cercle de science', color: '#7b2d6e', bg: '#fdf0f8', icon: Users },
 };
 
 const AUDIENCE_CONFIG: Record<string, { label: string; icon: LucideIcon; color: string; bg: string }> = {
  hommes: { label: 'Hommes', icon: User, color: '#4a0e58', bg: '#f8f0ff' },
  femmes: { label: 'Femmes', icon: User, color: '#7b2d6e', bg: '#fdf0f8' },
- enfants: { label: 'Enfants', icon: Baby, color: '#a87830', bg: '#faf5e8' },
- mixte: { label: 'Mixte', icon: Users, color: '#8a6025', bg: '#faf3e0' },
+ enfants: { label: 'Enfants', icon: Baby, color: '#6540b5', bg: '#faf5e8' },
+ mixte: { label: 'Mixte', icon: Users, color: '#543398', bg: '#faf3e0' },
 };
 
 function InstitutCard({ inst }: { inst: Institut }) {
@@ -241,9 +241,9 @@ function InstitutCard({ inst }: { inst: Institut }) {
  {inst.verified && (
  <span style={{
  fontSize: '0.65rem', fontWeight: 700,
- color: '#c9973a', backgroundColor: 'white',
+ color: '#7652CA', backgroundColor: 'white',
  padding: '2px 8px', borderRadius: '20px',
- border: '1px solid #f0dea0',
+ border: '1px solid #e2d7f5',
  display: 'inline-flex', alignItems: 'center', gap: '3px',
  }}>
  <CheckCircle size={10} strokeWidth={2} /> Vérifié
@@ -279,7 +279,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  {/* Corps de la carte */}
  <div style={{ padding: '1rem 1.25rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
  {/* Titre */}
- <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#1c1917', lineHeight: 1.35 }}>
+ <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#080808', lineHeight: 1.35 }}>
  {inst.name}
  </h3>
 
@@ -300,7 +300,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  {/* Description */}
  {inst.description && (
  <p style={{
- margin: 0, fontSize: '0.8rem', color: '#78716c', lineHeight: 1.55, flex: 1,
+ margin: 0, fontSize: '0.8rem', color: '#59565f', lineHeight: 1.55, flex: 1,
  display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
  } as React.CSSProperties}>
  {inst.description}
@@ -347,7 +347,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  <a href={inst.website} target="_blank" rel="noopener noreferrer" style={{
  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
  padding: '0.65rem', borderRadius: '10px', width: '100%',
- backgroundColor: '#1c1917', color: 'white',
+ backgroundColor: '#080808', color: 'white',
  fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none',
  }}>
  Voir le site <ExternalLink size={13} />
@@ -356,7 +356,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  <a href={`tel:${inst.phone}`} style={{
  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
  padding: '0.65rem', borderRadius: '10px', width: '100%',
- border: '1.5px solid #1c1917', color: '#1c1917',
+ border: '1.5px solid #080808', color: '#080808',
  fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none',
  }}>
  <Phone size={13} /> Contacter
@@ -365,7 +365,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  <Link href="/contact?type=general" style={{
  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
  padding: '0.65rem', borderRadius: '10px', width: '100%',
- border: '1px solid #e7e5e4', color: '#78716c',
+ border: '1px solid #e7e5e4', color: '#59565f',
  fontSize: '0.85rem', fontWeight: 500, textDecoration: 'none',
  }}>
  Infos

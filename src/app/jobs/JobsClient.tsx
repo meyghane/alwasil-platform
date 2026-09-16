@@ -53,23 +53,23 @@ const FRIENDLY_FILTERS: { key: FriendlyLevel | 'all'; label: string; icon: Lucid
 ];
 
 const JOB_TYPE_COLORS: Record<JobType, string> = {
- cdi: '#c9973a',
- cdd: '#a87830',
- freelance: '#c9973a',
+ cdi: '#7652CA',
+ cdd: '#6540b5',
+ freelance: '#7652CA',
  stage: '#f59e0b',
- alternance: '#c9973a',
- benevole: '#8a6025',
+ alternance: '#7652CA',
+ benevole: '#543398',
 };
 
 const SECTOR_COLORS: Record<string, string> = {
  tech: '#6366f1',
- sante: '#c9973a',
+ sante: '#7652CA',
  education: '#f59e0b',
- commerce: '#c9973a',
- juridique: '#a87830',
- humanitaire: '#8a6025',
- finance: '#c9973a',
- communication: '#c9973a',
+ commerce: '#7652CA',
+ juridique: '#6540b5',
+ humanitaire: '#543398',
+ finance: '#7652CA',
+ communication: '#7652CA',
  autre: '#6b7280',
 };
 
@@ -117,7 +117,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  const Icon = t.icon;
  return (
  <button key={t.key} onClick={() => { setTab(t.key); setSearch(''); }}
- style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #c9973a' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#c9973a' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+ style={{ padding: '0.75rem 1.25rem', border: 'none', borderBottom: tab === t.key ? '2px solid #7652CA' : '2px solid transparent', backgroundColor: 'transparent', color: tab === t.key ? '#7652CA' : 'var(--text-secondary)', fontWeight: tab === t.key ? 700 : 400, fontSize: '0.88rem', cursor: 'pointer', marginBottom: '-2px', whiteSpace: 'nowrap', transition: 'all 0.15s', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
  <Icon size={14} strokeWidth={1.8} />{t.label}
  </button>
  );
@@ -144,7 +144,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  <DeptFilter value={deptFilter} onChange={setDeptFilter} />
  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer', userSelect: 'none' }}>
  <input type="checkbox" checked={remoteOnly} onChange={e => setRemoteOnly(e.target.checked)}
- style={{ accentColor: '#c9973a' }} />
+ style={{ accentColor: '#7652CA' }} />
  Remote uniquement
  </label>
  </div>
@@ -152,7 +152,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  {/* Friendly filter */}
  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.875rem' }}>
  {FRIENDLY_FILTERS.map(f => {
- const color = '#c9973a';
+ const color = '#7652CA';
  const isActive = friendlyFilter === f.key;
  const Icon = f.icon;
  return (
@@ -167,7 +167,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  {/* Sector filter */}
  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
  {SECTORS.map(s => {
- const color = s.key !== 'all' ? SECTOR_COLORS[s.key] : '#c9973a';
+ const color = s.key !== 'all' ? SECTOR_COLORS[s.key] : '#7652CA';
  const isActive = sectorFilter === s.key;
  const Icon = s.icon;
  return (
@@ -191,7 +191,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  backgroundColor: 'white',
  borderRadius: '16px',
  border: '1px solid #e7e5e4',
- borderTop: job.featured ? `3px solid #d4a853` : undefined,
+ borderTop: job.featured ? `3px solid #c9b6ec` : undefined,
  overflow: 'hidden',
  display: 'flex',
  flexDirection: 'column',
@@ -202,7 +202,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  {/* Badges */}
  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.6rem' }}>
  {job.featured && (
- <span style={{ backgroundColor: '#d4a853', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800 }}>⭐ Mis en avant</span>
+ <span style={{ backgroundColor: '#c9b6ec', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 800 }}>⭐ Mis en avant</span>
  )}
  {job.cmn && (
  <span style={{ backgroundColor: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700 }}> Via CMN</span>
@@ -221,13 +221,13 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  {job.companyLogo}
  </div>
  <div>
- <h3 style={{ fontSize: '0.9rem', fontWeight: 700, margin: '0 0 0.2rem', lineHeight: 1.3, color: '#1c1917' }}>{job.title}</h3>
- <p style={{ fontSize: '0.75rem', color: '#78716c', margin: 0 }}>
+ <h3 style={{ fontSize: '0.9rem', fontWeight: 700, margin: '0 0 0.2rem', lineHeight: 1.3, color: '#080808' }}>{job.title}</h3>
+ <p style={{ fontSize: '0.75rem', color: '#59565f', margin: 0 }}>
  <strong style={{ color: '#44403c' }}>{job.company}</strong>
  </p>
  <p style={{ fontSize: '0.72rem', color: '#a8a29e', margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: '3px' }}>
  <MapPin size={10} /> {job.location}
- {job.salary && <span style={{ marginLeft: '0.4rem', color: '#d4a853', fontWeight: 700 }}>· {job.salary}</span>}
+ {job.salary && <span style={{ marginLeft: '0.4rem', color: '#c9b6ec', fontWeight: 700 }}>· {job.salary}</span>}
  </p>
  </div>
  </div>
@@ -235,7 +235,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
 
  {/* Corps */}
  <div style={{ padding: '0.75rem 1.1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
- <p style={{ fontSize: '0.78rem', color: '#78716c', lineHeight: 1.5, margin: 0,
+ <p style={{ fontSize: '0.78rem', color: '#59565f', lineHeight: 1.5, margin: 0,
  display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
  } as React.CSSProperties}>
  {job.description}
@@ -253,7 +253,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  {/* Tags */}
  <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
  {job.tags.slice(0, 4).map(tag => (
- <span key={tag} style={{ backgroundColor: '#f5f5f4', color: '#78716c', padding: '1px 7px', borderRadius: '4px', fontSize: '0.68rem' }}>#{tag}</span>
+ <span key={tag} style={{ backgroundColor: '#f5f5f4', color: '#59565f', padding: '1px 7px', borderRadius: '4px', fontSize: '0.68rem' }}>#{tag}</span>
  ))}
  </div>
  </div>
@@ -263,10 +263,10 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  <div style={{ fontSize: '0.68rem', color: '#a8a29e', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
  <Clock size={10} />
  {new Date(job.postedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
- {job.postedBy && <span> · <strong style={{ color: '#78716c' }}>{job.postedBy}</strong></span>}
+ {job.postedBy && <span> · <strong style={{ color: '#59565f' }}>{job.postedBy}</strong></span>}
  </div>
  <a href={job.url} target="_blank" rel="noopener noreferrer"
- style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#d4a853', color: 'white', padding: '0.6rem', borderRadius: '8px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: '100%' }}>
+ style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#c9b6ec', color: 'white', padding: '0.6rem', borderRadius: '8px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none', width: '100%' }}>
  Postuler <ExternalLink size={12} />
  </a>
  </div>
@@ -283,7 +283,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'white', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', color: 'var(--text-primary)' }}>
  Effacer tous les filtres
  </button>
- <Link href="/contact?type=offre-emploi" style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', backgroundColor: '#d4a853', color: 'white', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+ <Link href="/contact?type=offre-emploi" style={{ padding: '0.5rem 1.1rem', borderRadius: '8px', backgroundColor: '#c9b6ec', color: 'white', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
  + Publier une offre
  </Link>
  </div>
@@ -305,7 +305,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  {/* ─── VIVIER DE TALENTS ─── */}
  {tab === 'talents' && (
  <>
- <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #d4a853' }}>
+ <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(16,185,129,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #c9b6ec' }}>
  ⭐ Membres de la communauté ouverts aux opportunités. Contactez-les directement ou partagez leur profil.
  </div>
 
@@ -320,7 +320,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  {filteredTalents.map(t => (
  <div key={t.id} className="card" style={{ padding: '1.25rem', opacity: t.available ? 1 : 0.65 }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.875rem' }}>
- <div style={{ width: '46px', height: '46px', borderRadius: '50%', backgroundColor: SECTOR_COLORS[t.sector] || '#d4a853', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '1rem', flexShrink: 0 }}>
+ <div style={{ width: '46px', height: '46px', borderRadius: '50%', backgroundColor: SECTOR_COLORS[t.sector] || '#c9b6ec', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '1rem', flexShrink: 0 }}>
  {t.initials}
  </div>
  <div>
@@ -347,12 +347,12 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  </div>
 
  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', fontWeight: 700, color: t.available ? '#d4a853' : '#9ca3af' }}>
+ <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', fontWeight: 700, color: t.available ? '#c9b6ec' : '#9ca3af' }}>
  {t.available
- ? <><CheckCircle size={14} color="#d4a853" /> Disponible</>
+ ? <><CheckCircle size={14} color="#c9b6ec" /> Disponible</>
  : <><Clock size={14} /> En poste</>}
  </div>
- <button style={{ backgroundColor: '#d4a853', color: 'white', border: 'none', padding: '0.4rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}>
+ <button style={{ backgroundColor: '#c9b6ec', color: 'white', border: 'none', padding: '0.4rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}>
  Contacter
  </button>
  </div>
@@ -362,7 +362,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
 
  {/* CTA rejoindre */}
  <div style={{ marginTop: '2.5rem', padding: '1.75rem', borderRadius: '1rem', backgroundColor: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.2)', textAlign: 'center' }}>
- <Users size={32} color="#d4a853" style={{ marginBottom: '0.75rem' }} />
+ <Users size={32} color="#c9b6ec" style={{ marginBottom: '0.75rem' }} />
  <h3 style={{ fontWeight: 600, marginBottom: '0.4rem' }}>Rejoignez le vivier</h3>
  <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginBottom: '1rem' }}>
  Partagez votre profil et recevez des opportunités de la communauté.

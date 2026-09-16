@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const GOLD = '#c9973a';
+const GOLD = '#7652CA';
 
 export default function AdminLoginPage() {
  const [email, setEmail] = useState('');
@@ -39,20 +39,20 @@ export default function AdminLoginPage() {
  input:-webkit-autofill,
  input:-webkit-autofill:hover,
  input:-webkit-autofill:focus {
- -webkit-box-shadow: 0 0 0px 1000px #0f0a00 inset !important;
+ -webkit-box-shadow: 0 0 0px 1000px #080808 inset !important;
  -webkit-text-fill-color: #fff !important;
- border-color: rgba(201,151,58,0.4) !important;
+ border-color: rgba(118,82,202,0.4) !important;
  }
  .login-input:focus {
  border-color: ${GOLD} !important;
- box-shadow: 0 0 0 3px rgba(201,151,58,0.15) !important;
+ box-shadow: 0 0 0 3px rgba(118,82,202,0.15) !important;
  outline: none;
  }
  `}</style>
 
  <div style={{
  minHeight: '100vh',
- background: 'linear-gradient(160deg, #100c04 0%, #0a0806 50%, #050404 100%)',
+ background: 'linear-gradient(160deg, #080808 0%, #080808 50%, #080808 100%)',
  display: 'flex', alignItems: 'center', justifyContent: 'center',
  padding: '1rem', fontFamily: 'Poppins, sans-serif',
  position: 'relative', overflow: 'hidden',
@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
  <div style={{
  position: 'fixed', top: '15%', left: '50%', transform: 'translateX(-50%)',
  width: 500, height: 500, borderRadius: '50%',
- background: 'radial-gradient(circle, rgba(201,151,58,0.12) 0%, transparent 70%)',
+ background: 'radial-gradient(circle, rgba(118,82,202,0.12) 0%, transparent 70%)',
  pointerEvents: 'none',
  }} />
  {/* Étoiles */}
@@ -81,8 +81,8 @@ export default function AdminLoginPage() {
  borderRadius: '20px',
  padding: '2.5rem',
  width: '100%', maxWidth: '400px',
- border: '1px solid rgba(201,151,58,0.2)',
- boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 40px rgba(201,151,58,0.05)',
+ border: '1px solid rgba(118,82,202,0.2)',
+ boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 40px rgba(118,82,202,0.05)',
  position: 'relative',
  }}>
 
@@ -91,15 +91,15 @@ export default function AdminLoginPage() {
  <div style={{
  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
  width: 60, height: 60,
- background: `linear-gradient(135deg, ${GOLD}, #a87830)`,
- borderRadius: '16px', color: '#0a0806',
+ background: `linear-gradient(135deg, ${GOLD}, #6540b5)`,
+ borderRadius: '16px', color: '#080808',
  fontWeight: 900, fontSize: '1.5rem', marginBottom: '1rem',
- boxShadow: `0 8px 24px rgba(201,151,58,0.35)`,
+ boxShadow: `0 8px 24px rgba(118,82,202,0.35)`,
  }}>W</div>
  <div style={{ fontWeight: 800, color: 'white', fontSize: '1.15rem', letterSpacing: '-0.02em' }}>
  Al-Wasil
  </div>
- <div style={{ fontSize: '0.75rem', color: 'rgba(201,151,58,0.5)', marginTop: '3px' }}>
+ <div style={{ fontSize: '0.75rem', color: 'rgba(118,82,202,0.5)', marginTop: '3px' }}>
  Connexion équipe
  </div>
  </div>
@@ -108,7 +108,7 @@ export default function AdminLoginPage() {
  <div>
  <label style={{
  display: 'block', fontSize: '0.72rem', fontWeight: 700,
- color: 'rgba(201,151,58,0.7)', marginBottom: '0.45rem',
+ color: 'rgba(118,82,202,0.7)', marginBottom: '0.45rem',
  textTransform: 'uppercase', letterSpacing: '0.08em',
  }}>Email</label>
  <input
@@ -120,7 +120,7 @@ export default function AdminLoginPage() {
  style={{
  width: '100%', padding: '0.8rem 1rem',
  borderRadius: '10px',
- border: '1px solid rgba(201,151,58,0.2)',
+ border: '1px solid rgba(118,82,202,0.2)',
  background: 'rgba(255,255,255,0.04)',
  color: 'white', fontSize: '0.95rem',
  boxSizing: 'border-box', fontFamily: 'Poppins, sans-serif',
@@ -132,7 +132,7 @@ export default function AdminLoginPage() {
  <div>
  <label style={{
  display: 'block', fontSize: '0.72rem', fontWeight: 700,
- color: 'rgba(201,151,58,0.7)', marginBottom: '0.45rem',
+ color: 'rgba(118,82,202,0.7)', marginBottom: '0.45rem',
  textTransform: 'uppercase', letterSpacing: '0.08em',
  }}>Mot de passe</label>
  <div style={{ position: 'relative' }}>
@@ -146,7 +146,7 @@ export default function AdminLoginPage() {
  style={{
  width: '100%', padding: '0.8rem 2.5rem 0.8rem 1rem',
  borderRadius: '10px',
- border: '1px solid rgba(201,151,58,0.2)',
+ border: '1px solid rgba(118,82,202,0.2)',
  background: 'rgba(255,255,255,0.04)',
  color: 'white', fontSize: '0.95rem',
  boxSizing: 'border-box', fontFamily: 'Poppins, sans-serif',
@@ -158,7 +158,7 @@ export default function AdminLoginPage() {
  style={{
  position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)',
  background: 'none', border: 'none', cursor: 'pointer',
- color: 'rgba(201,151,58,0.5)', fontSize: '0.75rem', padding: '0',
+ color: 'rgba(118,82,202,0.5)', fontSize: '0.75rem', padding: '0',
  }}
  >
  {showPwd ? 'cacher' : 'voir'}
@@ -181,12 +181,12 @@ export default function AdminLoginPage() {
  type="submit" disabled={loading}
  style={{
  padding: '0.9rem', marginTop: '0.5rem',
- background: loading ? `rgba(201,151,58,0.4)` : `linear-gradient(135deg, ${GOLD}, #a87830)`,
- color: loading ? 'rgba(255,255,255,0.5)' : '#0a0806',
+ background: loading ? `rgba(118,82,202,0.4)` : `linear-gradient(135deg, ${GOLD}, #6540b5)`,
+ color: loading ? 'rgba(255,255,255,0.5)' : '#080808',
  border: 'none', borderRadius: '12px',
  fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '0.95rem',
  cursor: loading ? 'not-allowed' : 'pointer',
- boxShadow: loading ? 'none' : `0 4px 16px rgba(201,151,58,0.35)`,
+ boxShadow: loading ? 'none' : `0 4px 16px rgba(118,82,202,0.35)`,
  transition: 'all 0.2s',
  }}
  >
@@ -194,10 +194,10 @@ export default function AdminLoginPage() {
  </button>
 
  <div style={{ textAlign: 'center', marginTop: '0.25rem' }}>
- <a href="/modo/reset-password" style={{ display: 'block', fontSize: '0.78rem', color: 'rgba(201,151,58,0.75)', textDecoration: 'none', marginBottom: '0.75rem' }}>
+ <a href="/modo/reset-password" style={{ display: 'block', fontSize: '0.78rem', color: 'rgba(118,82,202,0.75)', textDecoration: 'none', marginBottom: '0.75rem' }}>
  Mot de passe oublié ?
  </a>
- <span style={{ fontSize: '0.72rem', color: 'rgba(201,151,58,0.3)' }}>
+ <span style={{ fontSize: '0.72rem', color: 'rgba(118,82,202,0.3)' }}>
  Admin ou modérateur — même page
  </span>
  </div>

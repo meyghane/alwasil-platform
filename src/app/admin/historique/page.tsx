@@ -3,7 +3,7 @@ import { isAdminLoggedIn } from '@/lib/admin-auth';
 import Link from 'next/link';
 import { ArrowLeft, History, Clock } from 'lucide-react';
 
-const VIOLET = '#c9973a';
+const VIOLET = '#7652CA';
 
 const CAT_LABELS: Record<string, string> = {
  webinaire: 'Webinaire', conference: 'Conférence', jeunesse: 'Jeunesse',
@@ -16,8 +16,8 @@ const CAT_LABELS: Record<string, string> = {
 };
 
 const ACTION_CONFIG: Record<string, { bg: string; color: string }> = {
- IMPORT: { bg: '#fdfbf0', color: VIOLET },
- PUBLICATION: { bg: '#fdfbf0', color: '#8a6025' },
+ IMPORT: { bg: '#f0ebfa', color: VIOLET },
+ PUBLICATION: { bg: '#f0ebfa', color: '#543398' },
  REJET: { bg: '#fee2e2', color: '#991b1b' },
 };
 
@@ -65,7 +65,7 @@ export default async function HistoriquePage() {
  const historique = await getHistorique();
 
  return (
- <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #fdfbf0 0%, #faf9ff 100%)' }}>
+ <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f0ebfa 0%, #faf9ff 100%)' }}>
 
  {/* Header violet */}
  <div style={{ background: 'linear-gradient(135deg, #3b0764 0%, #1e0545 100%)', borderBottom: '1px solid rgba(196,181,253,0.15)' }}>
@@ -75,7 +75,7 @@ export default async function HistoriquePage() {
  </Link>
  <div style={{ width: 1, height: 16, backgroundColor: 'rgba(255,255,255,0.2)' }} />
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
- <History size={16} color="#d4a853" strokeWidth={1.8} />
+ <History size={16} color="#c9b6ec" strokeWidth={1.8} />
  <span style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>
  Historique des ajouts
  </span>
@@ -95,18 +95,18 @@ export default async function HistoriquePage() {
  </div>
 
  {historique.length === 0 ? (
- <div style={{ textAlign: 'center', padding: '4rem 2rem', backgroundColor: 'white', borderRadius: '16px', border: '1px solid #fdfbf0' }}>
- <History size={40} color="#f0dea0" strokeWidth={1.2} style={{ display: 'block', margin: '0 auto 1rem' }} />
+ <div style={{ textAlign: 'center', padding: '4rem 2rem', backgroundColor: 'white', borderRadius: '16px', border: '1px solid #f0ebfa' }}>
+ <History size={40} color="#e2d7f5" strokeWidth={1.2} style={{ display: 'block', margin: '0 auto 1rem' }} />
  <p style={{ margin: 0, color: '#9ca3af', fontFamily: 'Poppins, sans-serif' }}>Aucun ajout enregistré.</p>
- <p style={{ fontSize: '0.78rem', color: '#d4a853', marginTop: '0.5rem' }}>
+ <p style={{ fontSize: '0.78rem', color: '#c9b6ec', marginTop: '0.5rem' }}>
  Si tu viens de redéployer l&apos;Apps Script, patiente 30 secondes puis rafraîchis.
  </p>
  </div>
  ) : (
- <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #fdfbf0', overflow: 'hidden', boxShadow: '0 4px 20px rgba(124,58,237,0.06)' }}>
+ <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #f0ebfa', overflow: 'hidden', boxShadow: '0 4px 20px rgba(124,58,237,0.06)' }}>
 
  {/* En-tête */}
- <div style={{ display: 'grid', gridTemplateColumns: '2.5fr 1fr 1fr 1fr 1.4fr', gap: '1rem', padding: '0.75rem 1.5rem', backgroundColor: '#fdfbf0', borderBottom: '1px solid #fdfbf0' }}>
+ <div style={{ display: 'grid', gridTemplateColumns: '2.5fr 1fr 1fr 1fr 1.4fr', gap: '1rem', padding: '0.75rem 1.5rem', backgroundColor: '#f0ebfa', borderBottom: '1px solid #f0ebfa' }}>
  {['Fiche', 'Action', 'Catégorie', 'Auteur', 'Date d\'ajout'].map(h => (
  <div key={h} style={{ fontSize: '0.68rem', fontWeight: 700, color: VIOLET, textTransform: 'uppercase', letterSpacing: '0.06em', fontFamily: 'Poppins, sans-serif' }}>
  {h}
@@ -124,12 +124,12 @@ export default async function HistoriquePage() {
  <div key={i} style={{
  display: 'grid', gridTemplateColumns: '2.5fr 1fr 1fr 1fr 1.4fr',
  gap: '1rem', padding: '0.9rem 1.5rem',
- borderBottom: i < historique.length - 1 ? '1px solid #fdfbf0' : 'none',
+ borderBottom: i < historique.length - 1 ? '1px solid #f0ebfa' : 'none',
  backgroundColor: i % 2 === 0 ? 'white' : '#fdfcff',
  alignItems: 'center',
  }}>
  {/* Nom */}
- <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#1c1917', lineHeight: 1.4, fontFamily: 'Poppins, sans-serif', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+ <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#080808', lineHeight: 1.4, fontFamily: 'Poppins, sans-serif', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
  {entry.nom || entry.id || '—'}
  </div>
 
@@ -142,14 +142,14 @@ export default async function HistoriquePage() {
 
  {/* Catégorie */}
  <div>
- <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: '20px', backgroundColor: '#fdfbf0', color: VIOLET, fontFamily: 'Poppins, sans-serif' }}>
+ <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: '20px', backgroundColor: '#f0ebfa', color: VIOLET, fontFamily: 'Poppins, sans-serif' }}>
  {catLabel}
  </span>
  </div>
 
  {/* Auteur */}
  <div>
- <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: '20px', backgroundColor: isAI ? '#fdfbf0' : '#fdfbf0', color: isAI ? VIOLET : '#8a6025', fontFamily: 'Poppins, sans-serif' }}>
+ <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: '20px', backgroundColor: isAI ? '#f0ebfa' : '#f0ebfa', color: isAI ? VIOLET : '#543398', fontFamily: 'Poppins, sans-serif' }}>
  {isAI ? ' Wassil' : ` ${entry.par}`}
  </span>
  </div>

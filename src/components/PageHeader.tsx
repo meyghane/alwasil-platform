@@ -31,12 +31,12 @@ const PARTICLES = [
  { x: '95%', y: '20%', s: 1, d: 0.6, o: 0.5 },
 ];
 
-export default function PageHeader({ title, titleAr, description, color = '#c9973a', count, countLabel }: PageHeaderProps) {
+export default function PageHeader({ title, titleAr, description, color = '#7652CA', count, countLabel }: PageHeaderProps) {
  return (
  <div style={{
  position: 'relative',
  overflow: 'hidden',
- background: 'linear-gradient(150deg, #100c04 0%, #0a0806 45%, #050404 100%)',
+ background: 'linear-gradient(150deg, #080808 0%, #080808 45%, #080808 100%)',
  padding: '3rem 0 2.5rem',
  minHeight: '180px',
  display: 'flex',
@@ -46,7 +46,7 @@ export default function PageHeader({ title, titleAr, description, color = '#c997
  <div style={{
  position: 'absolute', top: '-20%', left: '-5%',
  width: '50%', height: '160%',
- background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.25) 0%, rgba(180,120,30,0.08) 45%, transparent 70%)',
+ background: 'radial-gradient(ellipse at center, rgba(118,82,202,0.25) 0%, rgba(118,82,202,0.08) 45%, transparent 70%)',
  pointerEvents: 'none',
  }} />
 
@@ -54,7 +54,7 @@ export default function PageHeader({ title, titleAr, description, color = '#c997
  <div style={{
  position: 'absolute', bottom: '-30%', right: '5%',
  width: '30%', height: '120%',
- background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.12) 0%, transparent 65%)',
+ background: 'radial-gradient(ellipse at center, rgba(118,82,202,0.12) 0%, transparent 65%)',
  pointerEvents: 'none',
  }} />
 
@@ -69,7 +69,7 @@ export default function PageHeader({ title, titleAr, description, color = '#c997
  width: `${p.s}px`,
  height: `${p.s}px`,
  borderRadius: '50%',
- backgroundColor: '#d4a853',
+ backgroundColor: '#c9b6ec',
  opacity: p.o,
  animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite`,
  pointerEvents: 'none',
@@ -83,15 +83,15 @@ export default function PageHeader({ title, titleAr, description, color = '#c997
  {/* Badge catégorie */}
  <div style={{
  display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
- backgroundColor: 'rgba(212,168,83,0.15)',
- border: '1px solid rgba(212,168,83,0.35)',
- color: '#d4a853',
+ backgroundColor: 'rgba(118,82,202,0.15)',
+ border: '1px solid rgba(118,82,202,0.35)',
+ color: '#c9b6ec',
  fontWeight: 700, fontSize: '0.65rem', letterSpacing: '0.12em',
  textTransform: 'uppercase', padding: '0.25rem 0.75rem',
  borderRadius: '20px', marginBottom: '0.875rem',
  backdropFilter: 'blur(6px)',
  }}>
- <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#d4a853', display: 'inline-block' }} />
+ <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#c9b6ec', display: 'inline-block' }} />
  Al-Wasil
  </div>
 
@@ -106,7 +106,7 @@ export default function PageHeader({ title, titleAr, description, color = '#c997
  {titleAr && (
  <span style={{
  fontFamily: 'serif', fontWeight: 400,
- color: 'rgba(255,255,255,0.3)',
+ color: '#c9b6ec',
  fontSize: '0.52em', marginLeft: '0.75rem',
  letterSpacing: '0.02em',
  }}>
@@ -131,11 +131,11 @@ export default function PageHeader({ title, titleAr, description, color = '#c997
  <div style={{ textAlign: 'right', flexShrink: 0 }}>
  <p style={{
  fontFamily: 'Poppins, sans-serif', fontWeight: 900,
- fontSize: '2.5rem', color: '#d4a853', lineHeight: 1, margin: 0,
+ fontSize: '2.5rem', color: '#ECFF58', lineHeight: 1, margin: 0,
  }}>
  {count}
  </p>
- <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.78rem', margin: 0 }}>{countLabel}</p>
+ <p style={{ color: '#ccc', fontSize: '0.78rem', margin: 0 }}>{countLabel}</p>
  </div>
  )}
  </div>
