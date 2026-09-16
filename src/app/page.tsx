@@ -12,9 +12,9 @@ import type { JobOffer } from '@/data/jobs';
 import { getInstituts, getEvents, getJobOffers } from '@/lib/db-queries';
 import { V } from '@/lib/tokens';
 import RubriqueCard from '@/components/home/RubriqueCard';
-import TestimonialCard from '@/components/home/TestimonialCard';
 import EventCard from '@/components/home/EventCard';
 import EditorialHero from '@/components/home/EditorialHero';
+import CommunityStories from '@/components/home/CommunityStories';
 import PrayerTimesBar from '@/components/PrayerTimesBar';
 
 export const revalidate = 3600;
@@ -75,12 +75,6 @@ const CONTRIBUTION_ITEMS = [
   { href: '/contact?type=evenement',    icon: <Calendar size={18} strokeWidth={1.8} />, label: 'Ajouter un événement',         sub: 'Conférence, maraude, cours...' },
   { href: '/contact?type=offre-emploi', icon: <Briefcase size={18} strokeWidth={1.8} />, label: 'Référencer un employeur',    sub: 'Voile accepté, prière OK' },
   { href: '/contact?type=general',      icon: <Plus size={18} strokeWidth={1.8} />,      label: 'Autre ressource',             sub: 'Institut, librairie, praticien...' },
-];
-
-const TESTIMONIALS = [
-  { quote: "J'ai trouvé une piscine avec créneau burkini à 10 min de chez moi en 2 minutes. Avant je passais des heures à chercher.", name: 'Amira B.', role: 'Utilisatrice · Seine-Saint-Denis', tag: 'Piscines burkini', initial: 'A' },
-  { quote: "On a trouvé notre employeur actuel via Al-Wasil. Le voile est accepté, la prière aussi. Ça change tout.", name: 'Khadija M.', role: 'Utilisatrice · Paris 18e', tag: 'Emploi', initial: 'K' },
-  { quote: "On utilise Al-Wasil pour promouvoir nos maraudes. On a 3× plus de bénévoles depuis qu'on est référencés.", name: 'Association An-Nour', role: 'Organisateur · Bobigny', tag: 'Solidarité', initial: 'N' },
 ];
 
 // ── Stats ─────────────────────────────────────────────────────────
@@ -348,34 +342,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ─── TÉMOIGNAGES ────────────────────────────────────── */}
-      <section style={{ background: `linear-gradient(160deg, ${V.dark} 0%, #221d18 50%, ${V.dark} 100%)`, padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '10%', left: '5%', width: '300px', height: '300px', borderRadius: '50%', background: `radial-gradient(circle, ${V.primary}14 0%, transparent 70%)`, pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '10%', right: '5%', width: '250px', height: '250px', borderRadius: '50%', background: `radial-gradient(circle, ${V.primary}10 0%, transparent 70%)`, pointerEvents: 'none' }} />
-
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V[300], textTransform: 'uppercase' }}>Ils utilisent Al-Wasil</span>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.025em', marginTop: '0.5rem' }}>Ce que dit la communauté</h2>
-          </div>
-          <div className="testimonials-grid">
-            {TESTIMONIALS.map((t, i) => <TestimonialCard key={i} {...t} />)}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-            <Link href="/contact?type=temoignage" style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-              padding: '0.65rem 1.5rem',
-              border: `1px solid ${V.primary}66`,
-              color: V[300], textDecoration: 'none',
-              fontWeight: 600, fontSize: '0.85rem',
-              borderRadius: '9999px',
-              backgroundColor: `${V.primary}14`,
-            }}>
-              Partager ton expérience →
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CommunityStories />
 
       {/* ─── CONTRIBUTION CTA ───────────────────────────────── */}
       <section style={{ background: `linear-gradient(150deg, ${V.dark} 0%, #221d18 45%, ${V.dark} 100%)`, padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
