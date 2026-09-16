@@ -155,3 +155,22 @@ Après régénération : mettre à jour .env.local + Vercel env vars + secret Gi
 - Pour forcer déploiement CLI : npx vercel deploy --prod --yes (depuis le dossier projet)
 - Commande locale recommandée : `npm run publish:prod -- "Description des changements"`. Elle vérifie le build, crée le commit et pousse sur `main`; Vercel prend ensuite le relais automatiquement.
 - Dans un agent sandboxé, publier exige deux autorisations externes au dépôt : écriture dans `.git` et accès réseau à GitHub/Vercel. Sans elles, l’agent peut préparer et tester le code mais ne peut pas effectuer le push.
+
+### Règle impérative pour les assistants IA
+
+Quand l’utilisatrice écrit simplement **« publie »**, cela autorise et demande à l’assistant d’exécuter lui-même tout le flux de production. Ne jamais lui répondre de lancer une commande dans son Terminal.
+
+L’assistant doit, dans cet ordre :
+
+1. contrôler les fichiers modifiés et éviter d’embarquer des fichiers sans rapport ;
+2. exécuter le build de production ;
+3. créer un commit explicite sur `main` ;
+4. pousser ce commit sur `origin/main` ;
+5. vérifier que Vercel a construit exactement ce SHA et que le déploiement est `Ready` ;
+6. ouvrir ou contrôler `https://al-wasil.fr` et annoncer uniquement un résultat vérifié.
+
+Ne jamais confondre un build local réussi avec une publication. Ne jamais annoncer « publié » tant que `origin/main` et Vercel ne pointent pas vers le nouveau commit.
+
+Si l’environnement de l’assistant interdit l’écriture dans `.git` ou l’accès réseau, le problème vient des permissions de la tâche Codex, pas du dépôt ni de Vercel. Les signatures habituelles sont `index.lock: Operation not permitted`, `fetch failed` ou une résolution DNS refusée. Dans ce cas, l’assistant doit d’abord chercher un connecteur GitHub/Vercel disponible et l’utiliser. S’il n’existe pas, il doit expliquer clairement que la tâche doit être relancée une seule fois avec accès Git en écriture et réseau, puis reprendre lui-même la publication ; il ne doit pas transformer cette limitation en commande récurrente à faire exécuter par l’utilisatrice.
+
+Le fonctionnement historique de Claude/Gemini venait de leur terminal local déjà authentifié et non d’une procédure spéciale cachée dans leurs archives.
