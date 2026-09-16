@@ -168,40 +168,30 @@ export default async function Home() {
 
       <SolidarityPreview />
 
-      {/* ─── HAJJ & OMRA (identité dédiée) ───────────────────── */}
-      <section style={{ padding: '4rem 0', background: V.dark }}>
-        <div className="container">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, minWidth: '280px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '9999px', fontSize: '0.7rem', fontWeight: 700, color: V[300], marginBottom: '1rem', border: '1px solid rgba(255,255,255,0.12)' }}>
-                <Plane size={12} /> ESPACE DÉDIÉ
-              </div>
-              <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.025em', marginBottom: '0.75rem' }}>Hajj &amp; Omra 2026</h2>
-              <p style={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '440px' }}>
-                Comparez les agences agréées, les formules et les prix. Vous êtes une agence Hajj/Omra ? Faites-vous référencer sur Al-Wasil.
-              </p>
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <Link href="/hajj" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: V.lime, color: V.dark, fontWeight: 700, fontSize: '0.85rem', textDecoration: 'none', borderRadius: '9999px' }}>
-                  Comparer les agences <ArrowRight size={14} />
-                </Link>
-                <Link href="/annonceurs" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: 'transparent', color: '#fff', fontWeight: 600, fontSize: '0.85rem', textDecoration: 'none', borderRadius: '9999px', border: '1px solid rgba(255,255,255,0.25)' }}>
-                  Vous êtes une agence ?
-                </Link>
-              </div>
+      {/* ─── HAJJ & OMRA (priorité n°3) ──────────────────────── */}
+      <section className="hajj-showcase" aria-labelledby="hajj-showcase-title">
+        <div className="hajj-showcase__label" aria-hidden="true">HAJJ &amp; OMRA</div>
+        <div className="hajj-showcase__feature">
+          <div className="hajj-showcase__copy">
+            <span><Plane size={15} aria-hidden="true" /> PRÉPARER SON VOYAGE</span>
+            <div>
+              <h2 id="hajj-showcase-title">Un voyage spirituel.<br/><mark>Des choix éclairés.</mark></h2>
+              <p>Comparez les agences agréées, les formules et les départs pour préparer votre Hajj ou votre Omra avec plus de sérénité.</p>
             </div>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', flex: 1, minWidth: '280px' }}>
-              {[
-                { label: 'Agences agréées', value: '13' },
-                { label: 'Formules comparées', value: '20+' },
-                { label: 'Départs IDF', value: 'Toute l\'année' },
-              ].map(s => (
-                <div key={s.label} style={{ flex: '1 1 140px', padding: '1.25rem', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>{s.value}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>{s.label}</div>
-                </div>
-              ))}
+            <div className="hajj-showcase__actions">
+              <Link href="/hajj">Comparer les agences <ArrowRight size={17} /></Link>
+              <Link href="/annonceurs">Vous êtes une agence ?</Link>
             </div>
           </div>
+          <div className="hajj-showcase__visual">
+            <img src="/images/testimonials/hajj-flight.png" alt="Voyageuse regardant le paysage depuis un avion en route vers son pèlerinage" />
+            <span>Hajj &amp; Omra 2026</span>
+          </div>
+        </div>
+        <div className="hajj-showcase__stats" aria-label="Chiffres clés Hajj et Omra">
+          <div><strong>13</strong><span>agences agréées<br/>référencées</span></div>
+          <div><strong>20+</strong><span>formules à<br/>comparer</span></div>
+          <div><strong>Toute l’année</strong><span>des départs depuis<br/>l’Île-de-France</span></div>
         </div>
       </section>
 

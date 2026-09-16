@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ShieldCheck, ExternalLink, Search, ChevronDown, ChevronUp, AlertTriangle, Scale, FileText, Phone } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
 
 // ============================================================
 // TYPES
@@ -366,18 +367,9 @@ export default function JusticePage() {
  });
 
  return (
+ <>
+ <PageHeader title="Justice & Droits" titleAr="عَدْل" description="Connaître ses droits en France en tant que musulman·e. FAQ claire, liens de signalement et ressources juridiques." />
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1000px' }}>
-
- {/* Header */}
- <div style={{ marginBottom: '2rem' }}>
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
- <ShieldCheck size={28} color="#7652CA" />
- <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Justice & Droits — Adl (عَدْل)</h1>
- </div>
- <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
- Connaître ses droits en France en tant que musulman·e. FAQ claire, liens de signalement et ressources juridiques.
- </p>
- </div>
 
  {/* Bannière ARCOM */}
  <div style={{ marginBottom: '1.5rem', padding: '1rem 1.25rem', backgroundColor: 'rgba(239,68,68,0.07)', borderRadius: '0.75rem', border: '1px solid rgba(239,68,68,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
@@ -667,5 +659,6 @@ export default function JusticePage() {
  </div>
  </div>
  </div>
+ </>
  );
 }

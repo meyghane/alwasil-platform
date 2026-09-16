@@ -342,14 +342,14 @@ a {
 /* ── UPCOMING EVENTS — editorial masked rail ───────────────── */
 .events-showcase { padding: clamp(48px, 6vw, 88px) 0 clamp(58px, 7vw, 104px); background: #080808; color: #fff; overflow: hidden; }
 .events-showcase__label { padding: 0 clamp(18px, 4vw, 56px) clamp(30px, 4vw, 52px); color: #fff; font-size: clamp(58px, 12vw, 174px); line-height: .78; letter-spacing: -.085em; font-weight: 800; white-space: nowrap; }
-.upcoming-events { position: relative; min-height: 452px; }
-.upcoming-events__intro { position: absolute; z-index: 4; inset: 0 auto 0 0; width: clamp(235px, 21vw, 310px); padding: 30px clamp(22px, 3vw, 42px); background: #080808; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+.upcoming-events { --agenda-overlay-width: clamp(310px, 26vw, 390px); position: relative; min-height: 452px; }
+.upcoming-events__intro { position: absolute; z-index: 4; inset: 0 auto 0 0; box-sizing: border-box; width: var(--agenda-overlay-width); padding: 30px clamp(22px, 3vw, 42px); background: #080808; color: #fff; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
 .upcoming-events__intro > svg { width: 48px; height: 48px; padding: 11px; border: 1.5px solid #080808; border-radius: 50%; background: #ECFF58; }
 .upcoming-events__intro span { display: block; margin-bottom: 10px; color: #7652CA; font-size: 11px; line-height: 1; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.upcoming-events__intro h2 { margin: 0; color: #fff; font-size: clamp(29px, 3.1vw, 48px); line-height: .94; letter-spacing: -.06em; font-weight: 650; text-transform: uppercase; }
+.upcoming-events__intro h2 { max-width: 100%; margin: 0; color: #fff; font-size: clamp(27px, 2.65vw, 40px); line-height: .98; letter-spacing: -.055em; font-weight: 650; text-transform: uppercase; overflow-wrap: normal; }
 .upcoming-events__intro p { margin: 18px 0 0; color: rgba(255,255,255,.68); font-size: 13px; line-height: 1.55; }
 .upcoming-events__intro a { display: inline-flex; align-items: center; gap: 9px; width: fit-content; min-height: 44px; color: #fff; border-bottom: 1.5px solid rgba(255,255,255,.72); font-size: 12px; font-weight: 750; }
-.upcoming-events__rail { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(250px, 23vw, 322px); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 96px 16px clamp(255px, 22vw, 330px); overscroll-behavior-inline: contain; }
+.upcoming-events__rail { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(250px, 23vw, 322px); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 96px 16px calc(var(--agenda-overlay-width) + 18px); overscroll-behavior-inline: contain; }
 .upcoming-events__rail::-webkit-scrollbar { display: none; }
 .upcoming-events__more { min-height: 420px; border-radius: 20px; background: #ECFF58; color: #080808; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; scroll-snap-align: start; }
 .upcoming-events__more strong { font-size: 31px; line-height: 1; font-weight: 650; letter-spacing: -.055em; }
@@ -360,9 +360,47 @@ a {
 .upcoming-events__controls button:hover { background: #7652CA; color: #fff; }
 .upcoming-events__controls span { writing-mode: vertical-rl; margin-top: 4px; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 
+/* ── CATEGORY PAGE BANNERS ─────────────────────────────────── */
+.page-banner { position: relative; min-height: clamp(430px, 56vw, 690px); overflow: hidden; background: #080808; color: #fff; }
+.page-banner__image { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.page-banner__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,8,8,.05) 15%, rgba(8,8,8,.18) 48%, rgba(8,8,8,.92) 100%), linear-gradient(90deg, rgba(8,8,8,.55), transparent 45%); }
+.page-banner__content { position: absolute; z-index: 2; inset: 0; padding: clamp(24px, 4vw, 58px); display: flex; flex-direction: column; justify-content: space-between; }
+.page-banner__eyebrow { width: fit-content; padding: 9px 13px; border: 1px solid rgba(255,255,255,.5); border-radius: 999px; background: rgba(8,8,8,.45); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .11em; backdrop-filter: blur(9px); }
+.page-banner__bottom { display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+.page-banner h1 { margin: 0; max-width: 1160px; color: #fff; font-size: clamp(62px, 12vw, 178px); line-height: .76; letter-spacing: -.09em; font-weight: 800; text-transform: uppercase; text-wrap: balance; }
+.page-banner__meta { margin-top: clamp(25px, 3vw, 42px); display: flex; align-items: start; gap: 22px; }
+.page-banner__meta > span { color: #ECFF58; font-size: 21px; line-height: 1.2; font-weight: 700; }
+.page-banner__meta p { max-width: 590px; margin: 0; color: rgba(255,255,255,.78); font-size: 14px; line-height: 1.55; }
+.page-banner__count { flex: 0 0 auto; min-width: 145px; padding: 18px 20px; border-left: 1px solid rgba(255,255,255,.5); display: flex; flex-direction: column; }
+.page-banner__count strong { color: #ECFF58; font-size: 44px; line-height: .9; letter-spacing: -.055em; }
+.page-banner__count span { margin-top: 8px; color: rgba(255,255,255,.7); font-size: 11px; }
+
 /* ── SOLIDARITY — visible chapter marker ────────────────────── */
 .solidarity-showcase { position: relative; padding: clamp(58px, 7vw, 100px) 0 58px; overflow: hidden; background: #fff; color: #080808; }
 .solidarity-showcase__label { margin: 0 0 clamp(34px, 4vw, 56px); color: #080808; font-size: clamp(56px, 11vw, 154px); line-height: .78; letter-spacing: -.085em; font-weight: 800; white-space: nowrap; }
+
+/* ── HAJJ & OMRA — full editorial chapter ──────────────────── */
+.hajj-showcase { padding: clamp(58px, 7vw, 100px) clamp(14px, 4vw, 56px) 0; overflow: hidden; background: #080808; color: #fff; }
+.hajj-showcase__label { max-width: 1540px; margin: 0 auto clamp(38px, 5vw, 70px); color: #fff; font-size: clamp(54px, 10.5vw, 154px); line-height: .78; letter-spacing: -.085em; font-weight: 800; white-space: nowrap; }
+.hajj-showcase__feature { max-width: 1320px; min-height: 590px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr); border: 1px solid rgba(255,255,255,.2); border-radius: 28px 28px 0 0; overflow: hidden; }
+.hajj-showcase__copy { padding: clamp(30px, 4vw, 58px); display: flex; flex-direction: column; justify-content: space-between; gap: 42px; background: radial-gradient(circle at 0 100%, rgba(118,82,202,.38), transparent 40%), #111; }
+.hajj-showcase__copy > span { width: fit-content; display: inline-flex; align-items: center; gap: 8px; color: #080808; background: #ECFF58; padding: 9px 13px; border-radius: 999px; font-size: 10px; font-weight: 850; letter-spacing: .1em; }
+.hajj-showcase__copy h2 { max-width: 620px; margin: 0 0 24px; font-size: clamp(42px, 5.1vw, 76px); line-height: .94; letter-spacing: -.067em; font-weight: 650; }
+.hajj-showcase__copy mark { display: inline; padding: 0 .08em; background: #7652CA; color: #fff; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hajj-showcase__copy p { max-width: 540px; margin: 0; color: rgba(255,255,255,.7); font-size: 15px; line-height: 1.7; }
+.hajj-showcase__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.hajj-showcase__actions a { min-height: 50px; padding: 12px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1.5px solid rgba(255,255,255,.75); border-radius: 999px; color: #fff; font-size: 13px; font-weight: 750; }
+.hajj-showcase__actions a:first-child { border-color: #ECFF58; background: #ECFF58; color: #080808; }
+.hajj-showcase__actions a:hover { border-color: #7652CA; background: #7652CA; color: #fff; }
+.hajj-showcase__visual { position: relative; min-height: 590px; overflow: hidden; background: #332c3c; }
+.hajj-showcase__visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(8,8,8,.5)); pointer-events: none; }
+.hajj-showcase__visual img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 52% 48%; }
+.hajj-showcase__visual > span { position: absolute; z-index: 2; right: 24px; bottom: 24px; padding: 10px 14px; border-radius: 999px; background: rgba(8,8,8,.82); border: 1px solid rgba(255,255,255,.35); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; backdrop-filter: blur(8px); }
+.hajj-showcase__stats { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(255,255,255,.2); border-top: 0; }
+.hajj-showcase__stats > div { min-height: 145px; padding: 24px clamp(18px, 3vw, 38px); display: flex; align-items: center; gap: 20px; border-right: 1px solid rgba(255,255,255,.2); }
+.hajj-showcase__stats > div:last-child { border-right: 0; }
+.hajj-showcase__stats strong { font-size: clamp(30px, 4vw, 56px); line-height: .9; letter-spacing: -.065em; color: #ECFF58; }
+.hajj-showcase__stats span { color: rgba(255,255,255,.62); font-size: 12px; line-height: 1.45; }
 
 /* ── BACK TO SCHOOL BANNER ──────────────────────────────────── */
 .back-to-school { padding: clamp(48px, 6vw, 82px) clamp(14px, 4vw, 56px); background: #f0ebfa; }
@@ -471,6 +509,16 @@ a {
 }
 
 @media (max-width: 600px) {
+  .page-banner { min-height: 520px; }
+  .page-banner__image { object-position: 64% 50%; }
+  .page-banner__content { padding: 20px 16px 28px; }
+  .page-banner__bottom { display: block; }
+  .page-banner h1 { font-size: clamp(50px, 17vw, 82px); line-height: .82; }
+  .page-banner__meta { margin-top: 24px; display: block; }
+  .page-banner__meta > span { display: block; margin-bottom: 10px; }
+  .page-banner__meta p { font-size: 13px; }
+  .page-banner__count { width: fit-content; margin-top: 22px; padding: 0 0 0 15px; }
+  .page-banner__count strong { font-size: 34px; }
   .editorial-hero { display: flex; flex-direction: column; padding: 6px 10px 16px; }
   .editorial-hero__intro { display: flex; flex-direction: column; }
   .editorial-hero__title { position: relative; margin: 0; max-width: none; padding: 26px 18px; order: 0; }
@@ -500,7 +548,19 @@ a {
   .how-it-works { padding-left: 12px; padding-right: 12px; }
   .how-it-works__steps { grid-template-columns: 1fr; }
   .how-it-works__steps article, .how-it-works__steps article:nth-child(2) { min-height: 290px; }
-  .events-showcase__label, .solidarity-showcase__label { font-size: clamp(48px, 17vw, 78px); letter-spacing: -.075em; }
+  .events-showcase__label, .solidarity-showcase__label, .hajj-showcase__label { font-size: clamp(48px, 17vw, 78px); letter-spacing: -.075em; }
+  .hajj-showcase { padding: 54px 12px 0; }
+  .hajj-showcase__label { margin-bottom: 34px; }
+  .hajj-showcase__feature { min-height: 0; grid-template-columns: 1fr; border-radius: 24px 24px 0 0; }
+  .hajj-showcase__copy { min-height: 520px; padding: 28px 22px; gap: 34px; }
+  .hajj-showcase__copy h2 { font-size: clamp(39px, 12vw, 58px); }
+  .hajj-showcase__actions { flex-direction: column; }
+  .hajj-showcase__actions a { width: 100%; }
+  .hajj-showcase__visual { min-height: 460px; }
+  .hajj-showcase__visual img { object-position: 52% 45%; }
+  .hajj-showcase__stats { grid-template-columns: 1fr; }
+  .hajj-showcase__stats > div { min-height: 108px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
+  .hajj-showcase__stats > div:last-child { border-bottom: 0; }
   .back-to-school { padding: 42px 12px; }
   .back-to-school__banner { min-height: 0; border-radius: 24px; }
   .back-to-school__visual { min-height: 320px; }
