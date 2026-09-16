@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 const stories = [
   { title: 'Événements', image: '/images/testimonials/evenements.png', quote: "J’ai trouvé une conférence près de chez moi en quelques minutes. C’était exactement le rendez-vous communautaire que je cherchais.", name: 'Sarah, Paris', href: '/events', color: '#7652CA' },
@@ -15,13 +15,34 @@ const stories = [
 
 export default function CommunityStories() {
   const rail = useRef<HTMLDivElement>(null);
+  const frame = useRef<number | null>(null);
+  const animateMosaic = useCallback(() => {
+    if (frame.current !== null) return;
+    frame.current = window.requestAnimationFrame(() => {
+      frame.current = null;
+      const element = rail.current;
+      if (!element || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const center = element.scrollLeft + element.clientWidth / 2;
+      element.querySelectorAll<HTMLElement>('.community-story').forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.max(-1, Math.min(1, (cardCenter - center) / element.clientWidth));
+        const direction = index % 2 === 0 ? 1 : -1;
+        card.style.setProperty('--story-shift', `${direction * distance * 34}px`);
+      });
+    });
+  }, []);
+  useEffect(() => {
+    animateMosaic();
+    window.addEventListener('resize', animateMosaic);
+    return () => { window.removeEventListener('resize', animateMosaic); if (frame.current !== null) cancelAnimationFrame(frame.current); };
+  }, [animateMosaic]);
   const move = (direction: number) => rail.current?.scrollBy({ left: direction * Math.min(860, window.innerWidth * .82), behavior: 'smooth' });
   return <section className="community-stories" aria-labelledby="community-stories-title">
     <div className="community-stories__head">
       <div><span className="community-stories__eyebrow"><MessageCircle size={15}/> AVIS DE LA COMMUNAUTÉ</span><h2 id="community-stories-title">Trouvé grâce à Al-Wasil.</h2></div>
       <div className="community-stories__controls"><button onClick={() => move(-1)} aria-label="Avis précédents"><ChevronLeft/></button><button onClick={() => move(1)} aria-label="Avis suivants"><ChevronRight/></button></div>
     </div>
-    <div className="community-stories__rail" ref={rail}>
+    <div className="community-stories__rail" ref={rail} onScroll={animateMosaic}>
       {stories.map((story, index) => <article className="community-story" key={`${story.title}-${index}`}>
         <div className="community-story__image"><Image src={story.image} alt={`Ambiance ${story.title.toLowerCase()}`} fill sizes="(max-width: 720px) 82vw, 340px" style={{objectFit:'cover'}}/><span>{story.title}</span><Link href={story.href} aria-label={`Découvrir ${story.title}`}><ArrowUpRight/></Link></div>
         <div className="community-story__copy"><p>“{story.quote}”</p><div><strong>{story.name}</strong><span>Expérience partagée</span></div></div>

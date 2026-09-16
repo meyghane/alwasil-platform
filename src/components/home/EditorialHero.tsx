@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight, ArrowRight, Users } from 'lucide-react';
 
-const art='/images/brand/alwasil-editorial-reference.png';
 const lime='#ECFF58';
 export default function EditorialHero(){
  const pill:React.CSSProperties={borderRadius:999,padding:'16px 24px',display:'inline-flex',alignItems:'center',justifyContent:'center',gap:18,textDecoration:'none',fontWeight:700,color:'#080808',background:lime};
@@ -11,7 +10,7 @@ export default function EditorialHero(){
  <h1 style={{fontSize:'clamp(26px, 3.15vw, 52px)',lineHeight:1.3,letterSpacing:'-.055em',fontWeight:700,margin:0}}>APPRENDRE.<br/><span style={{display:'inline-block',background:lime,border:'2px solid #080808',borderRadius:100,padding:'0 10px',transform:'rotate(-3deg)',whiteSpace:'nowrap'}}>SE RETROUVER.</span><br/>S’ENTRAIDER.</h1>
  </div>
  <Link href="/education" aria-label="Trouver un institut ou un cours" className="editorial-hero__student">
- <img src={art} alt="Étudiante dans une bibliothèque" className="editorial-hero__student-image" />
+ <img src="/images/brand/student-library-v2.png" alt="Étudiante dans une bibliothèque" className="editorial-hero__student-image" />
  <span style={{position:'absolute',top:18,right:18,borderRadius:'50%',background:'white',padding:12,color:'#080808',display:'flex'}}><ArrowUpRight size={24}/></span>
  <span style={{...pill,position:'absolute',bottom:28,left:'8%',right:'8%'}}>Trouver un institut <ArrowRight size={22}/></span>
  </Link>
@@ -28,6 +27,9 @@ export default function EditorialHero(){
  <Link href="/solidarity" style={{...pill,background:'transparent',color:'white',border:'1px solid white',padding:'12px 20px'}}>Voir les cagnottes <ArrowRight size={16}/></Link>
  </div>
  </div>
- <div role="img" aria-label="Mosquée lumineuse découpée en mosaïque" className="editorial-hero__mosque"><img src={art} alt="" className="editorial-hero__mosque-image" /></div>
+ <div role="img" aria-label="Mosquée lumineuse découpée en mosaïque" className="editorial-hero__mosque">
+  <img src="/images/brand/mosque-v2.png" alt="" className="editorial-hero__mosque-image" />
+  <div className="editorial-hero__mosaic" aria-hidden="true">{Array.from({length:12},(_,i)=><span key={i}/>)}</div>
+ </div>
  </section>;
 }
