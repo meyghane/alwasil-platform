@@ -153,3 +153,5 @@ Après régénération : mettre à jour .env.local + Vercel env vars + secret Gi
 - Toujours builder localement avant de push : npm run build
 - Pour déployer : git push origin main (Vercel auto-deploy)
 - Pour forcer déploiement CLI : npx vercel deploy --prod --yes (depuis le dossier projet)
+- Commande locale recommandée : `npm run publish:prod -- "Description des changements"`. Elle vérifie le build, crée le commit et pousse sur `main`; Vercel prend ensuite le relais automatiquement.
+- Dans un agent sandboxé, publier exige deux autorisations externes au dépôt : écriture dans `.git` et accès réseau à GitHub/Vercel. Sans elles, l’agent peut préparer et tester le code mais ne peut pas effectuer le push.

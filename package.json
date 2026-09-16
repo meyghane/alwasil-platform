@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "import": "npx tsx scripts/import.ts"
+    "import": "npx tsx scripts/import.ts",
+    "publish:prod": "bash scripts/publish-production.sh"
   },
   "keywords": [],
   "author": "",
