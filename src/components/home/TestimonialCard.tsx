@@ -59,9 +59,9 @@ export default function TestimonialCard({ quote, name, role, tag, initial }: Pro
       }}>
         <div style={{
           width: 36, height: 36, borderRadius: '50%',
-          background: `linear-gradient(135deg, ${V.primary}, #a87830)`,
+          background: `linear-gradient(135deg, ${V.primary}, ${V.hover})`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontWeight: 800, color: '#0a0806', fontSize: '0.85rem', flexShrink: 0,
+          fontWeight: 800, color: '#fff', fontSize: '0.85rem', flexShrink: 0,
         }}>
           {initial}
         </div>

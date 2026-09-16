@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Moon, Sun, Sunrise, Sunset, Clock } from 'lucide-react';
-import Link from 'next/link';
+import { Moon, Sun, Sunrise, Sunset, Clock, MapPin } from 'lucide-react';
 
 type Timings = {
  Fajr: string; Dhuhr: string; Asr: string; Maghrib: string; Isha: string;
@@ -69,30 +68,29 @@ export default function PrayerTimesBar() {
  const nextLabel = next ? `${next.name} dans ${Math.floor(next.inMin / 60)}h${String(next.inMin % 60).padStart(2, '0')}` : '';
 
  return (
- <div style={{
- background: 'linear-gradient(135deg, #100c04 0%, #1a1408 100%)',
- borderBottom: '1px solid rgba(201,151,58,0.2)',
- padding: '0.75rem 0',
+ <section aria-label="Horaires de prière à Paris" style={{
+ background: '#080808', color: '#fff', padding: '1.1rem 0',
+ borderTop: '1px solid #222', borderBottom: '1px solid #222',
  }}>
- <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+ <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
 
  {/* Date + prochaine prière */}
  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
- <Clock size={13} color="#c9973a" strokeWidth={2} />
- <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', fontFamily: 'Poppins, sans-serif' }}>
+ <Clock size={14} color="#ECFF58" strokeWidth={2} />
+ <span style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.68)', fontFamily: 'Poppins, sans-serif' }}>
  {dateStr.charAt(0).toUpperCase() + dateStr.slice(1)}
  </span>
  </div>
  {next && (
  <div style={{
- fontSize: '0.72rem', fontWeight: 700, color: '#c9973a',
- backgroundColor: 'rgba(201,151,58,0.12)',
- border: '1px solid rgba(201,151,58,0.25)',
+ fontSize: '0.72rem', fontWeight: 800, color: '#080808',
+ backgroundColor: '#ECFF58',
+ border: '1px solid #ECFF58',
  padding: '2px 10px', borderRadius: '99px',
  fontFamily: 'Poppins, sans-serif',
  }}>
- ⏱ {nextLabel}
+ {nextLabel}
  </div>
  )}
  </div>
@@ -107,13 +105,13 @@ export default function PrayerTimesBar() {
  display: 'flex', alignItems: 'center', gap: '0.3rem',
  padding: '0.25rem 0.65rem',
  borderRadius: '8px',
- backgroundColor: isActive ? 'rgba(201,151,58,0.18)' : 'transparent',
- border: isActive ? '1px solid rgba(201,151,58,0.4)' : '1px solid transparent',
+ backgroundColor: isActive ? '#7652CA' : 'transparent',
+ border: isActive ? '1px solid #8f72dc' : '1px solid rgba(255,255,255,0.1)',
  transition: 'all 0.3s',
  }}>
- <Icon size={11} color={isActive ? '#d4a853' : 'rgba(255,255,255,0.35)'} strokeWidth={2} />
+ <Icon size={12} color={isActive ? '#ECFF58' : 'rgba(255,255,255,0.42)'} strokeWidth={2} />
  <div>
- <div style={{ fontSize: '0.62rem', color: isActive ? '#d4a853' : 'rgba(255,255,255,0.4)', fontWeight: 700, fontFamily: 'Poppins, sans-serif', lineHeight: 1 }}>
+ <div style={{ fontSize: '0.62rem', color: isActive ? '#ECFF58' : 'rgba(255,255,255,0.5)', fontWeight: 700, fontFamily: 'Poppins, sans-serif', lineHeight: 1 }}>
  {label}
  </div>
  <div style={{ fontSize: '0.75rem', color: isActive ? '#fff' : 'rgba(255,255,255,0.65)', fontWeight: isActive ? 700 : 500, fontFamily: 'Poppins, sans-serif', lineHeight: 1.2 }}>
@@ -125,11 +123,10 @@ export default function PrayerTimesBar() {
  })}
  </div>
 
- {/* Lien */}
- <Link href="/prieres" style={{ fontSize: '0.7rem', color: 'rgba(201,151,58,0.6)', textDecoration: 'none', fontFamily: 'Poppins, sans-serif', whiteSpace: 'nowrap' }}>
- Paris · Méthode UOIF →
- </Link>
+ <div style={{ display:'flex', alignItems:'center', gap:'0.4rem', fontSize: '0.7rem', color: 'rgba(255,255,255,0.55)', fontFamily: 'Poppins, sans-serif', whiteSpace: 'nowrap' }}>
+ <MapPin size={12} color="#ECFF58" /> Paris · Méthode UOIF
  </div>
  </div>
+ </section>
  );
 }

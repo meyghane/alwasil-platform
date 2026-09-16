@@ -14,6 +14,8 @@ import { V } from '@/lib/tokens';
 import RubriqueCard from '@/components/home/RubriqueCard';
 import TestimonialCard from '@/components/home/TestimonialCard';
 import EventCard from '@/components/home/EventCard';
+import EditorialHero from '@/components/home/EditorialHero';
+import PrayerTimesBar from '@/components/PrayerTimesBar';
 
 export const revalidate = 3600;
 
@@ -138,52 +140,8 @@ export default async function Home() {
   return (
     <div style={{ fontFamily: "'Inter', system-ui, -apple-system, sans-serif", backgroundColor: '#fff', color: V.dark }}>
 
-      {/* ─── HERO ───────────────────────────────────────────── */}
-      <section style={{
-        padding: '4.5rem 0 3rem',
-        background: `linear-gradient(160deg, ${V[50]} 0%, ${V[100]} 55%, ${V[200]} 100%)`,
-        position: 'relative', overflow: 'hidden',
-      }}>
-        <div style={{ position: 'absolute', top: '-20%', right: '-10%', width: '45%', height: '80%', background: `radial-gradient(ellipse at center, ${V[300]}55 0%, transparent 65%)`, pointerEvents: 'none' }} />
-
-        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '760px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.9rem', backgroundColor: '#fff', color: V[600], borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.01em', marginBottom: '1.75rem', border: `1px solid ${V[300]}`, boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-            <Search size={12} />
-            Qu&apos;est-ce que je cherche aujourd&apos;hui ?
-          </div>
-
-          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.4rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', color: V.dark, marginBottom: '1.1rem' }}>
-            Fini de chercher partout.{' '}
-            <span style={{ color: V.primary }}>Tout est ici.</span>
-          </h1>
-
-          <p style={{ fontSize: '1.05rem', color: V.muted, lineHeight: 1.65, marginBottom: '2.25rem', maxWidth: '540px', margin: '0 auto 2.25rem' }}>
-            Al-Wasil centralise <strong style={{ color: V.text }}>tout ce que la communauté musulmane de France cherche</strong> : événements, solidarité, emploi, hajj, et plus, mis à jour en continu.
-          </p>
-
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2.5rem' }}>
-            <a href="#evenements" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.85rem 1.75rem', backgroundColor: V.primary, color: '#fff', fontWeight: 700, fontSize: '0.92rem', textDecoration: 'none', borderRadius: '9999px', boxShadow: `0 8px 24px ${V.primary}40` }}>
-              J&apos;explore <ArrowRight size={15} />
-            </a>
-          </div>
-
-          {/* Pills catégories rapides */}
-          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {QUICK_CATEGORIES.map(c => (
-              <Link key={c.href} href={c.href} style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-                padding: '0.5rem 1rem', backgroundColor: 'rgba(255,255,255,0.6)',
-                color: V.text, fontSize: '0.82rem', fontWeight: 600,
-                textDecoration: 'none', borderRadius: '9999px',
-                border: `1px solid ${V.border}`,
-              }}>
-                <c.icon size={14} color={V.primary} strokeWidth={2} />
-                {c.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <EditorialHero />
+      <PrayerTimesBar />
 
       {/* ─── ÉVÉNEMENTS (priorité n°1) ───────────────────────── */}
       <section id="evenements" style={{ padding: '4rem 0', backgroundColor: '#fff' }}>

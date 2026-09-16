@@ -92,7 +92,7 @@ export async function GET(req: NextRequest) {
   try {
     const [updated] = await db
       .update(items)
-      .set({ status: newStatus, updatedAt: new Date() })
+      .set({ status: newStatus, updatedAt: new Date(), ...(action === 'approve' ? { lastVerifiedAt: new Date(), nextReviewAt: new Date(Date.now() + 30 * 86400000) } : {}) })
       .where(eq(items.id, id))
       .returning({ category: items.category });
 

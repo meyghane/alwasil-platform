@@ -24,6 +24,8 @@ export type Event = {
  isFree: boolean;
  price?: string;
  featured?: boolean;
+ verified?: boolean;
+ imageUrl?: string;
 };
 
 export type EventCategory =
@@ -36,6 +38,8 @@ export type EventCategory =
  | 'famille'
  | 'collecte'
  | 'autre';
+
+export const CURRENT_VERIFIED_EVENT_IDS = ['gmp-jardin-oriental-2026', 'conscience-soufie-ag-2026', 'carep-architecture-perte-2026', 'carep-bassma-kodmani-2026', 'gmp-napoleon-arabie-2026', 'carep-gaza-patrimoine-2026'] as const;
 
 export const EVENT_CATEGORY_LABELS: Record<EventCategory, string> = {
  conference: 'Conférence',
@@ -993,5 +997,24 @@ export const allEvents: Event[] = [
  tags: ['Sîra', 'prophète', 'conférence', 'spiritualité'],
  format: 'presentiel',
  isFree: true,
+ },
+ // ── AGENDA VÉRIFIÉE — mise à jour 15 septembre 2026 ─────────
+ {
+  id: 'gmp-jardin-oriental-2026', title: 'Exposition — Le Jardin Oriental-Islamique de Berlin', category: 'autre', date: '2026-09-17', timeStart: '10h00', timeEnd: '18h00', location: 'Grande Mosquée de Paris', address: '2 bis Place du Puits de l’Ermite', city: 'Paris 5e', department: '75', organizer: 'Grande Mosquée de Paris', organizerUrl: 'https://www.grandemosqueedeparis.fr/evenements', description: 'Exposition de Kamel Louafi consacrée au Jardin Oriental-Islamique de Berlin. Vérifier les horaires et modalités d’accès sur la page officielle.', tags: ['exposition', 'culture', 'Paris', 'art islamique'], format: 'presentiel', registrationUrl: 'https://www.grandemosqueedeparis.fr/evenements', isFree: true, featured: true,
+ },
+ {
+  id: 'conscience-soufie-ag-2026', title: 'Assemblée Générale Conscience Soufie 2026', category: 'conference', date: '2026-09-20', timeStart: '11h00', timeEnd: '12h30', location: 'Forum 104 / en ligne', address: '104 rue de Vaugirard', city: 'Paris 6e', department: '75', organizer: 'Conscience Soufie', organizerUrl: 'https://consciencesoufie.com/events/assemblee-generale-conscience-soufie-2026/', description: 'Assemblée générale avec présence au Forum 104 et participation en visioconférence. Inscription obligatoire selon les modalités de l’organisateur.', tags: ['soufisme', 'spiritualité', 'Paris', 'en ligne'], format: 'hybride', registrationUrl: 'https://consciencesoufie.com/events/assemblee-generale-conscience-soufie-2026/', isFree: true, featured: true,
+ },
+ {
+  id: 'carep-architecture-perte-2026', title: 'L’Architecture de la perte : la culture palestinienne contemporaine', category: 'conference', date: '2026-09-22', timeStart: '18h30', timeEnd: '20h00', location: 'CAREP Paris', address: '12 rue Raymond Aron', city: 'Paris 13e', department: '75', organizer: 'CAREP Paris', organizerUrl: 'https://carep-paris.org/evenements-a-venir/', description: 'Conférence avec Ismail Nashef et Nisrine Al Zahre, modérée par Franck Mermier. Événement annoncé par le CAREP Paris.', tags: ['Palestine', 'culture', 'conférence', 'Paris'], format: 'hybride', registrationUrl: 'https://carep-paris.org/evenements-a-venir/', isFree: true,
+ },
+ {
+  id: 'carep-bassma-kodmani-2026', title: 'Bassma Kodmani : le combat passionné d’une femme syrienne', category: 'conference', date: '2026-09-24', timeStart: '18h30', timeEnd: '20h00', location: 'CAREP Paris', address: '12 rue Raymond Aron', city: 'Paris 13e', department: '75', organizer: 'CAREP Paris', organizerUrl: 'https://carep-paris.org/evenements-a-venir/', description: 'Conférence en partenariat avec Souria Houria et Arab Reform Initiative, annoncée par le CAREP Paris.', tags: ['Syrie', 'culture', 'conférence', 'Paris'], format: 'hybride', registrationUrl: 'https://carep-paris.org/evenements-a-venir/', isFree: true,
+ },
+ {
+  id: 'gmp-napoleon-arabie-2026', title: 'Napoléon et l’Arabie — avec Louis Blin', category: 'conference', date: '2026-09-30', timeStart: '18h30', timeEnd: '20h00', location: 'Grande Mosquée de Paris', address: '2 bis Place du Puits de l’Ermite', city: 'Paris 5e', department: '75', organizer: 'Grande Mosquée de Paris', organizerUrl: 'https://www.grandemosqueedeparis.fr/evenements', description: 'Rencontre autour de Napoléon et l’Arabie avec Louis Blin. Vérifier la billetterie et les horaires sur la page officielle.', tags: ['histoire', 'Arabie', 'culture', 'Paris'], format: 'presentiel', registrationUrl: 'https://www.grandemosqueedeparis.fr/evenements', isFree: false,
+ },
+ {
+  id: 'carep-gaza-patrimoine-2026', title: 'Conserver la mémoire à Gaza à travers son patrimoine culturel', category: 'conference', date: '2026-10-06', timeStart: '18h30', timeEnd: '20h00', location: 'CAREP Paris', address: '12 rue Raymond Aron', city: 'Paris 13e', department: '75', organizer: 'CAREP Paris', organizerUrl: 'https://carep-paris.org/evenements-a-venir/', description: 'Conférence autour du rapport Gaza réalisé par l’OPOM et l’ICONEM, annoncée par le CAREP Paris.', tags: ['Gaza', 'patrimoine', 'Palestine', 'conférence'], format: 'hybride', registrationUrl: 'https://carep-paris.org/evenements-a-venir/', isFree: true,
  },
 ];

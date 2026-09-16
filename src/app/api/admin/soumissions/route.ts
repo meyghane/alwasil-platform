@@ -82,7 +82,8 @@ export async function PATCH(req: NextRequest) {
 
  const neonItem = await db.select({ id: items.id }).from(items).where(eq(items.id, id)).limit(1);
  if (neonItem.length > 0) {
- await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: new Date() }).where(eq(items.id, id));
+ const now = new Date();
+ await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: now, ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
  return NextResponse.json({ ok: true, id, status, source: 'neon' });
  }
 

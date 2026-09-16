@@ -1,5 +1,8 @@
 # Al-Wasil — Brief Claude Code (mis à jour juillet 2026)
 
+## Direction artistique actuelle
+Lire `DIRECTION_ARTISTIQUE.md` avant tout travail visuel : DA validée le 16 septembre 2026, prioritaire sur les anciens briefs. Blanc, jaune citron, noir, violet ; boutons pilules ; photos lumineuses et mosaïques arrondies ; header blanc partagé et logo compact.
+
 Plateforme communautaire musulmane française. Site Next.js déployé sur Vercel via GitHub.
 Repo GitHub : https://github.com/meyghane/alwasil-platform
 Prod : https://al-wasil.fr

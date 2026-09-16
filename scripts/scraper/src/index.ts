@@ -3,7 +3,7 @@
 // Source unique : Gemini + Google Search grounding (pas de scraping HTML direct
 // d'un site nommé — HelloAsso/LaunchGood retirés le 25/07/2026 car interdisent
 // le scraping dans leurs CGU ; voir ARCHITECTURE.md décision Epic B).
-import { checkAlreadyRanToday, getExistingEventTitles, insertEvent } from './utils/db';
+import { checkAlreadyRanToday, getExistingEventTitles, insertEvent, logAutomationError } from './utils/db';
 import { scrapeEventsWithGemini } from './utils/gemini';
 import { sendDigestEmail } from './utils/email';
 import { normalizeEventCategory } from './types';
@@ -81,7 +81,8 @@ async function main() {
   console.log('\n==== Done ====\n');
 }
 
-main().catch((e) => {
+main().catch(async (e) => {
+  await logAutomationError('run_failed');
   console.error('Fatal error:', e);
   process.exit(1);
 });

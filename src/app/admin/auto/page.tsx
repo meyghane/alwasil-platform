@@ -20,7 +20,7 @@ const SCRAPERS: { cat: string; label: string; freq: string; Icon: LucideIcon }[]
  { cat: 'hajj', label: 'Hajj & Omra', freq: '1x/semaine', Icon: Plane },
 ];
 
-type RunResult = { cat: string; found: number; written: number; status: 'ok' | 'error' | 'loading' | 'idle'; lastRun?: string };
+type RunResult = { cat: string; found: number; written: number; status: 'ok' | 'error' | 'loading' | 'idle'; lastRun?: string; error?: string };
 
 export default function AutoPage() {
  const [results, setResults] = useState<Record<string, RunResult>>({});
@@ -34,7 +34,7 @@ export default function AutoPage() {
  const data = await res.json();
  setResults(prev => ({
  ...prev,
- [cat]: { cat, found: data.found ?? 0, written: data.written ?? 0, status: res.ok ? 'ok' : 'error', lastRun: new Date().toLocaleTimeString('fr-FR') },
+   [cat]: { cat, found: data.found ?? 0, written: data.written ?? 0, status: res.ok ? 'ok' : 'error', lastRun: new Date().toLocaleTimeString('fr-FR'), error: data.error },
  }));
  } catch {
  setResults(prev => ({ ...prev, [cat]: { cat, found: 0, written: 0, status: 'error', lastRun: new Date().toLocaleTimeString('fr-FR') } }));
@@ -144,6 +144,7 @@ export default function AutoPage() {
  {r.lastRun && <span style={{ fontSize: '0.68rem', color: '#9ca3af', marginLeft: 'auto' }}>{r.lastRun}</span>}
  </div>
  )}
+ {r?.error && <div style={{ fontSize: '0.7rem', color: '#b91c1c', backgroundColor: '#fef2f2', borderRadius: 7, padding: '0.45rem 0.6rem', marginBottom: '0.7rem', lineHeight: 1.35 }}>{r.error}</div>}
 
  <button
  onClick={() => runScraper(s.cat)}
@@ -170,8 +171,10 @@ export default function AutoPage() {
  })}
  </div>
 
- <div style={{ marginTop: '1.5rem', padding: '1rem 1.25rem', backgroundColor: 'white', borderRadius: '14px', border: '1px solid #f0dea0', fontSize: '0.8rem', color: '#7a6848', lineHeight: 1.7 }}>
- <strong style={{ color: '#0f0a00' }}>Comment ça marche :</strong> Vercel Cron appelle automatiquement ces scrapers selon le planning défini. Les nouvelles fiches arrivent dans <strong>soumissions_X</strong> avec le status <em>à vérifier</em>. Tu reçois une notification Telegram à chaque ajout. Pour les valider : <Link href="/admin/soumissions" style={{ color: GOLD, textDecoration: 'none', fontWeight: 600 }}>page de modération →</Link>
+ <div style={{ marginTop: '1.5rem', padding: '1rem 1.25rem', backgroundColor: '#fffaf0', borderRadius: '14px', border: '1px solid #f0dea0', fontSize: '0.8rem', color: '#7a6848', lineHeight: 1.7 }}>
+ <strong style={{ color: '#b45309' }}>État actuel :</strong> les cartes peuvent être lancées manuellement, mais la découverte automatique des fiches est temporairement désactivée côté planification. Les seules tâches planifiées actuellement sont le nettoyage des événements expirés et le contrôle de fraîcheur. Il faudra réactiver le workflow de scraping après validation des secrets et de Google Sheets.
+ <br /><br />
+ <strong style={{ color: '#0f0a00' }}>Comment ça marche :</strong> lorsqu’un scraper est activé, les nouvelles fiches arrivent dans <strong>soumissions_X</strong> avec le statut <em>à vérifier</em>. Les erreurs apparaissent directement sur la carte concernée. Pour les valider : <Link href="/admin/soumissions" style={{ color: GOLD, textDecoration: 'none', fontWeight: 600 }}>page de modération →</Link>
  </div>
  </div>
 

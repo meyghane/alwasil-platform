@@ -58,7 +58,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
       }}>
         <div style={{
           width: 38, height: 38, borderRadius: '4px',
-          border: '1.5px solid rgba(212,168,83,0.65)',
+          border: '1.5px solid rgba(209,96,58,0.65)',
           backgroundColor: 'rgba(20,14,4,0.18)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           marginBottom: '0.55rem',
@@ -107,7 +107,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
               fontSize: '0.62rem', fontWeight: 600,
               backgroundColor: 'rgba(20,14,4,0.28)',
               color: 'rgba(255,255,255,0.85)',
-              border: '1px solid rgba(212,168,83,0.35)',
+              border: '1px solid rgba(209,96,58,0.35)',
               padding: '2px 8px', borderRadius: '2px',
             }}>
               {tag}

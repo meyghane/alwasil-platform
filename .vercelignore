@@ -1,0 +1,9 @@
+outputs
+work
+skills
+*.md
+*.gs
+*.csv
+make-*.json
+scripts/data-quality.test.ts
+scripts/apply-data-quality.mjs

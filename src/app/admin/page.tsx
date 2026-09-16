@@ -57,7 +57,7 @@ export default async function AdminPage() {
  </div>
  </div>
 
- <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+ <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: '75%' }}>
  <Link href="/admin/auto" style={{
  display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
  fontSize: '0.78rem', color: GOLD, textDecoration: 'none',
@@ -88,6 +88,11 @@ export default async function AdminPage() {
  }}>
  <Inbox size={13} strokeWidth={2} /> Soumissions
  </Link>
+ <Link href="/admin/leads" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: '#c9973a', textDecoration: 'none', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(201,151,58,0.12)', border: '1px solid rgba(201,151,58,0.3)', borderRadius: '8px' }}>
+ <Plane size={13} strokeWidth={2} /> Leads Hajj
+ </Link>
+ <Link href="/admin/fraicheur" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.8)', textDecoration: 'none', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px' }}>Fraîcheur</Link>
+ <Link href="/admin/couverture" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.8)', textDecoration: 'none', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px' }}>Couverture</Link>
  <Link href="/admin/historique" style={{
  display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
  fontSize: '0.78rem', color: 'rgba(255,255,255,0.6)', textDecoration: 'none',
@@ -131,8 +136,15 @@ export default async function AdminPage() {
  Tableau de bord
  </h1>
  <p style={{ color: '#7a6848', fontSize: '0.88rem', margin: 0 }}>
- Sélectionne une catégorie pour ajouter une nouvelle fiche.
+ Le site se remplit automatiquement. Ici, tu contrôles uniquement la qualité.
  </p>
+ </div>
+
+ <div style={{ marginBottom: '2rem' }}>
+  <h2 style={{ fontWeight: 800, fontSize: '1.1rem', color: DARK, margin: '0 0 .75rem' }}>Centre de contrôle qualité</h2>
+  <div className="admin-quality-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '.75rem' }}>
+   {[['/admin/soumissions','Nouvelles fiches','Valider ou archiver'],['/admin/signalements','Signalements','Traiter les retours visiteurs'],['/admin/couverture','Couverture','Repérer les départements incomplets'],['/admin/fraicheur','Fraîcheur','Voir les fiches à vérifier'],['/admin/auto','Automatisations','Suivre les exécutions'],['/admin/journal','Journal','Comprendre les erreurs automatiques']].map(([href,title,desc]) => <Link key={href} href={href} style={{ textDecoration:'none', background:'white', border:'1px solid #f0dea0', borderRadius:12, padding:'1rem' }}><div style={{fontWeight:800,color:DARK,fontSize:'.85rem'}}>{title}</div><div style={{fontSize:'.72rem',color:'#78716c',marginTop:'.35rem'}}>{desc}</div></Link>)}
+  </div>
  </div>
 
  {/* Équipe */}

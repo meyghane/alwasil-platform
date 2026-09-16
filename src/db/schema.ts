@@ -67,6 +67,14 @@ export const scrapeRuns = pgTable('scrape_runs', {
   ranAt: timestamp('ran_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const automationErrors = pgTable('automation_errors', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  stage: text('stage').notNull(),
+  code: text('code').notNull(),
+  itemId: uuid('item_id').references(() => items.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const reports = pgTable('reports', {
   id: uuid('id').primaryKey().defaultRandom(),
   type: text('type').notNull().default('correction'),

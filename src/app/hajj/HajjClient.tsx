@@ -250,7 +250,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  </div>
  )}
 
- <a href="/contact?type=hajj-devis" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', backgroundColor: typeColor, color: 'white', padding: '0.6rem', borderRadius: '0.5rem', fontWeight: 700, fontSize: '0.88rem', textDecoration: 'none' }}>
+ <a href={`/contact?type=hajj-devis&offer_id=${encodeURIComponent(pkg.id)}&partner_id=${encodeURIComponent(pkg.agenceId)}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', backgroundColor: typeColor, color: 'white', padding: '0.6rem', borderRadius: '0.5rem', fontWeight: 700, fontSize: '0.88rem', textDecoration: 'none' }}>
  Demander un devis <ExternalLink size={13} />
  </a>
  </div>

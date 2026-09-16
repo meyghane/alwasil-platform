@@ -1,5 +1,5 @@
 // Écriture directe en base Postgres (Neon) — remplace utils/sheets.ts (Apps Script/Google Sheets)
-import { eq, and, gte } from 'drizzle-orm';
+import { eq, and, gte, sql } from 'drizzle-orm';
 import { db } from '../db';
 import { items } from '../db/schema';
 
@@ -41,6 +41,14 @@ export type NewEventRow = {
 
 export async function insertEvent(row: NewEventRow): Promise<string | null> {
   try {
+    // Same title/date/city is an exact repeat; contacts alone are not unique events.
+    const previous = await db.select({ id: items.id }).from(items).where(and(
+      eq(items.category, 'event'),
+      sql`lower(trim(${items.title})) = lower(trim(${row.title}))`,
+      sql`lower(coalesce(${items.city}, '')) = lower(${row.city ?? ''})`,
+      sql`${items.dateStart} IS NOT DISTINCT FROM ${row.dateStart}`,
+    )).limit(1);
+    if (previous.length) return null;
     const [inserted] = await db
       .insert(items)
       .values({
@@ -61,7 +69,13 @@ export async function insertEvent(row: NewEventRow): Promise<string | null> {
       .returning({ id: items.id });
     return inserted?.id ?? null;
   } catch (e) {
+    await logAutomationError('insert_failed');
     console.error('[db] Insert error:', e);
     return null;
   }
+}
+
+export async function logAutomationError(code: string): Promise<void> {
+  try { await db.execute(sql`INSERT INTO automation_errors(stage, code) VALUES ('scraper', ${code})`); }
+  catch { console.error('[journal] unavailable'); }
 }

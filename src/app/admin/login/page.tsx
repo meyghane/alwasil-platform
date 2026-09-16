@@ -194,6 +194,9 @@ export default function AdminLoginPage() {
  </button>
 
  <div style={{ textAlign: 'center', marginTop: '0.25rem' }}>
+ <a href="/modo/reset-password" style={{ display: 'block', fontSize: '0.78rem', color: 'rgba(201,151,58,0.75)', textDecoration: 'none', marginBottom: '0.75rem' }}>
+ Mot de passe oublié ?
+ </a>
  <span style={{ fontSize: '0.72rem', color: 'rgba(201,151,58,0.3)' }}>
  Admin ou modérateur — même page
  </span>

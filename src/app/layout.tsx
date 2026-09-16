@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import { GoogleTagManager } from '@next/third-parties/google';
 import './globals.css';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ChatBotWrapper from '@/components/ChatBotWrapper';
-import PrayerTimesBar from '@/components/PrayerTimesBar';
+import CookieConsent from '@/components/CookieConsent';
 
 const BASE_URL = 'https://alwasil-platform.vercel.app';
 
@@ -72,15 +71,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
  dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_SCHEMA) }}
  />
  </head>
- <GoogleTagManager gtmId="GTM-PD96NMKQ" />
  <body>
  <Navigation />
- <PrayerTimesBar />
  <main style={{ minHeight: 'calc(100vh - 4rem - 300px)' }}>
  {children}
  </main>
  <Footer />
  <ChatBotWrapper />
+ <CookieConsent />
  </body>
  </html>
  );

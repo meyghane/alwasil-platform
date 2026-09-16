@@ -8,6 +8,7 @@ import {
  EVENT_CATEGORY_COLORS,
  type Event,
  type EventCategory,
+ CURRENT_VERIFIED_EVENT_IDS,
 } from '@/data/events';
 import DeptFilter from '@/components/DeptFilter';
 import PageHeader from '@/components/PageHeader';
@@ -24,6 +25,7 @@ const CATEGORIES: { key: EventCategory | 'all'; label: string }[] = [
  { key: 'jeunesse', label: 'Jeunesse' },
  { key: 'collecte', label: 'Collecte' },
 ];
+const VERIFIED_CURRENT_EVENTS = new Set<string>(CURRENT_VERIFIED_EVENT_IDS);
 
 function formatDate(iso: string): string {
  const d = new Date(iso);
@@ -55,7 +57,7 @@ export default function EventsClient({ events }: EventsClientProps) {
  ev.tags.some(t => t.toLowerCase().includes(q));
  const matchDept = selectedDept === 'Tout' || ev.department === selectedDept;
  const matchCat = selectedCategory === 'all' || ev.category === selectedCategory;
- const matchTime = showPast ? true : isUpcoming(ev.date);
+ const matchTime = showPast ? true : isUpcoming(ev.date) && VERIFIED_CURRENT_EVENTS.has(ev.id);
  return matchSearch && matchDept && matchCat && matchTime;
  });
 
@@ -197,6 +199,17 @@ export default function EventsClient({ events }: EventsClientProps) {
 
 function EventCard({ event }: { event: Event }) {
  const color = EVENT_CATEGORY_COLORS[event.category];
+ const imageUrl = event.imageUrl ?? {
+  conference: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80',
+  maraude: 'https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=900&q=80',
+  cours: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80',
+  collecte: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=900&q=80',
+  autre: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=900&q=80',
+  iftar: 'https://images.unsplash.com/photo-1515003197210-e0cd0c5059f6?w=900&q=80',
+  webinaire: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=900&q=80',
+  jeunesse: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?w=900&q=80',
+  famille: 'https://images.unsplash.com/photo-1504159506876-f8338247a14a?w=900&q=80',
+ }[event.category];
  const past = !isUpcoming(event.date);
  const d = new Date(event.date);
  const dayNum = d.toLocaleDateString('fr-FR', { day: 'numeric' });
@@ -214,6 +227,9 @@ function EventCard({ event }: { event: Event }) {
  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
  opacity: past ? 0.6 : 1,
  }}>
+ <div style={{ height: 150, background: `linear-gradient(180deg, transparent 35%, ${color}cc 100%), url(${imageUrl}) center/cover`, position: 'relative' }}>
+  <span style={{ position: 'absolute', left: '0.9rem', bottom: '0.7rem', color: 'white', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', textShadow: '0 1px 3px rgba(0,0,0,.5)' }}>{event.organizer}</span>
+ </div>
  {/* Header */}
  <div style={{ padding: '1rem 1.1rem 0.75rem', background: `linear-gradient(135deg, ${color}10, transparent)` }}>
  {/* Badges */}
@@ -301,6 +317,9 @@ function EventCard({ event }: { event: Event }) {
  ) : (
  <span style={{ fontSize: '0.72rem', color: '#78716c', fontWeight: 500 }}>Entrée libre</span>
  )}
+ <Link href={`/contact?type=correction&page=${encodeURIComponent('Événements')}&element=${encodeURIComponent(event.title)}`} style={{ fontSize: '0.68rem', color: '#a8a29e', textDecoration: 'underline', textUnderlineOffset: '2px' }}>
+ Signaler une erreur
+ </Link>
  </div>
  </div>
  );

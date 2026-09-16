@@ -7,8 +7,15 @@ import { revalidatePath } from 'next/cache';
 import { and, eq, lt } from 'drizzle-orm';
 import { db } from '@/db';
 import { items } from '@/db/schema';
+import { isAdminLoggedIn } from '@/lib/admin-auth';
 
-export async function GET(_req: NextRequest) {
+export async function GET(req: NextRequest) {
+  const cronSecret = process.env.CRON_SECRET;
+  const authorization = req.headers.get('authorization');
+  const isCron = !!cronSecret && authorization === `Bearer ${cronSecret}`;
+  if (!isCron && !(await isAdminLoggedIn())) {
+    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
+  }
   const now = new Date();
 
   const expired = await db
