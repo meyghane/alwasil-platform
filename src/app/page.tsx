@@ -101,7 +101,7 @@ function buildUpcomingEvents(events: Event[]) {
   today.setHours(0, 0, 0, 0);
 
   return events
-    .filter(e => new Date(e.date) >= today)
+    .filter(e => new Date(e.date) >= today && e.title !== 'Exposition — Le Jardin Oriental-Islamique de Berlin')
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 6)
     .map(e => {
