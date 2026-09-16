@@ -2,13 +2,13 @@
 const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
 
 const STRATEGIES = [
-  'conférences islamiques Île-de-France juillet août 2026',
+  'conférences islamiques Île-de-France événements à venir 2026',
   'maraudes solidarité associations musulmanes Paris banlieue',
   'cours arabe Coran instituts islamiques IDF été 2026',
   'collectes humanitaires associations musulmanes France',
-  'événements jeunesse musulmane IdF août septembre 2026',
+  'événements jeunesse musulmane IdF septembre octobre 2026',
   'portes ouvertes mosquées conférences islamiques France',
-  'stage Coran mémorisation été 2026 Île-de-France',
+  'stage Coran mémorisation rentrée 2026 Île-de-France',
 ];
 
 export type GeminiEvent = {
@@ -25,12 +25,27 @@ export type GeminiEvent = {
 };
 
 async function callGemini(prompt: string): Promise<GeminiEvent[]> {
-  // Modèles stables documentés par Google AI Studio.
-  const models: Array<[string, boolean]> = [
-    ['gemini-2.5-flash', true],
-    ['gemini-2.5-flash-lite', true],
-    ['gemini-2.5-flash-lite', false],
-  ];
+  // On découvre les modèles réellement disponibles pour cette clé : les noms
+  // et accès peuvent varier selon le projet Google et évoluer dans le temps.
+  let available: string[] = [];
+  try {
+    const catalog = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_KEY}`);
+    if (catalog.ok) {
+      const data = await catalog.json() as { models?: { name?: string; supportedGenerationMethods?: string[] }[] };
+      available = (data.models || [])
+        .filter(m => m.supportedGenerationMethods?.includes('generateContent'))
+        .map(m => (m.name || '').replace(/^models\//, ''))
+        .filter(Boolean);
+      console.log(`[gemini] ${available.length} modèles accessibles pour cette clé`);
+    } else {
+      console.warn(`[gemini] catalogue des modèles HTTP ${catalog.status}`);
+    }
+  } catch (e) { console.warn('[gemini] catalogue inaccessible:', e); }
+
+  const preferred = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.0-flash'];
+  const discovered = preferred.filter(model => available.includes(model));
+  const models: Array<[string, boolean]> = (discovered.length ? discovered : preferred)
+    .flatMap(model => [[model, true] as [string, boolean], [model, false] as [string, boolean]]);
 
   for (const [model, useSearch] of models) {
     try {
@@ -45,7 +60,7 @@ async function callGemini(prompt: string): Promise<GeminiEvent[]> {
         { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
       );
 
-      if (!res.ok) { console.warn(`[gemini] ${model} HTTP ${res.status}`); continue; }
+      if (!res.ok) { console.warn(`[gemini] ${model} (${useSearch ? 'search' : 'texte'}) HTTP ${res.status}: ${(await res.text()).slice(0, 180)}`); continue; }
 
       const data = await res.json() as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
       const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
