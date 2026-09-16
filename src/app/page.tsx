@@ -3,7 +3,7 @@ import {
   ArrowRight, ChevronRight, Users, BookOpen, Calendar, Briefcase,
   Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
   HeartHandshake, UserCheck, Landmark, ShieldCheck, MessageCircle,
-  Search, CheckCircle, Zap, Plus,
+  Search, CheckCircle, Zap, Plus, GraduationCap, Sparkles,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { Institut } from '@/data/institutes';
@@ -27,50 +27,40 @@ type Section = {
 type StatItem = { count: number; label: string; icon: LucideIcon };
 
 // ── Data ──────────────────────────────────────────────────────────
+const QUICK_CATEGORIES = [
+  { href: '/events', icon: Calendar, label: 'Événements' },
+  { href: '/solidarity', icon: HeartHandshake, label: 'Solidarité' },
+  { href: '/hajj', icon: Plane, label: 'Hajj & Omra' },
+  { href: '/jobs', icon: Briefcase, label: 'Emploi' },
+  { href: '/education', icon: BookOpen, label: 'Éducation' },
+  { href: '/sante', icon: Stethoscope, label: 'Santé' },
+  { href: '/librairies', icon: Library, label: 'Librairies' },
+  { href: '/piscines', icon: Waves, label: 'Piscines' },
+];
+
 const SECTIONS: Section[] = [
   { href: '/events', icon: Calendar, color: '#3a0a45', bg: '#ecfdf5', title: 'Événements', arabic: 'اللقاء', description: 'Conférences, séminaires, maraudes et rencontres communautaires en France.', tags: ['Conférences', 'Maraudes', 'Séminaires', 'En ligne'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80' },
-  { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#fdfbf0', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, collectes et initiatives solidaires partout en France.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Gaza'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
-  { href: '/jobs', icon: Briefcase, color: '#4a0e58', bg: '#ecfdf5', title: 'Emploi', arabic: 'الأمل', description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.', tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'], image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80' },
-  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#fdfbf0', title: 'Éducation', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
   { href: '/hajj', icon: Plane, color: '#4a0e58', bg: '#ecfdf5', title: 'Hajj & Omra', arabic: 'الحج', description: 'Comparez les agences, offres 2026 et guide du pèlerin.', tags: ['Hajj 2026', 'Omra', 'Comparateur'], image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80' },
-  { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#fdfbf0', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
+  { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#fdfbf0', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, collectes et initiatives solidaires partout en France.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Gaza'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
+  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#fdfbf0', title: 'Éducation', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
   { href: '/librairies', icon: Library, color: '#2c0835', bg: '#ecfdf5', title: 'Librairies', arabic: 'المكتبة', description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.', tags: ['Corans', 'Livres', 'Enfants'], image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80' },
+  { href: '/jobs', icon: Briefcase, color: '#4a0e58', bg: '#ecfdf5', title: 'Emploi', arabic: 'الأمل', description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.', tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'], image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80' },
+  { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#fdfbf0', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
   { href: '/piscines', icon: Waves, color: '#662a94', bg: '#fdfbf0', title: 'Piscines Burkini', arabic: 'السباحة', description: 'Créneaux burkini et maillots couvrants en Île-de-France.', tags: ['Créneaux femmes', 'Burkini', 'IdF'], image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80' },
   { href: '/justice', icon: ShieldCheck, color: '#3a0a45', bg: '#fdfbf0', title: 'Justice & Droits', arabic: 'العدل', description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.', tags: ['Voile au travail', 'ARCOM', 'Discrimination'], image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80' },
   { href: '#', icon: MessageCircle, color: 'rgba(255,255,255,0.85)', bg: '#fdfbf0', title: 'Communauté', arabic: 'الأمة', description: 'Annuaire de compétences, marrainage, muqabala et espace de brainstorming.', tags: ['Marrainage', 'Muqabala', 'Compétences', 'Entraide'], image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80', soon: true },
 ];
 
 const TAG_COLORS: Record<string, string> = {
-  conference: '#a87830', maraude: '#8a6025', cours: '#c9973a',
-  iftar: '#d4a853', webinaire: '#6a481a', jeunesse: '#a87830',
-  famille: '#c9973a', collecte: '#8a6025', autre: '#a87830',
+  conference: '#b34d2c', maraude: '#96401f', cours: '#d1603a',
+  iftar: '#e6b48c', webinaire: '#78341a', jeunesse: '#b34d2c',
+  famille: '#d1603a', collecte: '#96401f', autre: '#b34d2c',
 };
 const CAT_LABELS: Record<string, string> = {
   conference: 'Conférence', maraude: 'Maraude', cours: 'Cours',
   iftar: 'Iftar', webinaire: 'Webinaire', jeunesse: 'Jeunesse',
   famille: 'Famille', collecte: 'Collecte', autre: 'Événement',
 };
-
-const PARTICLES = [
-  { x: '5%',  y: '15%', s: 2, d: 0   }, { x: '15%', y: '70%', s: 1, d: 2.5 },
-  { x: '25%', y: '40%', s: 3, d: 1.2 }, { x: '35%', y: '85%', s: 1, d: 4   },
-  { x: '45%', y: '20%', s: 2, d: 0.8 }, { x: '55%', y: '60%', s: 1, d: 3.2 },
-  { x: '65%', y: '30%', s: 2, d: 1.8 }, { x: '75%', y: '75%', s: 3, d: 0.4 },
-  { x: '85%', y: '50%', s: 1, d: 2.8 }, { x: '92%', y: '25%', s: 2, d: 1.5 },
-  { x: '10%', y: '55%', s: 1, d: 3.8 }, { x: '50%', y: '90%', s: 2, d: 2.2 },
-  { x: '70%', y: '10%', s: 1, d: 0.6 }, { x: '80%', y: '85%', s: 3, d: 1.0 },
-  { x: '40%', y: '5%',  s: 2, d: 4.5 }, { x: '20%', y: '95%', s: 1, d: 3.5 },
-  { x: '60%', y: '45%', s: 2, d: 2.0 }, { x: '90%', y: '65%', s: 1, d: 1.3 },
-];
-
-const LANTERNS = [
-  { x: '8%',  y: '15%', size: 28, delay: '0s',   dur: '7s'   },
-  { x: '88%', y: '20%', size: 22, delay: '1.5s',  dur: '8s'   },
-  { x: '15%', y: '70%', size: 18, delay: '3s',    dur: '6s'   },
-  { x: '82%', y: '65%', size: 24, delay: '0.8s',  dur: '9s'   },
-  { x: '50%', y: '8%',  size: 16, delay: '2s',    dur: '7.5s' },
-  { x: '35%', y: '82%', size: 20, delay: '4s',    dur: '8s'   },
-];
 
 const STEPS = [
   { icon: <Search size={24} color={V.primary} strokeWidth={1.8} />, step: '01', title: 'Cherche', desc: 'Tape ta ville, une catégorie ou un mot-clé. Filtre par département. Le moteur connaît plus de 1000 ressources vérifiées.' },
@@ -112,7 +102,7 @@ function buildStats(events: Event[], instituts: Institut[], jobOffers: JobOffer[
   ];
 }
 
-// ── Upcoming events (3 prochains) ─────────────────────────────────
+// ── Upcoming events (4 prochains) ──────────────────────────────────
 function buildUpcomingEvents(events: Event[]) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -120,7 +110,7 @@ function buildUpcomingEvents(events: Event[]) {
   return events
     .filter(e => new Date(e.date) >= today)
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, 3)
+    .slice(0, 4)
     .map(e => {
       const d = new Date(e.date);
       const dateStr = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'long' });
@@ -130,7 +120,7 @@ function buildUpcomingEvents(events: Event[]) {
         location: e.location + (e.city ? `, ${e.city}` : ''),
         organizer: e.organizer,
         tag: CAT_LABELS[e.category] ?? 'Événement',
-        color: TAG_COLORS[e.category] ?? '#c9973a',
+        color: TAG_COLORS[e.category] ?? V.primary,
       };
     });
 }
@@ -150,104 +140,175 @@ export default async function Home() {
 
       {/* ─── HERO ───────────────────────────────────────────── */}
       <section style={{
-        padding: '4.5rem 0 4rem',
-        background: 'linear-gradient(150deg, #100c04 0%, #0a0806 45%, #050404 100%)',
+        padding: '4.5rem 0 3rem',
+        background: `linear-gradient(160deg, ${V[50]} 0%, ${V[100]} 55%, ${V[200]} 100%)`,
         position: 'relative', overflow: 'hidden',
       }}>
-        {/* Halo principal — animé, dérive lentement */}
-        <div style={{ position: 'absolute', top: '-15%', left: '-8%', width: '55%', height: '80%', background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.45) 0%, rgba(20,14,4,0.18) 45%, transparent 70%)', pointerEvents: 'none', animation: 'halo-drift 18s ease-in-out infinite alternate' }} />
-        <div style={{ position: 'absolute', bottom: 0, right: 0, width: '35%', height: '60%', background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '-20%', right: '-10%', width: '45%', height: '80%', background: `radial-gradient(ellipse at center, ${V[300]}55 0%, transparent 65%)`, pointerEvents: 'none' }} />
 
-        {PARTICLES.map((p, i) => (
-          <div key={i} style={{ position: 'absolute', left: p.x, top: p.y, width: `${p.s}px`, height: `${p.s}px`, borderRadius: '50%', backgroundColor: '#d4a853', opacity: 0.4, pointerEvents: 'none', animation: `particle-float ${6 + p.d}s ease-in-out ${p.d}s infinite` }} />
-        ))}
-
-        {/* Mosaïque arabe — une seule couche, opacité subtile */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start',
-          gap: '0.5rem', padding: '1rem',
-          pointerEvents: 'none', overflow: 'hidden',
-          transform: 'rotate(-8deg) scale(1.15)',
-          transformOrigin: 'center center',
-          opacity: 0.08,
-        }}>
-          {Array.from({ length: 120 }).map((_, i) => (
-            <span key={i} style={{
-              fontFamily: "'Amiri', 'Scheherazade New', 'Traditional Arabic', serif",
-              fontSize: '1.6rem', fontWeight: 700,
-              color: '#d4a853', letterSpacing: '0.1em',
-              userSelect: 'none', whiteSpace: 'nowrap',
-            }}>
-              الواصل
-            </span>
-          ))}
-        </div>
-
-        <div className="container hero-grid" style={{ position: 'relative', zIndex: 1 }}>
-          <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.9)', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.03em', marginBottom: '2rem', border: '1px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)' }}>
-              <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#d4a853', display: 'inline-block' }} />
-              Qu&apos;est-ce que je cherche aujourd&apos;hui ?
-            </div>
-
-            <h1 style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.03em', color: '#fff', marginBottom: '1rem' }}>
-              Fini de chercher partout.{' '}
-              <span style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                Tout est ici.
-              </span>
-            </h1>
-
-            <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, marginBottom: '0.6rem', maxWidth: '430px', fontStyle: 'italic' }}>
-              Emploi voile OK impossible à trouver. Piscine burkini introuvable. Cours d&apos;arabe dispersés. Événements qu&apos;on rate.
-            </p>
-            <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.88)', lineHeight: 1.7, marginBottom: '2rem', maxWidth: '430px', fontWeight: 500 }}>
-              Al-Wasil centralise <strong style={{ color: 'rgba(255,255,255,0.85)' }}>tout ce que la communauté musulmane de France cherche</strong> — en un seul endroit, mis à jour par la communauté.
-            </p>
-
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <a href="#rubriques" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: '#fff', color: V[800], fontWeight: 700, fontSize: '0.9rem', textDecoration: 'none', borderRadius: '8px', boxShadow: '0 0 20px rgba(255,255,255,0.25), 0 4px 12px rgba(0,0,0,0.2)' }}>
-                Je cherche une ressource <ArrowRight size={14} />
-              </a>
-              <Link href="/contact?type=general" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.25rem', backgroundColor: 'rgba(212,168,83,0.12)', color: '#d4a853', fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', borderRadius: '8px', border: '1px solid rgba(212,168,83,0.35)' }}>
-                <Plus size={14} /> Proposer une fiche
-              </Link>
-            </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '760px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.9rem', backgroundColor: '#fff', color: V[600], borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.01em', marginBottom: '1.75rem', border: `1px solid ${V[300]}`, boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+            <Search size={12} />
+            Qu&apos;est-ce que je cherche aujourd&apos;hui ?
           </div>
 
-          {/* Mosaïque 3×3 */}
-          <div className="hero-mosaic">
-            {SECTIONS.slice(0, 9).map(s => (
-              <Link key={s.href} href={s.href} className="led-card-outer" style={{ aspectRatio: '1', textDecoration: 'none' }}>
-                <div className="led-spin" />
-                <div className="led-face" style={{ background: '#080604' }}>
-                  <s.icon size={22} color="#d4a853" strokeWidth={1.5} />
-                  <span style={{ fontSize: '0.54rem', fontWeight: 800, color: 'rgba(255,255,255,0.88)', textAlign: 'center', letterSpacing: '0.05em', textTransform: 'uppercase', lineHeight: 1.2, padding: '0 0.35rem' }}>
-                    {s.title}
-                  </span>
-                </div>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.4rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', color: V.dark, marginBottom: '1.1rem' }}>
+            Fini de chercher partout.{' '}
+            <span style={{ color: V.primary }}>Tout est ici.</span>
+          </h1>
+
+          <p style={{ fontSize: '1.05rem', color: V.muted, lineHeight: 1.65, marginBottom: '2.25rem', maxWidth: '540px', margin: '0 auto 2.25rem' }}>
+            Al-Wasil centralise <strong style={{ color: V.text }}>tout ce que la communauté musulmane de France cherche</strong> : événements, solidarité, emploi, hajj, et plus, mis à jour en continu.
+          </p>
+
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2.5rem' }}>
+            <a href="#evenements" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.85rem 1.75rem', backgroundColor: V.primary, color: '#fff', fontWeight: 700, fontSize: '0.92rem', textDecoration: 'none', borderRadius: '9999px', boxShadow: `0 8px 24px ${V.primary}40` }}>
+              J&apos;explore <ArrowRight size={15} />
+            </a>
+          </div>
+
+          {/* Pills catégories rapides */}
+          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {QUICK_CATEGORIES.map(c => (
+              <Link key={c.href} href={c.href} style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                padding: '0.5rem 1rem', backgroundColor: 'rgba(255,255,255,0.6)',
+                color: V.text, fontSize: '0.82rem', fontWeight: 600,
+                textDecoration: 'none', borderRadius: '9999px',
+                border: `1px solid ${V.border}`,
+              }}>
+                <c.icon size={14} color={V.primary} strokeWidth={2} />
+                {c.label}
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── TICKER STATS ───────────────────────────────────── */}
-      <section style={{ background: 'linear-gradient(180deg, #0d0b04 0%, #080604 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '0.85rem 0', overflow: 'hidden' }}>
-        <div style={{ position: 'relative' }}>
-          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '80px', zIndex: 2, background: 'linear-gradient(to right, #0d0b04, transparent)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '80px', zIndex: 2, background: 'linear-gradient(to left, #0d0b04, transparent)', pointerEvents: 'none' }} />
-          <div className="ticker-track">
-            {[...STATS, ...STATS].map((s, i) => {
-              const Icon = s.icon;
-              return (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', padding: '0 2.25rem', borderRight: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, whiteSpace: 'nowrap' }}>
-                  <Icon size={14} color="#d4a853" strokeWidth={1.8} style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>Plus de {s.count}</span>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 400, color: 'rgba(255,255,255,0.55)' }}>{s.label}</span>
+      {/* ─── ÉVÉNEMENTS (priorité n°1) ───────────────────────── */}
+      <section id="evenements" style={{ padding: '4rem 0', backgroundColor: '#fff' }}>
+        <div className="container">
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>Le plus recherché</span>
+              <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.35rem' }}>Événements à venir</h2>
+            </div>
+            <Link href="/events" style={{ fontSize: '0.85rem', fontWeight: 700, color: V.primary, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              Tout voir <ChevronRight size={15} />
+            </Link>
+          </div>
+
+          {UPCOMING_EVENTS.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: V.surface, borderRadius: '16px', border: `1px solid ${V.border}` }}>
+              <p style={{ color: V.muted, margin: 0, fontSize: '0.9rem' }}>
+                Aucun événement à venir pour le moment.{' '}
+                <Link href="/contact?type=evenement" style={{ color: V.primary, fontWeight: 600, textDecoration: 'none' }}>Proposer un événement →</Link>
+              </p>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.1rem' }}>
+              {UPCOMING_EVENTS.map(ev => <EventCard key={ev.title} {...ev} />)}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ─── RENTRÉE 2026 (module saisonnier) ───────────────── */}
+      <section style={{ padding: '3.5rem 0', background: `linear-gradient(135deg, ${V[100]} 0%, ${V[200]} 100%)` }}>
+        <div className="container">
+          <div style={{ marginBottom: '1.75rem' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: '#fff', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700, color: V[600], marginBottom: '0.75rem' }}>
+              <Sparkles size={12} /> SPÉCIAL RENTRÉE · Le bon moment pour s&apos;inscrire
+            </div>
+            <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em' }}>Prépare la rentrée 2026</h2>
+          </div>
+          <div className="featured-duo">
+            <Link href="/education" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', height: '240px', boxShadow: '0 8px 28px rgba(0,0,0,0.1)' }}>
+                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80" alt="Instituts et cours" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,25,23,0.88) 0%, rgba(28,25,23,0.15) 60%, transparent 100%)' }} />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
+                  <GraduationCap size={22} color="#fff" style={{ marginBottom: '0.5rem' }} />
+                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.25rem', margin: '0 0 0.4rem' }}>Instituts &amp; cours d&apos;arabe</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.82rem', margin: '0 0 0.9rem' }}>Coran, tajwid, arabe, halaqa : inscriptions ouvertes</p>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#fff', fontWeight: 700, fontSize: '0.82rem' }}>Voir les instituts <ArrowRight size={14} /></span>
                 </div>
-              );
-            })}
+              </div>
+            </Link>
+            <Link href="/librairies" style={{ textDecoration: 'none', display: 'block' }}>
+              <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', height: '240px', boxShadow: '0 8px 28px rgba(0,0,0,0.1)' }}>
+                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80" alt="Librairies" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,25,23,0.88) 0%, rgba(28,25,23,0.15) 60%, transparent 100%)' }} />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
+                  <Library size={22} color="#fff" style={{ marginBottom: '0.5rem' }} />
+                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.25rem', margin: '0 0 0.4rem' }}>Librairies islamiques</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.82rem', margin: '0 0 0.9rem' }}>Corans, manuels scolaires, livres jeunesse près de chez toi</p>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#fff', fontWeight: 700, fontSize: '0.82rem' }}>Voir les librairies <ArrowRight size={14} /></span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SOLIDARITÉ (présente, plus calme) ──────────────── */}
+      <section style={{ padding: '3.5rem 0', backgroundColor: '#fff' }}>
+        <div className="container">
+          <Link href="/solidarity" style={{ textDecoration: 'none', display: 'block' }}>
+            <div style={{
+              position: 'relative', borderRadius: '16px', overflow: 'hidden',
+              minHeight: '180px', display: 'flex', alignItems: 'center',
+              backgroundColor: V.surface, border: `1px solid ${V.border}`,
+              padding: '1.75rem 2rem', gap: '1.5rem', flexWrap: 'wrap',
+            }}>
+              <div style={{ width: 52, height: 52, borderRadius: '14px', backgroundColor: '#fff', border: `1px solid ${V.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <HeartHandshake size={24} color={V.primary} strokeWidth={1.8} />
+              </div>
+              <div style={{ flex: 1, minWidth: '240px' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: V.dark, margin: '0 0 0.35rem' }}>Solidarité &amp; cagnottes</h3>
+                <p style={{ fontSize: '0.85rem', color: V.muted, margin: 0, maxWidth: '480px' }}>Maraudes, cagnottes vérifiées, collectes d&apos;urgence. Agir ensemble, partout en France.</p>
+              </div>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: V.primary, fontWeight: 700, fontSize: '0.85rem', flexShrink: 0 }}>
+                Voir tout <ArrowRight size={14} />
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* ─── HAJJ & OMRA (identité dédiée) ───────────────────── */}
+      <section style={{ padding: '4rem 0', background: 'linear-gradient(135deg, #1c1917 0%, #2d2620 100%)' }}>
+        <div className="container">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: '280px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '9999px', fontSize: '0.7rem', fontWeight: 700, color: V[300], marginBottom: '1rem', border: '1px solid rgba(255,255,255,0.12)' }}>
+                <Plane size={12} /> ESPACE DÉDIÉ
+              </div>
+              <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.025em', marginBottom: '0.75rem' }}>Hajj &amp; Omra 2026</h2>
+              <p style={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '440px' }}>
+                Comparez les agences agréées, les formules et les prix. Vous êtes une agence Hajj/Omra ? Faites-vous référencer sur Al-Wasil.
+              </p>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <Link href="/hajj" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: V.primary, color: '#fff', fontWeight: 700, fontSize: '0.85rem', textDecoration: 'none', borderRadius: '9999px' }}>
+                  Comparer les agences <ArrowRight size={14} />
+                </Link>
+                <Link href="/annonceurs" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.75rem 1.5rem', backgroundColor: 'transparent', color: '#fff', fontWeight: 600, fontSize: '0.85rem', textDecoration: 'none', borderRadius: '9999px', border: '1px solid rgba(255,255,255,0.25)' }}>
+                  Vous êtes une agence ?
+                </Link>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', flex: 1, minWidth: '280px' }}>
+              {[
+                { label: 'Agences agréées', value: '13' },
+                { label: 'Formules comparées', value: '20+' },
+                { label: 'Départs IDF', value: 'Toute l\'année' },
+              ].map(s => (
+                <div key={s.label} style={{ flex: '1 1 140px', padding: '1.25rem', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>{s.value}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -280,54 +341,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ─── FEATURED : ÉVÉNEMENTS + SOLIDARITÉ ──────────────── */}
-      <section id="rubriques" style={{ backgroundColor: '#fafaf8', padding: '3rem 0', borderBottom: `1px solid ${V.border}` }}>
-        <div className="container">
-          <div style={{ marginBottom: '1.75rem' }}>
-            <span style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', color: V.primary, textTransform: 'uppercase' }}>Les plus recherchés</span>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.35rem' }}>Événements &amp; Solidarité</h2>
-          </div>
-          <div className="featured-duo">
-            {/* Événements */}
-            <Link href="/events" style={{ textDecoration: 'none', display: 'block' }}>
-              <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', height: '260px', cursor: 'pointer', boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
-                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80" alt="Événements islamiques" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,8,4,0.92) 0%, rgba(10,8,4,0.3) 60%, transparent 100%)' }} />
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', backgroundColor: 'rgba(201,151,58,0.2)', border: '1px solid rgba(201,151,58,0.5)', borderRadius: '4px', padding: '3px 10px', marginBottom: '0.65rem', width: 'fit-content' }}>
-                    <Calendar size={12} color="#d4a853" />
-                    <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#d4a853', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Événements</span>
-                  </div>
-                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.3rem', margin: '0 0 0.5rem', lineHeight: 1.2 }}>Conférences, maraudes &amp; rencontres</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.82rem', margin: '0 0 1rem', lineHeight: 1.5 }}>Tous les événements islamiques en Île-de-France et en France</p>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#d4a853', fontWeight: 700, fontSize: '0.82rem' }}>
-                    Voir tous les événements <ArrowRight size={14} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-            {/* Solidarité */}
-            <Link href="/solidarity" style={{ textDecoration: 'none', display: 'block' }}>
-              <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', height: '260px', cursor: 'pointer', boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
-                <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=900&q=80" alt="Solidarité" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,8,4,0.92) 0%, rgba(10,8,4,0.3) 60%, transparent 100%)' }} />
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', backgroundColor: 'rgba(220,38,38,0.2)', border: '1px solid rgba(220,38,38,0.4)', borderRadius: '4px', padding: '3px 10px', marginBottom: '0.65rem', width: 'fit-content' }}>
-                    <HeartHandshake size={12} color="#f87171" />
-                    <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#f87171', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Solidarité</span>
-                  </div>
-                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.3rem', margin: '0 0 0.5rem', lineHeight: 1.2 }}>Maraudes, cagnottes &amp; collectes</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.82rem', margin: '0 0 1rem', lineHeight: 1.5 }}>Agir ensemble pour ceux qui en ont besoin, partout en France</p>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#f87171', fontWeight: 700, fontSize: '0.82rem' }}>
-                    Rejoindre une initiative <ArrowRight size={14} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ─── TOUTES LES RUBRIQUES ───────────────────────────── */}
       <div style={{ backgroundColor: '#fff', padding: '3rem 0 0' }}>
         <div className="container" style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -337,7 +350,6 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Grille full-bleed — responsive */}
       <section style={{ backgroundColor: '#fff' }}>
         <div className="sections-grid">
           {SECTIONS.map(s => (
@@ -352,62 +364,40 @@ export default async function Home() {
               tags={s.tags}
               soon={s.soon}
               image={s.image}
-              iconNode={<s.icon size={17} color="#d4a853" strokeWidth={1.8} />}
+              iconNode={<s.icon size={17} color="#fff" strokeWidth={1.8} />}
             />
           ))}
         </div>
       </section>
 
-      {/* ─── ÉVÉNEMENTS ─────────────────────────────────────── */}
-      <section style={{ padding: '3rem 0 5rem', backgroundColor: '#fff' }}>
-        <div className="container">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ width: '3px', height: '16px', backgroundColor: V[600], borderRadius: '9999px', display: 'block', flexShrink: 0 }} />
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.dark, textTransform: 'uppercase' }}>Événements à venir</span>
-            </div>
-            <Link href="/events" style={{ fontSize: '0.8rem', fontWeight: 600, color: V.primary, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-              Tout voir <ChevronRight size={14} />
-            </Link>
+      {/* ─── TICKER STATS ───────────────────────────────────── */}
+      <section style={{ background: `linear-gradient(180deg, ${V.dark} 0%, #100e0c 100%)`, padding: '0.85rem 0', overflow: 'hidden' }}>
+        <div style={{ position: 'relative' }}>
+          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '80px', zIndex: 2, background: `linear-gradient(to right, ${V.dark}, transparent)`, pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '80px', zIndex: 2, background: `linear-gradient(to left, ${V.dark}, transparent)`, pointerEvents: 'none' }} />
+          <div className="ticker-track">
+            {[...STATS, ...STATS].map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', padding: '0 2.25rem', borderRight: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                  <Icon size={14} color={V[300]} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>Plus de {s.count}</span>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 400, color: 'rgba(255,255,255,0.55)' }}>{s.label}</span>
+                </div>
+              );
+            })}
           </div>
-
-          {UPCOMING_EVENTS.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: '#fdfbf2', borderRadius: '16px', border: '1px solid #f0dea0' }}>
-              <p style={{ color: V.muted, margin: 0, fontSize: '0.9rem' }}>
-                Aucun événement à venir pour le moment.{' '}
-                <Link href="/contact?type=evenement" style={{ color: V.primary, fontWeight: 600, textDecoration: 'none' }}>Proposer un événement →</Link>
-              </p>
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
-              {UPCOMING_EVENTS.map(ev => <EventCard key={ev.title} {...ev} />)}
-            </div>
-          )}
         </div>
       </section>
 
       {/* ─── TÉMOIGNAGES ────────────────────────────────────── */}
-      <section style={{ background: 'linear-gradient(160deg, #0a0806 0%, #100c04 50%, #0a0806 100%)', padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '10%', left: '5%', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,151,58,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '10%', right: '5%', width: '250px', height: '250px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,151,58,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-
-        {LANTERNS.map((l, i) => (
-          <div key={i} style={{ position: 'absolute', left: l.x, top: l.y, pointerEvents: 'none', opacity: 0.18, animation: `particle-float ${l.dur} ease-in-out ${l.delay} infinite` }}>
-            <svg width={l.size} height={l.size * 1.5} viewBox="0 0 20 30" fill="none">
-              <line x1="10" y1="0" x2="10" y2="4" stroke="#d4a853" strokeWidth="1.5" strokeLinecap="round"/>
-              <rect x="6" y="4" width="8" height="2" rx="1" fill="#d4a853"/>
-              <path d="M4 6 Q3 13 4 20 L16 20 Q17 13 16 6 Z" fill="rgba(212,168,83,0.2)" stroke="#d4a853" strokeWidth="1"/>
-              <line x1="4" y1="11" x2="16" y2="11" stroke="#d4a853" strokeWidth="0.6" opacity="0.5"/>
-              <line x1="4" y1="16" x2="16" y2="16" stroke="#d4a853" strokeWidth="0.6" opacity="0.5"/>
-              <rect x="6" y="20" width="8" height="2" rx="1" fill="#d4a853"/>
-              <ellipse cx="10" cy="27" rx="4" ry="2" fill="rgba(212,168,83,0.4)"/>
-            </svg>
-          </div>
-        ))}
+      <section style={{ background: `linear-gradient(160deg, ${V.dark} 0%, #221d18 50%, ${V.dark} 100%)`, padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '10%', left: '5%', width: '300px', height: '300px', borderRadius: '50%', background: `radial-gradient(circle, ${V.primary}14 0%, transparent 70%)`, pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '10%', right: '5%', width: '250px', height: '250px', borderRadius: '50%', background: `radial-gradient(circle, ${V.primary}10 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>Ils utilisent Al-Wasil</span>
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V[300], textTransform: 'uppercase' }}>Ils utilisent Al-Wasil</span>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.025em', marginTop: '0.5rem' }}>Ce que dit la communauté</h2>
           </div>
           <div className="testimonials-grid">
@@ -417,11 +407,11 @@ export default async function Home() {
             <Link href="/contact?type=temoignage" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
               padding: '0.65rem 1.5rem',
-              border: '1px solid rgba(201,151,58,0.4)',
-              color: V.primary, textDecoration: 'none',
+              border: `1px solid ${V.primary}66`,
+              color: V[300], textDecoration: 'none',
               fontWeight: 600, fontSize: '0.85rem',
-              borderRadius: '6px',
-              backgroundColor: 'rgba(201,151,58,0.08)',
+              borderRadius: '9999px',
+              backgroundColor: `${V.primary}14`,
             }}>
               Partager ton expérience →
             </Link>
@@ -430,8 +420,8 @@ export default async function Home() {
       </section>
 
       {/* ─── CONTRIBUTION CTA ───────────────────────────────── */}
-      <section style={{ background: 'linear-gradient(150deg, #100c04 0%, #0a0806 45%, #050404 100%)', padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '-20%', left: '-5%', width: '50%', height: '120%', background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.28) 0%, rgba(20,14,4,0.1) 50%, transparent 70%)', pointerEvents: 'none' }} />
+      <section style={{ background: `linear-gradient(150deg, ${V.dark} 0%, #221d18 45%, ${V.dark} 100%)`, padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '-20%', left: '-5%', width: '50%', height: '120%', background: `radial-gradient(ellipse at center, ${V.primary}22 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
@@ -448,7 +438,7 @@ export default async function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '2.5rem' }}>
             {CONTRIBUTION_ITEMS.map((item, i) => (
               <Link key={i} href={item.href} style={{ textDecoration: 'none', display: 'flex', alignItems: 'flex-start', gap: '0.875rem', padding: '1.1rem 1.25rem', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}>
-                <div style={{ width: 36, height: 36, borderRadius: '8px', flexShrink: 0, backgroundColor: 'rgba(212,168,83,0.15)', border: '1px solid rgba(212,168,83,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.85)' }}>
+                <div style={{ width: 36, height: 36, borderRadius: '8px', flexShrink: 0, backgroundColor: `${V.primary}26`, border: `1px solid ${V.primary}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.85)' }}>
                   {item.icon}
                 </div>
                 <div>
@@ -460,7 +450,7 @@ export default async function Home() {
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <Link href="/contact?type=general" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.9rem 2rem', backgroundColor: '#fff', color: '#2c0835', fontWeight: 700, fontSize: '0.95rem', textDecoration: 'none', borderRadius: '8px', boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
+            <Link href="/contact?type=general" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.9rem 2rem', backgroundColor: '#fff', color: V.dark, fontWeight: 700, fontSize: '0.95rem', textDecoration: 'none', borderRadius: '9999px', boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
               <Plus size={16} /> Contribuer à Al-Wasil
             </Link>
             <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.75rem', marginTop: '1rem' }}>Gratuit · Sans compte · En 2 minutes</p>
