@@ -13,6 +13,12 @@ async function main() {
   const today = new Date().toISOString().split('T')[0];
   console.log(`\n==== Al-Wasil Scraper · ${today} ====\n`);
 
+  const required = ['GEMINI_API_KEY', 'DATABASE_URL'];
+  const missing = required.filter((name) => !process.env[name]?.trim());
+  if (missing.length) {
+    throw new Error(`Configuration manquante: ${missing.join(', ')}. Vérifier les secrets GitHub Actions.`);
+  }
+
   const alreadyRan = await checkAlreadyRanToday();
   if (alreadyRan) {
     console.log('Already ran today. Exiting.');

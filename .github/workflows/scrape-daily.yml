@@ -33,8 +33,16 @@ jobs:
         working-directory: scripts/scraper
         run: npm ci
 
+      - name: Validate required secrets
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
+        run: |
+          test -n "$GEMINI_API_KEY" || { echo "::error::Secret GEMINI_API_KEY manquant"; exit 1; }
+          test -n "$DATABASE_URL" || { echo "::error::Secret DATABASE_URL manquant"; exit 1; }
+          echo "Secrets requis présents (valeurs masquées)."
+
       # Tentative 1 — retry automatique jusqu'à 3 fois si une source plante
-      # Toutes les clés sont dans un seul secret JSON : SCRAPING_ALWASIL_ALL
       - name: Run scraper (attempt 1)
         id: scrape1
         working-directory: scripts/scraper

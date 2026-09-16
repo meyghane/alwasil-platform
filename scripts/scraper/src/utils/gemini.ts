@@ -25,6 +25,7 @@ export type GeminiEvent = {
 };
 
 async function callGemini(prompt: string): Promise<GeminiEvent[]> {
+  if (!GEMINI_KEY) throw new Error('GEMINI_API_KEY est absente');
   // On découvre les modèles réellement disponibles pour cette clé : les noms
   // et accès peuvent varier selon le projet Google et évoluer dans le temps.
   let available: string[] = [];
@@ -47,6 +48,8 @@ async function callGemini(prompt: string): Promise<GeminiEvent[]> {
   const models: Array<[string, boolean]> = (discovered.length ? discovered : preferred)
     .flatMap(model => [[model, true] as [string, boolean], [model, false] as [string, boolean]]);
 
+  let successfulResponses = 0;
+  let lastError = '';
   for (const [model, useSearch] of models) {
     try {
       const body: Record<string, unknown> = {
@@ -60,7 +63,14 @@ async function callGemini(prompt: string): Promise<GeminiEvent[]> {
         { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
       );
 
-      if (!res.ok) { console.warn(`[gemini] ${model} (${useSearch ? 'search' : 'texte'}) HTTP ${res.status}: ${(await res.text()).slice(0, 180)}`); continue; }
+      if (!res.ok) {
+        const detail = (await res.text()).slice(0, 180);
+        lastError = `${model} (${useSearch ? 'search' : 'texte'}) HTTP ${res.status}: ${detail}`;
+        console.warn(`[gemini] ${lastError}`);
+        continue;
+      }
+
+      successfulResponses++;
 
       const data = await res.json() as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
       const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
@@ -75,6 +85,9 @@ async function callGemini(prompt: string): Promise<GeminiEvent[]> {
     } catch (e) {
       console.warn(`[gemini] ${model} error:`, e);
     }
+  }
+  if (successfulResponses === 0) {
+    throw new Error(`Gemini n'a accepté aucune requête. Dernière erreur: ${lastError || 'réponse inconnue'}`);
   }
   return [];
 }
