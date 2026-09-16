@@ -320,7 +320,7 @@ a {
 .service-navigator__head p { max-width: 650px; margin: 30px 0 0; color: #555; font-size: clamp(15px, 1.5vw, 20px); line-height: 1.55; }
 .service-navigator__priorities { max-width: 1380px; margin: 0 auto 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .service-navigator__priorities > * { min-width: 0; border-radius: 26px; overflow: hidden; }
-.service-navigator__services { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.service-navigator__services { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .service-navigator__services > * { min-width: 0; border-radius: 22px; overflow: hidden; }
 
 /* ── HOW IT WORKS — editorial steps ────────────────────────── */

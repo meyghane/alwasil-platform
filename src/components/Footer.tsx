@@ -5,7 +5,7 @@ const sections = [
   { title: 'Explorer', links: [['Événements', '/events'], ['Solidarité & cagnottes', '/solidarity'], ['Cours & instituts', '/education'], ['Librairies', '/librairies'], ['Hajj & Omra', '/hajj']] },
   { title: 'Services', links: [['Emploi', '/jobs'], ['Santé & accompagnement', '/sante'], ['Piscines burkini', '/piscines'], ['Justice & droits', '/justice']] },
   { title: 'Participer', links: [['Proposer une fiche', '/contact?type=initiative'], ['Devenir annonceur', '/annonceurs'], ['Nous contacter', '/contact']] },
-  { title: 'Al-Wasil', links: [['Le blog', '/blog'], ['Le guide', '/guide'], ['Mentions légales', '/legal#mentions'], ['Confidentialité', '/legal#confidentialite']] },
+  { title: 'Al-Wasil', links: [['Premiers pas', '/guide'], ['Le blog', '/blog'], ['Mentions légales', '/legal#mentions'], ['Confidentialité', '/legal#confidentialite'], ['Conditions générales d’utilisation', '/legal#cgu']] },
 ];
 const highlights = [
   { icon: CalendarDays, title: 'Se retrouver', text: 'Des événements à découvrir.' },

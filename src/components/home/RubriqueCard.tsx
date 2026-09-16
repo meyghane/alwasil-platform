@@ -27,7 +27,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
       style={{
         position: 'relative',
         overflow: 'hidden',
-        minHeight: priority ? '430px' : '300px',
+        minHeight: priority ? '430px' : '260px',
         cursor: soon ? 'default' : 'pointer',
         opacity: soon ? 0.7 : 1,
       }}

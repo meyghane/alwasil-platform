@@ -2,7 +2,7 @@ import Link from 'next/link';
 import {
   ArrowRight, Users, BookOpen, Calendar, Briefcase,
   Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
-  HeartHandshake, UserCheck, Landmark, ShieldCheck, MessageCircle,
+  HeartHandshake, UserCheck, Landmark, ShieldCheck,
   Search, CheckCircle, Zap, Plus,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -52,7 +52,6 @@ const SECTIONS: Section[] = [
   { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#f0ebfa', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
   { href: '/piscines', icon: Waves, color: '#662a94', bg: '#f0ebfa', title: 'Piscines Burkini', arabic: 'السباحة', description: 'Créneaux burkini et maillots couvrants en Île-de-France.', tags: ['Créneaux femmes', 'Burkini', 'IdF'], image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80' },
   { href: '/justice', icon: ShieldCheck, color: '#3a0a45', bg: '#f0ebfa', title: 'Justice & Droits', arabic: 'العدل', description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.', tags: ['Voile au travail', 'ARCOM', 'Discrimination'], image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80' },
-  { href: '#', icon: MessageCircle, color: 'rgba(255,255,255,0.85)', bg: '#f0ebfa', title: 'Communauté', arabic: 'الأمة', description: 'Annuaire de compétences, marrainage, muqabala et espace de brainstorming.', tags: ['Marrainage', 'Muqabala', 'Compétences', 'Entraide'], image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80', soon: true },
 ];
 
 const CAT_LABELS: Record<string, string> = {
