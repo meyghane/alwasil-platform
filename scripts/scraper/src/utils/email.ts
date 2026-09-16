@@ -126,7 +126,7 @@ export async function sendDigestEmail(items: DigestItem[]): Promise<void> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Al-Wasil Scraper <onboarding@resend.dev>',
+        from: 'Al-Wasil <notifications@al-wasil.fr>',
         to: [ADMIN_EMAIL],
         subject: `Al-Wasil · ${items.length} à valider · ${today}`,
         html,

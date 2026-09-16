@@ -50,8 +50,11 @@ async function callGemini(prompt: string): Promise<GeminiEvent[]> {
     ...preferred.filter(model => available.includes(model)),
     ...available.filter(model => /flash/i.test(model) && !preferred.includes(model)),
   ];
-  const models: Array<[string, boolean]> = (discovered.length ? discovered : preferred)
-    .flatMap(model => [[model, true] as [string, boolean], [model, false] as [string, boolean]]);
+  // Un seul modèle actif par recherche : tester toute la liste consommait le
+  // quota inutilement. Le texte reste un secours pour le même modèle si la
+  // recherche Google est momentanément indisponible.
+  const activeModel = (discovered.length ? discovered : preferred)[0];
+  const models: Array<[string, boolean]> = [[activeModel, true], [activeModel, false]];
 
   let successfulResponses = 0;
   let lastError = '';
@@ -102,27 +105,22 @@ export async function scrapeEventsWithGemini(existingTitles: Set<string>): Promi
   const allEvents: GeminiEvent[] = [];
   const seenTitles = new Set(existingTitles);
 
-  // Run all strategies in parallel (3 at a time)
-  for (let i = 0; i < STRATEGIES.length; i += 3) {
-    const batch = STRATEGIES.slice(i, i + 3);
-    const results = await Promise.all(batch.map(async (strategy) => {
-      const existingList = [...seenTitles].slice(0, 20).join(' | ') || 'aucun';
-      const prompt = `Aujourd'hui : ${today}. Cherche 5 vrais événements islamiques à venir en France via cette recherche : "${strategy}". Priorité Île-de-France. Ces titres sont déjà dans la base, NE PAS les inclure : ${existingList}. Retourne UNIQUEMENT un tableau JSON valide, sans markdown. Chaque objet : titre (string), date_iso (YYYY-MM-DD, après ${today}), heure (ex: 14h00), ville, departement (2 chiffres), organisateur, categorie (conference/maraude/cours/iftar/webinaire/collecte/autre), description (2 phrases max), url_source (URL réelle), gratuit (boolean).`;
-      return callGemini(prompt);
-    }));
-
-    for (const events of results) {
-      for (const ev of events) {
+  // Une recherche à la fois : cela évite les pics RPM et laisse une chance à
+  // chaque stratégie de produire des données.
+  for (const strategy of STRATEGIES) {
+    const existingList = [...seenTitles].slice(0, 20).join(' | ') || 'aucun';
+    const prompt = `Aujourd'hui : ${today}. Cherche 5 vrais événements islamiques à venir en France via cette recherche : "${strategy}". Priorité Île-de-France. Ces titres sont déjà dans la base, NE PAS les inclure : ${existingList}. Retourne UNIQUEMENT un tableau JSON valide, sans markdown. Chaque objet : titre (string), date_iso (YYYY-MM-DD, après ${today}), heure (ex: 14h00), ville, departement (2 chiffres), organisateur, categorie (conference/maraude/cours/iftar/webinaire/collecte/autre), description (2 phrases max), url_source (URL réelle), gratuit (boolean).`;
+    const events = await callGemini(prompt);
+    for (const ev of events) {
         if (!ev.titre || !ev.date_iso) continue;
         if (ev.date_iso < today) continue;
         if (seenTitles.has(ev.titre.toLowerCase())) continue;
         seenTitles.add(ev.titre.toLowerCase());
         allEvents.push(ev);
-      }
     }
 
-    // Respect rate limits
-    if (i + 3 < STRATEGIES.length) await sleep(2000);
+    // Pause courte entre deux recherches pour respecter le RPM.
+    if (strategy !== STRATEGIES[STRATEGIES.length - 1]) await sleep(3000);
   }
 
   console.log(`[gemini] Total unique events: ${allEvents.length}`);
