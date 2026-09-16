@@ -43,8 +43,13 @@ async function callGemini(prompt: string): Promise<GeminiEvent[]> {
     }
   } catch (e) { console.warn('[gemini] catalogue inaccessible:', e); }
 
-  const preferred = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.0-flash'];
-  const discovered = preferred.filter(model => available.includes(model));
+  // Google peut retirer les anciens modèles pour les nouveaux projets. On
+  // privilégie donc les modèles réellement annoncés par le catalogue de la clé.
+  const preferred = ['gemini-3.6-flash', 'gemini-3.6-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+  const discovered = [
+    ...preferred.filter(model => available.includes(model)),
+    ...available.filter(model => /flash/i.test(model) && !preferred.includes(model)),
+  ];
   const models: Array<[string, boolean]> = (discovered.length ? discovered : preferred)
     .flatMap(model => [[model, true] as [string, boolean], [model, false] as [string, boolean]]);
 
