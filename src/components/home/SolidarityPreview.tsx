@@ -18,9 +18,10 @@ export default async function SolidarityPreview() {
     { label: 'Orphelins', title: 'Accompagner dans la durée', text: 'Découvrez les programmes de soutien et de parrainage.', href: '/solidarity#orphelins', image: '/images/testimonials/education-library.png' },
     { label: 'Palestine', title: 'Soutenir les familles', text: 'Retrouvez les appels à la solidarité et les collectes humanitaires.', href: '/solidarity#palestine', image: '/images/testimonials/solidarite.png' },
   ];
-  return <section aria-labelledby="solidarity-preview-title" style={{ background: '#f5f3f8', padding: '64px 0 48px', overflow: 'hidden' }}>
+  return <section aria-labelledby="solidarity-preview-title" className="solidarity-showcase">
     <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 20px' }}>
-      <div style={{ textAlign: 'center', maxWidth: 650, margin: '0 auto 24px' }}>
+      <div className="solidarity-showcase__label" aria-hidden="true">SOLIDARITÉ</div>
+      <div style={{ textAlign: 'left', maxWidth: 650, margin: '0 0 24px' }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#6540b5', fontSize: 12, fontWeight: 600 }}><HeartHandshake size={17} /> SOLIDARITÉ</span>
         <h2 id="solidarity-preview-title" style={{ fontSize: 'clamp(30px, 4.5vw, 60px)', lineHeight: 1.05, fontWeight: 500, letterSpacing: '-.05em', margin: '16px 0', textTransform: 'uppercase' }}>Un geste pour vous.<br/><span style={{ color: '#7652CA' }}>Beaucoup pour les autres.</span></h2>
         <p style={{ color: '#59565f', fontSize: 14, lineHeight: 1.6 }}>Du temps, un don, un engagement : trouvez votre façon d’agir.</p>
@@ -33,7 +34,7 @@ export default async function SolidarityPreview() {
           <div style={{ position: 'relative' }}><h3 style={{ fontSize: 25, lineHeight: 1.1, fontWeight: 500, letterSpacing: '-.035em', marginBottom: 10 }}>{card.title}</h3><p style={{ fontSize: 12, lineHeight: 1.55, color: '#fff' }}>{card.text}</p></div>
         </Link>)}
       </div>
-      <div style={{ textAlign: 'center' }}><Link href="/solidarity" style={{ display: 'inline-flex', alignItems: 'center', gap: 16, borderRadius: 999, padding: '14px 24px', background: '#080808', color: '#ECFF58', fontSize: 14, fontWeight: 600 }}>Voir plus de projets solidaires <ArrowUpRight size={18}/></Link><p style={{ marginTop: 12, fontSize: 11, color: '#59565f' }}>Images d’illustration · Dates et modalités à confirmer auprès des organisateurs.</p></div>
+      <div style={{ textAlign: 'left' }}><Link href="/solidarity" style={{ display: 'inline-flex', alignItems: 'center', gap: 16, borderRadius: 999, padding: '14px 24px', background: '#080808', color: '#ECFF58', fontSize: 14, fontWeight: 600 }}>Voir plus de projets solidaires <ArrowUpRight size={18}/></Link><p style={{ marginTop: 12, fontSize: 11, color: '#59565f' }}>Images d’illustration · Dates et modalités à confirmer auprès des organisateurs.</p></div>
     </div>
   </section>;
 }

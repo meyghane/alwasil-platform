@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 type Props = {
   href: string;
   iconNode: React.ReactNode;
@@ -13,9 +14,10 @@ type Props = {
   tags: string[];
   image: string;
   soon?: boolean;
+  priority?: boolean;
 };
 
-export default function RubriqueCard({ href, iconNode, title, arabic, description, tags, soon, image }: Props) {
+export default function RubriqueCard({ href, iconNode, title, arabic, description, tags, soon, image, priority }: Props) {
   const [hovered, setHovered] = useState(false);
 
   const card = (
@@ -25,7 +27,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
       style={{
         position: 'relative',
         overflow: 'hidden',
-        height: '260px',
+        minHeight: priority ? '430px' : '300px',
         cursor: soon ? 'default' : 'pointer',
         opacity: soon ? 0.7 : 1,
       }}
@@ -54,21 +56,21 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
         position: 'absolute', inset: 0,
         display: 'flex', flexDirection: 'column',
         justifyContent: 'flex-end',
-        padding: '1.1rem 1.25rem',
+        padding: priority ? '1.75rem' : '1.25rem',
       }}>
         <div style={{
-          width: 38, height: 38, borderRadius: '4px',
+          width: priority ? 54 : 44, height: priority ? 54 : 44, borderRadius: '50%',
           border: '1.5px solid #9474d7',
           backgroundColor: '#7652CA',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          marginBottom: '0.55rem',
+          marginBottom: priority ? '1rem' : '0.7rem',
           backdropFilter: 'blur(4px)',
         }}>
           {iconNode}
         </div>
 
         <h3 style={{
-          color: '#fff', fontWeight: 700, fontSize: '1rem',
+          color: '#fff', fontWeight: 750, fontSize: priority ? 'clamp(2rem, 3vw, 3.5rem)' : '1.25rem',
           margin: '0 0 1px', lineHeight: 1.2,
           textShadow: '0 1px 4px rgba(0,0,0,0.4)',
         }}>
@@ -92,11 +94,8 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
         </span>
 
         <p style={{
-          color: 'rgba(255,255,255,0.78)', fontSize: '0.73rem',
-          lineHeight: 1.5, margin: '0 0 0.5rem',
-          maxHeight: hovered ? '56px' : '0px',
-          overflow: 'hidden',
-          transition: 'max-height 0.35s ease',
+          color: '#fff', fontSize: priority ? '0.9rem' : '0.78rem',
+          lineHeight: 1.5, margin: '0 0 0.85rem', maxWidth: '390px',
         }}>
           {description}
         </p>
@@ -114,6 +113,7 @@ export default function RubriqueCard({ href, iconNode, title, arabic, descriptio
             </span>
           ))}
         </div>
+        <span style={{ position: 'absolute', right: priority ? 24 : 18, top: priority ? 24 : 18, width: priority ? 50 : 42, height: priority ? 50 : 42, borderRadius: '50%', background: '#fff', color: '#080808', display: 'grid', placeItems: 'center' }}><ArrowUpRight size={priority ? 24 : 20} /></span>
       </div>
     </div>
   );

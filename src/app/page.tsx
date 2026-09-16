@@ -3,7 +3,7 @@ import {
   ArrowRight, Users, BookOpen, Calendar, Briefcase,
   Waves, Library, Stethoscope, HandCoins, Scale, Plane, Building2,
   HeartHandshake, UserCheck, Landmark, ShieldCheck, MessageCircle,
-  Search, CheckCircle, Zap, Plus, GraduationCap, Sparkles,
+  Search, CheckCircle, Zap, Plus,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { Institut } from '@/data/institutes';
@@ -12,10 +12,11 @@ import type { JobOffer } from '@/data/jobs';
 import { getInstituts, getEvents, getJobOffers } from '@/lib/db-queries';
 import { HOME_THEME as V } from '@/lib/home-theme';
 import RubriqueCard from '@/components/home/RubriqueCard';
-import EventCard from '@/components/home/EventCard';
 import EditorialHero from '@/components/home/EditorialHero';
 import CommunityStories from '@/components/home/CommunityStories';
 import SolidarityPreview from '@/components/home/SolidarityPreview';
+import UpcomingEventsRail from '@/components/home/UpcomingEventsRail';
+import BackToSchool from '@/components/home/BackToSchool';
 import PrayerTimesBar from '@/components/PrayerTimesBar';
 
 export const revalidate = 3600;
@@ -133,71 +134,35 @@ export default async function Home() {
       <EditorialHero />
       <PrayerTimesBar />
 
-      {/* ─── ÉVÉNEMENTS (priorité n°1) ───────────────────────── */}
-      <section id="evenements" style={{ padding: 'clamp(54px, 7vw, 96px) 0', backgroundColor: '#f5f3f8', color: '#080808', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 clamp(18px, 4vw, 56px)' }}>
-          <div style={{ maxWidth: 920, margin: '0 auto 40px', textAlign: 'center' }}>
-            <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.13em', color: '#7652CA', textTransform: 'uppercase' }}>Se retrouver · Échanger · Apprendre</span>
-            <h2 style={{ fontSize: 'clamp(38px, 6vw, 78px)', fontWeight: 500, lineHeight: 0.94, color: '#080808', letterSpacing: '-0.06em', margin: '18px 0 0', textTransform: 'uppercase' }}>Les prochains rendez-vous<br/><span style={{ color: '#7652CA' }}>de la communauté.</span></h2>
-          </div>
+      {/* ─── NAVIGATEUR DE SERVICES ─────────────────────────── */}
+      <section className="service-navigator" aria-labelledby="service-navigator-title">
+        <div className="service-navigator__head">
+          <span>La communauté, à portée de main</span>
+          <h2 id="service-navigator-title">Que cherches-tu<br/>aujourd&apos;hui ?</h2>
+          <p>Événements, entraide, voyage, apprentissage et services du quotidien : choisis ton besoin.</p>
+        </div>
+        <div className="service-navigator__priorities">
+          {SECTIONS.slice(0, 3).map(s => <RubriqueCard key={s.href} href={s.href} title={s.title} arabic={s.arabic} description={s.description} tags={s.tags} soon={s.soon} image={s.image} color={V.primary} bg={V.surface} priority iconNode={<s.icon size={23} color="#fff" strokeWidth={1.8} />} />)}
+        </div>
+        <div className="service-navigator__services">
+          {SECTIONS.slice(3).map(s => <RubriqueCard key={s.href} href={s.href} title={s.title} arabic={s.arabic} description={s.description} tags={s.tags} soon={s.soon} image={s.image} color={V.primary} bg={V.surface} iconNode={<s.icon size={19} color="#fff" strokeWidth={1.8} />} />)}
+        </div>
+      </section>
 
+      {/* ─── ÉVÉNEMENTS (priorité n°1) ───────────────────────── */}
+      <section id="evenements" className="events-showcase">
+        <div style={{ maxWidth: 1540, margin: '0 auto' }}>
+          <div className="events-showcase__label" aria-hidden="true">ÉVÉNEMENTS</div>
           {UPCOMING_EVENTS.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: '#fff', borderRadius: 18, border: `1px solid ${V.border}` }}>
+            <div style={{ margin: '0 clamp(18px, 4vw, 56px)', textAlign: 'center', padding: '3rem', backgroundColor: '#fff', borderRadius: 18, border: `1px solid ${V.border}` }}>
               <p style={{ color: V.muted, margin: 0, fontSize: '0.9rem' }}>
                 Aucun événement à venir pour le moment.{' '}
                 <Link href="/contact?type=evenement" style={{ color: V.primary, fontWeight: 600, textDecoration: 'none' }}>Proposer un événement →</Link>
               </p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'clamp(250px, 28vw, 330px)', gap: 14, overflowX: 'auto', scrollSnapType: 'x proximity', padding: '6px 0 24px', scrollbarWidth: 'thin' }}>
-              <div style={{ minHeight: 390, borderRadius: 20, background: '#080808', color: '#fff', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', scrollSnapAlign: 'start' }}>
-                <span style={{ width: 44, height: 44, borderRadius: '50%', display: 'grid', placeItems: 'center', background: '#ECFF58', color: '#080808' }}><Sparkles size={20} aria-hidden="true" /></span>
-                <div><p style={{ color: '#ECFF58', fontSize: 11, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 12 }}>Agenda Al-Wasil</p><h3 style={{ fontSize: 29, lineHeight: 1.05, fontWeight: 500, letterSpacing: '-.045em', marginBottom: 14 }}>Six occasions de se retrouver.</h3><p style={{ color: '#d2d2d2', fontSize: 13, lineHeight: 1.6 }}>Conférences, maraudes, ateliers et rencontres : fais défiler les prochains rendez-vous.</p></div>
-              </div>
-              {UPCOMING_EVENTS.map(ev => <EventCard key={`${ev.title}-${ev.date}`} {...ev} />)}
-              <Link href="/events" style={{ minHeight: 390, borderRadius: 20, background: '#ECFF58', color: '#080808', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', scrollSnapAlign: 'start' }}>
-                <ArrowRight size={38}/><span style={{ fontSize: 32, lineHeight: 1, fontWeight: 600, letterSpacing: '-.05em' }}>Voir plus<br/>d’événements</span><span style={{ fontSize: 13 }}>Ouvrir tout l’agenda →</span>
-              </Link>
-            </div>
+            <UpcomingEventsRail events={UPCOMING_EVENTS} />
           )}
-        </div>
-      </section>
-
-      {/* ─── RENTRÉE 2026 (module saisonnier) ───────────────── */}
-      <section style={{ padding: '3.5rem 0', background: V[100] }}>
-        <div className="container">
-          <div style={{ marginBottom: '1.75rem' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', backgroundColor: '#fff', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700, color: V[600], marginBottom: '0.75rem' }}>
-              <Sparkles size={12} /> SPÉCIAL RENTRÉE · Le bon moment pour s&apos;inscrire
-            </div>
-            <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em' }}>Prépare la rentrée 2026</h2>
-          </div>
-          <div className="featured-duo">
-            <Link href="/education" style={{ textDecoration: 'none', display: 'block' }}>
-              <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', height: '240px', boxShadow: '0 8px 28px rgba(0,0,0,0.1)' }}>
-                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80" alt="Instituts et cours" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,25,23,0.88) 0%, rgba(28,25,23,0.15) 60%, transparent 100%)' }} />
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
-                  <GraduationCap size={22} color="#fff" style={{ marginBottom: '0.5rem' }} />
-                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.25rem', margin: '0 0 0.4rem' }}>Instituts &amp; cours d&apos;arabe</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.82rem', margin: '0 0 0.9rem' }}>Coran, tajwid, arabe, halaqa : inscriptions ouvertes</p>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#fff', fontWeight: 700, fontSize: '0.82rem' }}>Voir les instituts <ArrowRight size={14} /></span>
-                </div>
-              </div>
-            </Link>
-            <Link href="/librairies" style={{ textDecoration: 'none', display: 'block' }}>
-              <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', height: '240px', boxShadow: '0 8px 28px rgba(0,0,0,0.1)' }}>
-                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80" alt="Librairies" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,25,23,0.88) 0%, rgba(28,25,23,0.15) 60%, transparent 100%)' }} />
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.5rem' }}>
-                  <Library size={22} color="#fff" style={{ marginBottom: '0.5rem' }} />
-                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.25rem', margin: '0 0 0.4rem' }}>Librairies islamiques</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.82rem', margin: '0 0 0.9rem' }}>Corans, manuels scolaires, livres jeunesse près de chez toi</p>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#fff', fontWeight: 700, fontSize: '0.82rem' }}>Voir les librairies <ArrowRight size={14} /></span>
-                </div>
-              </div>
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -240,59 +205,26 @@ export default async function Home() {
         </div>
       </section>
 
+      <BackToSchool />
+      <CommunityStories />
+
       {/* ─── COMMENT ÇA MARCHE ──────────────────────────────── */}
-      <section style={{ backgroundColor: '#fff', padding: '4rem 0', borderBottom: `1px solid ${V.border}` }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>Comment ça marche</span>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem', marginBottom: '0.5rem' }}>Trois étapes, c&apos;est tout.</h2>
-            <p style={{ color: V.muted, fontSize: '0.95rem', maxWidth: '420px', margin: '0 auto' }}>Pas d&apos;inscription, pas de compte. Trouve ce que tu cherches en quelques secondes.</p>
-          </div>
-
-          <div className="steps-grid">
-            {STEPS.map((s, i) => (
-              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
-                  <div style={{ width: 52, height: 52, borderRadius: '14px', backgroundColor: V[100], border: `2px solid ${V[400]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 2px 8px ${V[300]}44` }}>
-                    {s.icon}
-                  </div>
-                  <span style={{ fontSize: '0.65rem', fontWeight: 800, color: V[700], letterSpacing: '0.1em' }}>ÉTAPE {s.step}</span>
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: V.dark, marginBottom: '0.4rem' }}>{s.title}</h3>
-                  <p style={{ fontSize: '0.85rem', color: V.muted, lineHeight: 1.7 }}>{s.desc}</p>
-                </div>
+      <section className="how-it-works">
+        <div className="how-it-works__head">
+          <span>Comment ça marche</span>
+          <h2>Tu cherches.<br/><mark>Tu trouves.</mark><br/>Tu agis.</h2>
+          <p>Pas de compte à créer. Al-Wasil te mène directement vers la bonne ressource et le bon contact.</p>
+        </div>
+        <div className="how-it-works__steps">
+          {STEPS.map((s, i) => (
+            <article key={i}>
+              <div className="how-it-works__number">{s.step}</div>
+              <div className="how-it-works__icon">{s.icon}</div>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TOUTES LES RUBRIQUES ───────────────────────────── */}
-      <div style={{ backgroundColor: '#fff', padding: '3rem 0 0' }}>
-        <div className="container" style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', color: V.primary, textTransform: 'uppercase' }}>Toutes les rubriques</span>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: V.dark, letterSpacing: '-0.025em', marginTop: '0.5rem', marginBottom: '0.4rem' }}>Que cherches-tu aujourd&apos;hui ?</h2>
-          <p style={{ color: V.muted, fontSize: '0.88rem', maxWidth: '480px', margin: '0 auto' }}>{SECTIONS.length} rubriques · mises à jour par la communauté</p>
-        </div>
-      </div>
-
-      <section style={{ backgroundColor: '#fff' }}>
-        <div className="sections-grid">
-          {SECTIONS.map(s => (
-            <RubriqueCard
-              key={s.href}
-              href={s.href}
-              color={V.primary}
-              bg={V.surface}
-              title={s.title}
-              arabic={s.arabic}
-              description={s.description}
-              tags={s.tags}
-              soon={s.soon}
-              image={s.image}
-              iconNode={<s.icon size={17} color="#fff" strokeWidth={1.8} />}
-            />
+            </article>
           ))}
         </div>
       </section>
@@ -316,8 +248,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      <CommunityStories />
 
       {/* ─── CONTRIBUTION CTA ───────────────────────────────── */}
       <section style={{ background: V.primary, padding: '5rem 0', position: 'relative', overflow: 'hidden' }}>
