@@ -151,6 +151,9 @@ function notify(msg: string) {
 // ── Handler ──────────────────────────────────────────────────────
 
 export async function GET(req: NextRequest) {
+ if (process.env.LEGACY_SHEETS_SCRAPING_ENABLED !== 'true') {
+ return NextResponse.json({ error: 'Ancien scraper Google Sheets désactivé. Utiliser le workflow GitHub Actions et la modération Neon.' }, { status: 410 });
+ }
  const authorization = req.headers.get('authorization');
  const isCron = !!CRON_SECRET && authorization === `Bearer ${CRON_SECRET}`;
  if (!isCron && !(await isAdminLoggedIn())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });

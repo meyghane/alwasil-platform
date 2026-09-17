@@ -1,184 +1,26 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Zap, RefreshCw, CheckCircle, AlertCircle, Clock, Play,
- Calendar, Heart, Briefcase, HandCoins, Stethoscope, Library, Waves, BookOpen, Plane } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { redirect } from 'next/navigation';
+import { isAdminLoggedIn } from '@/lib/admin-auth';
 
-const GOLD = '#7652CA';
-
-const SCRAPERS: { cat: string; label: string; freq: string; Icon: LucideIcon }[] = [
- { cat: 'events', label: 'Événements', freq: '4x/jour', Icon: Calendar },
- { cat: 'solidarite', label: 'Solidarité', freq: '2x/jour', Icon: Heart },
- { cat: 'emploi', label: 'Emploi', freq: '2x/jour', Icon: Briefcase },
- { cat: 'cagnottes', label: 'Cagnottes', freq: '1x/jour', Icon: HandCoins },
- { cat: 'praticiens', label: 'Praticiens', freq: '1x/semaine', Icon: Stethoscope },
- { cat: 'librairies', label: 'Librairies', freq: '1x/semaine', Icon: Library },
- { cat: 'piscines', label: 'Piscines', freq: '1x/semaine', Icon: Waves },
- { cat: 'education', label: 'Education', freq: '1x/semaine', Icon: BookOpen },
- { cat: 'hajj', label: 'Hajj & Omra', freq: '1x/semaine', Icon: Plane },
+const priorities = [
+  { title: 'Événements', detail: 'Recherche quotidienne équilibrée entre les départements franciliens. Fiches à valider avant publication.' },
+  { title: 'Cagnottes', detail: 'Recherche de campagnes HelloAsso et LaunchGood. Chaque collecte et son organisateur doivent être vérifiés manuellement.' },
 ];
 
-type RunResult = { cat: string; found: number; written: number; status: 'ok' | 'error' | 'loading' | 'idle'; lastRun?: string; error?: string };
-
-export default function AutoPage() {
- const [results, setResults] = useState<Record<string, RunResult>>({});
- const [running, setRunning] = useState<string | null>(null);
-
- async function runScraper(cat: string) {
- setRunning(cat);
- setResults(prev => ({ ...prev, [cat]: { cat, found: 0, written: 0, status: 'loading' } }));
- try {
- const res = await fetch(`/api/auto/scrape?cat=${cat}`);
- const data = await res.json();
- setResults(prev => ({
- ...prev,
-   [cat]: { cat, found: data.found ?? 0, written: data.written ?? 0, status: res.ok ? 'ok' : 'error', lastRun: new Date().toLocaleTimeString('fr-FR'), error: data.error },
- }));
- } catch {
- setResults(prev => ({ ...prev, [cat]: { cat, found: 0, written: 0, status: 'error', lastRun: new Date().toLocaleTimeString('fr-FR') } }));
- } finally {
- setRunning(null);
- }
- }
-
- async function runAll() {
- for (const s of SCRAPERS) {
- await runScraper(s.cat);
- await new Promise(r => setTimeout(r, 2000)); // 2s entre chaque pour pas spammer Gemini
- }
- }
-
- async function runCleanup() {
- setRunning('cleanup');
- try {
- const res = await fetch('/api/auto/cleanup');
- const data = await res.json();
- alert(`Nettoyage terminé - ${data.cleaned} onglet(s) traités`);
- } catch { alert('Erreur cleanup'); }
- finally { setRunning(null); }
- }
-
- return (
- <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #f0ebfa 0%, #faf8ff 100%)' }}>
-
- {/* Header */}
- <div style={{ background: 'linear-gradient(135deg, #080808 0%, #080808 100%)', borderBottom: '1px solid rgba(118,82,202,0.2)' }}>
- <div className="container" style={{ padding: '1rem', display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'space-between' }}>
- <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
- <Link href="/admin" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
- <ArrowLeft size={14} /> Dashboard
- </Link>
- <div style={{ width: 1, height: 16, backgroundColor: 'rgba(255,255,255,0.15)' }} />
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
- <Zap size={16} color={GOLD} strokeWidth={1.8} />
- <span style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>
- Automatisations Wassil
- </span>
- </div>
- </div>
- <div style={{ display: 'flex', gap: '0.5rem' }}>
- <button onClick={runCleanup} disabled={!!running}
- style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', fontSize: '0.78rem', cursor: 'pointer', fontFamily: 'Poppins, sans-serif' }}>
- <RefreshCw size={12} strokeWidth={2} /> Nettoyer expirés
- </button>
- <button onClick={runAll} disabled={!!running}
- style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', backgroundColor: GOLD, color: '#080808', border: 'none', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: running ? 'not-allowed' : 'pointer', opacity: running ? 0.6 : 1, fontFamily: 'Poppins, sans-serif' }}>
- <Play size={13} strokeWidth={2} /> Tout lancer
- </button>
- </div>
- </div>
- </div>
-
- <div className="container" style={{ padding: '2.5rem 1rem', maxWidth: '900px' }}>
-
- <div style={{ marginBottom: '1.5rem' }}>
- <h1 style={{ fontWeight: 900, fontSize: '1.5rem', color: '#080808', margin: '0 0 0.3rem', fontFamily: 'Poppins, sans-serif' }}>
- Automatisations en cours
- </h1>
- <p style={{ color: '#59565f', fontSize: '0.85rem', margin: 0 }}>
- Les scrapers Gemini tournent automatiquement via Vercel Cron. Lance-les manuellement ici pour tester ou forcer une mise à jour.
- </p>
- </div>
-
- <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.875rem' }}>
- {SCRAPERS.map(s => {
- const r = results[s.cat];
- const isLoading = running === s.cat;
- const status = r?.status;
-
- return (
- <div key={s.cat} style={{
- backgroundColor: 'white',
- borderRadius: '14px',
- border: `1px solid ${status === 'ok' ? 'rgba(118,82,202,0.3)' : status === 'error' ? '#fee2e2' : '#e2d7f5'}`,
- padding: '1.25rem',
- boxShadow: '0 2px 8px rgba(15,10,0,0.06)',
- }}>
- <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.875rem' }}>
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
- <div style={{ width: 32, height: 32, borderRadius: '8px', backgroundColor: '#f0ebfa', border: '1px solid #e2d7f5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
- <s.Icon size={15} color={GOLD} strokeWidth={1.8} />
- </div>
- <div>
- <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#080808', fontFamily: 'Poppins, sans-serif' }}>{s.label}</div>
- <div style={{ fontSize: '0.68rem', color: '#59565f', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
- <Clock size={10} strokeWidth={2} /> {s.freq}
- </div>
- </div>
- </div>
- {status === 'ok' && <CheckCircle size={16} color="#7652CA" strokeWidth={2} />}
- {status === 'error' && <AlertCircle size={16} color="#dc2626" strokeWidth={2} />}
- {isLoading && <RefreshCw size={16} color={GOLD} strokeWidth={2} style={{ animation: 'spin 1s linear infinite' }} />}
- </div>
-
- {r && (
- <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
- <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: '#f0ebfa', border: '1px solid #e2d7f5', color: '#59565f' }}>
- {r.found} trouvés
- </span>
- <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '20px', backgroundColor: r.written > 0 ? '#f0fdf4' : '#f9fafb', border: `1px solid ${r.written > 0 ? '#e2d7f5' : '#e5e7eb'}`, color: r.written > 0 ? '#7652CA' : '#6b7280' }}>
- {r.written} écrits
- </span>
- {r.lastRun && <span style={{ fontSize: '0.68rem', color: '#9ca3af', marginLeft: 'auto' }}>{r.lastRun}</span>}
- </div>
- )}
- {r?.error && <div style={{ fontSize: '0.7rem', color: '#b91c1c', backgroundColor: '#fef2f2', borderRadius: 7, padding: '0.45rem 0.6rem', marginBottom: '0.7rem', lineHeight: 1.35 }}>{r.error}</div>}
-
- <button
- onClick={() => runScraper(s.cat)}
- disabled={!!running}
- style={{
- width: '100%', padding: '0.5rem', borderRadius: '8px',
- backgroundColor: isLoading ? 'rgba(118,82,202,0.1)' : GOLD,
- color: isLoading ? GOLD : '#080808',
- border: isLoading ? `1px solid ${GOLD}` : 'none',
- fontSize: '0.78rem', fontWeight: 700, cursor: running ? 'not-allowed' : 'pointer',
- opacity: running && !isLoading ? 0.5 : 1,
- display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
- fontFamily: 'Poppins, sans-serif',
- transition: 'all 0.2s',
- }}
- >
- {isLoading
- ? <><RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} /> En cours...</>
- : <><Play size={13} strokeWidth={2} /> Lancer maintenant</>
- }
- </button>
- </div>
- );
- })}
- </div>
-
- <div style={{ marginTop: '1.5rem', padding: '1rem 1.25rem', backgroundColor: '#fffaf0', borderRadius: '14px', border: '1px solid #e2d7f5', fontSize: '0.8rem', color: '#59565f', lineHeight: 1.7 }}>
- <strong style={{ color: '#b45309' }}>État actuel :</strong> les cartes peuvent être lancées manuellement, mais la découverte automatique des fiches est temporairement désactivée côté planification. Les seules tâches planifiées actuellement sont le nettoyage des événements expirés et le contrôle de fraîcheur. Il faudra réactiver le workflow de scraping après validation des secrets et de Google Sheets.
- <br /><br />
- <strong style={{ color: '#080808' }}>Comment ça marche :</strong> lorsqu’un scraper est activé, les nouvelles fiches arrivent dans <strong>soumissions_X</strong> avec le statut <em>à vérifier</em>. Les erreurs apparaissent directement sur la carte concernée. Pour les valider : <Link href="/admin/soumissions" style={{ color: GOLD, textDecoration: 'none', fontWeight: 600 }}>page de modération →</Link>
- </div>
- </div>
-
- <style>{`@keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }`}</style>
- </div>
- );
+export default async function AutoPage() {
+  if (!(await isAdminLoggedIn())) redirect('/admin');
+  return <main style={{ minHeight: '100vh', background: '#fff', color: '#080808', padding: '2rem max(1rem, 5vw)' }}>
+    <Link href="/admin" style={{ color: '#7652CA' }}>Retour à l’administration</Link>
+    <h1 style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', marginBottom: '0.5rem' }}>Automatisations</h1>
+    <p style={{ maxWidth: 720, lineHeight: 1.6 }}>La recherche fonctionne depuis GitHub Actions et écrit des propositions dans Neon. Les anciens boutons Google Sheets ont été retirés pour ne pas contourner les budgets Gemini.</p>
+    <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', margin: '1.5rem 0 2rem' }}>
+      <Link href="/admin/scraping" style={{ borderRadius: 999, padding: '0.85rem 1.25rem', color: '#080808', background: '#ECFF58', fontWeight: 700 }}>Voir la consommation</Link>
+      <Link href="/admin/soumissions" style={{ borderRadius: 999, padding: '0.85rem 1.25rem', color: '#fff', background: '#080808', fontWeight: 700 }}>Modérer les fiches</Link>
+      <Link href="/admin/journal" style={{ borderRadius: 999, padding: '0.85rem 1.25rem', color: '#080808', border: '1px solid #080808' }}>Voir le journal</Link>
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 16 }}>
+      {priorities.map(item => <section key={item.title} style={{ background: '#f7f4ff', borderRadius: 20, padding: '1.5rem' }}><h2>{item.title}</h2><p style={{ lineHeight: 1.5 }}>{item.detail}</p></section>)}
+    </div>
+    <p style={{ maxWidth: 720, lineHeight: 1.6, marginTop: '2rem' }}>Emploi, santé, éducation, librairies, piscines et Hajj ne sont pas encore intégrés à ce pipeline. Ne pas activer les anciens scrapers pour ces catégories sans contrôle préalable.</p>
+  </main>;
 }

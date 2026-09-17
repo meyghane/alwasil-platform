@@ -144,3 +144,13 @@ export async function sendDigestEmail(items: DigestItem[]): Promise<void> {
     console.error('[email] Send error:', e);
   }
 }
+
+export async function sendCagnotteNotice(items: { title: string; url: string }[]): Promise<void> {
+  if (!RESEND_KEY || items.length === 0) return;
+  const listing = items.map(item => `<li style="margin:0 0 12px"><a href="${escHtml(item.url)}">${escHtml(item.title)}</a></li>`).join('');
+  const html = `<div style="font-family:sans-serif;max-width:620px;margin:auto;padding:24px"><h1>Cagnottes à vérifier</h1><p>${items.length} proposition(s) ont été ajoutées en attente de modération. Vérifiez l'organisateur, la collecte et la destination des dons avant toute publication.</p><ul>${listing}</ul><a href="${SITE_URL}/admin/soumissions">Vérifier dans l'administration</a></div>`;
+  try {
+    const response = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ from: 'Al-Wasil <notifications@al-wasil.fr>', to: [ADMIN_EMAIL], subject: `Al-Wasil · ${items.length} cagnotte(s) à vérifier`, html }) });
+    if (!response.ok) console.error('[email] Notification cagnottes non envoyée :', response.status);
+  } catch (error) { console.error('[email] Notification cagnottes impossible :', error); }
+}

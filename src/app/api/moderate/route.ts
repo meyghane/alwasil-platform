@@ -90,6 +90,12 @@ export async function GET(req: NextRequest) {
   const newStatus = action === 'approve' ? 'approved' : 'rejected';
 
   try {
+    if (action === 'approve') {
+      const [candidate] = await db.select({ category: items.category, metadata: items.metadata }).from(items).where(eq(items.id, id)).limit(1);
+      if (candidate?.category === 'solidarity' && candidate.metadata?.subType === 'cagnotte') {
+        return htmlPage('Vérification nécessaire', 'Pour publier une cagnotte, vérifiez sa source et son organisateur dans la page de modération.', '#7652CA', '!');
+      }
+    }
     const [updated] = await db
       .update(items)
       .set({ status: newStatus, updatedAt: new Date(), ...(action === 'approve' ? { lastVerifiedAt: new Date(), nextReviewAt: new Date(Date.now() + 30 * 86400000) } : {}) })

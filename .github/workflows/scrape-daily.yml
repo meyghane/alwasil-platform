@@ -6,17 +6,15 @@ on:
   schedule:
     - cron: '0 6,12,18 * * *'
   workflow_dispatch:
-    inputs:
-      force:
-        description: 'Forcer même si déjà tourné aujourd"hui'
-        type: boolean
-        default: false
 
 jobs:
   scrape:
     name: Scraping & Email Digest
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    concurrency:
+      group: alwasil-daily-scrape
+      cancel-in-progress: false
 
     steps:
       - name: Checkout
@@ -54,7 +52,10 @@ jobs:
           MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
           ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
           SITE_URL: https://al-wasil.fr
-          FORCE_RUN: ${{ github.event.inputs.force }}
+          EVENTS_DAILY_CALL_BUDGET: '7'
+          CAGNOTTES_DAILY_CALL_BUDGET: '3'
+          EVENTS_DAILY_TOKEN_BUDGET: '120000'
+          CAGNOTTES_DAILY_TOKEN_BUDGET: '50000'
         run: npm run scrape
 
       - name: Wait before retry
@@ -73,7 +74,10 @@ jobs:
           MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
           ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
           SITE_URL: https://al-wasil.fr
-          FORCE_RUN: ${{ github.event.inputs.force }}
+          EVENTS_DAILY_CALL_BUDGET: '7'
+          CAGNOTTES_DAILY_CALL_BUDGET: '3'
+          EVENTS_DAILY_TOKEN_BUDGET: '120000'
+          CAGNOTTES_DAILY_TOKEN_BUDGET: '50000'
         run: npm run scrape
 
       - name: Wait before retry
@@ -90,5 +94,8 @@ jobs:
           MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
           ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
           SITE_URL: https://al-wasil.fr
-          FORCE_RUN: ${{ github.event.inputs.force }}
+          EVENTS_DAILY_CALL_BUDGET: '7'
+          CAGNOTTES_DAILY_CALL_BUDGET: '3'
+          EVENTS_DAILY_TOKEN_BUDGET: '120000'
+          CAGNOTTES_DAILY_TOKEN_BUDGET: '50000'
         run: npm run scrape

@@ -7,6 +7,7 @@ import { getUserSession } from '@/lib/user-auth';
 import { db } from '@/db';
 import { items } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
 
@@ -21,28 +22,6 @@ export async function GET() {
  }
 
  try {
- // Appelle l'Apps Script pour lire les soumissions
- const res = await fetch(`${APPS_SCRIPT_URL}?action=list`, {
- method: 'GET',
- cache: 'no-store',
- });
-
- if (!res.ok) {
- // Fallback : retourne des données vides si l'Apps Script n'est pas déployé
- return NextResponse.json({ soumissions: [], source: 'fallback' });
- }
-
- const data = await res.json();
-
- // Normalise les clés en minuscules (Make écrit en MAJUSCULES dans le Sheet)
- const soumissions = (data.soumissions || []).map((item: Record<string, unknown>) => {
- const normalized: Record<string, unknown> = {};
- for (const [k, v] of Object.entries(item)) {
- normalized[k.toLowerCase()] = v;
- }
- return normalized;
- });
-
  const automatic = await db.select().from(items).where(eq(items.status, 'pending'));
  const neonSoumissions = automatic.map((item) => ({
  id: item.id,
@@ -57,10 +36,21 @@ export async function GET() {
  description: item.description || undefined,
  url_source: item.sourceUrl || undefined,
  source_system: 'neon',
+ requires_campaign_check: item.category === 'solidarity' && item.metadata?.subType === 'cagnotte' ? 'oui' : undefined,
  }));
- return NextResponse.json({ ...data, soumissions: [...neonSoumissions, ...soumissions] });
+ let legacy: Record<string, unknown>[] = [];
+ if (APPS_SCRIPT_URL) {
+   try {
+     const res = await fetch(`${APPS_SCRIPT_URL}?action=list`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
+     if (res.ok) {
+       const data = await res.json() as { soumissions?: Record<string, unknown>[] };
+       legacy = (Array.isArray(data.soumissions) ? data.soumissions : []).map(item => Object.fromEntries(Object.entries(item).map(([key, value]) => [key.toLowerCase(), value])));
+     }
+   } catch { /* Les fiches Neon restent visibles si Sheets ne répond pas. */ }
+ }
+ return NextResponse.json({ soumissions: [...neonSoumissions, ...legacy], source: 'neon+legacy' });
  } catch {
- return NextResponse.json({ soumissions: [], error: 'Apps Script non disponible' });
+ return NextResponse.json({ soumissions: [], error: 'Neon indisponible' }, { status: 503 });
  }
 }
 
@@ -70,7 +60,7 @@ export async function PATCH(req: NextRequest) {
  return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
  }
 
- const { id, status } = await req.json();
+ const { id, status, verifiedCampaign } = await req.json();
 
  if (!id || !status) {
  return NextResponse.json({ error: 'id et status requis' }, { status: 400 });
@@ -80,10 +70,17 @@ export async function PATCH(req: NextRequest) {
  return NextResponse.json({ error: 'Status invalide' }, { status: 400 });
  }
 
- const neonItem = await db.select({ id: items.id }).from(items).where(eq(items.id, id)).limit(1);
+ const neonItem = /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(id)
+   ? await db.select({ id: items.id, category: items.category, metadata: items.metadata }).from(items).where(eq(items.id, id)).limit(1)
+   : [];
  if (neonItem.length > 0) {
+ const campaign = neonItem[0].category === 'solidarity' && neonItem[0].metadata?.subType === 'cagnotte';
+ if (campaign && status === 'en ligne' && verifiedCampaign !== true) return NextResponse.json({ error: 'Vérifiez la collecte et confirmez avant publication.' }, { status: 400 });
  const now = new Date();
- await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: now, ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
+ const metadata = campaign && status === 'en ligne' ? { ...neonItem[0].metadata, raw: { ...(neonItem[0].metadata?.raw as Record<string, unknown> || {}), verified: true } } : neonItem[0].metadata;
+ await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: now, metadata, ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
+ revalidatePath('/');
+ revalidatePath(campaign ? '/solidarity' : neonItem[0].category === 'event' ? '/events' : '/');
  return NextResponse.json({ ok: true, id, status, source: 'neon' });
  }
 

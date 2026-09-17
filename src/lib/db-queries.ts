@@ -1,6 +1,7 @@
 import { db } from '@/db';
 import { items } from '@/db/schema';
 import { and, eq } from 'drizzle-orm';
+import { withoutEmDashes } from '@/lib/typography';
 
 import type { Event } from '@/data/events';
 import type { Institut } from '@/data/institutes';
@@ -38,7 +39,7 @@ async function getRaw<T>(category: Category, subType: string): Promise<T[]> {
 
   return rows
     .filter((r) => (r.metadata as Record<string, unknown> | null)?.subType === subType)
-    .map((r) => (r.metadata as { raw: unknown }).raw as T); } catch {
+    .map((r) => withoutEmDashes((r.metadata as { raw: unknown }).raw as T)); } catch {
     const fallback: Record<string, unknown[]> = { 'event:event': allEvents, 'institute:institut': allInstituts, 'library:librairie': librairies, 'job:job_offer': jobOffers, 'job:talent_profile': talentProfiles, 'health:psy': psyProfiles, 'health:hijama': hijamaProfiles, 'health:medical': medicalProfiles, 'health:roqya': roqyaProfiles, 'solidarity:cagnotte': cagnottes, 'solidarity:initiative': initiatives, 'solidarity:visite_malade': visiteMalades, 'solidarity:voyage_humanitaire': voyagesHumanitaires, 'solidarity:association': associations };
     return (fallback[`${category}:${subType}`] ?? []) as T[];
   }

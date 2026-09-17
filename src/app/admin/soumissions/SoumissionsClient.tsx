@@ -47,14 +47,18 @@ export default function SoumissionsClient() {
 
  useEffect(() => { load(); }, []);
 
- async function updateStatus(id: string, status: 'en ligne' | 'pas en ligne') {
+ async function updateStatus(item: Soumission, status: 'en ligne' | 'pas en ligne') {
+ const verifiedCampaign = item.requires_campaign_check === 'oui' && status === 'en ligne';
+ if (verifiedCampaign && !window.confirm('As-tu vérifié sur la page source que la collecte est active, que l’organisateur est fiable et que la destination des dons est exacte ? Confirmer publiera cette cagnotte.')) return;
+ const id = item.id;
  setActionLoading(id);
  try {
- await fetch('/api/admin/soumissions', {
+ const res = await fetch('/api/admin/soumissions', {
  method: 'PATCH',
  headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ id, status }),
+ body: JSON.stringify({ id, status, verifiedCampaign }),
  });
+ if (!res.ok) { const data = await res.json(); alert(data.error || 'Impossible de modifier cette fiche.'); return; }
  await load();
  } finally {
  setActionLoading(null);
@@ -136,6 +140,7 @@ export default function SoumissionsClient() {
  {item.ville && <span>{item.ville} · </span>}
  {item.soumis_le && <span>{new Date(item.soumis_le).toLocaleDateString('fr-FR')} à {new Date(item.soumis_le).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>}
  </div>
+ {item.requires_campaign_check === 'oui' && item.status === 'à vérifier' && <div style={{ color: '#9a3412', fontSize: '0.72rem', marginTop: 6 }}>Cagnotte : vérifier la collecte, l’organisateur et la destination avant publication. {item.url_source?.startsWith('https://') && <a href={item.url_source} target="_blank" rel="noopener noreferrer" style={{ color: '#7652CA' }}>Ouvrir la source</a>}</div>}
  </div>
 
  {/* Actions */}
@@ -143,13 +148,13 @@ export default function SoumissionsClient() {
  {item.status === 'à vérifier' && (
  <>
  <button
- onClick={() => updateStatus(item.id, 'en ligne')}
+ onClick={() => updateStatus(item, 'en ligne')}
  disabled={isLoading}
  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#7652CA', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer', opacity: isLoading ? 0.6 : 1 }}>
  <CheckCircle size={13} /> Valider
  </button>
  <button
- onClick={() => updateStatus(item.id, 'pas en ligne')}
+ onClick={() => updateStatus(item, 'pas en ligne')}
  disabled={isLoading}
  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#f0ebfa', color: '#6b7280', border: '1px solid #f0ebfa', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', opacity: isLoading ? 0.6 : 1 }}>
  <XCircle size={13} /> Rejeter

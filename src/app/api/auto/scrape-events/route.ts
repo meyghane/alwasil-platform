@@ -61,9 +61,12 @@ async function callGemini(prompt: string): Promise<GeminiEvent[]> {
 }
 
 export async function GET(req: NextRequest) {
+ if (process.env.LEGACY_SHEETS_SCRAPING_ENABLED !== 'true') {
+ return NextResponse.json({ error: 'Ancien scraper Google Sheets désactivé. Utiliser le workflow GitHub Actions.' }, { status: 410 });
+ }
  // Auth : Vercel Cron envoie le secret en header Authorization
  const auth = req.headers.get('authorization');
- if (CRON_SECRET && auth !== `Bearer ${CRON_SECRET}`) {
+ if (!CRON_SECRET || auth !== `Bearer ${CRON_SECRET}`) {
  return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
  }
 
