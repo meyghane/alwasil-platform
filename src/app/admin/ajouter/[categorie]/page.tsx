@@ -23,7 +23,7 @@ export default async function AjouterPage({ params }: { params: Promise<{ catego
  </Link>
  <div style={{ width: '1px', height: '16px', backgroundColor: 'rgba(255,255,255,0.15)' }} />
  <span style={{ fontWeight: 700, color: 'white', fontSize: '0.9rem' }}>
- Ajouter — {form.label}
+ Ajouter - {form.label}
  </span>
  </div>
  </div>

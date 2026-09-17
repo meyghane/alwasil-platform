@@ -1,21 +1,21 @@
-# Al-Wasil — الواصل
+# Al-Wasil - الواصل
 > La plateforme de référence de la communauté musulmane en France
 
 Al-Wasil (الواصل, "Celui qui relie") est une plateforme communautaire centralisant toutes les ressources utiles aux musulmans de France : éducation islamique, événements, solidarité, emploi Muslim-friendly, santé (psychologues, hijama, roqya), librairies islamiques, piscines burkini, et voyages Hajj/Omra.
 
 ## Pages principales
 
-- [Accueil](https://alwasil-platform.vercel.app/) — Présentation de toutes les sections
-- [Éducation](https://alwasil-platform.vercel.app/education) — Instituts islamiques, cours d'arabe, cercles d'étude (halaqa), professeurs de Coran et Tajwid en Île-de-France et en ligne
-- [Événements](https://alwasil-platform.vercel.app/events) — Conférences islamiques, séminaires, marawda, portes ouvertes en France
-- [Solidarité](https://alwasil-platform.vercel.app/solidarity) — Cagnottes (LaunchGood, HelloAsso), maraudes, visites de malades, voyages humanitaires, associations
-- [Emploi](https://alwasil-platform.vercel.app/jobs) — Offres d'emploi voile accepté, prière acceptée, Muslim-friendly. Vivier de talents et réseau CMN
-- [Santé](https://alwasil-platform.vercel.app/sante) — Psychologues orientés communauté musulmane, praticiens hijama certifiés, praticiens roqya char'iyya en Île-de-France
-- [Librairies](https://alwasil-platform.vercel.app/librairies) — Librairies islamiques d'Île-de-France : livres, Corans, manuels d'arabe, vêtements, accessoires
-- [Piscines Burkini](https://alwasil-platform.vercel.app/piscines) — Piscines acceptant le burkini et maillots couvrants en Île-de-France avec créneaux et horaires
-- [Hajj & Omra](https://alwasil-platform.vercel.app/hajj) — Comparateur d'agences Hajj et Omra en France, offres 2026, guide du pèlerin
-- [Justice & Droits](https://alwasil-platform.vercel.app/justice) — Droits des musulmans en France, FAQ juridique (voile, prière au travail), signalement islamophobie ARCOM
-- [Annonceurs](https://alwasil-platform.vercel.app/annonceurs) — Publicité Muslim-friendly sur Al-Wasil
+- [Accueil](https://alwasil-platform.vercel.app/) - Présentation de toutes les sections
+- [Éducation](https://alwasil-platform.vercel.app/education) - Instituts islamiques, cours d'arabe, cercles d'étude (halaqa), professeurs de Coran et Tajwid en Île-de-France et en ligne
+- [Événements](https://alwasil-platform.vercel.app/events) - Conférences islamiques, séminaires, marawda, portes ouvertes en France
+- [Solidarité](https://alwasil-platform.vercel.app/solidarity) - Cagnottes (LaunchGood, HelloAsso), maraudes, visites de malades, voyages humanitaires, associations
+- [Emploi](https://alwasil-platform.vercel.app/jobs) - Offres d'emploi voile accepté, prière acceptée, Muslim-friendly. Vivier de talents et réseau CMN
+- [Santé](https://alwasil-platform.vercel.app/sante) - Psychologues orientés communauté musulmane, praticiens hijama certifiés, praticiens roqya char'iyya en Île-de-France
+- [Librairies](https://alwasil-platform.vercel.app/librairies) - Librairies islamiques d'Île-de-France : livres, Corans, manuels d'arabe, vêtements, accessoires
+- [Piscines Burkini](https://alwasil-platform.vercel.app/piscines) - Piscines acceptant le burkini et maillots couvrants en Île-de-France avec créneaux et horaires
+- [Hajj & Omra](https://alwasil-platform.vercel.app/hajj) - Comparateur d'agences Hajj et Omra en France, offres 2026, guide du pèlerin
+- [Justice & Droits](https://alwasil-platform.vercel.app/justice) - Droits des musulmans en France, FAQ juridique (voile, prière au travail), signalement islamophobie ARCOM
+- [Annonceurs](https://alwasil-platform.vercel.app/annonceurs) - Publicité Muslim-friendly sur Al-Wasil
 
 ## Mots-clés principaux
 

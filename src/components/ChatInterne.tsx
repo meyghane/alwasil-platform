@@ -229,7 +229,7 @@ export default function ChatInterne({
  <div style={{ fontSize: '0.68rem', color: '#9ca3af', marginBottom: onlineUsers.length > 0 && currentRole === 'admin' ? '0.35rem' : 0 }}>
  {activeChannel === 'general' ? ' Canal ouvert à toute l\'équipe de modération' : ' Messages entre modérateurs et admin uniquement'}
  </div>
- {/* Liste des modos en ligne — visible uniquement pour l'admin */}
+ {/* Liste des modos en ligne - visible uniquement pour l'admin */}
  {currentRole === 'admin' && activeChannel === 'general' && onlineUsers.length > 0 && (
  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
  {onlineUsers.map(name => (

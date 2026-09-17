@@ -9,6 +9,7 @@ Référence approuvée explicitement : maquette éditoriale à trois colonnes, �
 - Gris discret pour séparations. Pas de retour au doré/beige dominant.
 
 ## Typographie et formes
+- Ponctuation éditoriale : ne jamais utiliser le tiret cadratin (Unicode U+2014) dans le site. Préférer un tiret simple entouré d'espaces, deux-points, une barre verticale ou une reformulation selon le contexte.
 - Sans-serif, titres affirmés, grands et serrés, majuscules pour les accroches courtes.
 - Titres éditoriaux : « APPRENDRE. SE RETROUVER. S’ENTRAIDER. » ; surlignage citron incliné possible.
 - Boutons en pilule, libellés explicites et vrais liens ; flèche Lucide en complément.

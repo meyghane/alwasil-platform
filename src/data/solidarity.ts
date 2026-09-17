@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES — Solidarité & Cagnottes communautaires
+// DONNÉES - Solidarité & Cagnottes communautaires
 // Sources : LaunchGood (API), HelloAsso, initiatives locales
 // Filtre : uniquement projets communauté musulmane
 // ============================================================
@@ -137,7 +137,7 @@ export const CAGNOTTE_CAT_COLORS: Record<CagnotteCategory, string> = {
 export const cagnottes: Cagnotte[] = [
  {
  id: 'gaza-urgence',
- title: 'Aide d\'urgence — Familles de Gaza',
+ title: 'Aide d\'urgence - Familles de Gaza',
  organizer: 'Human Appeal France',
  platform: 'launchgood',
  url: 'https://www.launchgood.com/campaign/help_gaza_families',
@@ -155,7 +155,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'puits-afrique',
- title: 'Construction de puits — Mali & Sénégal',
+ title: 'Construction de puits - Mali & Sénégal',
  organizer: 'Secours Islamique France',
  platform: 'launchgood',
  url: 'https://www.launchgood.com/campaign/water_wells_africa',
@@ -173,7 +173,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'mosquee-paris-reno',
- title: 'Rénovation Salle de Prière — Mosquée Al-Fath',
+ title: 'Rénovation Salle de Prière - Mosquée Al-Fath',
  organizer: 'Association Al-Fath',
  platform: 'helloasso',
  url: 'https://www.helloasso.com/associations/al-fath',
@@ -207,7 +207,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'orphelins-syrie',
- title: 'Parrainage d\'orphelins — Syrie',
+ title: 'Parrainage d\'orphelins - Syrie',
  organizer: 'La Maison des Orphelins',
  platform: 'launchgood',
  url: 'https://www.launchgood.com/campaign/orphan_sponsorship_syria',
@@ -225,7 +225,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'famille-sinistr-93',
- title: 'Famille sinistrée suite à incendie — Aubervilliers',
+ title: 'Famille sinistrée suite à incendie - Aubervilliers',
  organizer: 'Collectif Entraide 93',
  platform: 'leetchi',
  url: 'https://www.leetchi.com/c/famille-aubervilliers',
@@ -242,7 +242,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'soudan-urgence',
- title: 'Urgence Soudan — Déplacés de guerre',
+ title: 'Urgence Soudan - Déplacés de guerre',
  organizer: 'Islamic Relief France',
  platform: 'launchgood',
  url: 'https://www.launchgood.com/campaign/sudan_emergency',
@@ -260,7 +260,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'ecole-coranique-93',
- title: 'Financement école coranique — Saint-Denis',
+ title: 'Financement école coranique - Saint-Denis',
  organizer: 'Madrassa An-Nour',
  platform: 'helloasso',
  url: 'https://www.helloasso.com/associations/madrassa-an-nour',
@@ -277,7 +277,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'mosquee-construction-78',
- title: 'Construction mosquée — Versailles',
+ title: 'Construction mosquée - Versailles',
  organizer: 'Association Al-Barakah 78',
  platform: 'launchgood',
  url: 'https://www.launchgood.com/v2/campaign/new_mosque_versailles',
@@ -295,7 +295,7 @@ export const cagnottes: Cagnotte[] = [
  },
  {
  id: 'orphelins-gaza',
- title: 'Parrainage orphelins — Gaza',
+ title: 'Parrainage orphelins - Gaza',
  organizer: 'Human Appeal France',
  platform: 'launchgood',
  url: 'https://www.launchgood.com/campaign/orphans_gaza',
@@ -319,7 +319,7 @@ export const cagnottes: Cagnotte[] = [
 export const initiatives: Initiative[] = [
  {
  id: 'maraude-paris-10',
- title: 'Maraude hebdomadaire — Paris 10e/11e',
+ title: 'Maraude hebdomadaire - Paris 10e/11e',
  type: 'maraude',
  organizer: 'Au Cœur de la Fraternité',
  city: 'Paris',
@@ -333,7 +333,7 @@ export const initiatives: Initiative[] = [
  },
  {
  id: 'maraude-st-lazare',
- title: 'Maraude Saint-Lazare — Paris 8e',
+ title: 'Maraude Saint-Lazare - Paris 8e',
  type: 'maraude',
  organizer: 'Muslimes en Action',
  city: 'Paris',
@@ -347,7 +347,7 @@ export const initiatives: Initiative[] = [
  },
  {
  id: 'maraude-93-bobigny',
- title: 'Maraude mensuelle — Bobigny',
+ title: 'Maraude mensuelle - Bobigny',
  type: 'maraude',
  organizer: 'Association An-Nour Bobigny',
  city: 'Bobigny',
@@ -361,7 +361,7 @@ export const initiatives: Initiative[] = [
  },
  {
  id: 'repas-ramadan-93',
- title: 'Repas Ramadan solidaires — Bobigny',
+ title: 'Repas Ramadan solidaires - Bobigny',
  type: 'repas-solidaire',
  organizer: 'Association An-Nour Bobigny',
  city: 'Bobigny',
@@ -374,7 +374,7 @@ export const initiatives: Initiative[] = [
  },
  {
  id: 'visite-ehpad-créteil',
- title: 'Visites de personnes âgées — EHPAD Créteil',
+ title: 'Visites de personnes âgées - EHPAD Créteil',
  type: 'visite-ehpad',
  organizer: 'Collectif Fraternité 94',
  city: 'Créteil',
@@ -387,7 +387,7 @@ export const initiatives: Initiative[] = [
  },
  {
  id: 'collecte-vetements-92',
- title: 'Collecte vêtements & jouets — Nanterre',
+ title: 'Collecte vêtements & jouets - Nanterre',
  type: 'collecte',
  organizer: 'Mosquée de Nanterre',
  city: 'Nanterre',
@@ -406,10 +406,10 @@ export const initiatives: Initiative[] = [
 export const visiteMalades: VisiteMalade[] = [
  {
  id: 'visite-ehpad-bobigny',
- title: 'Visite bénévole — EHPAD Les Tilleuls Bobigny',
+ title: 'Visite bénévole - EHPAD Les Tilleuls Bobigny',
  lieu: 'EHPAD Les Tilleuls',
  typeLieu: 'ehpad',
- organizer: 'JMF — Jeunes Musulmans de France IDF',
+ organizer: 'JMF - Jeunes Musulmans de France IDF',
  city: 'Bobigny',
  department: '93',
  description: 'Rendez visite à des personnes âgées isolées. Lecture, jeux de société, échanges. Une heure qui compte énormément pour eux.',
@@ -420,7 +420,7 @@ export const visiteMalades: VisiteMalade[] = [
  },
  {
  id: 'visite-hopital-lariboisiere',
- title: 'Visite patients — Hôpital Lariboisière',
+ title: 'Visite patients - Hôpital Lariboisière',
  lieu: 'Hôpital Lariboisière',
  typeLieu: 'hopital',
  organizer: 'Collectif Bienfaiteurs Paris',
@@ -434,7 +434,7 @@ export const visiteMalades: VisiteMalade[] = [
  },
  {
  id: 'visite-domicile-91',
- title: 'Aide à domicile — Personnes âgées Essonne',
+ title: 'Aide à domicile - Personnes âgées Essonne',
  lieu: 'Domicile particuliers',
  typeLieu: 'domicile',
  organizer: 'Secours Islamique France',
@@ -448,7 +448,7 @@ export const visiteMalades: VisiteMalade[] = [
  },
  {
  id: 'visite-prison-93',
- title: 'Visite et soutien — Maison d\'arrêt de Villepinte',
+ title: 'Visite et soutien - Maison d\'arrêt de Villepinte',
  lieu: 'Maison d\'arrêt de Villepinte',
  typeLieu: 'prison',
  organizer: 'Aumônerie Musulmane de France',
@@ -462,7 +462,7 @@ export const visiteMalades: VisiteMalade[] = [
  },
  {
  id: 'visite-ehpad-vincennes',
- title: 'Thé & Compagnie — EHPAD Vincennes',
+ title: 'Thé & Compagnie - EHPAD Vincennes',
  lieu: 'EHPAD Résidence des Marronniers',
  typeLieu: 'ehpad',
  organizer: 'Sœurs Bienveillantes 94',
@@ -482,7 +482,7 @@ export const visiteMalades: VisiteMalade[] = [
 export const voyagesHumanitaires: VoyageHumanitaire[] = [
  {
  id: 'voyage-gaza-sif',
- title: 'Mission humanitaire — Gaza',
+ title: 'Mission humanitaire - Gaza',
  destination: 'Gaza, Palestine',
  organizer: 'Secours Islamique France',
  organizerUrl: 'https://www.secours-islamique.org/missions-humanitaires',
@@ -496,7 +496,7 @@ export const voyagesHumanitaires: VoyageHumanitaire[] = [
  },
  {
  id: 'voyage-mali-puits',
- title: 'Chantier solidaire — Construction de puits Mali',
+ title: 'Chantier solidaire - Construction de puits Mali',
  destination: 'Région de Kayes, Mali',
  organizer: 'Islamic Relief France',
  organizerUrl: 'https://www.islamic-relief.fr/agir/partir-en-mission',
@@ -510,7 +510,7 @@ export const voyagesHumanitaires: VoyageHumanitaire[] = [
  },
  {
  id: 'voyage-maroc-seisme',
- title: 'Reconstruction — Zones sinistrées Maroc',
+ title: 'Reconstruction - Zones sinistrées Maroc',
  destination: 'Al-Haouz, Maroc',
  organizer: 'Human Appeal France',
  organizerUrl: 'https://www.human-appeal.fr/missions',
@@ -524,7 +524,7 @@ export const voyagesHumanitaires: VoyageHumanitaire[] = [
  },
  {
  id: 'voyage-senegal-education',
- title: 'Volontariat éducation — Sénégal',
+ title: 'Volontariat éducation - Sénégal',
  destination: 'Dakar & Thiès, Sénégal',
  organizer: 'Association Baraka World',
  organizerUrl: 'https://www.barakaworld.org/volontariat',
@@ -538,7 +538,7 @@ export const voyagesHumanitaires: VoyageHumanitaire[] = [
  },
  {
  id: 'voyage-turquie-refugies',
- title: 'Mission soutien réfugiés — Turquie',
+ title: 'Mission soutien réfugiés - Turquie',
  destination: 'Istanbul & Gaziantep, Turquie',
  organizer: 'Islamic Relief France',
  organizerUrl: 'https://www.islamic-relief.fr/agir/partir-en-mission',

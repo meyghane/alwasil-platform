@@ -86,7 +86,7 @@ export default async function NotificationsPage() {
  </div>
  <div style={{ flex: 1 }}>
  <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#080808', fontFamily: 'Poppins, sans-serif' }}>
- {isPubli ? 'Fiche publiée' : 'Fiche rejetée'} — <span style={{ color: VIOLET }}>{n.nom || '(sans titre)'}</span>
+ {isPubli ? 'Fiche publiée' : 'Fiche rejetée'} - <span style={{ color: VIOLET }}>{n.nom || '(sans titre)'}</span>
  </div>
  <div style={{ fontSize: '0.73rem', color: '#9ca3af', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
  <Clock size={11} strokeWidth={2} />

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, CalendarDays } from 'lucide-react';
 import type { EventCategory } from '@/data/events';
@@ -17,6 +17,12 @@ export type UpcomingEventItem = {
 
 export default function UpcomingEventsRail({ events }: { events: UpcomingEventItem[] }) {
   const railRef = useRef<HTMLDivElement>(null);
+
+  // Le premier événement doit commencer après le panneau, même si le navigateur
+  // restaure une ancienne position de défilement lors du retour sur l'accueil.
+  useLayoutEffect(() => {
+    railRef.current?.scrollTo({ left: 0, behavior: 'instant' });
+  }, []);
 
   const move = (direction: -1 | 1) => {
     railRef.current?.scrollBy({ left: direction * 344, behavior: 'smooth' });

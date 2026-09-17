@@ -95,7 +95,7 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
  <strong style={{ color: 'var(--text-primary)' }}>{sorted.length}</strong> piscine{sorted.length > 1 ? 's' : ''} trouvée{sorted.length > 1 ? 's' : ''}
  </p>
 
- {/* Cards — grille 3 colonnes */}
+ {/* Cards - grille 3 colonnes */}
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
  {sorted.map(p => (
  <div key={p.id} style={{

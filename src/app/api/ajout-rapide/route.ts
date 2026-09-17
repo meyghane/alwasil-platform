@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
  const conf = ficheGeneree.confidence ? `${Math.round(Number(ficheGeneree.confidence) * 100)}%` : '?';
  const note = String(ficheGeneree.note_djamil || '');
 
- const msg = ` <b>Ajout Rapide — Wassil</b>\n\n <b>${categorie}</b>\n ${titre}${ville ? `\n ${ville}` : ''}\n Confiance : ${conf}${note ? `\n ${note}` : ''}\n\n <a href="https://alwasil-platform.vercel.app/admin/soumissions">Valider maintenant</a>`;
+ const msg = ` <b>Ajout Rapide - Wassil</b>\n\n <b>${categorie}</b>\n ${titre}${ville ? `\n ${ville}` : ''}\n Confiance : ${conf}${note ? `\n ${note}` : ''}\n\n <a href="https://alwasil-platform.vercel.app/admin/soumissions">Valider maintenant</a>`;
 
  fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
  method: 'POST',

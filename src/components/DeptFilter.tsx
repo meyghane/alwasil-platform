@@ -1,8 +1,8 @@
 'use client';
 
-// Filtre par département — composant réutilisable
+// Filtre par département - composant réutilisable
 // Utilisé sur les pages Éducation, Événements, Solidarité, etc.
-// counts : nombre d'éléments par département (optionnel) — affiche un badge et masque les vides
+// counts : nombre d'éléments par département (optionnel) - affiche un badge et masque les vides
 
 const DEPTS = [
  { code: 'Tout', label: 'Tout' },

@@ -1,10 +1,10 @@
 // ============================================================
-// src/lib/sheets.ts — Google Sheets comme base de données
+// src/lib/sheets.ts - Google Sheets comme base de données
 // Lit les données depuis le Google Sheet Al-Wasil via l'API publique
 // Cache : 1h via Next.js ISR (revalidate)
 // ============================================================
 
-// Sheet public "AL WASIL - BDD public" — source de vérité pour le site
+// Sheet public "AL WASIL - BDD public" - source de vérité pour le site
 const SHEET_ID = '1Qr-ZnpjCOUBWpki__ueQIQQrPSogs4bRJ0osy4RoLfU';
 const CACHE_SECONDS = 3600; // 1 heure
 

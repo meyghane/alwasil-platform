@@ -191,7 +191,7 @@ const FORMATS_BY_SEGMENT: Record<Segment, FormatCard[]> = {
  id: 'partenariat',
  name: 'Partenariat & Échange de visibilité',
  emoji: '',
- description: 'Influenceur, créateur, media Muslim-friendly : tu promeus Al-Wasil, on te donne de la visibilité. Story, reel, mention newsletter — à définir ensemble.',
+ description: 'Influenceur, créateur, media Muslim-friendly : tu promeus Al-Wasil, on te donne de la visibilité. Story, reel, mention newsletter - à définir ensemble.',
  placement: 'À définir selon audience',
  price: 'Sur devis',
  duration: 'Variable',
@@ -231,7 +231,7 @@ const PREMIUM_FORMATS = [
  placement: 'Footer sticky ou statique',
  format: 'JPEG/PNG/WebP, fond plein',
  maxSize: '300ko',
- note: 'Haute visibilité en fin de scroll — bon pour CTA',
+ note: 'Haute visibilité en fin de scroll - bon pour CTA',
  },
  {
  name: 'Medium Rectangle (Sidebar)',
@@ -247,7 +247,7 @@ const PREMIUM_FORMATS = [
  placement: 'Intégré dans le corps des articles',
  format: 'JPEG/WebP, même style que le contenu',
  maxSize: '500ko',
- note: 'CTR × 3 vs bannière classique — paraît éditorial',
+ note: 'CTR × 3 vs bannière classique - paraît éditorial',
  },
  {
  name: 'Newsletter Bandeau',
@@ -255,15 +255,15 @@ const PREMIUM_FORMATS = [
  placement: 'En-tête de la newsletter mensuelle',
  format: 'JPEG/PNG, fond plein, texte lisible seul',
  maxSize: '100ko',
- note: 'Certains clients email bloquent les images — prévois du texte alt',
+ note: 'Certains clients email bloquent les images - prévois du texte alt',
  },
 ];
 
 const ANNONCEURS_CIBLES = [
  { emoji: '', type: 'Agences Hajj & Omra', desc: 'Visibilité maximale avant la saison et pendant Ramadan' },
- { emoji: '', type: 'Marques modest fashion', desc: 'Abaya, hijab, vêtements islamiques — audience cible directe' },
+ { emoji: '', type: 'Marques modest fashion', desc: 'Abaya, hijab, vêtements islamiques - audience cible directe' },
  { emoji: '', type: 'Librairies & Instituts', desc: 'Cours d\'arabe, Coran, rentrée islamique, inscriptions' },
- { emoji: '', type: 'Parfums & bien-être sunnah', desc: 'Oud, huile de nigelle, musc — audience 100% qualifiée' },
+ { emoji: '', type: 'Parfums & bien-être sunnah', desc: 'Oud, huile de nigelle, musc - audience 100% qualifiée' },
  { emoji: '', type: 'Praticiens & cliniques', desc: 'Hijama, sage-femmes, médecins Muslim-friendly' },
  { emoji: '', type: 'Recruteurs Muslim-friendly', desc: 'Toucher des candidats recherchant des employeurs respectueux' },
  { emoji: '', type: 'Associations & ONG', desc: 'Collectes Ramadan, aide d\'urgence, maraudes' },
@@ -288,8 +288,8 @@ export default function AnnonceursPage() {
  fields: {
  Nom: formData.nom,
  Email: formData.email,
- Organisation: formData.organisation || '—',
- Format: formData.format || '—',
+ Organisation: formData.organisation || ' - ',
+ Format: formData.format || ' - ',
  Message: formData.message,
  },
  }),
@@ -403,7 +403,7 @@ export default function AnnonceursPage() {
  <div style={{ marginBottom: '3rem' }}>
  <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.4rem' }}>Formats & Tarifs</h2>
  <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
- Tous les emplacements sont réservés <strong>exclusivement à des annonceurs Muslim-friendly</strong>. Nous sélectionnons chaque annonceur. Tarifs <strong>one-shot par trimestre</strong> — pas d&apos;abonnement.
+ Tous les emplacements sont réservés <strong>exclusivement à des annonceurs Muslim-friendly</strong>. Nous sélectionnons chaque annonceur. Tarifs <strong>one-shot par trimestre</strong> - pas d&apos;abonnement.
  </p>
 
  {/* Tabs segments */}
@@ -481,7 +481,7 @@ export default function AnnonceursPage() {
  <div style={{ marginBottom: '3rem' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
  <Image size={22} color={ACCENT} />
- <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Specs techniques — Formats d&apos;image</h2>
+ <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Specs techniques - Formats d&apos;image</h2>
  </div>
  <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginBottom: '1.5rem' }}>
  Respectez ces dimensions pour éviter tout recadrage et maximiser la netteté de votre visuel.
@@ -515,7 +515,7 @@ export default function AnnonceursPage() {
  <div style={{ marginBottom: '3rem', padding: '1.75rem', borderRadius: '1rem', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
  <Tag size={20} color={ACCENT} />
- <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Tracking & ROI — Vous voyez tout</h2>
+ <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Tracking & ROI - Vous voyez tout</h2>
  </div>
 
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.25rem', marginBottom: '1.5rem' }}>
@@ -628,24 +628,24 @@ export default function AnnonceursPage() {
  <select value={formData.format} onChange={e => setFormData(p => ({ ...p, format: e.target.value }))}
  style={{ width: '100%', padding: '0.65rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', fontSize: '0.9rem', outline: 'none', backgroundColor: 'white', boxSizing: 'border-box' }}>
  <option value="">-- Choisir une offre --</option>
- <optgroup label="SOLO — Commerce local">
- <option>Fiche Mise en Avant — 199€ / 3 mois</option>
- <option>Article Sponsorisé SEO — 299€ permanent</option>
- <option>Pack Lancement — 299€ / 3 mois</option>
+ <optgroup label="SOLO - Commerce local">
+ <option>Fiche Mise en Avant - 199€ / 3 mois</option>
+ <option>Article Sponsorisé SEO - 299€ permanent</option>
+ <option>Pack Lancement - 299€ / 3 mois</option>
  </optgroup>
- <optgroup label="BOOST — E-commerce">
- <option>Bannière Sidebar — 399€ / 3 mois</option>
- <option>Sponsoring Newsletter — 199€ / envoi</option>
- <option>Habillage / Skin Premium — 599€ / 3 mois</option>
+ <optgroup label="BOOST - E-commerce">
+ <option>Bannière Sidebar - 399€ / 3 mois</option>
+ <option>Sponsoring Newsletter - 199€ / envoi</option>
+ <option>Habillage / Skin Premium - 599€ / 3 mois</option>
  </optgroup>
- <optgroup label="PRO — Services premium">
- <option>Bannière Header — 990€ / 3 mois</option>
- <option>Article Long Format SEO — 490€ permanent</option>
- <option>Pack Pro — 1 490€ / 3 mois</option>
+ <optgroup label="PRO - Services premium">
+ <option>Bannière Header - 990€ / 3 mois</option>
+ <option>Article Long Format SEO - 490€ permanent</option>
+ <option>Pack Pro - 1 490€ / 3 mois</option>
  </optgroup>
  <optgroup label="Saisonniers">
- <option>Pack Ramadan Essentiel — 499€ / 30 jours</option>
- <option>Pack Ramadan Complet — 799€ / 30 jours</option>
+ <option>Pack Ramadan Essentiel - 499€ / 30 jours</option>
+ <option>Pack Ramadan Complet - 799€ / 30 jours</option>
  </optgroup>
  <option value="agence">Offre Agence / Multi-clients</option>
  <option value="partenariat">Partenariat / Échange de visibilité</option>

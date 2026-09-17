@@ -21,12 +21,12 @@ import type {
 } from '@/data/solidarity';
 import type { HajjAgence, HajjPackage } from '@/data/hajj';
 import { hajjAgences as staticHajjAgences, hajjPackages as staticHajjPackages } from '@/data/hajj';
-import { allEvents } from '@/data/events'; import { allInstituts } from '@/data/institutes'; import { librairies } from '@/data/librairies'; import { jobOffers, talentProfiles } from '@/data/jobs'; import { psyProfiles, hijamaProfiles, medicalProfiles, roqyaProfiles } from '@/data/sante'; import { cagnottes, initiatives, visiteMalades, voyagesHumanitaires, associations } from '@/data/solidarity';
+import { allEvents, CURRENT_VERIFIED_EVENT_IDS } from '@/data/events'; import { allInstituts } from '@/data/institutes'; import { librairies } from '@/data/librairies'; import { jobOffers, talentProfiles } from '@/data/jobs'; import { psyProfiles, hijamaProfiles, medicalProfiles, roqyaProfiles } from '@/data/sante'; import { cagnottes, initiatives, visiteMalades, voyagesHumanitaires, associations } from '@/data/solidarity';
 
 type Category = 'event' | 'job' | 'solidarity' | 'institute' | 'health' | 'library' | 'pool' | 'hajj';
 
 // Le contenu original (tapé selon les types de src/data/*.ts) est conservé
-// intact dans metadata.raw à la migration — on le relit tel quel ici pour
+// intact dans metadata.raw à la migration - on le relit tel quel ici pour
 // que les composants existants n'aient rien à changer côté shape de données.
 // Volume actuel < 200 lignes : filtrer le subType en JS plutôt qu'en SQL
 // jsonb reste largement suffisant, à revoir si le volume grossit fortement.
@@ -46,7 +46,7 @@ async function getRaw<T>(category: Category, subType: string): Promise<T[]> {
 
 export async function getEvents() {
   const rows = await getRaw<Event>('event', 'event');
-  const current = allEvents.filter((event) => ['gmp-jardin-oriental-2026','conscience-soufie-ag-2026','carep-architecture-perte-2026','carep-bassma-kodmani-2026','gmp-napoleon-arabie-2026','carep-gaza-patrimoine-2026'].includes(event.id));
+  const current = allEvents.filter((event) => CURRENT_VERIFIED_EVENT_IDS.some((id) => id === event.id));
   const ids = new Set(rows.map((event) => event.id));
   return [...rows, ...current.filter((event) => !ids.has(event.id))];
 }

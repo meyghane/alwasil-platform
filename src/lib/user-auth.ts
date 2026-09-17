@@ -124,7 +124,7 @@ async function sha256(str: string): Promise<string> {
 }
 
 // ── Authentifier un utilisateur ──────────────────────────────────
-// Comptes permanents — hash SHA-256 uniquement (le mot de passe en clair n'est pas stocké)
+// Comptes permanents - hash SHA-256 uniquement (le mot de passe en clair n'est pas stocké)
 // Admin : al-wasil@hotmail.com / salamaleykoum
 // Modo test : test@gmail.com / test
 const PERMANENT_ACCOUNTS: { email: string; hash: string; role: UserRole; name: string }[] = [
@@ -171,7 +171,7 @@ export async function authenticateUser(email: string, password: string): Promise
  }
 
  // 3. Comptes modo depuis Apps Script (Google Sheet "Comptes")
- // Envoie le hash SHA-256 — Apps Script ne voit jamais le mot de passe en clair
+ // Envoie le hash SHA-256 - Apps Script ne voit jamais le mot de passe en clair
  const url = process.env.APPS_SCRIPT_WEBHOOK_URL;
  if (url) {
  try {

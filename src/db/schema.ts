@@ -32,7 +32,7 @@ export const items = pgTable('items', {
   lastVerifiedAt: timestamp('last_verified_at', { withTimezone: true }),
   nextReviewAt: timestamp('next_review_at', { withTimezone: true }),
   // Champs spécifiques à chaque catégorie (organizer, format, price, isFree,
-  // featured, timeStart/timeEnd, registrationUrl, subCategory...) — évite
+  // featured, timeStart/timeEnd, registrationUrl, subCategory...) - évite
   // d'avoir une table par catégorie pour un site mono-admin.
   metadata: jsonb('metadata').$type<Record<string, unknown>>().default({}),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
@@ -56,7 +56,7 @@ export const moderationLog = pgTable('moderation_log', {
   actedAt: timestamp('acted_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
-// Log des runs de découverte automatique (routine Claude quotidienne) — permet
+// Log des runs de découverte automatique (routine Claude quotidienne) - permet
 // à Méghane de suivre sa conso de tokens et rationner si besoin.
 export const scrapeRuns = pgTable('scrape_runs', {
   id: uuid('id').primaryKey().defaultRandom(),

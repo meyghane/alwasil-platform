@@ -25,7 +25,7 @@ export default async function ModoAjouterPage({ params }: { params: Promise<{ ca
  </Link>
  <div style={{ width: '1px', height: '16px', backgroundColor: 'rgba(255,255,255,0.15)' }} />
  <span style={{ fontWeight: 700, color: 'white', fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>
- Ajouter — {form.label}
+ Ajouter - {form.label}
  </span>
  </div>
  </div>

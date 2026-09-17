@@ -28,7 +28,7 @@ type LienUtile = {
 };
 
 // ============================================================
-// DONNÉES — FAQ
+// DONNÉES - FAQ
 // ============================================================
 const FAQ: FaqItem[] = [
  // Voile
@@ -42,8 +42,8 @@ La Cour de Justice de l'Union Européenne (CJUE) et la Cour de Cassation frança
 
 Si vous avez signé une clause de neutralité, vérifiez qu'elle concerne bien votre poste et qu'elle est proportionnée. En cas de doute, consultez un avocat spécialisé en droit du travail.`,
  sources: [
- { label: 'CJUE — Arrêt Micropole (2017)', url: 'https://curia.europa.eu' },
- { label: 'Cour de Cassation — Soc. 22 nov. 2017', url: 'https://www.legifrance.gouv.fr' },
+ { label: 'CJUE - Arrêt Micropole (2017)', url: 'https://curia.europa.eu' },
+ { label: 'Cour de Cassation - Soc. 22 nov. 2017', url: 'https://www.legifrance.gouv.fr' },
  ],
  },
  {
@@ -64,7 +64,7 @@ Exception : les entreprises publiques à caractère commercial (comme La Poste o
  id: 'voile-etudiant',
  question: 'Puis-je porter le voile à l\'université ?',
  category: 'voile',
- answer: `Oui, absolument. La loi du 15 mars 2004 qui interdit les signes religieux ostensibles ne s'applique qu'aux écoles, collèges et lycées publics — pas aux universités.
+ answer: `Oui, absolument. La loi du 15 mars 2004 qui interdit les signes religieux ostensibles ne s'applique qu'aux écoles, collèges et lycées publics - pas aux universités.
 
 Les étudiantes à l'université et dans les grandes écoles publiques ont le droit de porter le voile. Un règlement intérieur ne peut pas l'interdire dans l'espace universitaire commun.
 
@@ -81,7 +81,7 @@ En revanche, lors des examens, certaines règles spécifiques peuvent s'applique
 
 Si cela vous arrive : notez la date, l'heure, le lieu, le nom de l'établissement et les témoins éventuels. Vous pouvez saisir le Défenseur des Droits ou porter plainte.`,
  sources: [
- { label: 'Code pénal — Art. 225-1 à 225-3', url: 'https://www.legifrance.gouv.fr' },
+ { label: 'Code pénal - Art. 225-1 à 225-3', url: 'https://www.legifrance.gouv.fr' },
  { label: 'Défenseur des Droits', url: 'https://www.defenseurdesdroits.fr' },
  ],
  },
@@ -96,7 +96,7 @@ Dans la pratique : certains employeurs accordent des pauses ou aménagements à 
 
 La négociation directe et courtoise avec votre employeur est la première étape. Plusieurs entreprises (Microsoft, Renault, Orange, etc.) ont mis en place des salles de prière dans leurs locaux.`,
  sources: [
- { label: 'Code du travail — Art. L1132-1', url: 'https://www.legifrance.gouv.fr' },
+ { label: 'Code du travail - Art. L1132-1', url: 'https://www.legifrance.gouv.fr' },
  ],
  },
  {
@@ -124,7 +124,7 @@ Méthodes de preuve reconnues :
 
 Le Défenseur des Droits peut vous accompagner gratuitement dans la constitution de votre dossier.`,
  sources: [
- { label: 'Code du travail — Art. L1132-1', url: 'https://www.legifrance.gouv.fr' },
+ { label: 'Code du travail - Art. L1132-1', url: 'https://www.legifrance.gouv.fr' },
  { label: 'Défenseur des Droits', url: 'https://www.defenseurdesdroits.fr' },
  ],
  },
@@ -145,7 +145,7 @@ Le Défenseur des Droits peut vous accompagner gratuitement dans la constitution
 Pour un impact maximal, signalez collectivement : une mobilisation de 1 000 signalements ARCOM sur le même sujet a beaucoup plus de poids qu'un signalement isolé.`,
  sources: [
  { label: 'Signalement ARCOM', url: 'https://www.arcom.fr/nous-contacter/adresser-une-plainte' },
- { label: 'PHAROS — Signalement internet', url: 'https://www.internet-signalement.gouv.fr' },
+ { label: 'PHAROS - Signalement internet', url: 'https://www.internet-signalement.gouv.fr' },
  ],
  },
  // Laïcité
@@ -166,8 +166,8 @@ La loi de 1905 (séparation Église-État) garantit la liberté de conscience et
 
 Les restrictions légales : lycées publics (loi 2004), fonction publique, certains services judiciaires.`,
  sources: [
- { label: 'Loi de séparation des Églises et de l\'État — 9 déc. 1905', url: 'https://www.legifrance.gouv.fr' },
- { label: 'Observatoire de la Laïcité — Guide pratique', url: 'https://www.gouvernement.fr/la-laicite-dans-la-fonction-publique' },
+ { label: 'Loi de séparation des Églises et de l\'État - 9 déc. 1905', url: 'https://www.legifrance.gouv.fr' },
+ { label: 'Observatoire de la Laïcité - Guide pratique', url: 'https://www.gouvernement.fr/la-laicite-dans-la-fonction-publique' },
  ],
  },
  // Recours
@@ -190,8 +190,8 @@ Pour les décisions prises par des administrations publiques (refus de permis de
 **5. Associations de défense**
 Le CCIF, la LICRA et SOS Racisme peuvent vous accompagner et co-ester en justice dans certains cas.`,
  sources: [
- { label: 'Défenseur des Droits — Saisine', url: 'https://www.defenseurdesdroits.fr/fr/saisir-le-defenseur-des-droits' },
- { label: 'Code pénal — Art. 225-1 à 225-4', url: 'https://www.legifrance.gouv.fr' },
+ { label: 'Défenseur des Droits - Saisine', url: 'https://www.defenseurdesdroits.fr/fr/saisir-le-defenseur-des-droits' },
+ { label: 'Code pénal - Art. 225-1 à 225-4', url: 'https://www.legifrance.gouv.fr' },
  ],
  },
  // Famille
@@ -213,13 +213,13 @@ Conseil : si vous avez un mariage religieux sans mariage civil, envisagez au min
 ];
 
 // ============================================================
-// DONNÉES — LIENS UTILES
+// DONNÉES - LIENS UTILES
 // ============================================================
 const LIENS_UTILES: LienUtile[] = [
  // Signalement
  {
  id: 'arcom',
- name: 'ARCOM — Signalement médias',
+ name: 'ARCOM - Signalement médias',
  description: 'Signaler des propos islamophobes ou discriminatoires à la télévision ou la radio. Gratuit, en ligne, 5 minutes.',
  url: 'https://www.arcom.fr/nous-contacter/adresser-une-plainte',
  type: 'signalement',
@@ -227,7 +227,7 @@ const LIENS_UTILES: LienUtile[] = [
  },
  {
  id: 'pharos',
- name: 'PHAROS — Signalement Internet',
+ name: 'PHAROS - Signalement Internet',
  description: 'Signaler des contenus haineux, islamophobes ou illicites sur internet. Plateforme gouvernementale officielle.',
  url: 'https://www.internet-signalement.gouv.fr',
  type: 'signalement',
@@ -235,7 +235,7 @@ const LIENS_UTILES: LienUtile[] = [
  },
  {
  id: 'service-public-discrimination',
- name: 'Service-public.fr — Signalement discrimination',
+ name: 'Service-public.fr - Signalement discrimination',
  description: 'Guide officiel pour signaler une discrimination et connaître ses droits. Toutes situations couvertes.',
  url: 'https://www.service-public.fr/particuliers/vosdroits/F19448',
  type: 'signalement',
@@ -260,7 +260,7 @@ const LIENS_UTILES: LienUtile[] = [
  },
  {
  id: 'legifrance',
- name: 'Légifrance — Textes de loi',
+ name: 'Légifrance - Textes de loi',
  description: 'La source officielle pour tous les textes de loi français. Codes du travail, pénal, civil. Gratuit.',
  url: 'https://www.legifrance.gouv.fr',
  type: 'officiel',
@@ -269,7 +269,7 @@ const LIENS_UTILES: LienUtile[] = [
  // Associations
  {
  id: 'ccif',
- name: 'CCIF — Collectif contre l\'Islamophobie',
+ name: 'CCIF - Collectif contre l\'Islamophobie',
  description: 'Observation et documentation des actes islamophobes. Accompagnement juridique des victimes. Rapport annuel.',
  url: 'https://www.islamophobie.net',
  type: 'association',
@@ -277,7 +277,7 @@ const LIENS_UTILES: LienUtile[] = [
  },
  {
  id: 'laligue-droits',
- name: 'LDH — Ligue des Droits de l\'Homme',
+ name: 'LDH - Ligue des Droits de l\'Homme',
  description: 'Organisation historique de défense des libertés fondamentales. Sections locales dans toute la France.',
  url: 'https://www.ldh-france.org',
  type: 'association',
@@ -285,7 +285,7 @@ const LIENS_UTILES: LienUtile[] = [
  },
  {
  id: 'gisti',
- name: 'GISTI — Droits des étrangers',
+ name: 'GISTI - Droits des étrangers',
  description: 'Groupe d\'information et de soutien des immigré·es. Droits des étrangers, titre de séjour, naturalisation.',
  url: 'https://www.gisti.org',
  type: 'association',
@@ -293,7 +293,7 @@ const LIENS_UTILES: LienUtile[] = [
  },
  {
  id: 'cfcm',
- name: 'CFCM — Conseil Français du Culte Musulman',
+ name: 'CFCM - Conseil Français du Culte Musulman',
  description: 'Instance représentative de l\'islam en France. Interlocuteur officiel des pouvoirs publics. Avis, communiqués.',
  url: 'https://www.cfcm-officiel.fr',
  type: 'officiel',
@@ -302,7 +302,7 @@ const LIENS_UTILES: LienUtile[] = [
  // Officiel
  {
  id: 'service-public-religion',
- name: 'Service-public.fr — Religion et travail',
+ name: 'Service-public.fr - Religion et travail',
  description: 'Guide officiel complet sur les droits des salariés en matière de religion : voile, prière, fêtes religieuses.',
  url: 'https://www.service-public.fr/particuliers/vosdroits/F33472',
  type: 'officiel',
@@ -310,7 +310,7 @@ const LIENS_UTILES: LienUtile[] = [
  },
  {
  id: 'arcom-observatoire',
- name: 'ARCOM — Observatoire diversité',
+ name: 'ARCOM - Observatoire diversité',
  description: 'Rapports annuels sur la représentation de la diversité dans les médias audiovisuels français.',
  url: 'https://www.arcom.fr/nos-ressources/etudes-et-donnees/notre-mediatheque/bilan-de-la-representation-de-la-diversite',
  type: 'officiel',
@@ -611,8 +611,8 @@ export default function JusticePage() {
  {[
  { label: 'Propos haineux sur internet', url: 'https://www.internet-signalement.gouv.fr', desc: 'Plateforme PHAROS (Police nationale)' },
  { label: 'Discrimination dans l\'emploi', url: 'https://www.defenseurdesdroits.fr/fr/saisir-le-defenseur-des-droits', desc: 'Défenseur des Droits (gratuit)' },
- { label: 'Acte islamophobe (physique ou verbal)', url: 'https://www.islamophobie.net', desc: 'CCIF — Documentation et suivi' },
- { label: 'Plainte pénale', url: 'https://www.service-public.fr/particuliers/vosdroits/F1435', desc: 'Service-public.fr — Guide dépôt de plainte' },
+ { label: 'Acte islamophobe (physique ou verbal)', url: 'https://www.islamophobie.net', desc: 'CCIF - Documentation et suivi' },
+ { label: 'Plainte pénale', url: 'https://www.service-public.fr/particuliers/vosdroits/F1435', desc: 'Service-public.fr - Guide dépôt de plainte' },
  ].map(item => (
  <div key={item.url} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
  <div>
@@ -630,7 +630,7 @@ export default function JusticePage() {
 
  <div style={{ padding: '1.25rem', backgroundColor: 'rgba(239,68,68,0.04)', borderRadius: '0.75rem', border: '1px solid rgba(239,68,68,0.15)', textAlign: 'center' }}>
  <FileText size={24} color="#ef4444" style={{ margin: '0 auto 0.75rem' }} />
- <h3 style={{ fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.95rem' }}>Signalement ARCOM — Accès direct</h3>
+ <h3 style={{ fontWeight: 700, marginBottom: '0.4rem', fontSize: '0.95rem' }}>Signalement ARCOM - Accès direct</h3>
  <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
  Gardez ce lien en favoris pour signaler rapidement la prochaine fois.
  </p>

@@ -67,7 +67,7 @@ function ResetForm() {
  {token ? 'Nouveau mot de passe' : 'Mot de passe oublié'}
  </h2>
  <p style={{ color: 'rgba(196,181,253,0.6)', fontSize: '0.82rem', margin: '0 0 0.5rem', lineHeight: 1.6 }}>
- {token ? 'Entre ton nouveau mot de passe ci-dessous.' : 'Entre ton email — tu recevras un lien pour réinitialiser ton mot de passe.'}
+ {token ? 'Entre ton nouveau mot de passe ci-dessous.' : 'Entre ton email - tu recevras un lien pour réinitialiser ton mot de passe.'}
  </p>
 
  {!token && (

@@ -341,7 +341,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  </div>
  </div>
 
- {/* Footer — CTA */}
+ {/* Footer - CTA */}
  <div style={{ padding: '0 1.25rem 1.25rem' }}>
  {inst.website ? (
  <a href={inst.website} target="_blank" rel="noopener noreferrer" style={{

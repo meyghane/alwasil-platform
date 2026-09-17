@@ -13,8 +13,13 @@ type PageHeaderProps = {
 const BANNERS: Record<string, string> = {
  'Événements': '/images/page-banners/events-v1.webp',
  'Solidarité': '/images/page-banners/solidarity-v1.webp',
- 'Éducation': '/images/page-banners/education-v2.webp',
+ 'Apprentissage': '/images/page-banners/education-v2.webp',
  'Hajj & Omra': '/images/page-banners/hajj-v1.webp',
+ 'Emploi': '/images/page-banners/jobs-v1.webp',
+ 'Santé': '/images/page-banners/health-v1.webp',
+ 'Justice & Droits': '/images/page-banners/justice-v1.webp',
+ 'Librairies': '/images/page-banners/bookshops-v1.webp',
+ 'Piscines Burkini': '/images/page-banners/pools-v1.webp',
 };
 
 export default function PageHeader({ title, titleAr, description, count, countLabel }: PageHeaderProps) {
@@ -22,7 +27,7 @@ export default function PageHeader({ title, titleAr, description, count, countLa
 
  return (
   <header className="page-banner" aria-labelledby="page-banner-title">
-   <img src={image} alt="" className="page-banner__image" />
+   <img src={image} alt="" className={`page-banner__image${title === 'Piscines Burkini' ? ' page-banner__image--pools' : ''}`} />
    <div className="page-banner__shade" aria-hidden="true" />
    <div className="page-banner__content">
     <span className="page-banner__eyebrow">AL-WASIL · ANNUAIRE COMMUNAUTAIRE</span>

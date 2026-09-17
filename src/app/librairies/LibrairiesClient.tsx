@@ -37,7 +37,7 @@ const SPECIALITE_FILTERS: { key: LibrairieSpecialite | 'all'; label: string; ico
  { key: 'accessoires', label: 'Accessoires', icon: Gem },
 ];
 
-const ACCENT = '#7652CA'; // violet — couleur librairies
+const ACCENT = '#7652CA'; // violet - couleur librairies
 
 export default function LibrairiesClient({ librairies }: LibrairiesClientProps) {
  const [search, setSearch] = useState('');
@@ -217,7 +217,7 @@ export default function LibrairiesClient({ librairies }: LibrairiesClientProps) 
  </a>
  )}
  {!lib.website && !lib.phone && !lib.instagram && (
- <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>Coordonnées non disponibles — vérifiez Google Maps</span>
+ <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>Coordonnées non disponibles - vérifiez Google Maps</span>
  )}
  </div>
  </div>

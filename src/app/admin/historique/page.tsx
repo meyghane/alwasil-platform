@@ -22,9 +22,9 @@ const ACTION_CONFIG: Record<string, { bg: string; color: string }> = {
 };
 
 function formatDate(raw: unknown): string {
- if (!raw) return '—';
+ if (!raw) return ' - ';
  const s = String(raw);
- if (!s) return '—';
+ if (!s) return ' - ';
  const d = new Date(s);
  if (isNaN(d.getTime())) return s.slice(0, 16).replace('T', ' à ');
  const dd = String(d.getDate()).padStart(2, '0');
@@ -90,7 +90,7 @@ export default async function HistoriquePage() {
  Historique des ajouts
  </h1>
  <p style={{ color: '#6b7280', fontSize: '0.85rem', margin: 0 }}>
- {historique.length} entrée{historique.length !== 1 ? 's' : ''} — tout ce qui a été ajouté ou validé
+ {historique.length} entrée{historique.length !== 1 ? 's' : ''} - tout ce qui a été ajouté ou validé
  </p>
  </div>
 
@@ -116,7 +116,7 @@ export default async function HistoriquePage() {
 
  {/* Lignes */}
  {historique.map((entry, i) => {
- const catLabel = CAT_LABELS[entry.categorie] || CAT_LABELS[entry.onglet] || entry.categorie || entry.onglet || '—';
+ const catLabel = CAT_LABELS[entry.categorie] || CAT_LABELS[entry.onglet] || entry.categorie || entry.onglet || ' - ';
  const actionCfg = ACTION_CONFIG[entry.action] ?? ACTION_CONFIG.IMPORT;
  const isAI = !entry.par || entry.par === 'Wassil' || entry.par === 'Claude' || entry.par === 'wassil' || entry.par === 'claude';
 
@@ -130,7 +130,7 @@ export default async function HistoriquePage() {
  }}>
  {/* Nom */}
  <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#080808', lineHeight: 1.4, fontFamily: 'Poppins, sans-serif', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
- {entry.nom || entry.id || '—'}
+ {entry.nom || entry.id || ' - '}
  </div>
 
  {/* Action */}

@@ -72,7 +72,7 @@ const SOURATES = [
  fr: ['Nous t\'avons certes donné l\'Abondance', 'Accomplis donc la prière pour ton Seigneur et sacrifie', 'C\'est bien ton ennemi qui est le sans postérité'],
  },
  {
- nom: 'An-Nas (Les Hommes)', num: '114', rakat: 'Protection — souvent récitée',
+ nom: 'An-Nas (Les Hommes)', num: '114', rakat: 'Protection - souvent récitée',
  ar: ['قُلْ أَعُوذُ بِرَبِّ النَّاسِ', 'مَلِكِ النَّاسِ', 'إِلَٰهِ النَّاسِ', 'مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ', 'الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ', 'مِنَ الْجِنَّةِ وَالنَّاسِ'],
  translit: ['Qul a\'udhu bi-rabbi n-nas', 'Maliki n-nas', 'Ilahi n-nas', 'Min sharri l-waswasi l-khannas', 'Alladhi yuwaswisu fi suduri n-nas', 'Mina l-jinnati wa-n-nas'],
  fr: ['Dis : "Je cherche refuge auprès du Seigneur des hommes"', 'Le Roi des hommes', 'Le Dieu des hommes', 'Contre le mal du mauvais conseiller qui se dérobe', 'Qui souffle le mal dans les poitrines des hommes', 'Qu\'il soit djinn ou homme'],
@@ -137,7 +137,7 @@ export default function GuidePage() {
  w.document.write(`<!DOCTYPE html><html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<title>Guide - Mes Premiers Pas en Islam — Al-Wasil</title>
+<title>Guide - Mes Premiers Pas en Islam - Al-Wasil</title>
 <style>
  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
  * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -156,17 +156,17 @@ export default function GuidePage() {
 </head>
 <body>
 <div class="save-hint"><strong>Pour télécharger :</strong> Fichier → Imprimer (Cmd+P / Ctrl+P) → choisir <strong>"Enregistrer en PDF"</strong> comme destination.</div>
-<div class="badge">Al-Wasil — Mes Premiers Pas</div>
+<div class="badge">Al-Wasil - Mes Premiers Pas</div>
 <h1>Guide pour débuter en Islam</h1>
 <p>Les fondamentaux sur lesquels tous les savants s'accordent, sans divergences d'écoles.</p>
 
 <h2>Les 5 piliers de l'Islam</h2>
 ${PILIERS.map((p, i) => `<div class="item"><div class="num">${i+1}</div><div><strong>${p.nom}</strong> <em style="color:#a8a29e">${p.ar}</em><br/><span style="font-size:0.85rem;color:#57534e">${p.desc}</span></div></div>`).join('')}
 
-<h2>L'ablution (Wudu) — étapes</h2>
+<h2>L'ablution (Wudu) - étapes</h2>
 ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><strong>${s.titre}</strong><br/><span style="font-size:0.85rem;color:#57534e">${s.desc}</span></div></div>`).join('')}
 
-<footer>© Al-Wasil — alwasil-platform.vercel.app — Guide généré le ${new Date().toLocaleDateString('fr-FR')}</footer>
+<footer>© Al-Wasil - alwasil-platform.vercel.app - Guide généré le ${new Date().toLocaleDateString('fr-FR')}</footer>
 </body></html>`);
  w.document.close();
  }, []);
@@ -183,7 +183,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Mes Premiers Pas</h1>
  </div>
  <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}>
- Tu découvres l&apos;islam ou tu souhaites (re)apprendre les bases ? Ce guide couvre l&apos;essentiel — les points sur lesquels tous les savants s&apos;accordent, sans divergences d&apos;écoles.
+ Tu découvres l&apos;islam ou tu souhaites (re)apprendre les bases ? Ce guide couvre l&apos;essentiel - les points sur lesquels tous les savants s&apos;accordent, sans divergences d&apos;écoles.
  </p>
  </div>
 
@@ -221,7 +221,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  </Section>
 
  {/* ── SECTION 2 : La Shahada ── */}
- <Section title="La Shahada — Le témoignage de foi" icon={Heart}>
+ <Section title="La Shahada - Le témoignage de foi" icon={Heart}>
  <div style={{ textAlign: 'center', padding: '1.5rem', backgroundColor: TEAL_LIGHT, borderRadius: '0.75rem', border: `1px solid ${TEAL_BORDER}`, marginBottom: '1rem' }}>
  <p style={{ fontSize: '1.8rem', fontFamily: 'serif', direction: 'rtl', lineHeight: 1.8, color: '#080808', margin: '0 0 0.75rem' }}>
  أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ
@@ -239,7 +239,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  </Section>
 
  {/* ── SECTION 3 : Les Ablutions ── */}
- <Section title="Les Ablutions (Wudu — الوُضُوء)" icon={Droplets}>
+ <Section title="Les Ablutions (Wudu - الوُضُوء)" icon={Droplets}>
  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.65 }}>
  Les ablutions sont obligatoires avant la prière, le toucher du Coran et la circumambulation (tawaf). Elles sont invalidées par : les selles/urines, les gaz intestinaux, le sommeil profond, le saignement abondant.
  </p>
@@ -281,10 +281,10 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  </Section>
 
  {/* ── SECTION 5 : Comment prier ── */}
- <Section title="Comment faire sa prière — les étapes" icon={BookOpen}>
+ <Section title="Comment faire sa prière - les étapes" icon={BookOpen}>
  {gender === 'f' && (
  <div style={{ padding: '0.75rem 1rem', backgroundColor: '#f0ebfa', border: '1px solid #c9b6ec', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.83rem', color: '#543398' }}>
- <strong>Pour les sœurs :</strong> La position des bras, des mains et des pieds diffère légèrement (par exemple, les bras restent plus proches du corps). Un guide spécifique avec images est recommandé — recherche "comment prier pour les femmes" sur YouTube.
+ <strong>Pour les sœurs :</strong> La position des bras, des mains et des pieds diffère légèrement (par exemple, les bras restent plus proches du corps). Un guide spécifique avec images est recommandé - recherche "comment prier pour les femmes" sur YouTube.
  </div>
  )}
  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -301,7 +301,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  </Section>
 
  {/* ── SECTION 6 : Al-Fatiha ── */}
- <Section title="Al-Fatiha — La sourate à réciter dans chaque rak'at" icon={FileText}>
+ <Section title="Al-Fatiha - La sourate à réciter dans chaque rak'at" icon={FileText}>
  <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
  Al-Fatiha est obligatoire dans chaque rak'at de chaque prière. La mémoriser est la première chose à apprendre.
  </p>
@@ -360,7 +360,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  Télécharger <span style={{ textDecoration: 'underline', marginLeft: 4 }}>EN</span> PDF
  </button>
  <p style={{ textAlign: 'center', fontSize: '0.72rem', color: '#9ca3af', marginTop: '0.5rem' }}>
- Une fenêtre s'ouvre — choisis "Enregistrer en PDF" comme imprimante
+ Une fenêtre s'ouvre - choisis "Enregistrer en PDF" comme imprimante
  </p>
  </div>
 
@@ -375,7 +375,7 @@ ${WUDU_STEPS.map(s => `<div class="item"><div class="num">${s.num}</div><div><st
  style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', border: '1.5px solid var(--border-color)', fontSize: '0.9rem', marginBottom: '1rem', backgroundColor: 'white' }}>
  <option value="">-- Choisir ton département --</option>
  {Object.entries(DEPARTEMENTS_MOSQUEES).map(([code, m]) => (
- <option key={code} value={code}>{code} — {m.ville}</option>
+ <option key={code} value={code}>{code} - {m.ville}</option>
  ))}
  <option value="autre">Autre département</option>
  </select>

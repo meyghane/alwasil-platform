@@ -198,7 +198,7 @@ export default function AdminLoginPage() {
  Mot de passe oublié ?
  </a>
  <span style={{ fontSize: '0.72rem', color: 'rgba(118,82,202,0.3)' }}>
- Admin ou modérateur — même page
+ Admin ou modérateur - même page
  </span>
  </div>
  </form>

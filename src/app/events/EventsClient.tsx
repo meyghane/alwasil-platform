@@ -32,8 +32,8 @@ function formatDate(iso: string): string {
  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
-function isUpcoming(iso: string): boolean {
- return new Date(iso) >= new Date(new Date().toDateString());
+function isUpcoming(iso: string, endDate?: string): boolean {
+ return new Date(`${endDate ?? iso}T23:59:59`) >= new Date();
 }
 
 export default function EventsClient({ events }: EventsClientProps) {
@@ -44,7 +44,7 @@ export default function EventsClient({ events }: EventsClientProps) {
 
  // Compteurs par département
  const deptCounts: Record<string, number> = {};
- events.filter(e => isUpcoming(e.date)).forEach(e => {
+ events.filter(e => isUpcoming(e.date, e.endDate) && VERIFIED_CURRENT_EVENTS.has(e.id)).forEach(e => {
  deptCounts[e.department] = (deptCounts[e.department] ?? 0) + 1;
  });
 
@@ -57,7 +57,7 @@ export default function EventsClient({ events }: EventsClientProps) {
  ev.tags.some(t => t.toLowerCase().includes(q));
  const matchDept = selectedDept === 'Tout' || ev.department === selectedDept;
  const matchCat = selectedCategory === 'all' || ev.category === selectedCategory;
- const matchTime = showPast ? true : isUpcoming(ev.date) && VERIFIED_CURRENT_EVENTS.has(ev.id);
+ const matchTime = showPast ? true : isUpcoming(ev.date, ev.endDate) && VERIFIED_CURRENT_EVENTS.has(ev.id);
  return matchSearch && matchDept && matchCat && matchTime;
  });
 
@@ -154,7 +154,7 @@ export default function EventsClient({ events }: EventsClientProps) {
  </div>
  </div>
 
- {/* Results — grille 3 colonnes */}
+ {/* Results - grille 3 colonnes */}
  {sorted.length === 0 ? (
  <div style={{ textAlign: 'center', padding: '5rem 0', color: '#a8a29e' }}>
  <Calendar size={48} style={{ margin: '0 auto 1.5rem', opacity: 0.2 }} />
@@ -264,7 +264,7 @@ function EventCard({ event }: { event: Event }) {
  </div>
  <div>
  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#080808' }}>
- {event.timeStart}{event.timeEnd ? ` — ${event.timeEnd}` : ''}
+ {event.timeStart}{event.timeEnd ? ` - ${event.timeEnd}` : ''}
  </div>
  <div style={{ fontSize: '0.72rem', color: '#a8a29e', marginTop: '1px', textTransform: 'capitalize' }}>
  {d.toLocaleDateString('fr-FR', { weekday: 'long' })}

@@ -54,7 +54,7 @@ function StarsDisplay({ count }: { count: number }) {
 
 function AgenceNameById({ id, agences }: { id: string; agences: HajjAgence[] }) {
  const agence = agences.find(a => a.id === id);
- return <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{agence?.name ?? '—'}</span>;
+ return <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{agence?.name ?? ' - '}</span>;
 }
 
 export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProps) {
@@ -358,11 +358,11 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  },
  {
  icon: '',
- title: 'Calendrier — Hajj 2026',
+ title: 'Calendrier - Hajj 2026',
  color: '#7652CA',
  items: [
  '8 Dhul Hijja : Départ vers Mina (Yawm al-Tarwiyah)',
- '9 Dhul Hijja : Arafat — Le jour le plus important du Hajj',
+ '9 Dhul Hijja : Arafat - Le jour le plus important du Hajj',
  '10 Dhul Hijja : Muzdalifah, lapidation, sacrifice, tawaf',
  '11–12 Dhul Hijja : Jours de Tachrik (nuit à Mina)',
  '13 Dhul Hijja : Départ progressif',

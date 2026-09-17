@@ -128,7 +128,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
  },
 
  psy: {
- label: 'Praticien — Psy',
+ label: 'Praticien - Psy',
  emoji: '',
  sheetTab: 'Sante_psy',
  color: '#c9973a',
@@ -155,7 +155,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
  },
 
  hijama: {
- label: 'Praticien — Hijama',
+ label: 'Praticien - Hijama',
  emoji: '',
  sheetTab: 'sante_hijama',
  color: '#ef4444',
@@ -177,7 +177,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
  },
 
  roqya: {
- label: 'Praticien — Roqya',
+ label: 'Praticien - Roqya',
  emoji: '',
  sheetTab: 'Sante_roqya',
  color: '#c9973a',

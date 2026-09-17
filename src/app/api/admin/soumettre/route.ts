@@ -78,11 +78,11 @@ export async function POST(req: NextRequest) {
  }
  }
 
- // Email de notification (simple — admin valide dans le Sheet)
+ // Email de notification (simple - admin valide dans le Sheet)
  const fieldsHtml = Object.entries(data)
  .map(([k, v]) => `<tr>
  <td style="padding:5px 10px;font-weight:600;color:#555;border-bottom:1px solid #f3f4f6">${k}</td>
- <td style="padding:5px 10px;color:#111;border-bottom:1px solid #f3f4f6">${String(v || '—')}</td>
+ <td style="padding:5px 10px;color:#111;border-bottom:1px solid #f3f4f6">${String(v || ' - ')}</td>
  </tr>`)
  .join('');
 
@@ -91,13 +91,13 @@ export async function POST(req: NextRequest) {
  const emailResult = await resend.emails.send({
  from: 'Al-Wasil <onboarding@resend.dev>',
  to: process.env.CONTACT_EMAIL || 'al-wasil@hotmail.com',
- subject: `[Al-Wasil] Nouvelle soumission à vérifier — ${form.emoji} ${form.label}`,
+ subject: `[Al-Wasil] Nouvelle soumission à vérifier - ${form.emoji} ${form.label}`,
  html: `
  <div style="font-family:sans-serif;max-width:620px;margin:0 auto;background:#fff">
  <div style="background:#0a0a0a;padding:20px 24px;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:12px">
  <span style="font-size:1.5rem">${form.emoji}</span>
  <div>
- <h1 style="color:white;margin:0;font-size:1rem;font-weight:700">Nouvelle soumission — ${form.label}</h1>
+ <h1 style="color:white;margin:0;font-size:1rem;font-weight:700">Nouvelle soumission - ${form.label}</h1>
  <p style="color:#9ca3af;margin:4px 0 0;font-size:0.8rem">Soumis le ${new Date(now).toLocaleString('fr-FR')}</p>
  </div>
  </div>
@@ -162,7 +162,7 @@ export async function POST(req: NextRequest) {
  emailSentTo: process.env.CONTACT_EMAIL || 'meyghvne@gmail.com',
  emailError: emailError || null,
  message: sheetWriteOk
- ? 'Fiche enregistrée dans le Sheet (onglet Soumissions) — email envoyé.'
+ ? 'Fiche enregistrée dans le Sheet (onglet Soumissions) - email envoyé.'
  : 'Email envoyé. Vérifier la connexion Apps Script.',
  });
 }

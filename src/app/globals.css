@@ -24,7 +24,7 @@
   --font-body: 'Poppins', sans-serif;
 }
 
-/* Dark mode désactivé volontairement — design toujours en light mode */
+/* Dark mode désactivé volontairement - design toujours en light mode */
 
 * {
   box-sizing: border-box;
@@ -149,7 +149,7 @@ a {
   66%       { transform: translateY(-6px) scale(0.8); }
 }
 
-/* ── HALO HERO — lumière dorée qui dérive lentement ─────────── */
+/* ── HALO HERO - lumière dorée qui dérive lentement ─────────── */
 
 @keyframes halo-drift {
   0%   { transform: translate(0%,   0%)   scale(1);    }
@@ -159,7 +159,7 @@ a {
   100% { transform: translate(-5%,  5%)   scale(1);    }
 }
 
-/* ── TICKER STATS — défilement infini ────────────────────────── */
+/* ── TICKER STATS - défilement infini ────────────────────────── */
 
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
@@ -177,7 +177,7 @@ a {
   animation-play-state: paused;
 }
 
-/* ── BORDER BEAM — lumière qui fait le tour du contour ──────── */
+/* ── BORDER BEAM - lumière qui fait le tour du contour ──────── */
 
 @keyframes led-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -192,7 +192,7 @@ a {
   display: flex;
   text-decoration: none;
   cursor: pointer;
-  /* Halo doux permanent autour du bouton — comme si le contour brillait */
+  /* Halo doux permanent autour du bouton - comme si le contour brillait */
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.10),
     0 0 10px rgba(255,255,255,0.04);
@@ -231,7 +231,7 @@ a {
   filter: blur(0.4px);
 }
 
-/* Face intérieure OPAQUE — masque le centre du conic-gradient */
+/* Face intérieure OPAQUE - masque le centre du conic-gradient */
 .led-face {
   position: absolute;
   inset: 1.5px;          /* épaisseur du contour visible */
@@ -323,7 +323,7 @@ a {
 .service-navigator__services { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .service-navigator__services > * { min-width: 0; border-radius: 22px; overflow: hidden; }
 
-/* ── HOW IT WORKS — editorial steps ────────────────────────── */
+/* ── HOW IT WORKS - editorial steps ────────────────────────── */
 .how-it-works { padding: clamp(68px, 8vw, 116px) clamp(16px, 4vw, 58px); display: grid; grid-template-columns: minmax(270px, .75fr) minmax(0, 1.55fr); gap: clamp(36px, 7vw, 110px); background: #ECFF58; color: #080808; }
 .how-it-works__head > span { display: inline-block; padding: 9px 13px; border-radius: 999px; background: #7652CA; color: #fff; font-size: 11px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
 .how-it-works__head h2 { margin: 24px 0; font-size: clamp(48px, 6vw, 88px); line-height: .85; letter-spacing: -.075em; font-weight: 750; text-transform: uppercase; }
@@ -339,7 +339,7 @@ a {
 .how-it-works__steps p { margin: 0; font-size: 13px; line-height: 1.6; color: #555; }
 .how-it-works__steps article:nth-child(2) p { color: rgba(255,255,255,.86); }
 
-/* ── UPCOMING EVENTS — editorial masked rail ───────────────── */
+/* ── UPCOMING EVENTS - editorial masked rail ───────────────── */
 .events-showcase { padding: clamp(48px, 6vw, 88px) 0 clamp(58px, 7vw, 104px); background: #080808; color: #fff; overflow: hidden; }
 .events-showcase__label { padding: 0 clamp(18px, 4vw, 56px) clamp(30px, 4vw, 52px); color: #fff; font-size: clamp(58px, 12vw, 174px); line-height: .78; letter-spacing: -.085em; font-weight: 800; white-space: nowrap; }
 .upcoming-events { --agenda-overlay-width: clamp(310px, 26vw, 390px); position: relative; min-height: 452px; }
@@ -349,7 +349,7 @@ a {
 .upcoming-events__intro h2 { max-width: 100%; margin: 0; color: #fff; font-size: clamp(27px, 2.65vw, 40px); line-height: .98; letter-spacing: -.055em; font-weight: 650; text-transform: uppercase; overflow-wrap: normal; }
 .upcoming-events__intro p { margin: 18px 0 0; color: rgba(255,255,255,.68); font-size: 13px; line-height: 1.55; }
 .upcoming-events__intro a { display: inline-flex; align-items: center; gap: 9px; width: fit-content; min-height: 44px; color: #fff; border-bottom: 1.5px solid rgba(255,255,255,.72); font-size: 12px; font-weight: 750; }
-.upcoming-events__rail { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(250px, 23vw, 322px); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 96px 16px calc(var(--agenda-overlay-width) + 18px); overscroll-behavior-inline: contain; }
+.upcoming-events__rail { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(250px, 23vw, 322px); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline-start: calc(var(--agenda-overlay-width) + 18px); scrollbar-width: none; padding: 0 96px 16px calc(var(--agenda-overlay-width) + 18px); overscroll-behavior-inline: contain; }
 .upcoming-events__rail::-webkit-scrollbar { display: none; }
 .upcoming-events__more { min-height: 420px; border-radius: 20px; background: #ECFF58; color: #080808; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; scroll-snap-align: start; }
 .upcoming-events__more strong { font-size: 31px; line-height: 1; font-weight: 650; letter-spacing: -.055em; }
@@ -375,31 +375,31 @@ a {
 .page-banner__count strong { color: #ECFF58; font-size: 44px; line-height: .9; letter-spacing: -.055em; }
 .page-banner__count span { margin-top: 8px; color: rgba(255,255,255,.7); font-size: 11px; }
 
-/* ── SOLIDARITY — visible chapter marker ────────────────────── */
+/* ── SOLIDARITY - visible chapter marker ────────────────────── */
 .solidarity-showcase { position: relative; padding: clamp(58px, 7vw, 100px) 0 58px; overflow: hidden; background: #fff; color: #080808; }
 .solidarity-showcase__label { margin: 0 0 clamp(34px, 4vw, 56px); color: #080808; font-size: clamp(56px, 11vw, 154px); line-height: .78; letter-spacing: -.085em; font-weight: 800; white-space: nowrap; }
 
-/* ── HAJJ & OMRA — full editorial chapter ──────────────────── */
-.hajj-showcase { padding: clamp(58px, 7vw, 100px) clamp(14px, 4vw, 56px) 0; overflow: hidden; background: #080808; color: #fff; }
-.hajj-showcase__label { max-width: 1540px; margin: 0 auto clamp(38px, 5vw, 70px); color: #fff; font-size: clamp(54px, 10.5vw, 154px); line-height: .78; letter-spacing: -.085em; font-weight: 800; white-space: nowrap; }
-.hajj-showcase__feature { max-width: 1320px; min-height: 590px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr); border: 1px solid rgba(255,255,255,.2); border-radius: 28px 28px 0 0; overflow: hidden; }
-.hajj-showcase__copy { padding: clamp(30px, 4vw, 58px); display: flex; flex-direction: column; justify-content: space-between; gap: 42px; background: radial-gradient(circle at 0 100%, rgba(118,82,202,.38), transparent 40%), #111; }
+/* ── HAJJ & OMRA - full editorial chapter ──────────────────── */
+.hajj-showcase { padding: clamp(38px, 4vw, 56px) clamp(14px, 4vw, 56px) 0; overflow: hidden; background: #080808; color: #fff; }
+.hajj-showcase__label { max-width: 1540px; margin: 0 auto clamp(20px, 2.5vw, 34px); color: #fff; font-size: clamp(54px, 9vw, 128px); line-height: .78; letter-spacing: -.085em; font-weight: 800; white-space: nowrap; }
+.hajj-showcase__feature { max-width: 1320px; height: clamp(390px, 33vw, 470px); margin: 0 auto; display: grid; grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr); border: 1px solid rgba(255,255,255,.2); border-radius: 28px 28px 0 0; overflow: hidden; }
+.hajj-showcase__copy { min-width: 0; padding: clamp(26px, 3vw, 42px); display: flex; flex-direction: column; justify-content: space-between; gap: 18px; background: radial-gradient(circle at 0 100%, rgba(118,82,202,.38), transparent 40%), #111; }
 .hajj-showcase__copy > span { width: fit-content; display: inline-flex; align-items: center; gap: 8px; color: #080808; background: #ECFF58; padding: 9px 13px; border-radius: 999px; font-size: 10px; font-weight: 850; letter-spacing: .1em; }
-.hajj-showcase__copy h2 { max-width: 620px; margin: 0 0 24px; font-size: clamp(42px, 5.1vw, 76px); line-height: .94; letter-spacing: -.067em; font-weight: 650; }
+.hajj-showcase__copy h2 { max-width: 620px; margin: 0 0 14px; font-size: clamp(36px, 4.1vw, 58px); line-height: .94; letter-spacing: -.067em; font-weight: 650; }
 .hajj-showcase__copy mark { display: inline; padding: 0 .08em; background: #7652CA; color: #fff; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.hajj-showcase__copy p { max-width: 540px; margin: 0; color: rgba(255,255,255,.7); font-size: 15px; line-height: 1.7; }
+.hajj-showcase__copy p { max-width: 540px; margin: 0; color: rgba(255,255,255,.7); font-size: 14px; line-height: 1.5; }
 .hajj-showcase__actions { display: flex; flex-wrap: wrap; gap: 10px; }
-.hajj-showcase__actions a { min-height: 50px; padding: 12px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1.5px solid rgba(255,255,255,.75); border-radius: 999px; color: #fff; font-size: 13px; font-weight: 750; }
+.hajj-showcase__actions a { min-height: 44px; padding: 10px 16px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1.5px solid rgba(255,255,255,.75); border-radius: 999px; color: #fff; font-size: 12px; font-weight: 750; }
 .hajj-showcase__actions a:first-child { border-color: #ECFF58; background: #ECFF58; color: #080808; }
 .hajj-showcase__actions a:hover { border-color: #7652CA; background: #7652CA; color: #fff; }
-.hajj-showcase__visual { position: relative; min-height: 590px; overflow: hidden; background: #332c3c; }
+.hajj-showcase__visual { position: relative; min-height: 0; overflow: hidden; background: #332c3c; }
 .hajj-showcase__visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(8,8,8,.5)); pointer-events: none; }
-.hajj-showcase__visual img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 52% 48%; }
+.hajj-showcase__visual img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; object-position: 58% 47%; }
 .hajj-showcase__visual > span { position: absolute; z-index: 2; right: 24px; bottom: 24px; padding: 10px 14px; border-radius: 999px; background: rgba(8,8,8,.82); border: 1px solid rgba(255,255,255,.35); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; backdrop-filter: blur(8px); }
 .hajj-showcase__stats { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(255,255,255,.2); border-top: 0; }
-.hajj-showcase__stats > div { min-height: 145px; padding: 24px clamp(18px, 3vw, 38px); display: flex; align-items: center; gap: 20px; border-right: 1px solid rgba(255,255,255,.2); }
+.hajj-showcase__stats > div { min-height: 96px; padding: 15px clamp(18px, 3vw, 38px); display: flex; align-items: center; gap: 16px; border-right: 1px solid rgba(255,255,255,.2); }
 .hajj-showcase__stats > div:last-child { border-right: 0; }
-.hajj-showcase__stats strong { font-size: clamp(30px, 4vw, 56px); line-height: .9; letter-spacing: -.065em; color: #ECFF58; }
+.hajj-showcase__stats strong { font-size: clamp(28px, 3.2vw, 44px); line-height: .9; letter-spacing: -.065em; color: #ECFF58; }
 .hajj-showcase__stats span { color: rgba(255,255,255,.62); font-size: 12px; line-height: 1.45; }
 
 /* ── BACK TO SCHOOL BANNER ──────────────────────────────────── */
@@ -511,6 +511,7 @@ a {
 @media (max-width: 600px) {
   .page-banner { min-height: 520px; }
   .page-banner__image { object-position: 64% 50%; }
+  .page-banner__image--pools { object-position: 36% 50%; }
   .page-banner__content { padding: 20px 16px 28px; }
   .page-banner__bottom { display: block; }
   .page-banner h1 { font-size: clamp(50px, 17vw, 82px); line-height: .82; }
@@ -526,8 +527,7 @@ a {
   .editorial-hero__student { min-height: 480px; order: 1; }
   .editorial-hero__student-image { object-position: 52% 50%; }
   .editorial-hero__services { min-height: 660px; }
-  .editorial-hero__mosque { min-height: 500px; }
-  .editorial-hero__mosque-image { object-position: 58% 50%; }
+  .editorial-hero__mosque { display: none; }
   .community-stories { padding-left: 14px; padding-right: 14px; }
   .community-stories__head { align-items: end; }
   .community-stories__controls button { width: 46px; height: 46px; }
@@ -536,8 +536,8 @@ a {
   .community-story__copy { min-height: 225px; padding: 21px; }
   .upcoming-events { min-height: 0; }
   .upcoming-events__intro { position: relative; inset: auto; width: auto; min-height: 300px; margin: 0 14px 18px; padding: 24px; border-radius: 24px; background: #080808; }
-  .upcoming-events__intro h2 { font-size: clamp(34px, 11vw, 48px); }
-  .upcoming-events__rail { grid-auto-columns: 82%; padding: 0 54px 14px 14px; }
+  .upcoming-events__intro h2 { font-size: clamp(28px, 8.3vw, 38px); }
+  .upcoming-events__rail { grid-auto-columns: 82%; scroll-padding-inline-start: 14px; padding: 0 54px 14px 14px; }
   .upcoming-events__controls { right: 8px; top: auto; bottom: 172px; transform: none; }
   .upcoming-events__controls button { width: 44px; height: 44px; }
   .upcoming-events__controls button:first-child, .upcoming-events__controls span { display: none; }
@@ -549,18 +549,20 @@ a {
   .how-it-works__steps { grid-template-columns: 1fr; }
   .how-it-works__steps article, .how-it-works__steps article:nth-child(2) { min-height: 290px; }
   .events-showcase__label, .solidarity-showcase__label, .hajj-showcase__label { font-size: clamp(48px, 17vw, 78px); letter-spacing: -.075em; }
-  .hajj-showcase { padding: 54px 12px 0; }
-  .hajj-showcase__label { margin-bottom: 34px; }
-  .hajj-showcase__feature { min-height: 0; grid-template-columns: 1fr; border-radius: 24px 24px 0 0; }
-  .hajj-showcase__copy { min-height: 520px; padding: 28px 22px; gap: 34px; }
-  .hajj-showcase__copy h2 { font-size: clamp(39px, 12vw, 58px); }
+  .events-showcase__label { font-size: clamp(32px, 10.5vw, 46px); letter-spacing: -.07em; white-space: normal; }
+  .hajj-showcase { padding: 38px 12px 0; }
+  .hajj-showcase__label { margin-bottom: 22px; }
+  .hajj-showcase__feature { height: auto; grid-template-columns: 1fr; border-radius: 24px 24px 0 0; }
+  .hajj-showcase__copy { min-height: 0; padding: 25px 22px; gap: 22px; }
+  .hajj-showcase__copy h2 { font-size: clamp(35px, 10vw, 50px); }
   .hajj-showcase__actions { flex-direction: column; }
   .hajj-showcase__actions a { width: 100%; }
-  .hajj-showcase__visual { min-height: 460px; }
-  .hajj-showcase__visual img { object-position: 52% 45%; }
-  .hajj-showcase__stats { grid-template-columns: 1fr; }
-  .hajj-showcase__stats > div { min-height: 108px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
-  .hajj-showcase__stats > div:last-child { border-bottom: 0; }
+  .hajj-showcase__visual { height: clamp(230px, 50vw, 320px); }
+  .hajj-showcase__visual img { object-position: 58% 45%; }
+  .hajj-showcase__stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hajj-showcase__stats > div { min-height: 96px; padding: 15px 12px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px; }
+  .hajj-showcase__stats strong { font-size: clamp(21px, 5vw, 32px); }
+  .hajj-showcase__stats span { font-size: 10px; }
   .back-to-school { padding: 42px 12px; }
   .back-to-school__banner { min-height: 0; border-radius: 24px; }
   .back-to-school__visual { min-height: 320px; }

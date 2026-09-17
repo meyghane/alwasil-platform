@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
 const APPS_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
-// Telegram removed — notifications via email digest (GitHub Actions)
+// Telegram removed - notifications via email digest (GitHub Actions)
 const CRON_SECRET = process.env.CRON_SECRET || '';
 
 const STRATEGIES = [

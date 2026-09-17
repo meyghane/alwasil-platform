@@ -4,7 +4,7 @@ import PiscinesClient from './PiscinesClient';
 import type { PiscineSheet } from '@/lib/sheets';
 
 export default async function PiscinesPage() {
- // Fetch depuis Google Sheets — fallback sur données statiques si erreur
+ // Fetch depuis Google Sheets - fallback sur données statiques si erreur
  let data: PiscineSheet[] = await getPiscines();
 
  if (data.length === 0) {

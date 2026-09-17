@@ -36,7 +36,7 @@ const QUICK_CATEGORIES = [
   { href: '/solidarity', icon: HeartHandshake, label: 'Solidarité' },
   { href: '/hajj', icon: Plane, label: 'Hajj & Omra' },
   { href: '/jobs', icon: Briefcase, label: 'Emploi' },
-  { href: '/education', icon: BookOpen, label: 'Éducation' },
+  { href: '/education', icon: BookOpen, label: 'Apprentissage' },
   { href: '/sante', icon: Stethoscope, label: 'Santé' },
   { href: '/librairies', icon: Library, label: 'Librairies' },
   { href: '/piscines', icon: Waves, label: 'Piscines' },
@@ -46,7 +46,7 @@ const SECTIONS: Section[] = [
   { href: '/events', icon: Calendar, color: '#3a0a45', bg: '#ecfdf5', title: 'Événements', arabic: 'اللقاء', description: 'Conférences, séminaires, maraudes et rencontres communautaires en France.', tags: ['Conférences', 'Maraudes', 'Séminaires', 'En ligne'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80' },
   { href: '/hajj', icon: Plane, color: '#4a0e58', bg: '#ecfdf5', title: 'Hajj & Omra', arabic: 'الحج', description: 'Comparez les agences, offres 2026 et guide du pèlerin.', tags: ['Hajj 2026', 'Omra', 'Comparateur'], image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80' },
   { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#f0ebfa', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, collectes et initiatives solidaires partout en France.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Gaza'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
-  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#f0ebfa', title: 'Éducation', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
+  { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#f0ebfa', title: 'Apprentissage', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
   { href: '/librairies', icon: Library, color: '#2c0835', bg: '#ecfdf5', title: 'Librairies', arabic: 'المكتبة', description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.', tags: ['Corans', 'Livres', 'Enfants'], image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80' },
   { href: '/jobs', icon: Briefcase, color: '#4a0e58', bg: '#ecfdf5', title: 'Emploi', arabic: 'الأمل', description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.', tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'], image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80' },
   { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#f0ebfa', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
@@ -100,7 +100,7 @@ function buildUpcomingEvents(events: Event[]) {
   today.setHours(0, 0, 0, 0);
 
   return events
-    .filter(e => new Date(e.date) >= today && e.title !== 'Exposition — Le Jardin Oriental-Islamique de Berlin')
+    .filter(e => new Date(e.date) >= today && e.title !== 'Exposition - Le Jardin Oriental-Islamique de Berlin')
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 6)
     .map(e => {

@@ -40,15 +40,15 @@ export async function POST(req: NextRequest) {
  const now = new Date().toLocaleString('fr-FR');
 
  // ── 1. Email via Resend ─────────────────────────────────────
- const subject = `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` — ${leadId}` : ''}`;
+ const subject = `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` - ${leadId}` : ''}`;
  const html = `
- <h2>Nouvelle soumission via Al-Wasil — ${type}</h2>
+ <h2>Nouvelle soumission via Al-Wasil - ${type}</h2>
  <table style="border-collapse:collapse;width:100%">
  ${Object.entries(fields as Record<string, string>)
  .map(([k, v]) => `
  <tr>
  <td style="padding:8px 12px;border:1px solid #e5e7eb;font-weight:600;background:#f9fafb;width:180px">${k}</td>
- <td style="padding:8px 12px;border:1px solid #e5e7eb">${v || '—'}</td>
+ <td style="padding:8px 12px;border:1px solid #e5e7eb">${v || ' - '}</td>
  </tr>`)
  .join('')}
  </table>
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
  Valider dans l'admin
  </a>
  </p>
- <p style="margin-top:16px;color:#6b7280;font-size:13px">Envoyé depuis al-wasil.fr — ${now}</p>
+ <p style="margin-top:16px;color:#6b7280;font-size:13px">Envoyé depuis al-wasil.fr - ${now}</p>
  `;
 
  resend.emails.send({

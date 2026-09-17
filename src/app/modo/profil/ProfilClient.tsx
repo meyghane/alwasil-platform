@@ -134,7 +134,7 @@ export default function ProfilClient({
  )}
  {!level.next && (
  <div style={{ fontSize: '0.78rem', color: '#fbbf24', fontWeight: 700, textAlign: 'center', marginTop: '0.25rem' }}>
- Niveau maximum atteint — bārakAllāhu fīk !
+ Niveau maximum atteint - bārakAllāhu fīk !
  </div>
  )}
  </div>
@@ -173,7 +173,7 @@ export default function ProfilClient({
  </div>
  ))}
  <div style={{ marginTop: '0.875rem', padding: '0.75rem', backgroundColor: '#f0ebfa', borderRadius: '10px', fontSize: '0.75rem', color: '#7652CA', fontStyle: 'italic', textAlign: 'center', lineHeight: 1.5 }}>
- &ldquo;Qui guide vers une bonne action reçoit une récompense équivalente.&rdquo; — Hadith
+ &ldquo;Qui guide vers une bonne action reçoit une récompense équivalente.&rdquo; - Hadith
  </div>
  </div>
 
@@ -211,7 +211,7 @@ export default function ProfilClient({
  <div>
  <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, color: '#374151', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Rôle & permissions</label>
  <div style={{ padding: '0.75rem 1rem', border: '1.5px solid #f3f4f6', borderRadius: '10px', backgroundColor: '#fafafa', fontSize: '0.85rem', color: '#374151' }}>
- <strong>{session.role === 'admin' ? 'Administrateur' : 'Modérateur'}</strong> — {session.permissions.includes('all') ? 'Toutes catégories' : session.permissions.map(p => PERM_LABELS[p] || p).join(', ')}
+ <strong>{session.role === 'admin' ? 'Administrateur' : 'Modérateur'}</strong> - {session.permissions.includes('all') ? 'Toutes catégories' : session.permissions.map(p => PERM_LABELS[p] || p).join(', ')}
  </div>
  </div>
  </div>

@@ -57,7 +57,7 @@ function progressPct(raised?: number, goal?: number) {
 }
 
 function formatAmount(n?: number, currency = 'EUR') {
- if (!n) return '—';
+ if (!n) return ' - ';
  const sym = currency === 'USD' ? '$' : '€';
  return n >= 1000 ? `${sym}${(n / 1000).toFixed(0)}k` : `${sym}${n}`;
 }
@@ -274,7 +274,7 @@ export default function SolidarityClient({
  <DeptFilter value={deptFilter} onChange={setDeptFilter} />
  </div>
  <div style={{ marginBottom: '1rem', padding: '0.875rem 1rem', backgroundColor: 'rgba(239,68,68,0.06)', borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid #ef4444' }}>
- Les maraudes sont des distributions nocturnes de repas et produits d&apos;hygiène aux personnes sans-abri. Aucune compétence requise — votre présence suffit.
+ Les maraudes sont des distributions nocturnes de repas et produits d&apos;hygiène aux personnes sans-abri. Aucune compétence requise - votre présence suffit.
  </div>
  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
  {filteredMaraudes.map(ini => (

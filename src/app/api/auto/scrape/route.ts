@@ -64,7 +64,7 @@ const CATEGORIES: Record<string, CatConfig> = {
  solidarite: {
  sheetTab: 'soumissions_solidarite',
  expiresIn: 60, // fallback si pas de date fournie
- prompt: `Find 5 solidarity initiatives in France from Muslim/Islamic associations: maraudes, food banks (distribution alimentaire), elderly visits, neighborhood help. Return ONLY a JSON array. Each object: titre, association, ville, departement, type (maraude/distribution/visite/aide-juridique/autre), description, date_fin (YYYY-MM-DD or null — the end/expiry date of the initiative), date_prochaine (YYYY-MM-DD or null — next occurrence), recurrence (hebdo/mensuel/ponctuel/permanent), url_source, contact.`,
+ prompt: `Find 5 solidarity initiatives in France from Muslim/Islamic associations: maraudes, food banks (distribution alimentaire), elderly visits, neighborhood help. Return ONLY a JSON array. Each object: titre, association, ville, departement, type (maraude/distribution/visite/aide-juridique/autre), description, date_fin (YYYY-MM-DD or null - the end/expiry date of the initiative), date_prochaine (YYYY-MM-DD or null - next occurrence), recurrence (hebdo/mensuel/ponctuel/permanent), url_source, contact.`,
  dedup: 'titre',
  expiryField: 'date_fin', // utilise la date de fin si fournie par Gemini
  },

@@ -17,12 +17,12 @@ export async function GET(request: Request) {
  // 3. Pages Facebook associations islamiques IdF
  // 4. Sites mosquées (mawaqit.net feed)
 
- console.log('[CRON] scrape-events — démarrage', new Date().toISOString());
+ console.log('[CRON] scrape-events - démarrage', new Date().toISOString());
 
- // Placeholder — retourner OK pour éviter erreur Vercel
+ // Placeholder - retourner OK pour éviter erreur Vercel
  return Response.json({
  success: true,
- message: 'Scraping events placeholder — DB pas encore connectée',
+ message: 'Scraping events placeholder - DB pas encore connectée',
  timestamp: new Date().toISOString(),
  });
  } catch (error) {

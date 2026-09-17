@@ -184,7 +184,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  <strong style={{ color: 'var(--text-primary)' }}>{filteredOffers.length}</strong> offre{filteredOffers.length > 1 ? 's' : ''} trouvée{filteredOffers.length > 1 ? 's' : ''}
  </p>
 
- {/* Job cards — grille 3 colonnes */}
+ {/* Job cards - grille 3 colonnes */}
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
  {filteredOffers.map(job => (
  <div key={job.id} style={{
@@ -379,7 +379,7 @@ export default function JobsClient({ jobOffers, talentProfiles }: JobsClientProp
  <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
  <span style={{ fontSize: '2.5rem' }}></span>
  <div>
- <h2 style={{ fontWeight: 700, fontSize: '1.15rem', marginBottom: '0.35rem' }}>CMN — Cadre Musulman Network</h2>
+ <h2 style={{ fontWeight: 700, fontSize: '1.15rem', marginBottom: '0.35rem' }}>CMN - Cadre Musulman Network</h2>
  <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
  Le CMN est un réseau de professionnels musulmans en France, réunissant des cadres, entrepreneurs et experts dans tous les secteurs. Al-Wasil Emploi est connecté à leur vivier de talents.
  </p>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowUpRight, BookOpen, CalendarDays, HeartHandshake, Users } from 'lucide-react';
 
 const sections = [
-  { title: 'Explorer', links: [['Événements', '/events'], ['Solidarité & cagnottes', '/solidarity'], ['Cours & instituts', '/education'], ['Librairies', '/librairies'], ['Hajj & Omra', '/hajj']] },
+  { title: 'Explorer', links: [['Événements', '/events'], ['Solidarité & cagnottes', '/solidarity'], ['Apprentissage - cours & instituts', '/education'], ['Librairies', '/librairies'], ['Hajj & Omra', '/hajj']] },
   { title: 'Services', links: [['Emploi', '/jobs'], ['Santé & accompagnement', '/sante'], ['Piscines burkini', '/piscines'], ['Justice & droits', '/justice']] },
   { title: 'Participer', links: [['Proposer une fiche', '/contact?type=initiative'], ['Devenir annonceur', '/annonceurs'], ['Nous contacter', '/contact']] },
   { title: 'Al-Wasil', links: [['Premiers pas', '/guide'], ['Le blog', '/blog'], ['Mentions légales', '/legal#mentions'], ['Confidentialité', '/legal#confidentialite'], ['Conditions générales d’utilisation', '/legal#cgu']] },
@@ -33,7 +33,7 @@ export default function Footer() {
       <div style={{ maxWidth: 1440, margin: '0 auto', padding: '48px clamp(20px, 4vw, 56px) 24px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '36px 48px', paddingBottom: 40 }}>
           <div style={{ flex: '1.5 1 240px', maxWidth: 330 }}>
-            <Link href="/" aria-label="Al-Wasil — Accueil" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 23, fontWeight: 800, letterSpacing: '-1px' }}>AL-WASIL</Link>
+            <Link href="/" aria-label="Al-Wasil - Accueil" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 23, fontWeight: 800, letterSpacing: '-1px' }}>AL-WASIL</Link>
             <h2 style={{ marginTop: 12, fontSize: 13, fontWeight: 600, textTransform: 'uppercase' }}>Gardons le lien</h2>
             <p style={{ marginTop: 10, fontSize: 12, lineHeight: 1.8, color: '#505050', maxWidth: 275 }}>Les ressources de la communauté musulmane, à portée de main. Une question ou une initiative à partager ?</p>
             <Link href="/contact" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid #bcbcb8', marginTop: 18, maxWidth: 275, minHeight: 46, fontSize: 12 }}>
@@ -42,7 +42,7 @@ export default function Footer() {
             </Link>
           </div>
           {sections.map(section => (
-            <nav key={section.title} aria-label={`Pied de page — ${section.title}`} style={{ flex: '1 1 140px' }}>
+            <nav key={section.title} aria-label={`Pied de page - ${section.title}`} style={{ flex: '1 1 140px' }}>
               <h2 style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.035em', marginBottom: 14 }}>{section.title}</h2>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {section.links.map(([label, href]) => (

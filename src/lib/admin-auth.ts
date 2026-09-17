@@ -1,4 +1,4 @@
-// Web Crypto API — compatible Edge Runtime (middleware) + Node.js
+// Web Crypto API - compatible Edge Runtime (middleware) + Node.js
 const SECRET = process.env.ADMIN_SESSION_SECRET || 'fallback_secret';
 const COOKIE_NAME = 'aw_admin';
 const MAX_AGE = 60 * 60 * 8; // 8 heures

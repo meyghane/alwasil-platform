@@ -80,7 +80,7 @@ export default function AjoutRapidePage() {
  <div style={{ width: 1, height: 16, backgroundColor: 'rgba(255,255,255,0.2)' }} />
  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
  <Sparkles size={16} color="#c9b6ec" strokeWidth={1.8} />
- <span style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide — Wassil</span>
+ <span style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide - Wassil</span>
  </div>
  </div>
  </div>

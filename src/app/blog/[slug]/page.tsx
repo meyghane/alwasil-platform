@@ -173,7 +173,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
  {/* Dernière mise à jour */}
  <p style={{ fontSize: '0.78rem', color: '#9ca3af', marginTop: '3rem', paddingTop: '1.5rem', borderTop: '1px solid #f3f4f6' }}>
- Dernière mise à jour : {formatDate(article.lastUpdated)} — Al-Wasil centralise les ressources utiles aux musulmans de France.
+ Dernière mise à jour : {formatDate(article.lastUpdated)} - Al-Wasil centralise les ressources utiles aux musulmans de France.
  </p>
 
  {/* Articles liés */}

@@ -142,7 +142,7 @@ export default function AddForm({ categorie, form, backUrl = '/admin' }: { categ
  required={field.required}
  style={{ ...inputStyle, backgroundColor: '#faf9ff' }}
  >
- <option value="">— Choisir —</option>
+ <option value=""> - Choisir - </option>
  {field.options?.map(opt => (
  <option key={opt.value} value={opt.value}>{opt.label}</option>
  ))}

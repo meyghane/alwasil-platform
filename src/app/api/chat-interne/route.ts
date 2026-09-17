@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
  if (tgToken && tgChat && authorRole !== 'admin') {
  const chanLabel = channelName === 'modo-general' ? ' Canal Équipe' : ' Canal Admin';
  const adminUrl = 'https://alwasil-platform.vercel.app/admin';
- const tgMsg = ` <b>Nouveau message — ${chanLabel}</b>\n\n <b>${authorName}</b>\n ${message.trim()}\n\n <a href="${adminUrl}">Répondre dans l'admin</a>`;
+ const tgMsg = ` <b>Nouveau message - ${chanLabel}</b>\n\n <b>${authorName}</b>\n ${message.trim()}\n\n <a href="${adminUrl}">Répondre dans l'admin</a>`;
  fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },

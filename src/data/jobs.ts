@@ -137,7 +137,7 @@ export const jobOffers: JobOffer[] = [
  },
  {
  id: 'j4',
- title: 'Enseignant·e de mathématiques — Collège/Lycée',
+ title: 'Enseignant·e de mathématiques - Collège/Lycée',
  company: 'École privée Ibn Rushd',
  companyLogo: '',
  location: 'Évry-Courcouronnes (91)',
@@ -174,7 +174,7 @@ export const jobOffers: JobOffer[] = [
  },
  {
  id: 'j6',
- title: 'Avocat·e Collaborateur·rice — Droit Social',
+ title: 'Avocat·e Collaborateur·rice - Droit Social',
  company: 'Cabinet Droit & Dignité',
  companyLogo: '',
  location: 'Paris 9e',

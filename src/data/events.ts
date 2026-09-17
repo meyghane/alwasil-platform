@@ -1,5 +1,5 @@
 // ============================================================
-// DONNÉES — Événements islamiques Île-de-France
+// DONNÉES - Événements islamiques Île-de-France
 // À enrichir avec de vraies données scrapées
 // ============================================================
 
@@ -39,7 +39,7 @@ export type EventCategory =
  | 'collecte'
  | 'autre';
 
-export const CURRENT_VERIFIED_EVENT_IDS = ['gmp-jardin-oriental-2026', 'conscience-soufie-ag-2026', 'carep-architecture-perte-2026', 'carep-bassma-kodmani-2026', 'gmp-napoleon-arabie-2026', 'carep-gaza-patrimoine-2026'] as const;
+export const CURRENT_VERIFIED_EVENT_IDS = ['gmp-jardin-oriental-2026', 'conscience-soufie-ag-2026', 'carep-architecture-perte-2026', 'carep-bassma-kodmani-2026', 'gmp-napoleon-arabie-2026', 'carep-gaza-patrimoine-2026', 'carep-bijoutiers-oumma-2026', 'ici-dj-lyss-2026', 'ici-randotram-2026', 'ici-ogresses-sept-2026', 'ici-dar-bellarj-2026', 'ici-ogresses-nov-2026', 'ici-ogresses-dec-2026', 'mosquee-mariam-patrimoine-2026', 'conscience-soufie-arabe-2026', 'al-ikha-arabe-femmes-2026', 'humanicare-maraude-sept-2026'] as const;
 
 export const EVENT_CATEGORY_LABELS: Record<EventCategory, string> = {
  conference: 'Conférence',
@@ -82,7 +82,7 @@ export const allEvents: Event[] = [
  // ── MAI 2026 ────────────────────────────────────────────────
  {
  id: 'eid-adha-gmp-2026',
- title: 'Prière de l\'Aïd Al-Adha — Grande Mosquée de Paris',
+ title: 'Prière de l\'Aïd Al-Adha - Grande Mosquée de Paris',
  category: 'autre',
  date: '2026-05-27',
  timeStart: '07h30',
@@ -101,7 +101,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-gare-nord-mai',
- title: 'Maraude solidaire — Gare du Nord',
+ title: 'Maraude solidaire - Gare du Nord',
  category: 'maraude',
  date: '2026-05-17',
  timeStart: '19h30',
@@ -120,7 +120,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'conf-ici-islam-arts-mai',
- title: 'Portes ouvertes — Institut des Cultures d\'Islam',
+ title: 'Portes ouvertes - Institut des Cultures d\'Islam',
  category: 'conference',
  date: '2026-05-24',
  timeStart: '14h00',
@@ -138,12 +138,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'conf-jmf-identite-mai',
- title: 'Conférence JMF : Identité musulmane en France — comment naviguer ?',
+ title: 'Conférence JMF : Identité musulmane en France - comment naviguer ?',
  category: 'conference',
  date: '2026-05-18',
  timeStart: '15h00',
  timeEnd: '18h00',
- location: 'Salle Al-Houda — Mosquée d\'Évry',
+ location: 'Salle Al-Houda - Mosquée d\'Évry',
  address: 'Évry-Courcouronnes',
  city: 'Évry-Courcouronnes',
  department: '91',
@@ -156,7 +156,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'webinaire-finance-halal-mai',
- title: 'Webinaire : Investir halal — Bourse, SCPI et immobilier en 2026',
+ title: 'Webinaire : Investir halal - Bourse, SCPI et immobilier en 2026',
  category: 'webinaire',
  date: '2026-05-20',
  timeStart: '20h00',
@@ -174,7 +174,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'cours-arabe-adultes-mai',
- title: 'Stage intensif arabe — Niveau débutant & intermédiaire',
+ title: 'Stage intensif arabe - Niveau débutant & intermédiaire',
  category: 'cours',
  date: '2026-05-31',
  timeStart: '09h00',
@@ -195,7 +195,7 @@ export const allEvents: Event[] = [
  // ── JUIN 2026 ────────────────────────────────────────────────
  {
  id: 'maraude-st-lazare-juin',
- title: 'Maraude hebdomadaire — Gare Saint-Lazare',
+ title: 'Maraude hebdomadaire - Gare Saint-Lazare',
  category: 'maraude',
  date: '2026-06-06',
  timeStart: '19h00',
@@ -212,12 +212,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'conf-droits-musulmans-juin',
- title: 'Vos droits en tant que musulman en France — Q&A juridique',
+ title: 'Vos droits en tant que musulman en France - Q&A juridique',
  category: 'conference',
  date: '2026-06-07',
  timeStart: '15h00',
  timeEnd: '17h30',
- location: 'Espace associatif — Mosquée de Créteil',
+ location: 'Espace associatif - Mosquée de Créteil',
  city: 'Créteil',
  department: '94',
  organizer: 'Collectif Justice & Foi',
@@ -229,15 +229,15 @@ export const allEvents: Event[] = [
  },
  {
  id: 'tournoi-foot-idf-juin',
- title: 'Tournoi de foot inter-mosquées — Édition été 2026',
+ title: 'Tournoi de foot inter-mosquées - Édition été 2026',
  category: 'jeunesse',
  date: '2026-06-14',
  timeStart: '09h00',
  timeEnd: '19h00',
- location: 'Stade Léo Lagrange — Bobigny',
+ location: 'Stade Léo Lagrange - Bobigny',
  city: 'Bobigny',
  department: '93',
- organizer: 'Jeunes Musulmans de France — IDF',
+ organizer: 'Jeunes Musulmans de France - IDF',
  organizerUrl: 'https://www.jmf.fr',
  description: '8 équipes issues des mosquées d\'IDF s\'affrontent dans un tournoi de football fraternel. Inscription équipes par équipe de 7. Barbecue halal sur place en fin de journée.',
  tags: ['sport', 'football', 'jeunesse', '93', 'fraternité'],
@@ -246,12 +246,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'collecte-humanitaire-juin',
- title: 'Collecte humanitaire — Gaza & Soudan',
+ title: 'Collecte humanitaire - Gaza & Soudan',
  category: 'collecte',
  date: '2026-06-13',
  timeStart: '10h00',
  timeEnd: '17h00',
- location: 'Mosquée Al-Fath — Paris',
+ location: 'Mosquée Al-Fath - Paris',
  city: 'Paris 18e',
  department: '75',
  organizer: 'Human Appeal France',
@@ -263,12 +263,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'cours-tajwid-women-juin',
- title: 'Cercle Tajwid pour sœurs — Session intensive juin',
+ title: 'Cercle Tajwid pour sœurs - Session intensive juin',
  category: 'cours',
  date: '2026-06-21',
  timeStart: '10h00',
  timeEnd: '13h00',
- location: 'Centre culturel islamique — Clichy',
+ location: 'Centre culturel islamique - Clichy',
  city: 'Clichy',
  department: '92',
  organizer: 'Réseau des Sœurs d\'Île-de-France',
@@ -316,7 +316,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-gare-nord',
- title: 'Maraude Solidaire — Gare du Nord',
+ title: 'Maraude Solidaire - Gare du Nord',
  category: 'maraude',
  date: '2026-04-10',
  timeStart: '19h30',
@@ -352,12 +352,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-vincennes',
- title: 'Maraude — Bois de Vincennes',
+ title: 'Maraude - Bois de Vincennes',
  category: 'maraude',
  date: '2026-04-12',
  timeStart: '18h30',
  timeEnd: '21h00',
- location: 'Bois de Vincennes — entrée Porte Dorée',
+ location: 'Bois de Vincennes - entrée Porte Dorée',
  city: 'Paris 12e',
  department: '75',
  organizer: 'Secours Islamique France',
@@ -369,7 +369,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-saint-denis',
- title: 'Maraude mensuelle — Saint-Denis',
+ title: 'Maraude mensuelle - Saint-Denis',
  category: 'maraude',
  date: '2026-04-19',
  timeStart: '20h00',
@@ -385,7 +385,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-nanterre',
- title: 'Maraude — Nanterre / La Défense',
+ title: 'Maraude - Nanterre / La Défense',
  category: 'maraude',
  date: '2026-04-25',
  timeStart: '19h00',
@@ -401,12 +401,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'jeunesse-conference-foi',
- title: 'Conférence Jeunes — Ma foi face aux défis du monde',
+ title: 'Conférence Jeunes - Ma foi face aux défis du monde',
  category: 'jeunesse',
  date: '2026-04-18',
  timeStart: '14h00',
  timeEnd: '17h00',
- location: 'Centre culturel islamique — Aubervilliers',
+ location: 'Centre culturel islamique - Aubervilliers',
  city: 'Aubervilliers',
  department: '93',
  organizer: 'JMF Île-de-France',
@@ -450,7 +450,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'collecte-palestin-92',
- title: 'Collecte Humanitaire — Gaza',
+ title: 'Collecte Humanitaire - Gaza',
  category: 'collecte',
  date: '2026-04-13',
  timeStart: '09h00',
@@ -466,7 +466,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'collecte-vetements-printemps',
- title: 'Collecte vêtements & jouets — Printemps',
+ title: 'Collecte vêtements & jouets - Printemps',
  category: 'collecte',
  date: '2026-04-20',
  timeStart: '10h00',
@@ -482,12 +482,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'collecte-alimentaire-95',
- title: 'Collecte alimentaire non-périssable — Sarcelles',
+ title: 'Collecte alimentaire non-périssable - Sarcelles',
  category: 'collecte',
  date: '2026-04-27',
  timeStart: '09h00',
  timeEnd: '17h00',
- location: 'Mosquée Al-Rahma — Sarcelles',
+ location: 'Mosquée Al-Rahma - Sarcelles',
  city: 'Sarcelles',
  department: '95',
  organizer: 'Association Rahma Solidarité',
@@ -506,7 +506,7 @@ export const allEvents: Event[] = [
  location: 'Stade municipal de Bobigny',
  city: 'Bobigny',
  department: '93',
- organizer: 'Jeunes Musulmans de France — IDF',
+ organizer: 'Jeunes Musulmans de France - IDF',
  description: 'Tournoi de football fraternité entre équipes des mosquées d\'Île-de-France. Remise de prix et barbecue halal.',
  tags: ['sport', 'foot', 'jeunesse', 'fraternité'],
  format: 'presentiel',
@@ -514,7 +514,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'conf-femme-islam',
- title: 'La Femme dans le Coran — Cycle de conférences',
+ title: 'La Femme dans le Coran - Cycle de conférences',
  category: 'conference',
  date: '2026-04-20',
  timeStart: '14h00',
@@ -530,7 +530,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'webinaire-tajwid-live',
- title: 'Session live Tajwid — Correction individuelle',
+ title: 'Session live Tajwid - Correction individuelle',
  category: 'webinaire',
  date: '2026-04-26',
  timeStart: '20h00',
@@ -538,7 +538,7 @@ export const allEvents: Event[] = [
  location: 'En ligne (Zoom)',
  city: 'En ligne',
  department: '00',
- organizer: 'Sheikh Ahmed — Professeur Égypte',
+ organizer: 'Sheikh Ahmed - Professeur Égypte',
  description: 'Session de correction de récitation en direct. Chaque participant lit quelques versets et reçoit une correction personnalisée.',
  tags: ['Tajwid', 'Coran', 'récitation', 'en ligne'],
  format: 'enligne',
@@ -550,7 +550,7 @@ export const allEvents: Event[] = [
  // ── JUILLET 2026 ─────────────────────────────────────────────
  {
  id: 'maraude-gare-nord-juil-1',
- title: 'Maraude solidaire — Gare du Nord',
+ title: 'Maraude solidaire - Gare du Nord',
  category: 'maraude',
  date: '2026-07-04',
  timeStart: '19h30',
@@ -569,7 +569,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'conf-famille-islam-juil',
- title: 'Conférence : La famille en Islam — piliers et défis contemporains',
+ title: 'Conférence : La famille en Islam - piliers et défis contemporains',
  category: 'conference',
  date: '2026-07-06',
  timeStart: '14h30',
@@ -579,7 +579,7 @@ export const allEvents: Event[] = [
  department: '91',
  organizer: 'Institut Al-Ghazali',
  organizerUrl: 'https://www.mosqueedeparis.net',
- description: 'Conference en famille : mariage, éducation des enfants dans un contexte occidental, rôles respectifs. Deux intervenants — homme et femme — pour aborder tous les aspects. Questions/réponses.',
+ description: 'Conference en famille : mariage, éducation des enfants dans un contexte occidental, rôles respectifs. Deux intervenants - homme et femme - pour aborder tous les aspects. Questions/réponses.',
  tags: ['famille', 'mariage', 'éducation', 'conférence'],
  format: 'presentiel',
  isFree: true,
@@ -587,7 +587,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'tournoi-foot-ete-juil',
- title: 'Tournoi de foot fraternité — Édition juillet 2026',
+ title: 'Tournoi de foot fraternité - Édition juillet 2026',
  category: 'jeunesse',
  date: '2026-07-05',
  timeStart: '09h00',
@@ -595,7 +595,7 @@ export const allEvents: Event[] = [
  location: 'Stade de la Courneuve',
  city: 'La Courneuve',
  department: '93',
- organizer: 'Jeunes Musulmans de France — IDF',
+ organizer: 'Jeunes Musulmans de France - IDF',
  organizerUrl: 'https://www.jmf.fr',
  description: 'Tournoi de football inter-mosquées, 10 équipes de 7 joueurs. Inscription en équipe obligatoire avant le 30 juin. Barbecue halal le soir.',
  tags: ['sport', 'football', 'jeunesse', '93', 'été'],
@@ -622,7 +622,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'cercle-soeurs-quran-juil',
- title: 'Cercle Coran pour sœurs — Mémorisation & Tajwid',
+ title: 'Cercle Coran pour sœurs - Mémorisation & Tajwid',
  category: 'cours',
  date: '2026-07-12',
  timeStart: '10h00',
@@ -639,12 +639,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-vincennes-juil',
- title: 'Maraude été — Bois de Vincennes',
+ title: 'Maraude été - Bois de Vincennes',
  category: 'maraude',
  date: '2026-07-18',
  timeStart: '18h30',
  timeEnd: '21h00',
- location: 'Bois de Vincennes — Porte Dorée',
+ location: 'Bois de Vincennes - Porte Dorée',
  city: 'Paris 12e',
  department: '75',
  organizer: 'Secours Islamique France',
@@ -656,7 +656,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'stage-arabe-ete-juil',
- title: 'Stage intensif arabe estival — Débutant & intermédiaire',
+ title: 'Stage intensif arabe estival - Débutant & intermédiaire',
  category: 'cours',
  date: '2026-07-19',
  endDate: '2026-07-20',
@@ -676,23 +676,23 @@ export const allEvents: Event[] = [
  },
  {
  id: 'collecte-fournitures-juil',
- title: 'Collecte fournitures scolaires — Rentrée 2026',
+ title: 'Collecte fournitures scolaires - Rentrée 2026',
  category: 'collecte',
  date: '2026-07-25',
  timeStart: '09h00',
  timeEnd: '16h00',
- location: 'Mosquée Omar — Paris 11e',
+ location: 'Mosquée Omar - Paris 11e',
  city: 'Paris 11e',
  department: '75',
  organizer: 'Réseau Entraide IdF',
- description: 'Dépôt de fournitures scolaires neuves ou en bon état pour la rentrée de septembre. Cahiers, stylos, trousses, sacs à dos — tout est utile pour les familles dans le besoin.',
+ description: 'Dépôt de fournitures scolaires neuves ou en bon état pour la rentrée de septembre. Cahiers, stylos, trousses, sacs à dos - tout est utile pour les familles dans le besoin.',
  tags: ['collecte', 'fournitures', 'rentrée', 'familles'],
  format: 'presentiel',
  isFree: true,
  },
  {
  id: 'conf-soeurs-leadership-juil',
- title: 'Conférence : Sœurs — Engagement, leadership et foi',
+ title: 'Conférence : Sœurs - Engagement, leadership et foi',
  category: 'conference',
  date: '2026-07-13',
  timeStart: '15h00',
@@ -709,12 +709,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-93-juil',
- title: 'Maraude mensuelle — Saint-Denis / Aubervilliers',
+ title: 'Maraude mensuelle - Saint-Denis / Aubervilliers',
  category: 'maraude',
  date: '2026-07-11',
  timeStart: '20h00',
  timeEnd: '22h30',
- location: 'Place de la République — Saint-Denis',
+ location: 'Place de la République - Saint-Denis',
  city: 'Saint-Denis',
  department: '93',
  organizer: 'Association Al-Amal',
@@ -744,7 +744,7 @@ export const allEvents: Event[] = [
  // ── AOÛT 2026 ─────────────────────────────────────────────────
  {
  id: 'maraude-gare-nord-aout',
- title: 'Maraude solidaire — Gare du Nord (août)',
+ title: 'Maraude solidaire - Gare du Nord (août)',
  category: 'maraude',
  date: '2026-08-01',
  timeStart: '19h30',
@@ -754,14 +754,14 @@ export const allEvents: Event[] = [
  department: '75',
  organizer: 'Au Cœur de la Fraternité',
  organizerUrl: 'https://www.aucoeurfraternite.fr',
- description: 'Distribution mensuelle de repas chauds, boissons fraîches et kits d\'hygiène. Attention chaleur en été — de l\'eau sera distribuée en priorité.',
+ description: 'Distribution mensuelle de repas chauds, boissons fraîches et kits d\'hygiène. Attention chaleur en été - de l\'eau sera distribuée en priorité.',
  tags: ['maraude', 'solidarité', 'sans-abri', 'été'],
  format: 'presentiel',
  isFree: true,
  },
  {
  id: 'stage-coran-ete-aout',
- title: 'Stage Coran intensif été — Mémorisation et compréhension',
+ title: 'Stage Coran intensif été - Mémorisation et compréhension',
  category: 'cours',
  date: '2026-08-10',
  endDate: '2026-08-14',
@@ -779,12 +779,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'collecte-rentree-aout',
- title: 'Distribution de kits rentrée scolaire — Familles dans le besoin',
+ title: 'Distribution de kits rentrée scolaire - Familles dans le besoin',
  category: 'collecte',
  date: '2026-08-22',
  timeStart: '10h00',
  timeEnd: '14h00',
- location: 'Association An-Nour — Bobigny',
+ location: 'Association An-Nour - Bobigny',
  city: 'Bobigny',
  department: '93',
  organizer: 'Association An-Nour',
@@ -812,7 +812,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-92-aout',
- title: 'Maraude — Nanterre / La Défense (août)',
+ title: 'Maraude - Nanterre / La Défense (août)',
  category: 'maraude',
  date: '2026-08-29',
  timeStart: '19h00',
@@ -828,7 +828,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'cours-arabe-reprise-aout',
- title: 'Cours d\'arabe — Reprise de septembre (inscriptions ouvertes)',
+ title: 'Cours d\'arabe - Reprise de septembre (inscriptions ouvertes)',
  category: 'cours',
  date: '2026-08-29',
  timeStart: '10h00',
@@ -846,12 +846,12 @@ export const allEvents: Event[] = [
  // ── SEPTEMBRE 2026 ────────────────────────────────────────────
  {
  id: 'rentree-islamique-conf-sept',
- title: 'Rentrée islamique 2026 — Retrouvons-nous !',
+ title: 'Rentrée islamique 2026 - Retrouvons-nous !',
  category: 'conference',
  date: '2026-09-06',
  timeStart: '14h00',
  timeEnd: '18h00',
- location: 'Salle des congrès — Mosquée de Créteil',
+ location: 'Salle des congrès - Mosquée de Créteil',
  city: 'Créteil',
  department: '94',
  organizer: 'Communauté Musulmane du Val-de-Marne',
@@ -863,12 +863,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'cours-arabe-rentree-sept',
- title: 'Rentrée des cours d\'arabe — Toutes les sections',
+ title: 'Rentrée des cours d\'arabe - Toutes les sections',
  category: 'cours',
  date: '2026-09-05',
  timeStart: '09h00',
  timeEnd: '12h00',
- location: 'Institut Al-Kalam — Évry',
+ location: 'Institut Al-Kalam - Évry',
  city: 'Évry-Courcouronnes',
  department: '91',
  organizer: 'Institut Al-Kalam',
@@ -881,12 +881,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'stage-tajwid-sept',
- title: 'Stage tajwid rentrée — Correction individuelle & règles',
+ title: 'Stage tajwid rentrée - Correction individuelle & règles',
  category: 'cours',
  date: '2026-09-07',
  timeStart: '09h00',
  timeEnd: '16h00',
- location: 'Mosquée Al-Rahma — Sarcelles',
+ location: 'Mosquée Al-Rahma - Sarcelles',
  city: 'Sarcelles',
  department: '95',
  organizer: 'Sheikh Moussa Al-Hafiz',
@@ -899,12 +899,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-mensuelle-93-sept',
- title: 'Maraude mensuelle — Saint-Denis / Aubervilliers',
+ title: 'Maraude mensuelle - Saint-Denis / Aubervilliers',
  category: 'maraude',
  date: '2026-09-12',
  timeStart: '19h30',
  timeEnd: '22h00',
- location: 'Place Victor Hugo — Aubervilliers',
+ location: 'Place Victor Hugo - Aubervilliers',
  city: 'Aubervilliers',
  department: '93',
  organizer: 'Association Al-Amal',
@@ -915,7 +915,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'webinaire-parents-ecole-sept',
- title: 'Webinaire : Mon enfant musulman à l\'école — droits et stratégies',
+ title: 'Webinaire : Mon enfant musulman à l\'école - droits et stratégies',
  category: 'webinaire',
  date: '2026-09-14',
  timeStart: '20h00',
@@ -933,12 +933,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'conf-voile-travail-sept',
- title: 'Conférence : Le voile au travail en 2026 — état des lieux juridique',
+ title: 'Conférence : Le voile au travail en 2026 - état des lieux juridique',
  category: 'conference',
  date: '2026-09-20',
  timeStart: '14h00',
  timeEnd: '16h30',
- location: 'Mairie du 20e — Paris',
+ location: 'Mairie du 20e - Paris',
  city: 'Paris 20e',
  department: '75',
  organizer: 'Collectif Contre l\'Islamophobie',
@@ -949,12 +949,12 @@ export const allEvents: Event[] = [
  },
  {
  id: 'journee-solidarite-sept',
- title: 'Journée solidarité communautaire — Al-Wasil & partenaires',
+ title: 'Journée solidarité communautaire - Al-Wasil & partenaires',
  category: 'collecte',
  date: '2026-09-27',
  timeStart: '10h00',
  timeEnd: '18h00',
- location: 'Espace Sportif Brémonts — Aubervilliers',
+ location: 'Espace Sportif Brémonts - Aubervilliers',
  city: 'Aubervilliers',
  department: '93',
  organizer: 'Al-Wasil × Associations locales',
@@ -966,7 +966,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'maraude-92-sept',
- title: 'Maraude mensuelle — 92 (Nanterre / Colombes)',
+ title: 'Maraude mensuelle - 92 (Nanterre / Colombes)',
  category: 'maraude',
  date: '2026-09-19',
  timeStart: '19h30',
@@ -982,7 +982,7 @@ export const allEvents: Event[] = [
  },
  {
  id: 'conf-prophetologie-sept',
- title: 'Conférence : La Sîra en pratique — leçons pour notre quotidien',
+ title: 'Conférence : La Sîra en pratique - leçons pour notre quotidien',
  category: 'conference',
  date: '2026-09-26',
  timeStart: '15h00',
@@ -998,9 +998,9 @@ export const allEvents: Event[] = [
  format: 'presentiel',
  isFree: true,
  },
- // ── AGENDA VÉRIFIÉE — mise à jour 15 septembre 2026 ─────────
+ // ── AGENDA VÉRIFIÉE - mise à jour 15 septembre 2026 ─────────
  {
-  id: 'gmp-jardin-oriental-2026', title: 'Exposition — Le Jardin Oriental-Islamique de Berlin', category: 'autre', date: '2026-09-17', timeStart: '10h00', timeEnd: '18h00', location: 'Grande Mosquée de Paris', address: '2 bis Place du Puits de l’Ermite', city: 'Paris 5e', department: '75', organizer: 'Grande Mosquée de Paris', organizerUrl: 'https://www.grandemosqueedeparis.fr/evenements', description: 'Exposition de Kamel Louafi consacrée au Jardin Oriental-Islamique de Berlin. Vérifier les horaires et modalités d’accès sur la page officielle.', tags: ['exposition', 'culture', 'Paris', 'art islamique'], format: 'presentiel', registrationUrl: 'https://www.grandemosqueedeparis.fr/evenements', isFree: true, featured: true,
+  id: 'gmp-jardin-oriental-2026', title: 'Exposition - Le Jardin Oriental-Islamique de Berlin', category: 'autre', date: '2026-09-17', timeStart: '10h00', timeEnd: '18h00', location: 'Grande Mosquée de Paris', address: '2 bis Place du Puits de l’Ermite', city: 'Paris 5e', department: '75', organizer: 'Grande Mosquée de Paris', organizerUrl: 'https://www.grandemosqueedeparis.fr/evenements', description: 'Exposition de Kamel Louafi consacrée au Jardin Oriental-Islamique de Berlin. Vérifier les horaires et modalités d’accès sur la page officielle.', tags: ['exposition', 'culture', 'Paris', 'art islamique'], format: 'presentiel', registrationUrl: 'https://www.grandemosqueedeparis.fr/evenements', isFree: true, featured: true,
  },
  {
   id: 'conscience-soufie-ag-2026', title: 'Assemblée Générale Conscience Soufie 2026', category: 'conference', date: '2026-09-20', timeStart: '11h00', timeEnd: '12h30', location: 'Forum 104 / en ligne', address: '104 rue de Vaugirard', city: 'Paris 6e', department: '75', organizer: 'Conscience Soufie', organizerUrl: 'https://consciencesoufie.com/events/assemblee-generale-conscience-soufie-2026/', description: 'Assemblée générale avec présence au Forum 104 et participation en visioconférence. Inscription obligatoire selon les modalités de l’organisateur.', tags: ['soufisme', 'spiritualité', 'Paris', 'en ligne'], format: 'hybride', registrationUrl: 'https://consciencesoufie.com/events/assemblee-generale-conscience-soufie-2026/', isFree: true, featured: true,
@@ -1012,9 +1012,43 @@ export const allEvents: Event[] = [
   id: 'carep-bassma-kodmani-2026', title: 'Bassma Kodmani : le combat passionné d’une femme syrienne', category: 'conference', date: '2026-09-24', timeStart: '18h30', timeEnd: '20h00', location: 'CAREP Paris', address: '12 rue Raymond Aron', city: 'Paris 13e', department: '75', organizer: 'CAREP Paris', organizerUrl: 'https://carep-paris.org/evenements-a-venir/', description: 'Conférence en partenariat avec Souria Houria et Arab Reform Initiative, annoncée par le CAREP Paris.', tags: ['Syrie', 'culture', 'conférence', 'Paris'], format: 'hybride', registrationUrl: 'https://carep-paris.org/evenements-a-venir/', isFree: true,
  },
  {
-  id: 'gmp-napoleon-arabie-2026', title: 'Napoléon et l’Arabie — avec Louis Blin', category: 'conference', date: '2026-09-30', timeStart: '18h30', timeEnd: '20h00', location: 'Grande Mosquée de Paris', address: '2 bis Place du Puits de l’Ermite', city: 'Paris 5e', department: '75', organizer: 'Grande Mosquée de Paris', organizerUrl: 'https://www.grandemosqueedeparis.fr/evenements', description: 'Rencontre autour de Napoléon et l’Arabie avec Louis Blin. Vérifier la billetterie et les horaires sur la page officielle.', tags: ['histoire', 'Arabie', 'culture', 'Paris'], format: 'presentiel', registrationUrl: 'https://www.grandemosqueedeparis.fr/evenements', isFree: false,
+  id: 'gmp-napoleon-arabie-2026', title: 'Napoléon et l’Arabie - avec Louis Blin', category: 'conference', date: '2026-09-30', timeStart: '18h30', timeEnd: '20h00', location: 'Grande Mosquée de Paris', address: '2 bis Place du Puits de l’Ermite', city: 'Paris 5e', department: '75', organizer: 'Grande Mosquée de Paris', organizerUrl: 'https://www.grandemosqueedeparis.fr/evenements', description: 'Rencontre autour de Napoléon et l’Arabie avec Louis Blin. Vérifier la billetterie et les horaires sur la page officielle.', tags: ['histoire', 'Arabie', 'culture', 'Paris'], format: 'presentiel', registrationUrl: 'https://www.grandemosqueedeparis.fr/evenements', isFree: false,
  },
  {
   id: 'carep-gaza-patrimoine-2026', title: 'Conserver la mémoire à Gaza à travers son patrimoine culturel', category: 'conference', date: '2026-10-06', timeStart: '18h30', timeEnd: '20h00', location: 'CAREP Paris', address: '12 rue Raymond Aron', city: 'Paris 13e', department: '75', organizer: 'CAREP Paris', organizerUrl: 'https://carep-paris.org/evenements-a-venir/', description: 'Conférence autour du rapport Gaza réalisé par l’OPOM et l’ICONEM, annoncée par le CAREP Paris.', tags: ['Gaza', 'patrimoine', 'Palestine', 'conférence'], format: 'hybride', registrationUrl: 'https://carep-paris.org/evenements-a-venir/', isFree: true,
+ },
+ // Sources des rendez-vous ci-dessous : agendas des organisateurs ou pages de réservation.
+ {
+  id: 'carep-bijoutiers-oumma-2026', title: 'Les bijoutier·es de la Oumma', category: 'conference', date: '2026-10-13', timeStart: 'À confirmer', location: 'CAREP Paris', city: 'Paris', department: '75', organizer: 'CAREP Paris', description: 'Rencontre avec Ariella Aïsha Azoulay autour des mondes judéo-musulmans. Horaires et modalités à vérifier auprès du CAREP.', tags: ['histoire', 'culture', 'conférence'], format: 'presentiel', registrationUrl: 'https://carep-paris.org/evenements-a-venir/', isFree: false,
+ },
+ {
+  id: 'ici-dj-lyss-2026', title: 'DJ set Lyss', category: 'autre', date: '2026-09-25', timeStart: '21h00', location: 'Institut des Cultures d’Islam', city: 'Paris 18e', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Concert annoncé dans l’agenda de l’Institut des Cultures d’Islam.', tags: ['concert', 'culture', 'Paris'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,
+ },
+ {
+  id: 'ici-randotram-2026', title: 'Visite RandoTram « Saison Méditerranée »', category: 'autre', date: '2026-09-26', timeStart: '14h30', location: 'Du Frac à l’ICI', city: 'Paris', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Parcours de visite du Frac à l’Institut des Cultures d’Islam.', tags: ['visite', 'culture', 'Méditerranée'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,
+ },
+ {
+  id: 'ici-ogresses-sept-2026', title: 'Atelier jeune public « Ogresses en pièces »', category: 'jeunesse', date: '2026-09-26', timeStart: '14h30', location: 'Institut des Cultures d’Islam', city: 'Paris 18e', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Atelier et visite jeune public autour du Bal des Ogresses.', tags: ['atelier', 'jeune public', 'culture'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,
+ },
+ {
+  id: 'ici-dar-bellarj-2026', title: 'Dar Bellarj × ICI : les coulisses d’une collaboration', category: 'conference', date: '2026-09-26', timeStart: '18h00', location: 'Institut des Cultures d’Islam', city: 'Paris 18e', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Rencontre autour de la collaboration entre Dar Bellarj et l’ICI.', tags: ['rencontre', 'culture', 'Maroc'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,
+ },
+ {
+  id: 'ici-ogresses-nov-2026', title: 'Atelier jeune public « Ogresses en pièces » - novembre', category: 'jeunesse', date: '2026-11-07', timeStart: '14h30', location: 'Institut des Cultures d’Islam', city: 'Paris 18e', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Nouvelle séance de l’atelier et visite jeune public.', tags: ['atelier', 'jeune public', 'culture'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,
+ },
+ {
+  id: 'ici-ogresses-dec-2026', title: 'Atelier jeune public « Ogresses en pièces » - décembre', category: 'jeunesse', date: '2026-12-12', timeStart: '14h30', location: 'Institut des Cultures d’Islam', city: 'Paris 18e', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Séance de décembre de l’atelier et visite jeune public.', tags: ['atelier', 'jeune public', 'culture'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,
+ },
+ {
+  id: 'mosquee-mariam-patrimoine-2026', title: 'Visite de la mosquée Mariam - Journées du patrimoine', category: 'famille', date: '2026-09-19', endDate: '2026-09-20', timeStart: '10h00', timeEnd: '17h00', location: 'Mosquée Mariam', address: '50 boulevard Viala', city: 'Marseille', department: '13', organizer: 'Centre Musulman de Marseille', description: 'Visite commentée de la mosquée et expositions autour de l’islam. Réservation d’un créneau auprès de l’organisateur.', tags: ['mosquée', 'visite', 'patrimoine'], format: 'presentiel', registrationUrl: 'https://www.helloasso.com/associations/centre-musulman-de-marseille/evenements/journees-europeennes-du-patrimoine-2026', isFree: true,
+ },
+ {
+  id: 'conscience-soufie-arabe-2026', title: 'Cours d’arabe « Lettres et symbolique »', category: 'cours', date: '2026-09-19', endDate: '2026-12-31', timeStart: '12h30', timeEnd: '14h00', location: 'En ligne', city: 'En ligne', department: '00', organizer: 'Conscience Soufie et Angle de Paix', description: 'Cycle de huit cours en ligne, un samedi sur deux, de septembre à décembre. Inscription au cycle auprès de l’organisateur.', tags: ['arabe', 'langue', 'en ligne'], format: 'enligne', registrationUrl: 'https://www.helloasso.com/associations/conscience-soufie/evenements/cours-d-arabe-lettres-et-symbolique', isFree: false, price: '120 € le cycle',
+ },
+ {
+  id: 'al-ikha-arabe-femmes-2026', title: 'Cours d’arabe en ligne pour femmes - rentrée 2026', category: 'cours', date: '2026-09-21', endDate: '2027-06-27', timeStart: 'Selon le créneau choisi', location: 'En ligne', city: 'En ligne', department: '00', organizer: 'Al-Ikha Amitié Fraternelle', description: 'Cours individuels et collectifs pour femmes, selon niveau et créneau. Vérifier les modalités et tarifs sur la page d’inscription.', tags: ['arabe', 'femmes', 'en ligne'], format: 'enligne', registrationUrl: 'https://www.helloasso.com/associations/al-ikha-amitie-fraternelle/evenements/arabe-en-ligne-individuel-ou-collectif-femmes-2026-2027', isFree: false,
+ },
+ {
+  id: 'humanicare-maraude-sept-2026', title: 'HuMaraudes - maraude du mardi à Strasbourg', category: 'maraude', date: '2026-09-22', timeStart: '18h00', timeEnd: '21h30', location: 'Centre de Strasbourg', city: 'Strasbourg', department: '67', organizer: 'HumaniCare Strasbourg', description: 'Maraude hebdomadaire du mardi annoncée par l’association. Confirmer les modalités de participation avant de se déplacer.', tags: ['maraude', 'bénévolat', 'solidarité'], format: 'presentiel', registrationUrl: 'https://www.helloasso.com/associations/humanicare-strasbourg/evenements/humaraudes', isFree: true,
  },
 ];

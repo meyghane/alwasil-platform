@@ -1,5 +1,5 @@
 // ============================================================
-// ARTICLES DE BLOG — Al-Wasil
+// ARTICLES DE BLOG - Al-Wasil
 // Optimisés SEO + GEO (indexation moteurs IA : ChatGPT, Perplexity, Claude)
 // Structure : H2/H3 clairs, FAQ rich snippets, réponses directes
 // ============================================================
@@ -40,7 +40,7 @@ export const articles: Article[] = [
  {
  slug: 'cours-arabe-en-ligne-france',
  title: "Cours d'arabe en ligne : les meilleures options pour les musulmans en France (2026)",
- metaTitle: "Cours d'arabe en ligne France 2026 — Comparatif plateformes islamiques",
+ metaTitle: "Cours d'arabe en ligne France 2026 - Comparatif plateformes islamiques",
  metaDescription: "Quel cours d'arabe choisir en ligne ? Bayyinah, IESH, Al-Kalam, professeurs égyptiens... Comparatif complet pour apprendre l'arabe coranique depuis la France.",
  category: 'Apprentissage',
  categoryColor: '#7652CA',
@@ -53,7 +53,7 @@ export const articles: Article[] = [
  blocks: [
  {
  type: 'intro',
- content: "Apprendre l'arabe est le souhait de millions de musulmans en France — pour mieux comprendre le Coran, les prières, ou simplement se connecter à la langue de leur religion. En 2026, plus besoin de trouver un cours en présentiel : des dizaines de plateformes permettent d'apprendre depuis chez soi. Ce guide compare les meilleures options selon ton niveau, ton budget et tes objectifs.",
+ content: "Apprendre l'arabe est le souhait de millions de musulmans en France - pour mieux comprendre le Coran, les prières, ou simplement se connecter à la langue de leur religion. En 2026, plus besoin de trouver un cours en présentiel : des dizaines de plateformes permettent d'apprendre depuis chez soi. Ce guide compare les meilleures options selon ton niveau, ton budget et tes objectifs.",
  },
  { type: 'h2', content: "Pourquoi apprendre l'arabe coranique en priorité ?" },
  { type: 'p', content: "L'arabe coranique (arabe classique) est la langue du Coran et des textes islamiques fondamentaux. Il diffère de l'arabe dialectal (égyptien, marocain, syrien…). Si ton objectif est de comprendre ta prière, mémoriser le Coran ou suivre des cours de sciences islamiques, c'est par l'arabe coranique qu'il faut commencer." },
@@ -79,7 +79,7 @@ export const articles: Article[] = [
  ['YouTube mosquées françaises', 'Français', 'Live + replay', 'Gratuit', 'Débutant'],
  ],
  },
- { type: 'h2', content: "Bayyinah TV — La référence mondiale pour l'arabe coranique" },
+ { type: 'h2', content: "Bayyinah TV - La référence mondiale pour l'arabe coranique" },
  { type: 'p', content: "Fondée par Nouman Ali Khan, Bayyinah TV est la plateforme la plus reconnue au monde pour l'arabe coranique et le tafsir. Le contenu est en anglais, mais la qualité pédagogique est exceptionnelle. Le programme « Dream » est particulièrement recommandé pour les débutants qui maîtrisent l'anglais. Abonnement autour de 13$/mois avec accès à des centaines d'heures de contenu." },
  {
  type: 'callout',
@@ -87,9 +87,9 @@ export const articles: Article[] = [
  title: 'Astuce',
  content: "Si tu n'es pas à l'aise en anglais, commence par Al-Kalam ou les cours YouTube des mosquées françaises. Reviens sur Bayyinah quand tu auras les bases.",
  },
- { type: 'h2', content: "Les cours particuliers avec des professeurs égyptiens — le bon plan caché" },
+ { type: 'h2', content: "Les cours particuliers avec des professeurs égyptiens - le bon plan caché" },
  { type: 'p', content: "Des centaines de professeurs arabophones basés en Égypte, Syrie ou Maroc proposent des cours particuliers via Zoom ou Skype. La qualité est souvent excellente (professeurs diplômés d'Al-Azhar ou d'universités islamiques), et les tarifs sont imbattables : entre 5€ et 15€ de l'heure. Idéal pour la correction de Tajwid et la mémorisation du Coran. On trouve ces professeurs sur des groupes Facebook, des plateformes comme Preply, ou via le bouche-à-oreille dans les mosquées." },
- { type: 'h2', content: "Les mosquées françaises sur YouTube — gratuit et communautaire" },
+ { type: 'h2', content: "Les mosquées françaises sur YouTube - gratuit et communautaire" },
  { type: 'p', content: "De nombreuses mosquées d'Île-de-France diffusent leurs cours en direct sur YouTube : Grande Mosquée de Paris, Mosquée de Stains, Institut Al-Ghazali, Oussoul Eddine… Ces cours sont entièrement gratuits, en français, et le replay est souvent disponible. Excellent point de départ avant d'investir dans une formation payante." },
  { type: 'h2', content: "Comment choisir selon ton profil ?" },
  {
@@ -114,7 +114,7 @@ export const articles: Article[] = [
  { q: "Combien de temps pour apprendre l'arabe coranique ?", a: "Avec 30 min/jour régulières, on peut lire l'arabe phonétiquement en 3 à 6 mois. La compréhension réelle du Coran demande 2 à 4 ans de travail régulier. L'objectif court terme atteignable : reconnaître les mots fréquents du Coran en 6 mois." },
  { q: "Quelle différence entre arabe coranique et arabe parlé ?", a: "L'arabe coranique (fusha classique) est la langue du Coran, figée dans sa forme. L'arabe dialectal (égyptien, marocain, algérien…) est la langue parlée au quotidien, qui varie selon les pays. Les deux ont une base commune mais des différences notables. Pour les musulmans, le coranique est prioritaire." },
  { q: "Peut-on apprendre l'arabe sans professeur ?", a: "Oui, pour les bases phonétiques et la lecture. Mais la correction de la prononciation (Tajwid) nécessite un professeur. Les applications et vidéos suffisent pour débuter, mais un professeur même occasionnel améliore considérablement la progression." },
- { q: "Bayyinah TV est-il adapté aux débutants ?", a: "Oui, le programme 'Arabic with Husna' est pensé pour les débutants absolus. Le programme 'Dream' est pour les intermédiaires. Le contenu est en anglais — si c'est un obstacle, commence par Al-Kalam en français." },
+ { q: "Bayyinah TV est-il adapté aux débutants ?", a: "Oui, le programme 'Arabic with Husna' est pensé pour les débutants absolus. Le programme 'Dream' est pour les intermédiaires. Le contenu est en anglais - si c'est un obstacle, commence par Al-Kalam en français." },
  ],
  },
  ],
@@ -126,14 +126,14 @@ export const articles: Article[] = [
  {
  slug: 'porter-voile-travail-droits-france',
  title: "Porter le voile au travail en France : vos droits expliqués clairement (2026)",
- metaTitle: "Voile au travail France 2026 — Droits, loi, que faire si refus",
+ metaTitle: "Voile au travail France 2026 - Droits, loi, que faire si refus",
  metaDescription: "Peut-on porter le voile au travail en France ? Secteur privé, public, clause de neutralité... Vos droits expliqués clairement avec les recours en cas de discrimination.",
  category: 'Justice & Droits',
  categoryColor: '#6366f1',
  date: '2026-03-15',
  lastUpdated: '2026-03-15',
  readTime: '9 min',
- excerpt: "Secteur privé, public, client final — les règles ne sont pas les mêmes partout. Ce guide résume vos droits, les cas de discrimination et les recours possibles.",
+ excerpt: "Secteur privé, public, client final - les règles ne sont pas les mêmes partout. Ce guide résume vos droits, les cas de discrimination et les recours possibles.",
  tags: ['voile', 'travail', 'droits', 'laïcité', 'discrimination', 'hijab'],
  featured: true,
  blocks: [
@@ -157,7 +157,7 @@ export const articles: Article[] = [
  "Elle doit s'appliquer à TOUS les signes religieux, pas seulement islamiques",
  "Elle doit être justifiée par des contraintes réelles (pas juste l'image de marque subjective)",
  "Elle ne peut s'appliquer qu'aux postes avec contact direct avec la clientèle (pas aux postes back-office)",
- "Elle doit être proportionnée — l'employeur doit d'abord envisager un reclassement interne",
+ "Elle doit être proportionnée - l'employeur doit d'abord envisager un reclassement interne",
  ],
  },
  { type: 'h2', content: "Secteur public : la laïcité s'applique aux agents, pas aux usagers" },
@@ -166,22 +166,22 @@ export const articles: Article[] = [
  type: 'callout',
  icon: '',
  title: 'Cas particulier : les accompagnatrices scolaires',
- content: "Depuis 2019, la circulaire Blanquer recommande aux établissements scolaires de demander aux parents accompagnateurs de ne pas porter de signes religieux. Cette recommandation n'a pas force de loi — un tribunal administratif a rappelé en 2023 que les parents accompagnateurs ne sont pas soumis au principe de neutralité. Mais la pratique varie selon les établissements.",
+ content: "Depuis 2019, la circulaire Blanquer recommande aux établissements scolaires de demander aux parents accompagnateurs de ne pas porter de signes religieux. Cette recommandation n'a pas force de loi - un tribunal administratif a rappelé en 2023 que les parents accompagnateurs ne sont pas soumis au principe de neutralité. Mais la pratique varie selon les établissements.",
  },
  { type: 'h2', content: "Que faire si ton employeur refuse ton voile illégalement ?" },
  {
  type: 'ol',
  items: [
  "Demande d'abord à voir le règlement intérieur par écrit",
- "Si aucune clause de neutralité n'existe, la demande est illégale — signale-le à ton employeur par écrit (mail ou courrier recommandé)",
- "Contacte le Défenseur des Droits (formulaire en ligne, gratuit, anonyme) — c'est l'autorité indépendante pour les discriminations",
+ "Si aucune clause de neutralité n'existe, la demande est illégale - signale-le à ton employeur par écrit (mail ou courrier recommandé)",
+ "Contacte le Défenseur des Droits (formulaire en ligne, gratuit, anonyme) - c'est l'autorité indépendante pour les discriminations",
  "Contacte une association spécialisée : Lallab, le CCIF/CCIE, ou un avocat en droit social",
  "Si ça persiste : saisine des prud'hommes pour discrimination religieuse (délit puni jusqu'à 3 ans de prison et 45 000€ d'amende pour l'employeur)",
  ],
  },
  {
  type: 'cta',
- label: 'Ressources juridiques — Justice & Droits',
+ label: 'Ressources juridiques - Justice & Droits',
  href: '/justice',
  desc: 'Associations, avocats, Défenseur des Droits, signalement ARCOM… Tous les recours disponibles sur Al-Wasil',
  },
@@ -203,7 +203,7 @@ export const articles: Article[] = [
  {
  slug: 'piscines-burkini-ile-de-france-2026',
  title: "Piscines burkini en Île-de-France 2026 : créneaux, horaires et bons plans",
- metaTitle: "Piscines burkini Île-de-France 2026 — Créneaux et horaires",
+ metaTitle: "Piscines burkini Île-de-France 2026 - Créneaux et horaires",
  metaDescription: "Toutes les piscines qui acceptent le burkini en Île-de-France avec les créneaux réservés, horaires et tarifs 2026. Paris, 93, 94, 91, 78, 77, 95.",
  category: 'Bien-être',
  categoryColor: '#3b82f6',
@@ -225,32 +225,32 @@ export const articles: Article[] = [
  content: "Aucune loi française n'interdit le burkini dans les piscines publiques. Les interdictions locales ont été annulées par les tribunaux administratifs. Depuis 2023, plusieurs villes ont officiellement mis en place des créneaux dédiés. Un refus d'accès avec un burkini conforme (bonnet de bain inclus) peut constituer une discrimination.",
  },
  { type: 'h2', content: "Piscines avec créneaux burkini réguliers en IDF" },
- { type: 'p', content: "Les créneaux varient selon les saisons et peuvent changer — vérifiez toujours auprès de la piscine avant de vous déplacer. Al-Wasil met à jour ces informations régulièrement." },
+ { type: 'p', content: "Les créneaux varient selon les saisons et peuvent changer - vérifiez toujours auprès de la piscine avant de vous déplacer. Al-Wasil met à jour ces informations régulièrement." },
  {
  type: 'cta',
  label: 'Voir la liste complète des piscines burkini',
  href: '/piscines',
- desc: 'Créneaux, horaires, tarifs et adresses — toutes les piscines référencées en temps réel sur Al-Wasil',
+ desc: 'Créneaux, horaires, tarifs et adresses - toutes les piscines référencées en temps réel sur Al-Wasil',
  },
  { type: 'h2', content: "Ce qu'il faut savoir avant d'y aller" },
  {
  type: 'ul',
  items: [
- "Le bonnet de bain est obligatoire dans toutes les piscines publiques françaises, y compris avec un burkini — prévoyez-en un adapté",
+ "Le bonnet de bain est obligatoire dans toutes les piscines publiques françaises, y compris avec un burkini - prévoyez-en un adapté",
  "Le burkini doit être réservé à la baignade (pas porté ailleurs dans l'établissement)",
  "Certaines piscines demandent que le burkini soit neuf ou clairement dédié à la natation",
- "Les créneaux dédiés sont souvent mixtes mais à majorité féminine — renseignez-vous sur la composition",
- "Hors créneaux dédiés, le règlement intérieur de chaque piscine s'applique — pas de garantie",
+ "Les créneaux dédiés sont souvent mixtes mais à majorité féminine - renseignez-vous sur la composition",
+ "Hors créneaux dédiés, le règlement intérieur de chaque piscine s'applique - pas de garantie",
  ],
  },
  { type: 'h2', content: "Créneaux Ramadan : attention aux horaires spéciaux" },
- { type: 'p', content: "Plusieurs piscines ajoutent des créneaux burkini pendant le Ramadan, notamment le soir après le ftour. Ces créneaux temporaires ne sont pas toujours annoncés longtemps à l'avance — suivez les réseaux sociaux des centres nautiques de votre département et vérifiez sur Al-Wasil." },
+ { type: 'p', content: "Plusieurs piscines ajoutent des créneaux burkini pendant le Ramadan, notamment le soir après le ftour. Ces créneaux temporaires ne sont pas toujours annoncés longtemps à l'avance - suivez les réseaux sociaux des centres nautiques de votre département et vérifiez sur Al-Wasil." },
  { type: 'h2', content: "Que faire si on vous refuse l'accès ?" },
  {
  type: 'ol',
  items: [
  "Demandez la raison du refus par écrit (email à la direction du centre nautique)",
- "Vérifiez le règlement intérieur — s'il n'interdit pas explicitement le burkini, le refus est contestable",
+ "Vérifiez le règlement intérieur - s'il n'interdit pas explicitement le burkini, le refus est contestable",
  "Contactez la mairie dont dépend la piscine",
  "En cas de discrimination persistante, saisissez le Défenseur des Droits (formulaire en ligne gratuit)",
  ],
@@ -272,7 +272,7 @@ export const articles: Article[] = [
  {
  slug: 'prayer-space-travail-france',
  title: "Espace de prière au travail en France : droits, demande et alternatives (2026)",
- metaTitle: "Espace prière au travail France 2026 — Droits et comment demander",
+ metaTitle: "Espace prière au travail France 2026 - Droits et comment demander",
  metaDescription: "La loi oblige-t-elle les employeurs à prévoir un espace de prière ? Comment demander, négocier, et quelles alternatives en cas de refus. Guide complet 2026.",
  category: 'Justice & Droits',
  categoryColor: '#6366f1',
@@ -297,9 +297,9 @@ export const articles: Article[] = [
  {
  type: 'ul',
  items: [
- "Prier pendant votre pause déjeuner, dans un espace retiré (voiture, couloir vide, extérieur) — c'est votre temps libre",
+ "Prier pendant votre pause déjeuner, dans un espace retiré (voiture, couloir vide, extérieur) - c'est votre temps libre",
  "Utiliser vos pauses réglementaires (10-15 min légales dans la journée) pour prier",
- "Demander un aménagement d'horaires ponctuel pour les prières importantes — à titre personnel",
+ "Demander un aménagement d'horaires ponctuel pour les prières importantes - à titre personnel",
  "Pratiquer votre religion discrètement sans avoir à vous justifier à vos collègues",
  ],
  },
@@ -308,15 +308,15 @@ export const articles: Article[] = [
  {
  type: 'ol',
  items: [
- "Commencez par une conversation informelle avec votre manager direct — pas les RH d'emblée",
+ "Commencez par une conversation informelle avec votre manager direct - pas les RH d'emblée",
  "Formulez comme un besoin pratique : 'J'aurais besoin d'un espace calme 5 minutes à telle heure, une salle de réunion vide ou un bureau libre suffirait'",
  "Proposez une solution concrète déjà identifiée (salle de réunion non occupée, local technique, espace extérieur…)",
- "Soyez flexible sur le lieu — ce n'est pas forcément une pièce dédiée à la religion",
+ "Soyez flexible sur le lieu - ce n'est pas forcément une pièce dédiée à la religion",
  "Mettez la demande par écrit après l'accord oral, pour formaliser",
  ],
  },
  { type: 'h2', content: "Les entreprises Muslim-Friendly existent" },
- { type: 'p', content: "De plus en plus d'entreprises françaises — notamment dans les secteurs tech, conseil, et start-ups — intègrent des salles de prière dans leurs locaux, au même titre que des salles de méditation ou de bien-être. Sur Al-Wasil, la section Emploi référence les offres d'entreprises qui acceptent le voile et les aménagements religieux." },
+ { type: 'p', content: "De plus en plus d'entreprises françaises - notamment dans les secteurs tech, conseil, et start-ups - intègrent des salles de prière dans leurs locaux, au même titre que des salles de méditation ou de bien-être. Sur Al-Wasil, la section Emploi référence les offres d'entreprises qui acceptent le voile et les aménagements religieux." },
  {
  type: 'cta',
  label: 'Offres d\'emploi Muslim-Friendly',
@@ -342,7 +342,7 @@ export const articles: Article[] = [
  {
  slug: 'instituts-islamiques-france-comparatif',
  title: "Instituts islamiques en France : comparatif IESH, Oussoul Eddine, Al-Kalam (2026)",
- metaTitle: "Comparatif instituts islamiques France 2026 — IESH, Oussoul Eddine, Al-Kalam",
+ metaTitle: "Comparatif instituts islamiques France 2026 - IESH, Oussoul Eddine, Al-Kalam",
  metaDescription: "Quel institut islamique choisir en France ? Comparatif complet IESH, Oussoul Eddine, IFI, Al-Kalam avec programmes, formats, niveaux et tarifs 2026.",
  category: 'Apprentissage',
  categoryColor: '#7652CA',
@@ -368,7 +368,7 @@ export const articles: Article[] = [
  "Audience : hommes seuls, femmes seules, ou mixte",
  ],
  },
- { type: 'h2', content: "IESH — Institut Européen des Sciences Humaines" },
+ { type: 'h2', content: "IESH - Institut Européen des Sciences Humaines" },
  { type: 'p', content: "L'IESH est la référence historique en France pour les sciences islamiques. Fondé dans les années 1990, il propose une formation diplômante complète (5 ans) en arabe, fiqh, aqida, tafsir, hadith et sirah. Basé à Château-Chinon avec une antenne à Paris. Cours en présentiel et à distance. Il délivre des attestations reconnues dans le milieu associatif et académique islamique en Europe." },
  {
  type: 'callout',
@@ -421,7 +421,7 @@ export const articles: Article[] = [
  {
  slug: 'hijama-paris-idf-guide',
  title: "Hijama à Paris et en Île-de-France : trouver un praticien sérieux (guide 2026)",
- metaTitle: "Hijama Paris IDF 2026 — Trouver un praticien sérieux",
+ metaTitle: "Hijama Paris IDF 2026 - Trouver un praticien sérieux",
  metaDescription: "Comment trouver un praticien hijama sérieux à Paris et en Île-de-France ? Prix, certifications, précautions, bonnes pratiques. Guide complet 2026.",
  category: 'Santé',
  categoryColor: '#ef4444',
@@ -437,7 +437,7 @@ export const articles: Article[] = [
  content: "La hijama (cupping thérapeutique, ou ventouses) est une pratique de médecine traditionnelle mentionnée dans la Sunnah prophétique. Elle connaît un renouveau important en France, notamment en Île-de-France. Mais entre praticiens sérieux et personnes non formées, il faut savoir comment choisir pour pratiquer en toute sécurité.",
  },
  { type: 'h2', content: "Qu'est-ce que la hijama ?" },
- { type: 'p', content: "La hijama est une technique de thérapie par ventouses qui consiste à créer une dépression sur la peau à l'aide de ventouses (souvent en verre ou en plastique), avec ou sans scarification superficielle pour favoriser l'élimination de sang stagnant. Elle se pratique sur des points précis du corps et est considérée comme une médecine prophétique (tibb an-nabawi) — le Prophète ﷺ l'a recommandée dans plusieurs hadiths authentiques." },
+ { type: 'p', content: "La hijama est une technique de thérapie par ventouses qui consiste à créer une dépression sur la peau à l'aide de ventouses (souvent en verre ou en plastique), avec ou sans scarification superficielle pour favoriser l'élimination de sang stagnant. Elle se pratique sur des points précis du corps et est considérée comme une médecine prophétique (tibb an-nabawi) - le Prophète ﷺ l'a recommandée dans plusieurs hadiths authentiques." },
  {
  type: 'callout',
  icon: '',
@@ -449,7 +449,7 @@ export const articles: Article[] = [
  type: 'ul',
  items: [
  "Formation certifiée : cherchez des praticiens ayant suivi une formation accréditée (British Cupping Society, formations françaises reconnues)",
- "Matériel à usage unique : les ventouses et les instruments de scarification doivent être nouveaux pour chaque client — demandez-le avant la séance",
+ "Matériel à usage unique : les ventouses et les instruments de scarification doivent être nouveaux pour chaque client - demandez-le avant la séance",
  "Localisation propre : le lieu doit répondre à des standards d'hygiène basiques (surface propre, pas d'humidité, matériel stérilisé)",
  "Antécédents médicaux : un praticien sérieux vous demande vos antécédents et contre-indications avant la séance",
  "Pas de diagnostic médical : la hijama est complémentaire, pas un remplacement à la médecine conventionnelle",
@@ -461,7 +461,7 @@ export const articles: Article[] = [
  headers: ['Type de séance', 'Prix moyen', 'Durée'],
  rows: [
  ['Hijama sèche (ventouses sans scarification)', '30–50€', '45 min'],
- ['Hijama humide (avec scarification — points classiques)', '60–100€', '60–90 min'],
+ ['Hijama humide (avec scarification - points classiques)', '60–100€', '60–90 min'],
  ['Séance complète (dos + nuque + points spécifiques)', '80–120€', '90 min'],
  ],
  },
@@ -474,7 +474,7 @@ export const articles: Article[] = [
  "Trouble de la coagulation sanguine",
  "Plaies ouvertes, infection cutanée sur les zones de traitement",
  "Hémophilie",
- "Jeûne strict du Ramadan (selon les avis, la hijama peut rompre le jeûne — consultez votre imam)",
+ "Jeûne strict du Ramadan (selon les avis, la hijama peut rompre le jeûne - consultez votre imam)",
  ],
  },
  {
@@ -486,9 +486,9 @@ export const articles: Article[] = [
  {
  type: 'faq',
  items: [
- { q: "La hijama est-elle remboursée par la Sécurité Sociale ?", a: "Non. La hijama n'est pas reconnue comme acte médical par la Sécurité Sociale française et n'est donc pas remboursée. Certaines mutuelles couvrent partiellement les médecines alternatives — renseignez-vous auprès de votre mutuelle." },
+ { q: "La hijama est-elle remboursée par la Sécurité Sociale ?", a: "Non. La hijama n'est pas reconnue comme acte médical par la Sécurité Sociale française et n'est donc pas remboursée. Certaines mutuelles couvrent partiellement les médecines alternatives - renseignez-vous auprès de votre mutuelle." },
  { q: "La hijama rompt-elle le jeûne du Ramadan ?", a: "Il y a divergence d'opinions entre les savants islamiques. Le Comité de la Grande Mosquée de Paris et certains savants considèrent qu'elle ne rompt pas le jeûne (position hanafi et maliki majoritaire en France). D'autres savants considèrent qu'elle le rompt. Consultez l'imam de votre mosquée pour suivre l'avis que vous considérez." },
- { q: "Quelle différence entre hijama et ventouses chinoises ?", a: "Les ventouses chinoises (cupping de la médecine traditionnelle chinoise) sont généralement 'sèches' — sans scarification. La hijama islamique utilise traditionnellement la scarification légère pour laisser s'écouler le sang. Les deux techniques utilisent la dépression, mais les points et l'objectif thérapeutique diffèrent." },
+ { q: "Quelle différence entre hijama et ventouses chinoises ?", a: "Les ventouses chinoises (cupping de la médecine traditionnelle chinoise) sont généralement 'sèches' - sans scarification. La hijama islamique utilise traditionnellement la scarification légère pour laisser s'écouler le sang. Les deux techniques utilisent la dépression, mais les points et l'objectif thérapeutique diffèrent." },
  { q: "Peut-on faire la hijama seul chez soi ?", a: "Les praticiens déconseillent fortement l'auto-hijama sans formation. Les risques d'infection, de mauvais positionnement des ventouses et de blessure involontaire sont réels. Commencez toujours par un praticien certifié." },
  ],
  },

@@ -65,7 +65,7 @@ export default async function ModoDashboard() {
  <div>
  <div style={{ fontWeight: 800, color: '#fff', fontSize: '0.95rem', fontFamily: 'Poppins, sans-serif' }}>Espace modération</div>
  <div style={{ fontSize: '0.68rem', color: 'rgba(196,181,253,0.6)' }}>
- {isAdmin ? 'Administrateur' : 'Modérateur'} — {session.name}
+ {isAdmin ? 'Administrateur' : 'Modérateur'} - {session.name}
  </div>
  </div>
  </div>
@@ -148,7 +148,7 @@ export default async function ModoDashboard() {
  <div>
  <div style={{ fontWeight: 800, fontSize: '1rem', color: 'white', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide</div>
  <div style={{ fontSize: '0.78rem', color: 'rgba(196,181,253,0.7)', marginTop: '4px', lineHeight: 1.5 }}>
- Décris en texte libre — Wassil cherche tout sur Google et crée la fiche
+ Décris en texte libre - Wassil cherche tout sur Google et crée la fiche
  </div>
  </div>
  <div style={{ fontSize: '0.72rem', color: '#c9b6ec', fontWeight: 700 }}> +15 hasanates par ajout</div>

@@ -55,7 +55,7 @@ export default function AutoPage() {
  try {
  const res = await fetch('/api/auto/cleanup');
  const data = await res.json();
- alert(`Nettoyage terminé — ${data.cleaned} onglet(s) traités`);
+ alert(`Nettoyage terminé - ${data.cleaned} onglet(s) traités`);
  } catch { alert('Erreur cleanup'); }
  finally { setRunning(null); }
  }

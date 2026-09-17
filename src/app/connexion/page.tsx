@@ -59,7 +59,7 @@ export default function ConnexionPage() {
  Al-Wasil
  </h1>
  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto' }}>
- Inscris-toi pour être parmi les premiers à accéder aux fonctionnalités communautaires — avis, favoris, alertes.
+ Inscris-toi pour être parmi les premiers à accéder aux fonctionnalités communautaires - avis, favoris, alertes.
  </p>
  </div>
 

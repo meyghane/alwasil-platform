@@ -1,4 +1,4 @@
-// Hachage SHA-256 — fonctionne en browser ET Edge Runtime (Vercel)
+// Hachage SHA-256 - fonctionne en browser ET Edge Runtime (Vercel)
 export async function hashPassword(password: string): Promise<string> {
  const data = new TextEncoder().encode(password);
  const hash = await crypto.subtle.digest('SHA-256', data);

@@ -117,7 +117,7 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#080808', fontFamily: 'Poppins, sans-serif' }}>
  {item.nom || item.name || item.titre || '(sans titre)'}
  </span>
- {item.ville && <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>— {item.ville}</span>}
+ {item.ville && <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}> - {item.ville}</span>}
  <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#f0ebfa', color: VIOLET }}>{item.categorie}</span>
  {isSpam && <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#fee2e2', color: '#991b1b' }}>SPAM</span>}
  </div>
@@ -159,7 +159,7 @@ export default function SoumissionsModerateur({ session }: { session: UserSessio
  .map(([k, v]) => (
  <tr key={k} style={{ borderBottom: '1px solid #f9fafb' }}>
  <td style={{ padding: '5px 10px 5px 0', fontWeight: 600, color: '#6b7280', width: 140 }}>{k}</td>
- <td style={{ padding: '5px 0', color: '#080808' }}>{v || '—'}</td>
+ <td style={{ padding: '5px 0', color: '#080808' }}>{v || ' - '}</td>
  </tr>
  ))}
  </tbody>

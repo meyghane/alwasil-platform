@@ -124,7 +124,7 @@ export const librairies: Librairie[] = [
  },
  {
  id: 'lib4',
- name: 'Librairie du Savoir — As-Salam',
+ name: 'Librairie du Savoir - As-Salam',
  type: 'physique',
  description: 'Petite librairie spécialisée dans les livres pédagogiques pour enfants et adolescents musulmans. Histoires des prophètes, activités, coloriages, Corans pour enfants, méthodes d\'arabe jeunesse.',
  adresse: '7 avenue du Président Wilson',
@@ -211,7 +211,7 @@ export const librairies: Librairie[] = [
  },
  {
  id: 'lib8',
- name: 'Nour Al-Ilm — En ligne',
+ name: 'Nour Al-Ilm - En ligne',
  type: 'en-ligne',
  description: 'Boutique 100% en ligne spécialisée dans les livres islamiques en français. Forte expertise éditoriale, newsletters avec recommandations de lecture, coffrets cadeaux islamiques. Livraison express en France.',
  ville: 'En ligne',
@@ -230,7 +230,7 @@ export const librairies: Librairie[] = [
  },
  {
  id: 'lib9',
- name: 'Dار Al-Andalus — Librairie & Galerie',
+ name: 'Dار Al-Andalus - Librairie & Galerie',
  type: 'physique',
  description: 'Librairie-galerie d\'art islamique à Vincennes. Livres d\'art, calligraphie, histoire de la civilisation islamique, cartes géographiques du monde arabo-musulman. Lieu culturel autant que commercial.',
  adresse: '18 rue de Fontenay',

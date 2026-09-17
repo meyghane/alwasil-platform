@@ -16,7 +16,7 @@ type SanteClientProps = {
  medicalProfiles: PraticienMedical[];
 };
 
-const ACCENT = '#7652CA'; // rose-500 — couleur santé
+const ACCENT = '#7652CA'; // rose-500 - couleur santé
 const HIJAMA_COLOR = '#dc2626';
 const ROQYA_COLOR = '#7652CA';
 const MEDICAL_COLOR = '#0891b2'; // cyan-600

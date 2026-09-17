@@ -114,7 +114,7 @@ export default async function AdminPage() {
 
  <div className="container" style={{ padding: '2.5rem 1rem', maxWidth: '1000px' }}>
 
- {/* Ajout Rapide — bandeau Wassil */}
+ {/* Ajout Rapide - bandeau Wassil */}
  <Link href="/modo/ajout-rapide" style={{ textDecoration: 'none', display: 'block', marginBottom: '1.5rem' }}>
  <div style={{ background: `linear-gradient(135deg, ${DARK}, #1a1408)`, borderRadius: '16px', padding: '1.25rem 1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: `0 8px 24px rgba(118,82,202,0.15)`, border: `1px solid rgba(118,82,202,0.2)` }}>
  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -122,7 +122,7 @@ export default async function AdminPage() {
  <Sparkles size={22} color={GOLD} strokeWidth={1.6} />
  </div>
  <div>
- <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'white', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide — Wassil</div>
+ <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'white', fontFamily: 'Poppins, sans-serif' }}>Ajout Rapide - Wassil</div>
  <div style={{ fontSize: '0.75rem', color: 'rgba(118,82,202,0.6)', marginTop: '2px' }}>Décris en texte libre → Wassil cherche sur Google et crée la fiche automatiquement</div>
  </div>
  </div>

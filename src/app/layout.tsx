@@ -26,7 +26,7 @@ const JSON_LD_SCHEMA = {
 export const metadata: Metadata = {
  metadataBase: new URL(BASE_URL),
  title: {
- default: 'Al-Wasil — La plateforme de la communauté musulmane en France',
+ default: 'Al-Wasil - La plateforme de la communauté musulmane en France',
  template: '%s | Al-Wasil',
  },
  description: 'Emploi voile accepté, librairies islamiques, piscines burkini, Hajj & Omra, psychologues, hijama, roqya, événements et solidarité. La plateforme de référence pour les musulmans de France.',
@@ -44,13 +44,13 @@ export const metadata: Metadata = {
  locale: 'fr_FR',
  url: BASE_URL,
  siteName: 'Al-Wasil',
- title: 'Al-Wasil — La plateforme de la communauté musulmane en France',
+ title: 'Al-Wasil - La plateforme de la communauté musulmane en France',
  description: 'Emploi voile accepté, librairies islamiques, piscines burkini, Hajj & Omra, psychologues, hijama, événements et solidarité.',
  images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Al-Wasil' }],
  },
  twitter: {
  card: 'summary_large_image',
- title: 'Al-Wasil — Communauté musulmane France',
+ title: 'Al-Wasil - Communauté musulmane France',
  description: 'Emploi voile OK, librairies, piscines burkini, Hajj, psychologues, hijama…',
  images: ['/og-image.png'],
  },

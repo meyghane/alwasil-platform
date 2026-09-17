@@ -52,10 +52,10 @@ export const VOYAGE_TYPE_LABELS: Record<VoyageType, string> = {
 };
 
 export const VOYAGE_TYPE_COLORS: Record<VoyageType, string> = {
- 'hajj': '#7652CA', // or principal — le pèlerinage sacré
- 'omra-ramadan': '#4a0e58', // violet profond — nuit du Ramadan
- 'omra-hors-saison': '#6540b5', // or ambré — voyage spirituel
- 'omra-express': '#543398', // bronze — formule courte
+ 'hajj': '#7652CA', // or principal - le pèlerinage sacré
+ 'omra-ramadan': '#4a0e58', // violet profond - nuit du Ramadan
+ 'omra-hors-saison': '#6540b5', // or ambré - voyage spirituel
+ 'omra-express': '#543398', // bronze - formule courte
 };
 
 export const hajjAgences: HajjAgence[] = [
@@ -187,7 +187,7 @@ export const hajjPackages: HajjPackage[] = [
  id: 'pkg3',
  agenceId: 'a3',
  type: 'hajj',
- name: 'Hajj Royal — Face Kaaba',
+ name: 'Hajj Royal - Face Kaaba',
  stars: 5,
  duration: 25,
  departCities: ['Marseille', 'Paris'],
@@ -236,7 +236,7 @@ export const hajjPackages: HajjPackage[] = [
  id: 'pkg5',
  agenceId: 'a2',
  type: 'omra-ramadan',
- name: 'Omra Ramadan — 10 dernières nuits',
+ name: 'Omra Ramadan - 10 dernières nuits',
  stars: 4,
  duration: 12,
  departCities: ['Lyon', 'Paris'],
@@ -283,7 +283,7 @@ export const hajjPackages: HajjPackage[] = [
  id: 'pkg7',
  agenceId: 'a1',
  type: 'omra-hors-saison',
- name: 'Omra Été — Juillet 2026',
+ name: 'Omra Été - Juillet 2026',
  stars: 4,
  duration: 10,
  departCities: ['Paris', 'Lyon', 'Marseille', 'Bordeaux'],
