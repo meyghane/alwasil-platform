@@ -46,7 +46,7 @@ async function getRaw<T>(category: Category, subType: string): Promise<T[]> {
 }
 
 export async function getEvents() {
-  const rows = await getRaw<Event>('event', 'event');
+  const rows = (await getRaw<Event>('event', 'event')).filter((event) => event.id !== 'ici-dj-lyss-2026');
   const current = allEvents.filter((event) => CURRENT_VERIFIED_EVENT_IDS.some((id) => id === event.id));
   const ids = new Set(rows.map((event) => event.id));
   return [...rows, ...current.filter((event) => !ids.has(event.id))];

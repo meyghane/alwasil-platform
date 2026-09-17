@@ -39,7 +39,7 @@ export type EventCategory =
  | 'collecte'
  | 'autre';
 
-export const CURRENT_VERIFIED_EVENT_IDS = ['gmp-jardin-oriental-2026', 'conscience-soufie-ag-2026', 'carep-architecture-perte-2026', 'carep-bassma-kodmani-2026', 'gmp-napoleon-arabie-2026', 'carep-gaza-patrimoine-2026', 'carep-bijoutiers-oumma-2026', 'ici-dj-lyss-2026', 'ici-randotram-2026', 'ici-ogresses-sept-2026', 'ici-dar-bellarj-2026', 'ici-ogresses-nov-2026', 'ici-ogresses-dec-2026', 'mosquee-mariam-patrimoine-2026', 'conscience-soufie-arabe-2026', 'al-ikha-arabe-femmes-2026', 'humanicare-maraude-sept-2026'] as const;
+export const CURRENT_VERIFIED_EVENT_IDS = ['gmp-jardin-oriental-2026', 'conscience-soufie-ag-2026', 'carep-architecture-perte-2026', 'carep-bassma-kodmani-2026', 'gmp-napoleon-arabie-2026', 'carep-gaza-patrimoine-2026', 'carep-bijoutiers-oumma-2026', 'ici-randotram-2026', 'ici-ogresses-sept-2026', 'ici-dar-bellarj-2026', 'ici-ogresses-nov-2026', 'ici-ogresses-dec-2026', 'mosquee-mariam-patrimoine-2026', 'conscience-soufie-arabe-2026', 'al-ikha-arabe-femmes-2026', 'humanicare-maraude-sept-2026'] as const;
 
 export const EVENT_CATEGORY_LABELS: Record<EventCategory, string> = {
  conference: 'Conférence',
@@ -1020,9 +1020,6 @@ export const allEvents: Event[] = [
  // Sources des rendez-vous ci-dessous : agendas des organisateurs ou pages de réservation.
  {
   id: 'carep-bijoutiers-oumma-2026', title: 'Les bijoutier·es de la Oumma', category: 'conference', date: '2026-10-13', timeStart: 'À confirmer', location: 'CAREP Paris', city: 'Paris', department: '75', organizer: 'CAREP Paris', description: 'Rencontre avec Ariella Aïsha Azoulay autour des mondes judéo-musulmans. Horaires et modalités à vérifier auprès du CAREP.', tags: ['histoire', 'culture', 'conférence'], format: 'presentiel', registrationUrl: 'https://carep-paris.org/evenements-a-venir/', isFree: false,
- },
- {
-  id: 'ici-dj-lyss-2026', title: 'DJ set Lyss', category: 'autre', date: '2026-09-25', timeStart: '21h00', location: 'Institut des Cultures d’Islam', city: 'Paris 18e', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Concert annoncé dans l’agenda de l’Institut des Cultures d’Islam.', tags: ['concert', 'culture', 'Paris'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,
  },
  {
   id: 'ici-randotram-2026', title: 'Visite RandoTram « Saison Méditerranée »', category: 'autre', date: '2026-09-26', timeStart: '14h30', location: 'Du Frac à l’ICI', city: 'Paris', department: '75', organizer: 'Institut des Cultures d’Islam', description: 'Parcours de visite du Frac à l’Institut des Cultures d’Islam.', tags: ['visite', 'culture', 'Méditerranée'], format: 'presentiel', registrationUrl: 'https://www.institut-cultures-islam.org/agenda-par-mois/', isFree: false,

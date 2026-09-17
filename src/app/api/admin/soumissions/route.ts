@@ -82,7 +82,17 @@ export async function PATCH(req: NextRequest) {
  const metadata = campaign && status === 'en ligne' ? { ...neonItem[0].metadata, raw: { ...(neonItem[0].metadata?.raw as Record<string, unknown> || {}), verified: true } } : neonItem[0].metadata;
  await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: now, metadata, ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
  revalidatePath('/');
- revalidatePath(campaign ? '/solidarity' : neonItem[0].category === 'event' ? '/events' : '/');
+ const category = neonItem[0].category;
+ const publicPage = category === 'event' ? '/events'
+   : category === 'institute' ? '/education'
+   : category === 'solidarity' ? '/solidarity'
+   : category === 'job' ? '/jobs'
+   : category === 'library' ? '/librairies'
+   : category === 'pool' ? '/piscines'
+   : category === 'health' ? '/sante'
+   : category === 'hajj' ? '/hajj' : '/';
+ revalidatePath(publicPage);
+ if (category === 'institute') revalidatePath('/api/mosques');
  return NextResponse.json({ ok: true, id, status, source: 'neon' });
  }
 
