@@ -51,16 +51,41 @@ async function downloadMedia(token: string, msg: TelegramMessage): Promise<{ dat
   return { data: buffer.toString('base64'), mime };
 }
 
+let cachedGeminiModel: string | null = null;
+
+async function chooseGeminiModel(key: string): Promise<string> {
+  if (cachedGeminiModel) return cachedGeminiModel;
+  const preferred = ['gemini-3.6-flash', 'gemini-3.6-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+  try {
+    const catalog = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`, { signal: AbortSignal.timeout(8000) });
+    const data = await catalog.json() as { models?: Array<{ name?: string; supportedGenerationMethods?: string[] }> };
+    const available = (data.models || [])
+      .filter(model => model.supportedGenerationMethods?.includes('generateContent'))
+      .map(model => (model.name || '').replace(/^models\//, ''))
+      .filter(Boolean);
+    const selected = preferred.find(model => available.includes(model)) || available.find(model => /flash/i.test(model));
+    if (selected) cachedGeminiModel = selected;
+  } catch (error) {
+    console.warn('[telegram] Gemini model catalog unavailable:', error instanceof Error ? error.message : 'unknown error');
+  }
+  return cachedGeminiModel || preferred[0];
+}
+
 async function analyze(key: string, text: string, media: { data: string; mime: string } | null): Promise<Record<string, unknown>> {
   const parts: Array<Record<string, unknown>> = [{ text: `Extrais les informations factuelles de cette proposition. Si une donnée manque, laisse une chaîne vide. N'invente rien. Catégories autorisées: evenement, mosquee, institut, cagnotte, piscine, emploi, librairie, psy, hijama, roqya, hajj. Champs JSON: categorie, titre, description, ville, departement, date_iso au format YYYY-MM-DD si connu, heure, lieu, organisateur, adresse, contact, site_web, gratuit, event_category, tags. Texte transmis: ${text}` }];
   if (media) parts.push({ inline_data: { mime_type: media.mime, data: media.data } });
-  const model = process.env.TELEGRAM_GEMINI_MODEL || 'gemini-2.5-flash';
+  const model = await chooseGeminiModel(key);
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ contents: [{ role: 'user', parts }], generationConfig: { temperature: 0, responseMimeType: 'application/json', maxOutputTokens: 1600 } }),
     signal: AbortSignal.timeout(25000),
   });
-  if (!response.ok) throw new Error(`Analyse indisponible (${response.status})`);
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => null) as { error?: { status?: string; message?: string } } | null;
+    const reason = errorBody?.error?.status || errorBody?.error?.message || 'réponse Google inconnue';
+    console.warn(`[telegram] Gemini ${model} HTTP ${response.status}: ${reason}`);
+    throw new Error(`Analyse indisponible (${response.status})`);
+  }
   const data = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
   const result = JSON.parse(data.candidates?.[0]?.content?.parts?.[0]?.text || '{}') as unknown;
   if (!result || typeof result !== 'object' || Array.isArray(result)) throw new Error('Analyse invalide');
