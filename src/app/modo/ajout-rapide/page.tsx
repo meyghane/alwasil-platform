@@ -35,6 +35,7 @@ const CAT_LABELS: Record<string, string> = {
 export default function AjoutRapidePage() {
  const [texte, setTexte] = useState('');
  const [url, setUrl] = useState('');
+ const [categorie, setCategorie] = useState('evenement');
  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
  const [fiche, setFiche] = useState<FicheGeneree | null>(null);
  const [errorMsg, setErrorMsg] = useState('');
@@ -49,7 +50,7 @@ export default function AjoutRapidePage() {
  const res = await fetch('/api/ajout-rapide', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ texte, url }),
+ body: JSON.stringify({ texte, url, categorie }),
  });
  const data = await res.json();
  if (res.ok) {
@@ -90,10 +91,10 @@ export default function AjoutRapidePage() {
  {/* Intro */}
  <div style={{ marginBottom: '2rem' }}>
  <h1 style={{ fontWeight: 900, fontSize: '1.6rem', color: DARK, margin: '0 0 0.5rem', letterSpacing: '-0.02em', fontFamily: 'Poppins, sans-serif' }}>
- Wassil s&apos;occupe de tout
+ Ajout rapide à vérifier
  </h1>
  <p style={{ color: '#6b7280', fontSize: '0.9rem', lineHeight: 1.6, margin: 0 }}>
- Décris la ressource comme tu le ferais à voix haute. Wassil détecte la catégorie, cherche les infos manquantes sur Google et crée la fiche. Tu n&apos;as plus qu&apos;à valider.
+ Décris la ressource et choisis sa catégorie. Elle sera enregistrée dans la modération, puis complétée et vérifiée avant publication.
  </p>
  </div>
 
@@ -107,11 +108,15 @@ export default function AjoutRapidePage() {
  <div style={{ width: 36, height: 36, borderRadius: '10px', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}></div>
  <div>
  <div style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', fontFamily: 'Poppins, sans-serif' }}>Wassil est à l&apos;écoute</div>
- <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.72rem' }}>Powered by Gemini + Google Search</div>
+ <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.72rem' }}>Enregistrement direct dans la modération</div>
  </div>
  </div>
 
  <div style={{ padding: '1.5rem' }}>
+ <label htmlFor="quick-category" style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#374151', marginBottom: '0.5rem' }}>Catégorie</label>
+ <select id="quick-category" value={categorie} onChange={e => setCategorie(e.target.value)} style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', borderRadius: '10px', border: '2px solid #f0ebfa', background: '#fff' }}>
+ {Object.entries(CAT_LABELS).filter(([key]) => key !== 'mosquee').map(([key, label]) => <option key={key} value={key}>{label}</option>)}
+ </select>
  {/* Zone de texte libre */}
  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#374151', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
  Décris la ressource
@@ -165,7 +170,7 @@ export default function AjoutRapidePage() {
  <button type="submit" disabled={status === 'loading' || texte.trim().length < 5}
  style={{ width: '100%', padding: '1rem', background: status === 'loading' ? '#c9b6ec' : 'linear-gradient(135deg, #7652CA, #543398)', color: 'white', border: 'none', borderRadius: '14px', fontWeight: 800, fontSize: '1rem', cursor: status === 'loading' ? 'not-allowed' : 'pointer', fontFamily: 'Poppins, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', boxShadow: '0 4px 16px rgba(124,58,237,0.3)', transition: 'opacity 0.2s' }}>
  {status === 'loading' ? (
- <> Wassil cherche sur le web...</>
+ <> Enregistrement en cours...</>
  ) : (
  <><Send size={18} strokeWidth={2} /> Envoyer à Wassil</>
  )}
@@ -173,7 +178,7 @@ export default function AjoutRapidePage() {
 
  {status === 'loading' && (
  <p style={{ textAlign: 'center', fontSize: '0.78rem', color: '#9ca3af', marginTop: '0.75rem', fontFamily: 'Poppins, sans-serif' }}>
- Wassil lit ton message, cherche sur Google et prépare la fiche... (10-20 secondes)
+ La fiche est envoyée dans la file de validation.
  </p>
  )}
  </form>
@@ -186,7 +191,7 @@ export default function AjoutRapidePage() {
  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', padding: '1rem 1.25rem', backgroundColor: 'white', borderRadius: '14px', border: '1px solid #e2d7f5', boxShadow: '0 2px 8px rgba(5,150,105,0.08)' }}>
  <CheckCircle size={28} color="#7652CA" strokeWidth={1.8} />
  <div style={{ flex: 1 }}>
- <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#543398', fontFamily: 'Poppins, sans-serif' }}>Wassil a généré la fiche </div>
+ <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#543398', fontFamily: 'Poppins, sans-serif' }}>Fiche enregistrée pour vérification</div>
  <div style={{ fontSize: '0.78rem', color: '#6b7280', marginTop: '2px' }}>
  En attente de validation dans <strong>/admin/soumissions</strong>
  </div>

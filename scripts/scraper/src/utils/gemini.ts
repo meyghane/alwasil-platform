@@ -1,11 +1,19 @@
 // Gemini API — discover Islamic events via Google Search grounding
 const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
 
-const DEPARTMENTS = ['75', '92', '93', '94', '77', '78', '95'] as const;
-const THEMES = ['conférences et rencontres musulmanes', 'maraudes et actions solidaires', 'cours arabe et Coran', 'collectes humanitaires', 'événements jeunesse', 'portes ouvertes et séminaires', 'webinaires islamiques'];
+const CORE_DEPARTMENTS = ['75', '77', '78', '91', '92', '93', '94', '95'] as const;
+const NEIGHBOR_DEPARTMENTS = ['60', '27', '28', '02', '51'] as const;
+const THEMES = ['conférences et rencontres musulmanes', 'maraudes et actions solidaires', 'cours arabe et Coran', 'collectes humanitaires', 'événements jeunesse', 'portes ouvertes et séminaires', 'webinaires islamiques', 'formations communautaires'];
 
-export function prioritizeDepartments(counts: Record<string, number>): string[] {
-  return [...DEPARTMENTS].sort((a, b) => (counts[a] ?? 0) - (counts[b] ?? 0));
+export function prioritizeDepartments(counts: Record<string, number>, rotation = 0): string[] {
+  const coreRank = (department: string) => (CORE_DEPARTMENTS.indexOf(department as typeof CORE_DEPARTMENTS[number]) - rotation % CORE_DEPARTMENTS.length + CORE_DEPARTMENTS.length) % CORE_DEPARTMENTS.length;
+  const core = [...CORE_DEPARTMENTS].sort((a, b) => (counts[a] ?? 0) - (counts[b] ?? 0) || coreRank(a) - coreRank(b));
+  // Étendre seulement lorsque tous les départements franciliens ont au moins
+  // trois événements à venir. Une seule zone voisine est ajoutée par jour.
+  if (core.some(department => (counts[department] ?? 0) < 3)) return core;
+  const neighborRank = (department: string) => (NEIGHBOR_DEPARTMENTS.indexOf(department as typeof NEIGHBOR_DEPARTMENTS[number]) - rotation % NEIGHBOR_DEPARTMENTS.length + NEIGHBOR_DEPARTMENTS.length) % NEIGHBOR_DEPARTMENTS.length;
+  const neighbors = [...NEIGHBOR_DEPARTMENTS].sort((a, b) => (counts[a] ?? 0) - (counts[b] ?? 0) || neighborRank(a) - neighborRank(b));
+  return [neighbors[0], ...core];
 }
 
 export function normalizeCampaignUrl(value: string): string | null {
@@ -138,10 +146,11 @@ export async function scrapeEventsWithGemini(existingKeys: Set<string>, departme
 
   // Une recherche à la fois : cela évite les pics RPM et laisse une chance à
   // chaque stratégie de produire des données.
-  const departments = prioritizeDepartments(departmentCounts);
+  const dayNumber = Math.floor(Date.now() / 86_400_000);
+  const departments = prioritizeDepartments(departmentCounts, dayNumber);
   for (let index = 0; index < departments.length && index < maxCalls; index++) {
     const department = departments[index];
-    const strategy = `${THEMES[index]} département ${department} prochains événements confirmés`;
+    const strategy = `${THEMES[index % THEMES.length]} département ${department} prochains événements confirmés`;
     const existingList = [...seenKeys].slice(-20).join(' ; ') || 'aucun';
     const prompt = `Aujourd'hui : ${today}. Cherche 5 vrais événements islamiques à venir en France via cette recherche : "${strategy}". Priorité au département ${department}. Ces combinaisons titre/ville/date sont déjà dans la base, ne les répète pas : ${existingList}. Retourne UNIQUEMENT un tableau JSON valide, sans markdown. Chaque objet : titre (string), date_iso (YYYY-MM-DD, après ${today}), heure (ex: 14h00), ville, departement (2 chiffres), organisateur, categorie (conference/maraude/cours/iftar/webinaire/collecte/autre), description (2 phrases max), url_source (URL réelle), gratuit (boolean).`;
     let events: GeminiEvent[];

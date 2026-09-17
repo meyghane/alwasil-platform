@@ -5,6 +5,10 @@ import { db } from '@/db';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 
 type Row = { category: string; model_calls: number; tokens_used: number; items_found: number; items_inserted: number; quota_errors: number };
+const limits = [
+  { category: 'events', label: 'Événements', calls: 7, tokens: 120000 },
+  { category: 'cagnottes', label: 'Cagnottes', calls: 3, tokens: 50000 },
+] as const;
 
 export default async function ScrapingPage() {
   if (!(await isAdminLoggedIn())) redirect('/admin');
@@ -25,9 +29,10 @@ export default async function ScrapingPage() {
     <Link href="/admin/auto" style={{ color: '#7652CA' }}>Retour aux automatisations</Link>
     <h1 style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', marginBottom: '0.5rem' }}>Consommation du scraping</h1>
     <p style={{ color: '#555' }}>Aujourd’hui, heure de Paris. Les fiches découvertes restent en attente de modération.</p>
-    {unavailable ? <p>Suivi indisponible. Vérifier la migration 0007.</p> : rows.length === 0 ? <p>Aucun appel enregistré aujourd’hui.</p> : <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-      <thead><tr>{['Catégorie', 'Appels', 'Tokens', 'Trouvées', 'Ajoutées', 'Erreurs 429'].map(label => <th key={label} style={{ padding: '0.75rem', borderBottom: '2px solid #080808' }}>{label}</th>)}</tr></thead>
-      <tbody>{rows.map(row => <tr key={row.category}><td style={{ padding: '0.75rem' }}>{row.category}</td><td>{row.model_calls}</td><td>{row.tokens_used}</td><td>{row.items_found}</td><td>{row.items_inserted}</td><td>{row.quota_errors}</td></tr>)}</tbody>
+    {unavailable ? <p>Suivi indisponible. Vérifier la migration 0007.</p> : <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+      <thead><tr>{['Catégorie', 'Appels / limite', 'Tokens / limite', 'Trouvées', 'Ajoutées', 'Erreurs 429'].map(label => <th key={label} style={{ padding: '0.75rem', borderBottom: '2px solid #080808' }}>{label}</th>)}</tr></thead>
+      <tbody>{limits.map(limit => { const row = rows.find(item => item.category === limit.category); return <tr key={limit.category}><td style={{ padding: '0.75rem' }}>{limit.label}</td><td>{row?.model_calls ?? 0} / {limit.calls}</td><td>{row?.tokens_used ?? 0} / {limit.tokens.toLocaleString('fr-FR')}</td><td>{row?.items_found ?? 0}</td><td>{row?.items_inserted ?? 0}</td><td>{row?.quota_errors ?? 0}</td></tr>; })}</tbody>
     </table></div>}
+    <p style={{ color: '#666', fontSize: '0.85rem' }}>Limites affichées : configuration du workflow GitHub Actions. Si elle change, mettre ce tableau à jour.</p>
   </main>;
 }

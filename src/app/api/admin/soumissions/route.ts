@@ -37,6 +37,7 @@ export async function GET() {
  url_source: item.sourceUrl || undefined,
  source_system: 'neon',
  requires_campaign_check: item.category === 'solidarity' && item.metadata?.subType === 'cagnotte' ? 'oui' : undefined,
+ requires_enrichment: item.metadata?.requiresEnrichment === true ? 'oui' : undefined,
  }));
  let legacy: Record<string, unknown>[] = [];
  if (APPS_SCRIPT_URL) {
@@ -74,6 +75,7 @@ export async function PATCH(req: NextRequest) {
    ? await db.select({ id: items.id, category: items.category, metadata: items.metadata }).from(items).where(eq(items.id, id)).limit(1)
    : [];
  if (neonItem.length > 0) {
+ if (status === 'en ligne' && neonItem[0].metadata?.requiresEnrichment === true) return NextResponse.json({ error: 'Cette fiche rapide doit être complétée et vérifiée avant publication.' }, { status: 400 });
  const campaign = neonItem[0].category === 'solidarity' && neonItem[0].metadata?.subType === 'cagnotte';
  if (campaign && status === 'en ligne' && verifiedCampaign !== true) return NextResponse.json({ error: 'Vérifiez la collecte et confirmez avant publication.' }, { status: 400 });
  const now = new Date();
