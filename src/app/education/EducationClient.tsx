@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import {
- Search, MapPin, Star, BookOpen, Building2, CheckCircle, Phone, ExternalLink,
+ Search, MapPin, Star, BookOpen, Building2, CheckCircle, ExternalLink,
  Landmark, Monitor, Users, User, Baby, GraduationCap, type LucideIcon,
 } from 'lucide-react';
 import { COURSE_LABELS, type Institut, type CourseType } from '@/data/institutes';
@@ -342,8 +342,8 @@ function InstitutCard({ inst }: { inst: Institut }) {
  </div>
 
  {/* Footer - CTA */}
- <div style={{ padding: '0 1.25rem 1.25rem' }}>
- {inst.website ? (
+ <div style={{ padding: '0 1.25rem 1.25rem', display: 'flex', gap: '0.5rem' }}>
+ {inst.website && inst.website !== '#' ? (
  <a href={inst.website} target="_blank" rel="noopener noreferrer" style={{
  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
  padding: '0.65rem', borderRadius: '10px', width: '100%',
@@ -352,25 +352,16 @@ function InstitutCard({ inst }: { inst: Institut }) {
  }}>
  Voir le site <ExternalLink size={13} />
  </a>
- ) : inst.phone ? (
- <a href={`tel:${inst.phone}`} style={{
+ ) : (inst.address || inst.city) ? (
+ <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([inst.name, inst.address, inst.city].filter(Boolean).join(', '))}`} target="_blank" rel="noopener noreferrer" style={{
  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
  padding: '0.65rem', borderRadius: '10px', width: '100%',
  border: '1.5px solid #080808', color: '#080808',
  fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none',
  }}>
- <Phone size={13} /> Contacter
+ <MapPin size={13} /> Voir sur Google Maps <ExternalLink size={13} />
  </a>
- ) : (
- <Link href="/contact?type=general" style={{
- display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem',
- padding: '0.65rem', borderRadius: '10px', width: '100%',
- border: '1px solid #e7e5e4', color: '#59565f',
- fontSize: '0.85rem', fontWeight: 500, textDecoration: 'none',
- }}>
- Infos
- </Link>
- )}
+ ) : null}
  </div>
  </div>
  );
