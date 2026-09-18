@@ -30,6 +30,9 @@ export async function GET() {
  const searchable = `${item.title} ${item.description || ''}`.toLocaleLowerCase('fr-FR');
  const hasCourse = (Array.isArray(raw.courses) && raw.courses.length > 0) || /cours|formation|enseignement|coran|tajwid|arabe|hifz|mémorisation|memorisation/.test(searchable);
  const isMosque = item.category === 'institute' && !hasCourse && (item.metadata?.subType === 'mosquee' || raw.type === 'mosquee' || /mosquée|mosquee|masjid|lieu de prière|lieu de priere|salle de prière|salle de priere/.test(searchable));
+ const text = `${item.title} ${item.description || ''}`;
+ const asText = (key: string) => typeof raw[key] === 'string' ? raw[key] as string : undefined;
+ const asList = (key: string) => Array.isArray(raw[key]) ? (raw[key] as unknown[]).filter(value => typeof value === 'string').join('\n') : asText(key);
  return {
  id: item.id,
  categorie: isMosque ? 'mosquee' : item.category,
@@ -48,6 +51,24 @@ export async function GET() {
  organisateur: typeof raw.organizer === 'string' ? raw.organizer : undefined,
  heure: typeof raw.timeStart === 'string' ? raw.timeStart : undefined,
  departement: item.department || undefined,
+ prix: asText('price') || asText('prix') || asText('pricePerPerson'),
+ prix_double: asText('priceDouble'),
+ prix_triple: asText('priceTriple'),
+ prix_quad: asText('priceQuad'),
+ prix_single: asText('priceSingle'),
+ duree: asText('duration') || asText('duree_jours'),
+ depart: asText('departure') || (text.match(/départ(?:\s+depuis)?\s+([^,.;]+)/i)?.[1]?.trim()),
+ hotel_makkah: asText('hotelMakkah'),
+ hotel_madinah: asText('hotelMadinah'),
+ distance_haram: asText('distanceMasjidHaram'),
+ distance_nabawi: asText('distanceMasjidNabawi'),
+ compagnie: asText('airline'),
+ places: asText('places'),
+ places_restantes: asText('placesRestantes'),
+ promotion: asText('promo'),
+ inclusions: asList('includes'),
+ exclusions: asList('excludes'),
+ documents_requis: asList('requiredDocuments'),
  source_system: 'neon',
  requires_campaign_check: item.category === 'solidarity' && item.metadata?.subType === 'cagnotte' ? 'oui' : undefined,
  requires_enrichment: item.metadata?.requiresEnrichment === true ? 'oui' : undefined,
@@ -96,17 +117,49 @@ export async function PATCH(req: NextRequest) {
    const department = value('department', 3);
    const organizer = value('organizer', 160);
    const timeStart = value('timeStart', 20);
-   const complete = current.category === 'event' ? !!(date && city && department && organizer && timeStart)
-     : !!(city && department);
    const description = value('description', 3000);
    const enrichedDescription = holiday && !description.toLocaleLowerCase('fr-FR').includes(holiday.start) ? `${description}\n\nPériode repérée : ${holidayLabel(holiday)}.` : description;
-   const metadata = withoutEmDashes({ ...current.metadata, raw: { ...raw, id: raw.id || current.id, title, name: title,
+   const isHajjOffer = /\b(omra|hajj|hadj)\b/i.test(`${title} ${enrichedDescription}`) || current.category === 'hajj';
+   const nextCategory = isHajjOffer ? 'hajj' : current.category;
+   const list = (key: string): string[] | undefined => {
+     if (typeof edits[key] !== 'string') return undefined;
+     return edits[key].split(/\r?\n/).map((entry: string) => entry.trim()).filter(Boolean).slice(0, 40);
+   };
+   const numeric = (key: string): number | undefined => {
+     const entered = value(key, 32).replace(',', '.');
+     if (!entered) return undefined;
+     const parsed = Number(entered.replace(/[^0-9.]/g, ''));
+     return Number.isFinite(parsed) ? parsed : undefined;
+   };
+   const optional = (key: string, max = 240): string | undefined => {
+     const entered = value(key, max);
+     return entered || (typeof raw[key] === 'string' ? raw[key] as string : undefined);
+   };
+   const rawUpdated: Record<string, unknown> = { ...raw, id: raw.id || current.id, title, name: title,
      description: enrichedDescription, city, department, date, organizer, timeStart,
-     location: value('location', 240), address: value('address', 240), website: url, registrationUrl: url },
+     location: optional('location'), address: optional('address'), website: url || raw.website, registrationUrl: url || raw.registrationUrl };
+   const hajjTextFields: Record<string, string | undefined> = {
+     departure: optional('departure'), duration: optional('duration', 80), airline: optional('airline', 120),
+     hotelMakkah: optional('hotelMakkah', 180), hotelMadinah: optional('hotelMadinah', 180),
+     distanceMasjidHaram: optional('distanceHaram', 80), distanceMasjidNabawi: optional('distanceNabawi', 80),
+     promo: optional('promo', 300),
+   };
+   for (const [key, entered] of Object.entries(hajjTextFields)) if (entered) rawUpdated[key] = entered;
+   const numericFields: Record<string, string> = { price: 'price', priceDouble: 'priceDouble', priceTriple: 'priceTriple', priceQuad: 'priceQuad', priceSingle: 'priceSingle', places: 'places', placesRestantes: 'placesRemaining' };
+   for (const [rawKey, editKey] of Object.entries(numericFields)) { const entered = numeric(editKey); if (entered !== undefined) rawUpdated[rawKey] = entered; }
+   for (const [rawKey, editKey] of [['includes', 'includes'], ['excludes', 'excludes'], ['requiredDocuments', 'requiredDocuments']]) { const entered = list(editKey); if (entered?.length) rawUpdated[rawKey] = entered; }
+   if (isHajjOffer) rawUpdated.subType = 'package';
+   const priceAvailable = numeric('price') !== undefined || raw.price !== undefined || raw.prix !== undefined || raw.pricePerPerson !== undefined;
+   const complete = nextCategory === 'event' ? !!(date && city && department && organizer && timeStart)
+     : nextCategory === 'hajj' ? !!(city && priceAvailable)
+     : !!(city && department);
+   const metadata = withoutEmDashes({ ...current.metadata, subType: isHajjOffer ? 'package' : current.metadata?.subType, raw: rawUpdated,
      requiresEnrichment: edits.verifiedDetails === true ? !complete : current.metadata?.requiresEnrichment });
-   await db.update(items).set({ title, description: enrichedDescription, city, department,
+   await db.update(items).set({ category: nextCategory, title, description: enrichedDescription, city, department,
      sourceUrl: url || null, dateStart: date ? new Date(`${date}T12:00:00Z`) : null,
      metadata, updatedAt: new Date() }).where(eq(items.id, id));
+   revalidatePath('/hajj');
+   revalidatePath('/events');
    return NextResponse.json({ ok: true, needsMoreDetails: metadata.requiresEnrichment === true });
  }
 

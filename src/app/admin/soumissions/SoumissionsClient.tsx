@@ -54,12 +54,23 @@ export default function SoumissionsClient() {
  }
 
  function startEdit(item: Soumission) {
+   const title = item.name || item.titre || '';
+   const text = `${title} ${item.description || ''}`;
+   const departure = item.depart || text.match(/départ(?:\s+depuis)?\s+([^,.;]+)/i)?.[1]?.trim() || '';
+   const isHajj = item.categorie === 'hajj' || /\b(omra|hajj|hadj)\b/i.test(text);
    setEditing(item.id);
    setExpanded(item.id);
-   setEditValues({ title: item.name || item.titre || '', description: item.description || '',
+   setEditValues({ title, description: item.description || '',
      city: item.ville || '', department: item.departement || '', sourceUrl: item.url_source || '',
      date: item.date_evenement || '', organizer: item.organisateur || '', timeStart: item.heure || '',
-     location: item.lieu || '', address: item.adresse || '' });
+     location: item.lieu || departure || item.ville || '', address: item.adresse || '',
+     departure: departure || item.ville || '', price: item.prix || '', priceDouble: item.prix_double || '',
+     priceTriple: item.prix_triple || '', priceQuad: item.prix_quad || '', priceSingle: item.prix_single || '',
+     duration: item.duree || '', airline: item.compagnie || '', hotelMakkah: item.hotel_makkah || '',
+     hotelMadinah: item.hotel_madinah || '', distanceHaram: item.distance_haram || '',
+     distanceNabawi: item.distance_nabawi || '', places: item.places || '', placesRemaining: item.places_restantes || '',
+     promo: item.promotion || '', includes: item.inclusions || '', excludes: item.exclusions || '',
+     requiredDocuments: item.documents_requis || '', isHajj: isHajj ? 'true' : 'false' });
  }
 
  async function saveEdit(id: string) {
@@ -231,12 +242,25 @@ export default function SoumissionsClient() {
  {isExpanded && (
  <div style={{ borderTop: '1px solid #f0ebfa', padding: '1rem 1.25rem', backgroundColor: '#faf9ff' }}>
  {editing === item.id && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10, marginBottom: 20 }}>
- {([['title', 'Titre'], ['description', 'Description'], ['city', 'Ville'], ['department', 'Département'], ['date', 'Date de l’événement (AAAA-MM-JJ)'], ['timeStart', 'Heure'], ['organizer', 'Organisateur'], ['location', 'Lieu'], ['address', 'Adresse'], ['sourceUrl', 'Lien source HTTPS']] as const).map(([key, label]) => (
+ {([['title', 'Titre'], ['city', 'Ville / départ'], ['department', 'Département'], ['date', item.categorie === 'hajj' ? 'Date de départ (AAAA-MM-JJ)' : 'Date de l’événement (AAAA-MM-JJ)'], ['timeStart', 'Heure'], ['organizer', 'Organisateur / agence (interne)'], ['location', 'Lieu précis'], ['address', 'Adresse'], ['sourceUrl', 'Lien source HTTPS']] as const).map(([key, label]) => (
    <label key={key} style={{ display: 'grid', gap: 4, fontSize: 12, fontWeight: 700 }}>{label}
      <input value={editValues[key] || ''} onChange={event => setEditValues(previous => ({ ...previous, [key]: event.target.value }))}
-       style={{ width: '100%', padding: 9, border: '1px solid #d1c6ea', borderRadius: 8, fontSize: 14 }} />
+       style={{ width: '100%', padding: 9, border: '1px solid #d1c6ea', borderRadius: 8, fontSize: 14, boxSizing: 'border-box' }} />
    </label>
  ))}
+ <label style={{ gridColumn: '1 / -1', display: 'grid', gap: 4, fontSize: 12, fontWeight: 700 }}>Description
+   <textarea value={editValues.description || ''} onChange={event => setEditValues(previous => ({ ...previous, description: event.target.value }))}
+     rows={6} style={{ width: '100%', minHeight: 150, resize: 'vertical', padding: 11, border: '1px solid #d1c6ea', borderRadius: 8, fontSize: 14, lineHeight: 1.45, boxSizing: 'border-box' }} />
+ </label>
+ {(/\b(omra|hajj|hadj)\b/i.test(`${item.name || item.titre || ''} ${item.description || ''}`) || item.categorie === 'hajj') && <div style={{ gridColumn: '1 / -1', display: 'grid', gap: 10, padding: 14, borderRadius: 10, background: '#f5f1ff', border: '1px solid #d9cdf4' }}>
+   <strong style={{ color: '#4c1d95' }}>Détails structurés de l’offre Hajj / Omra</strong>
+   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 10 }}>
+   {([['departure', 'Départ / période'], ['price', 'Prix de base / personne'], ['priceDouble', 'Prix en chambre double'], ['priceTriple', 'Prix en chambre triple'], ['priceQuad', 'Prix en chambre quadruple'], ['priceSingle', 'Prix en chambre single'], ['duration', 'Durée'], ['airline', 'Compagnie aérienne'], ['hotelMakkah', 'Hôtel à La Mecque'], ['hotelMadinah', 'Hôtel à Médine'], ['distanceHaram', 'Distance du Haram'], ['distanceNabawi', 'Distance du Nabawi'], ['places', 'Places totales'], ['placesRemaining', 'Places restantes'], ['promo', 'Promotion / avantage']] as const).map(([key, label]) => <label key={key} style={{ display: 'grid', gap: 4, fontSize: 12, fontWeight: 700 }}>{label}<input value={editValues[key] || ''} onChange={event => setEditValues(previous => ({ ...previous, [key]: event.target.value }))} style={{ width: '100%', padding: 9, border: '1px solid #d1c6ea', borderRadius: 8, fontSize: 14, boxSizing: 'border-box' }} /></label>)}
+   </div>
+   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
+   {([['includes', 'Inclusions (une par ligne)'], ['excludes', 'Exclusions (une par ligne)'], ['requiredDocuments', 'Documents requis (un par ligne)']] as const).map(([key, label]) => <label key={key} style={{ display: 'grid', gap: 4, fontSize: 12, fontWeight: 700 }}>{label}<textarea value={editValues[key] || ''} onChange={event => setEditValues(previous => ({ ...previous, [key]: event.target.value }))} rows={4} style={{ width: '100%', resize: 'vertical', padding: 9, border: '1px solid #d1c6ea', borderRadius: 8, fontSize: 14, boxSizing: 'border-box' }} /></label>)}
+   </div>
+ </div>}
  <div style={{ display: 'flex', alignItems: 'end', gap: 8 }}>
    <button onClick={() => saveEdit(item.id)} disabled={isLoading} style={{ padding: '10px 16px', borderRadius: 8, border: 0, background: '#7652CA', color: 'white', fontWeight: 700 }}>Enregistrer</button>
    <button onClick={() => setEditing(null)} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid #d1c6ea', background: 'white' }}>Annuler</button>
