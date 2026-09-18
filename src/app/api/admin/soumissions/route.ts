@@ -23,12 +23,12 @@ export async function GET() {
  }
 
  try {
- const automatic = await db.select().from(items).where(inArray(items.status, ['pending', 'approved', 'rejected']));
+ const automatic = await db.select().from(items).where(inArray(items.status, ['pending', 'approved', 'rejected', 'expired']));
  const neonSoumissions = automatic.map((item) => ({
  id: item.id,
  categorie: item.category,
  destinationTab: 'Neon · items',
- status: item.status === 'approved' ? 'en ligne' : item.status === 'rejected' ? 'pas en ligne' : 'à vérifier',
+ status: item.status === 'approved' ? 'en ligne' : item.status === 'expired' ? 'archivé' : item.status === 'rejected' ? 'pas en ligne' : 'à vérifier',
  soumis_le: item.createdAt.toISOString(),
  soumis_par: item.source,
  name: item.title,
@@ -73,7 +73,7 @@ export async function PATCH(req: NextRequest) {
  if (id && edits && typeof edits === 'object' && !Array.isArray(edits)) {
    if (!(await isAdminLoggedIn())) return NextResponse.json({ error: 'Administrateur requis pour corriger cette fiche' }, { status: 403 });
    const [current] = await db.select().from(items).where(eq(items.id, id)).limit(1);
-   if (!current || current.status !== 'pending') return NextResponse.json({ error: 'Fiche introuvable ou déjà traitée' }, { status: 404 });
+   if (!current || !['pending', 'approved', 'expired'].includes(current.status)) return NextResponse.json({ error: 'Fiche introuvable ou non modifiable' }, { status: 404 });
    const value = (key: string, max: number): string => typeof edits[key] === 'string' ? withoutEmDashes(edits[key].trim().slice(0, max)) : '';
    const title = value('title', 240);
    if (!title) return NextResponse.json({ error: 'Un titre est nécessaire' }, { status: 400 });
@@ -104,7 +104,7 @@ export async function PATCH(req: NextRequest) {
  return NextResponse.json({ error: 'id et status requis' }, { status: 400 });
  }
 
- if (!['en ligne', 'pas en ligne', 'à vérifier', 'expiré'].includes(status)) {
+ if (!['en ligne', 'pas en ligne', 'à vérifier', 'archivé', 'expiré'].includes(status)) {
  return NextResponse.json({ error: 'Status invalide' }, { status: 400 });
  }
 
@@ -117,11 +117,12 @@ export async function PATCH(req: NextRequest) {
  if (campaign && status === 'en ligne' && verifiedCampaign !== true) return NextResponse.json({ error: 'Vérifiez la collecte et confirmez avant publication.' }, { status: 400 });
  const now = new Date();
  const metadata = campaign && status === 'en ligne' ? { ...neonItem[0].metadata, raw: { ...(neonItem[0].metadata?.raw as Record<string, unknown> || {}), verified: true } } : neonItem[0].metadata;
- await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: now,
+ const nextStatus = status === 'en ligne' ? 'approved' : status === 'archivé' || status === 'expiré' ? 'expired' : 'rejected';
+ await db.update(items).set({ status: nextStatus, updatedAt: now,
    title: withoutEmDashes(neonItem[0].title), description: withoutEmDashes(neonItem[0].description),
    metadata: withoutEmDashes(metadata),
    ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
- await db.insert(moderationLog).values({ itemId: id, action: status === 'en ligne' ? 'approved' : 'rejected', actor: (await isAdminLoggedIn()) ? 'admin:site' : 'moderator:site' }).catch(error => console.error('[admin] moderation log write failed:', error));
+ await db.insert(moderationLog).values({ itemId: id, action: status === 'en ligne' ? 'approved' : nextStatus === 'expired' ? 'archived' : 'rejected', actor: (await isAdminLoggedIn()) ? 'admin:site' : 'moderator:site' }).catch(error => console.error('[admin] moderation log write failed:', error));
  revalidatePath('/');
  const category = neonItem[0].category;
  const publicPage = category === 'event' ? '/events'

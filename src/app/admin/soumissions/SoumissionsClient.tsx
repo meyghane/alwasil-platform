@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CheckCircle, XCircle, Clock, RefreshCw, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle, XCircle, RefreshCw, ChevronDown, ChevronUp, Archive } from 'lucide-react';
 
 const V = '#7652CA';
 
@@ -21,14 +21,15 @@ type Soumission = {
 
 const STATUS_CONFIG = {
  'à vérifier': { color: '#f59e0b', bg: '#fffbeb', label: 'À vérifier', dot: '' },
- 'en ligne': { color: '#7652CA', bg: '#f0fdf4', label: 'En ligne', dot: '' },
+ 'en ligne': { color: '#16a34a', bg: '#f0fdf4', label: 'En ligne', dot: '' },
  'pas en ligne':{ color: '#6b7280', bg: '#f9fafb', label: 'Rejeté', dot: '' },
+ 'archivé': { color: '#64748b', bg: '#f8fafc', label: 'Archivé', dot: '' },
 };
 
 export default function SoumissionsClient() {
  const [items, setItems] = useState<Soumission[]>([]);
  const [loading, setLoading] = useState(true);
- const [filter, setFilter] = useState<'all' | 'à vérifier' | 'en ligne' | 'pas en ligne'>('à vérifier');
+ const [filter, setFilter] = useState<'all' | 'à vérifier' | 'en ligne' | 'pas en ligne' | 'archivé'>('à vérifier');
  const [expanded, setExpanded] = useState<string | null>(null);
  const [actionLoading, setActionLoading] = useState<string | null>(null);
  const [editing, setEditing] = useState<string | null>(null);
@@ -62,6 +63,7 @@ export default function SoumissionsClient() {
  }
 
  async function saveEdit(id: string) {
+   if (!window.confirm('Confirmer cette modification ? La fiche sera mise à jour sur le site.')) return;
    setActionLoading(id);
    try {
      const res = await fetch('/api/admin/soumissions', { method: 'PATCH', headers: { 'Content-Type': 'application/json' },
@@ -84,7 +86,8 @@ export default function SoumissionsClient() {
 
  useEffect(() => { load(); }, []);
 
- async function updateStatus(item: Soumission, status: 'en ligne' | 'pas en ligne') {
+ async function updateStatus(item: Soumission, status: 'en ligne' | 'pas en ligne' | 'archivé') {
+ if (status === 'archivé' && !window.confirm('Confirmer l’archivage ? La fiche ne sera plus visible sur le site.')) return;
  const verifiedCampaign = item.requires_campaign_check === 'oui' && status === 'en ligne';
  if (verifiedCampaign && !window.confirm('As-tu vérifié sur la page source que la collecte est active, que l’organisateur est fiable et que la destination des dons est exacte ? Confirmer publiera cette cagnotte.')) return;
  const id = item.id;
@@ -110,7 +113,7 @@ export default function SoumissionsClient() {
  <div>
  {/* Filtres */}
  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem', alignItems: 'center' }}>
- {(['à vérifier', 'en ligne', 'pas en ligne', 'all'] as const).map(f => {
+ {(['à vérifier', 'en ligne', 'archivé', 'pas en ligne', 'all'] as const).map(f => {
  const isActive = filter === f;
  const count = f === 'all' ? items.length : items.filter(i => i.status === f).length;
  return (
@@ -122,7 +125,7 @@ export default function SoumissionsClient() {
  color: isActive ? 'white' : '#6b7280',
  display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
  }}>
- {f === 'all' ? 'Tout' : f === 'à vérifier' ? 'À vérifier' : f === 'en ligne' ? 'En ligne' : 'Rejeté'}
+ {f === 'all' ? 'Tout' : f === 'à vérifier' ? 'À vérifier' : f === 'en ligne' ? 'En ligne' : f === 'archivé' ? 'Archivées' : 'Rejeté'}
  <span style={{ backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : '#f0ebfa', color: isActive ? 'white' : V, borderRadius: '20px', padding: '0 6px', fontSize: '0.72rem', fontWeight: 800 }}>{count}</span>
  </button>
  );
@@ -211,10 +214,15 @@ export default function SoumissionsClient() {
  </>
  )}
  {item.status === 'en ligne' && (
- <span style={{ fontSize: '0.75rem', color: '#7652CA', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+ <>
+ <button onClick={() => startEdit(item)} disabled={isLoading} style={{ padding: '0.45rem 0.875rem', borderRadius: 8, border: '1px solid #7652CA', background: 'white', color: '#7652CA', fontWeight: 700, cursor: 'pointer' }}>Modifier</button>
+ <button onClick={() => updateStatus(item, 'archivé')} disabled={isLoading} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#f8fafc', color: '#475569', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}><Archive size={13} /> Archiver</button>
+ <span style={{ fontSize: '0.75rem', color: '#16a34a', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
  <CheckCircle size={13} /> En ligne
  </span>
+ </>
  )}
+ {item.status === 'archivé' && <><button onClick={() => startEdit(item)} disabled={isLoading} style={{ padding: '0.45rem 0.875rem', borderRadius: 8, border: '1px solid #7652CA', background: 'white', color: '#7652CA', fontWeight: 700, cursor: 'pointer' }}>Modifier</button><button onClick={() => updateStatus(item, 'en ligne')} disabled={isLoading} style={{ padding: '0.45rem 0.875rem', borderRadius: 8, border: 0, background: '#16a34a', color: 'white', fontWeight: 700, cursor: 'pointer' }}>Remettre en ligne</button></>}
  <button onClick={() => setExpanded(isExpanded ? null : item.id)}
  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#a8a29e', padding: '0.25rem' }}>
  {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
