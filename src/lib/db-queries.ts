@@ -45,6 +45,28 @@ async function getRaw<T>(category: Category, subType: string): Promise<T[]> {
   }
 }
 
+function refreshRecurringInitiatives<T extends { recurring?: boolean; nextDate?: string; description?: string; tags?: string[] }>(itemsList: T[]): T[] {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  return itemsList.map(item => {
+    if (!item.recurring || !item.nextDate) return item;
+    const original = new Date(`${item.nextDate}T12:00:00`);
+    if (Number.isNaN(original.getTime()) || original >= now) return item;
+    const text = `${item.description || ''} ${(item.tags || []).join(' ')}`.toLocaleLowerCase('fr-FR');
+    const weeklyDay = text.includes('dimanche') ? 0 : text.includes('lundi') ? 1 : text.includes('mardi') ? 2 : text.includes('mercredi') ? 3 : text.includes('jeudi') ? 4 : text.includes('vendredi') ? 5 : text.includes('samedi') ? 6 : null;
+    const next = new Date(now);
+    if (weeklyDay !== null) {
+      const days = (weeklyDay - next.getDay() + 7) % 7 || 7;
+      next.setDate(next.getDate() + days);
+    } else {
+      const day = Math.min(original.getDate(), 28);
+      next.setDate(day);
+      while (next < now) next.setMonth(next.getMonth() + 1);
+    }
+    return { ...item, nextDate: next.toISOString().slice(0, 10) };
+  });
+}
+
 export async function getEvents() {
   const rows = (await getRaw<Event>('event', 'event')).filter((event) => event.id !== 'ici-dj-lyss-2026');
   const current = allEvents.filter((event) => CURRENT_VERIFIED_EVENT_IDS.some((id) => id === event.id));
@@ -60,7 +82,9 @@ export const getHijamaProfiles = () => getRaw<PraticienHijama>('health', 'hijama
 export const getMedicalProfiles = () => getRaw<PraticienMedical>('health', 'medical');
 export const getRoqyaProfiles = () => getRaw<PraticienRoqya>('health', 'roqya');
 export const getCagnottes = () => getRaw<Cagnotte>('solidarity', 'cagnotte');
-export const getInitiatives = () => getRaw<Initiative>('solidarity', 'initiative');
+export async function getInitiatives() {
+  return refreshRecurringInitiatives(await getRaw<Initiative>('solidarity', 'initiative'));
+}
 export const getVisiteMalades = () => getRaw<VisiteMalade>('solidarity', 'visite_malade');
 export const getVoyagesHumanitaires = () =>
   getRaw<VoyageHumanitaire>('solidarity', 'voyage_humanitaire');
