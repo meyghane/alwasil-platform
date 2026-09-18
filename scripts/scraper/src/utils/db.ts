@@ -110,7 +110,7 @@ export async function insertEvent(row: NewEventRow): Promise<string | null> {
   }
 }
 
-export async function logAutomationError(code: string): Promise<void> {
-  try { await db.execute(sql`INSERT INTO automation_errors(stage, code) VALUES ('scraper', ${code})`); }
+export async function logAutomationError(code: string, stage = 'scraper'): Promise<void> {
+  try { await db.execute(sql`INSERT INTO automation_errors(stage, code) VALUES (${stage}, ${code})`); }
   catch { console.error('[journal] unavailable'); }
 }

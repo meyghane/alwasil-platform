@@ -6,6 +6,7 @@
 import { randomUUID } from 'node:crypto';
 import { getExistingEventKeys, getExistingCagnotteUrls, getDepartmentCounts, getTodayUsage, hadAnyQuotaErrorToday, insertEvent, insertCagnotte, logAutomationError, saveUsage, type CategoryUsage } from './utils/db';
 import { scrapeEventsWithGemini, scrapeCagnottesWithGemini } from './utils/gemini';
+import { scrapeEventsFromRss } from './utils/rss-events';
 import { sendDigestEmail, sendCagnotteNotice } from './utils/email';
 import { normalizeEventCategory } from './types';
 import type { DigestItem } from './types';
@@ -48,9 +49,23 @@ async function main() {
     usage.itemsFound = geminiEvents.length;
     console.log(`Gemini: ${geminiEvents.length} events found`);
 
+    let eventsToInsert = geminiEvents;
+    if (geminiEvents.length === 0) {
+      await logAutomationError('events_zero_results', 'scraper_events');
+      console.warn('[events] Gemini a répondu sans événement. Activation de la source de secours RSS.');
+      const fallback = await scrapeEventsFromRss(existingKeys);
+      if (fallback.length) {
+        console.log(`[events] RSS fallback: ${fallback.length} candidats à vérifier`);
+        await logAutomationError(`events_fallback_${fallback.length}`, 'scraper_events');
+        eventsToInsert = fallback.map(event => ({ ...event, heure: 'À confirmer', organisateur: 'Source RSS à vérifier', categorie: 'autre', gratuit: false }));
+      } else {
+        await logAutomationError('events_no_source_results', 'scraper_events');
+      }
+    }
+
     const digestItems: DigestItem[] = [];
 
-    for (const ev of geminiEvents) {
+    for (const ev of eventsToInsert) {
     const category = normalizeEventCategory(ev.categorie);
     const id = await insertEvent({
       title: ev.titre,
@@ -92,7 +107,7 @@ async function main() {
     }
     }
 
-  console.log(`\nInserted: ${digestItems.length}/${geminiEvents.length}`);
+  console.log(`\nInserted: ${digestItems.length}/${eventsToInsert.length}`);
 
   console.log('\n--- Sending Email Digest ---');
     if (digestItems.length) await sendDigestEmail(digestItems);
@@ -103,6 +118,9 @@ async function main() {
     await saveUsage(runId, 'events', usage);
   }
   if (!usage.quotaErrors) await runCagnottes();
+  if (usage.itemsFound === 0 && usage.itemsInserted === 0) {
+    throw new Error('Scraping événements terminé sans fiche : consulter le journal admin.');
+  }
 }
 
 async function runCagnottes() {
