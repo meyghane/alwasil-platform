@@ -34,6 +34,7 @@ export default function SoumissionsClient() {
  const [editing, setEditing] = useState<string | null>(null);
  const [editValues, setEditValues] = useState<Record<string, string>>({});
  const [telegramSetup, setTelegramSetup] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
+ const [category, setCategory] = useState('all');
 
  async function load() {
  setLoading(true);
@@ -101,7 +102,8 @@ export default function SoumissionsClient() {
  }
  }
 
- const filtered = filter === 'all' ? items : items.filter(i => i.status === filter);
+ const categories = Array.from(new Set(items.map(item => item.categorie).filter(Boolean))).sort();
+ const filtered = items.filter(item => (filter === 'all' || item.status === filter) && (category === 'all' || item.categorie === category));
  const pending = items.filter(i => i.status === 'à vérifier').length;
 
  return (
@@ -125,6 +127,11 @@ export default function SoumissionsClient() {
  </button>
  );
  })}
+
+ <select value={category} onChange={event => setCategory(event.target.value)} aria-label="Filtrer par catégorie" style={{ padding: '0.4rem 0.75rem', borderRadius: 20, border: '1.5px solid #f0ebfa', background: 'white', color: '#6b7280', fontWeight: 600, fontSize: '0.8rem' }}>
+ <option value="all">Toutes les catégories</option>
+ {categories.map(value => <option key={value} value={value}>{value}</option>)}
+ </select>
 
  <button onClick={activateTelegramButtons} disabled={telegramSetup === 'loading'} style={{ padding: '0.4rem 0.875rem', borderRadius: 8, border: '1px solid #7652CA', background: 'white', color: '#7652CA', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}>
  {telegramSetup === 'loading' ? 'Activation...' : telegramSetup === 'ok' ? 'Telegram activé' : 'Activer les boutons Telegram'}

@@ -5,8 +5,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 import { getUserSession } from '@/lib/user-auth';
 import { db } from '@/db';
-import { items } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { items, moderationLog } from '@/db/schema';
+import { eq, inArray } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { withoutEmDashes } from '@/lib/typography';
 
@@ -23,12 +23,12 @@ export async function GET() {
  }
 
  try {
- const automatic = await db.select().from(items).where(eq(items.status, 'pending'));
+ const automatic = await db.select().from(items).where(inArray(items.status, ['pending', 'approved', 'rejected']));
  const neonSoumissions = automatic.map((item) => ({
  id: item.id,
  categorie: item.category,
  destinationTab: 'Neon · items',
- status: 'à vérifier',
+ status: item.status === 'approved' ? 'en ligne' : item.status === 'rejected' ? 'pas en ligne' : 'à vérifier',
  soumis_le: item.createdAt.toISOString(),
  soumis_par: item.source,
  name: item.title,
@@ -121,6 +121,7 @@ export async function PATCH(req: NextRequest) {
    title: withoutEmDashes(neonItem[0].title), description: withoutEmDashes(neonItem[0].description),
    metadata: withoutEmDashes(metadata),
    ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
+ await db.insert(moderationLog).values({ itemId: id, action: status === 'en ligne' ? 'approved' : 'rejected', actor: (await isAdminLoggedIn()) ? 'admin:site' : 'moderator:site' }).catch(error => console.error('[admin] moderation log write failed:', error));
  revalidatePath('/');
  const category = neonItem[0].category;
  const publicPage = category === 'event' ? '/events'

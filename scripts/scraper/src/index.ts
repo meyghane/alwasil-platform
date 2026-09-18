@@ -11,6 +11,23 @@ import { sendDigestEmail, sendCagnotteNotice } from './utils/email';
 import { normalizeEventCategory } from './types';
 import type { DigestItem } from './types';
 
+async function notifyTelegram(item: { id: string; title: string; category: string; city?: string | null; sourceUrl?: string | null }): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_MODERATION_CHAT_ID || process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+  const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: ['À vérifier sur Al-Wasil', `${item.title} (${item.category})`, item.city ? `Ville : ${item.city}` : '', item.sourceUrl ? `Source : ${item.sourceUrl}` : '', `Ouvrir : https://al-wasil.fr/admin/soumissions?item=${item.id}`].filter(Boolean).join('\n'),
+      disable_web_page_preview: true,
+      reply_markup: { inline_keyboard: [[{ text: 'Valider', callback_data: `a:${item.id}` }, { text: 'Refuser', callback_data: `r:${item.id}` }], [{ text: 'Modifier ou voir', url: `https://al-wasil.fr/admin/soumissions?item=${item.id}` }]] },
+    }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!response.ok) throw new Error(`Telegram HTTP ${response.status}`);
+}
+
 async function main() {
   const today = new Date().toISOString().split('T')[0];
   console.log(`\n==== Al-Wasil Scraper · ${today} ====\n`);
@@ -97,6 +114,7 @@ async function main() {
 
     if (id) {
       usage.itemsInserted++;
+      await notifyTelegram({ id, title: ev.titre, category, city: ev.ville, sourceUrl: ev.url_source }).catch(error => console.warn('[telegram] notification échouée:', error instanceof Error ? error.message : 'unknown'));
       digestItems.push({
         id,
         title: ev.titre,
@@ -151,7 +169,11 @@ async function runCagnottes() {
           category: candidate.categorie || 'urgence', country: candidate.pays || 'À vérifier',
           description: candidate.description || '', sourceUrl: candidate.url_source,
         });
-        if (id) { usage.itemsInserted++; inserted.push({ title: candidate.titre, url: candidate.url_source }); }
+        if (id) {
+          usage.itemsInserted++;
+          inserted.push({ title: candidate.titre, url: candidate.url_source });
+          await notifyTelegram({ id, title: candidate.titre, category: 'solidarity', city: candidate.pays, sourceUrl: candidate.url_source }).catch(error => console.warn('[telegram] notification échouée:', error instanceof Error ? error.message : 'unknown'));
+        }
       } catch (error) {
         await logAutomationError('cagnotte_insert_failed');
         console.error('[db] Cagnotte insert error:', error);
