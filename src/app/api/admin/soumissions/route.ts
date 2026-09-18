@@ -24,9 +24,14 @@ export async function GET() {
 
  try {
  const automatic = await db.select().from(items).where(inArray(items.status, ['pending', 'approved', 'rejected', 'expired']));
- const neonSoumissions = automatic.map((item) => ({
+ const neonSoumissions = automatic.map((item) => {
+ const raw = (item.metadata?.raw || {}) as Record<string, unknown>;
+ const searchable = `${item.title} ${item.description || ''}`.toLocaleLowerCase('fr-FR');
+ const hasCourse = (Array.isArray(raw.courses) && raw.courses.length > 0) || /cours|formation|enseignement|coran|tajwid|arabe|hifz|mémorisation|memorisation/.test(searchable);
+ const isMosque = item.category === 'institute' && !hasCourse && (item.metadata?.subType === 'mosquee' || raw.type === 'mosquee' || /mosquée|mosquee|masjid|lieu de prière|lieu de priere|salle de prière|salle de priere/.test(searchable));
+ return {
  id: item.id,
- categorie: item.category,
+ categorie: isMosque ? 'mosquee' : item.category,
  destinationTab: 'Neon · items',
  status: item.status === 'approved' ? 'en ligne' : item.status === 'expired' ? 'archivé' : item.status === 'rejected' ? 'pas en ligne' : 'à vérifier',
  soumis_le: item.createdAt.toISOString(),
@@ -36,16 +41,16 @@ export async function GET() {
  ville: item.city || undefined,
  description: item.description || undefined,
  url_source: item.sourceUrl || undefined,
- date_evenement: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.date === 'string' ? String((item.metadata?.raw as Record<string, unknown>).date) : undefined,
- lieu: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.location === 'string' ? String((item.metadata?.raw as Record<string, unknown>).location) : undefined,
- adresse: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.address === 'string' ? String((item.metadata?.raw as Record<string, unknown>).address) : undefined,
- organisateur: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.organizer === 'string' ? String((item.metadata?.raw as Record<string, unknown>).organizer) : undefined,
- heure: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.timeStart === 'string' ? String((item.metadata?.raw as Record<string, unknown>).timeStart) : undefined,
+ date_evenement: typeof raw.date === 'string' ? raw.date : undefined,
+ lieu: typeof raw.location === 'string' ? raw.location : undefined,
+ adresse: typeof raw.address === 'string' ? raw.address : undefined,
+ organisateur: typeof raw.organizer === 'string' ? raw.organizer : undefined,
+ heure: typeof raw.timeStart === 'string' ? raw.timeStart : undefined,
  departement: item.department || undefined,
  source_system: 'neon',
  requires_campaign_check: item.category === 'solidarity' && item.metadata?.subType === 'cagnotte' ? 'oui' : undefined,
  requires_enrichment: item.metadata?.requiresEnrichment === true ? 'oui' : undefined,
- }));
+ }; });
  let legacy: Record<string, unknown>[] = [];
  if (APPS_SCRIPT_URL) {
    try {

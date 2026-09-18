@@ -19,11 +19,13 @@ export async function GET(req: NextRequest) {
 
  try {
  const legacy = await getMosquees();
- const approved = await db.select({ id: items.id, metadata: items.metadata, title: items.title, city: items.city, department: items.department })
+ const approved = await db.select({ id: items.id, metadata: items.metadata, title: items.title, description: items.description, city: items.city, department: items.department })
    .from(items).where(and(eq(items.category, 'institute'), eq(items.status, 'approved')));
  const fromNeon: Mosquee[] = approved.filter(row => {
    const raw = row.metadata?.raw as Record<string, unknown> | undefined;
-   return raw?.type === 'mosquee';
+ const text = `${row.title || ''} ${row.description || ''}`.toLocaleLowerCase('fr-FR');
+ const hasCourse = Array.isArray(raw?.courses) && raw.courses.length > 0 || /cours|formation|enseignement|coran|tajwid|arabe|hifz|mémorisation|memorisation/.test(text);
+ return raw?.type === 'mosquee' || (!hasCourse && /mosquée|mosquee|masjid|lieu de prière|lieu de priere|salle de prière|salle de priere/.test(text));
  }).map(row => {
    const raw = (row.metadata?.raw || {}) as Record<string, unknown>;
    const courses = Array.isArray(raw.courses) ? raw.courses.filter((item): item is string => typeof item === 'string') : [];

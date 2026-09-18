@@ -9,7 +9,7 @@ type Category = typeof items.$inferInsert.category;
 const CATEGORY_MAP: Record<string, { category: Category; subType: string }> = {
   piscine: { category: 'pool', subType: 'piscine' },
   institut: { category: 'institute', subType: 'institut' },
-  mosquee: { category: 'institute', subType: 'institut' },
+  mosquee: { category: 'institute', subType: 'mosquee' },
   evenement: { category: 'event', subType: 'event' },
   emploi: { category: 'job', subType: 'job_offer' },
   psy: { category: 'health', subType: 'psy' },
@@ -40,6 +40,12 @@ export async function ingestManualSubmission(input: {
   const raw: Record<string, unknown> = withoutEmDashes({ ...input.data, id: randomUUID() });
   const title = first(raw, input.categoryKey === 'psy' ? ['name', 'title'] : ['title', 'name', 'titre', 'nom']);
   if (!title || title.length > 240) throw new Error('Titre invalide');
+  const textForClassification = `${title} ${first(raw, ['description', 'texte_libre'])}`.toLocaleLowerCase('fr-FR');
+  const courses = Array.isArray(raw.courses) ? raw.courses.filter(Boolean) : [];
+  const hasConfirmedCourse = courses.length > 0 || /cours|formation|enseignement|coran|tajwid|arabe|mémorisation|memorisation|hifz|sciences islamiques/.test(textForClassification);
+  const isPrayerPlace = /mosquée|mosquee|masjid|salle de prière|salle de priere|lieu de prière|lieu de priere/.test(textForClassification) && !hasConfirmedCourse;
+  const effectiveCategoryKey = isPrayerPlace ? 'mosquee' : input.categoryKey;
+  const effectiveMapping = CATEGORY_MAP[effectiveCategoryKey];
   const city = first(raw, ['city', 'ville', 'location']) || null;
   const department = first(raw, ['department', 'departement']) || null;
   const url = first(raw, ['website', 'url', 'registrationUrl', 'site_web', 'url_source']);
@@ -49,7 +55,7 @@ export async function ingestManualSubmission(input: {
   const tags = Array.isArray(raw.tags) ? raw.tags.filter((tag): tag is string => typeof tag === 'string') :
     typeof raw.tags === 'string' ? raw.tags.split(',').map(tag => tag.trim()).filter(Boolean) : [];
   const candidate: Candidate = {
-    id: 'new', category: mapping.category, title, city, dateStart,
+    id: 'new', category: effectiveMapping.category, title, city, dateStart,
     sourceUrl: url || null, metadata: { raw },
   };
   const existing = await db.select({
@@ -60,11 +66,11 @@ export async function ingestManualSubmission(input: {
   if (duplicate) return { duplicate: true as const, id: duplicate.id };
 
   const [inserted] = await db.insert(items).values({
-    category: mapping.category, status: 'pending', title,
+    category: effectiveMapping.category, status: 'pending', title,
     description: first(raw, ['description', 'texte_libre']) || null,
     city, department, dateStart, source: input.source, sourceUrl: url || null,
     tags, isSpam: raw.is_spam === true,
-    metadata: { subType: mapping.subType, raw, submittedBy: input.actor, submittedAt: new Date().toISOString(), requiresEnrichment: input.source === 'quick_add' || input.source.startsWith('telegram:') && raw.requires_enrichment === true },
+    metadata: { subType: effectiveMapping.subType, raw: { ...raw, type: effectiveMapping.subType }, submittedBy: input.actor, submittedAt: new Date().toISOString(), requiresEnrichment: input.source === 'quick_add' || input.source.startsWith('telegram:') && raw.requires_enrichment === true },
   }).returning({ id: items.id });
   return { duplicate: false as const, id: inserted.id };
 }
