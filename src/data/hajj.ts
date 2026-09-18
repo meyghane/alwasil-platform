@@ -42,10 +42,13 @@ export type HajjPackage = {
  promo?: string; // ex: "-5% jusqu'au 15 avril"
  hotelMakkah?: string;
  hotelMadinah?: string;
+ sourceUrl?: string;
+ seasonYear?: number;
+ verificationStatus?: 'verified' | 'to_verify' | 'expired';
 };
 
 export const VOYAGE_TYPE_LABELS: Record<VoyageType, string> = {
- 'hajj': 'Hajj 2026',
+ 'hajj': 'Hajj 2027',
  'omra-ramadan': 'Omra Ramadan',
  'omra-hors-saison': 'Omra hors saison',
  'omra-express': 'Omra Express',

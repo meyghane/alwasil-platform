@@ -21,7 +21,7 @@ const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
 
 const TYPE_FILTERS: { key: VoyageType | 'all'; label: string; icon: LucideIcon }[] = [
  { key: 'all', label: 'Tous', icon: Globe },
- { key: 'hajj', label: 'Hajj 2026', icon: Plane },
+ { key: 'hajj', label: 'Hajj 2027', icon: Plane },
  { key: 'omra-ramadan', label: 'Omra Ramadan', icon: Moon },
  { key: 'omra-hors-saison',label: 'Omra hors saison', icon: Plane },
  { key: 'omra-express', label: 'Omra Express', icon: Zap },
@@ -68,7 +68,10 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  const budgetObj = BUDGET_FILTERS.find(b => b.key === budgetFilter) ?? BUDGET_FILTERS[0];
 
- const filteredPackages = hajjPackages.filter(p => {
+ // Les anciennes offres Hajj 2026 ne doivent plus être proposées comme si elles étaient disponibles.
+ // Elles restent dans la source historique, mais seules les offres 2027 vérifiées pourront apparaître ici.
+ const currentPackages = hajjPackages.filter(p => p.type !== 'hajj' || (p.seasonYear ?? 0) >= 2027);
+ const filteredPackages = currentPackages.filter(p => {
  const q = search.toLowerCase();
  return (typeFilter === 'all' || p.type === typeFilter) &&
  (starsFilter === 0 || p.stars === starsFilter) &&
@@ -82,7 +85,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  return (
  <div>
- <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Comparez les agences françaises, offres 2026 et guide complet du pèlerin." color="#7652CA" emoji="" />
+ <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Comparez les agences françaises, préparez le Hajj 2027 et trouvez une offre Omra vérifiable." color="#7652CA" emoji="" />
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
 
  {/* Tabs */}
@@ -150,6 +153,13 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
  <strong style={{ color: 'var(--text-primary)' }}>{sorted.length}</strong> offre{sorted.length > 1 ? 's' : ''} trouvée{sorted.length > 1 ? 's' : ''}
  </p>
+
+ {typeFilter === 'hajj' && sorted.length === 0 && (
+ <div style={{ marginBottom: '1.25rem', padding: '1rem 1.1rem', borderRadius: '0.75rem', border: '1px solid #7652CA55', backgroundColor: '#7652CA0d', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+ <strong style={{ color: '#543398' }}>Hajj 2027 : offres en cours de vérification.</strong>{' '}
+ Les anciennes offres 2026 ont été retirées de la comparaison. Nous afficherons ici uniquement des offres 2027 publiées par une agence identifiable, avec une source, des conditions et une date de dernière vérification.
+ </div>
+ )}
 
  {/* Package cards */}
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.25rem' }}>
@@ -358,7 +368,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  },
  {
  icon: '',
- title: 'Calendrier - Hajj 2026',
+ title: 'Calendrier - prochain Hajj',
  color: '#7652CA',
  items: [
  '8 Dhul Hijja : Départ vers Mina (Yawm al-Tarwiyah)',
@@ -366,7 +376,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  '10 Dhul Hijja : Muzdalifah, lapidation, sacrifice, tawaf',
  '11–12 Dhul Hijja : Jours de Tachrik (nuit à Mina)',
  '13 Dhul Hijja : Départ progressif',
- ' Dates estimées 2026 : 5–10 juin 2026 (à confirmer)',
+ ' Dates du Hajj 2027 : à confirmer selon le calendrier officiel et les autorités saoudiennes',
  ],
  },
  {

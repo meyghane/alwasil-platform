@@ -78,7 +78,7 @@ const CATEGORIES: Record<string, CatConfig> = {
  hajj: {
  sheetTab: 'soumissions_hajj',
  expiresIn: 365,
- prompt: `Find 3 French travel agencies offering Hajj 2026 or Omra packages. Search for: agence voyage hajj 2026 france, omra pas cher france. Return ONLY a JSON array. Each object: nom_agence, ville, type (hajj/omra/les-deux), prix_a_partir (number in euros), duree_jours (number), description, url_source, phone, inclus (array: vol/hotel/transport/guide/repas), agrement_officiel (boolean).`,
+ prompt: `Find 3 identifiable French travel agencies and public offers for Hajj 2027 or Omra 2026-2027. Search current official agency pages and reputable French comparators only as leads, then keep the agency's own source URL. Do not invent prices, dates, hotels, accreditation or availability. Return ONLY a JSON array. Each object: nom_agence, ville, type (hajj/omra/les-deux), saison (2027 or 2026-2027), prix_a_partir (number in euros or null), duree_jours (number or null), dates (string or null), description, url_source, phone, site_officiel, inclus (array: vol/hotel/transport/guide/repas), agrement_atout_france (boolean or null), garantie_apst (boolean or null), approbation_hajj_saoudienne (boolean or null), derniere_verification (YYYY-MM-DD), statut_verification (a_verifier). Only include a record when url_source is present.`,
  dedup: 'nom_agence',
  },
 };
