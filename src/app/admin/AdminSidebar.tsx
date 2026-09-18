@@ -9,9 +9,9 @@ import AdminLogout from './AdminLogout';
 // Navigation persistante de l'espace admin, avec compteurs en temps réel.
 
 const groups = [
-  { label: 'Contenu', links: [['/admin/base', 'Gestion des fiches', Database], ['/admin/soumissions', 'Nouvelles fiches', FileCheck], ['/admin/signalements', 'Signalements', Flag]] },
-  { label: 'Qualité', links: [['/admin/fraicheur', 'Fraîcheur', Gauge], ['/admin/couverture', 'Couverture', Archive], ['/admin/historique', 'Historique', History], ['/admin/journal', 'Journal', History]] },
-  { label: 'Exploitation', links: [['/admin/auto', 'Automatisations', Zap], ['/admin/comptes', 'Comptes', Users], ['/admin/leads', 'Leads Hajj', Settings]] },
+  { label: 'Modération', links: [['/admin/soumissions', 'À traiter', FileCheck], ['/admin/base', 'Toutes les fiches', Database], ['/admin/signalements', 'Signalements', Flag]] },
+  { label: 'Qualité des données', links: [['/admin/fraicheur', 'Fiches à revérifier', Gauge], ['/admin/couverture', 'Couverture géographique', Archive], ['/admin/historique', 'Historique des actions', History], ['/admin/journal', 'Erreurs et alertes', History]] },
+  { label: 'Fonctionnement', links: [['/admin/auto', 'Automatisations', Zap], ['/admin/comptes', 'Comptes et modérateurs', Users], ['/admin/leads', 'Demandes Hajj/Omra', Settings]] },
 ] as const;
 
 export default function AdminSidebar({ mobileOpen = false, onNavigate }: { mobileOpen?: boolean; onNavigate?: () => void }) {
