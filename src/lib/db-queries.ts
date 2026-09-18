@@ -126,8 +126,8 @@ export async function getHajjPackages() {
       const city = String(raw.city || raw.ville || 'Paris');
       const rawPrice = Number(raw.price ?? raw.prix ?? raw.prix_a_partir ?? 0);
       const rawDuration = Number(raw.duration ?? raw.duree_jours ?? 9);
-      const includes = Array.isArray(raw.includes) ? raw.includes.map(String) : Array.isArray(raw.inclus) ? raw.inclus.map(String) : ['Voir les conditions auprès de l’agence'];
-      const excludes = Array.isArray(raw.excludes) ? raw.excludes.map(String) : Array.isArray(raw.exclus) ? raw.exclus.map(String) : [];
+      const includes = Array.isArray(raw.includes) ? raw.includes.map(String) : Array.isArray(raw.inclusions) ? raw.inclusions.map(String) : Array.isArray(raw.inclus) ? raw.inclus.map(String) : ['Voir les conditions auprès de l’agence'];
+      const excludes = Array.isArray(raw.excludes) ? raw.excludes.map(String) : Array.isArray(raw.exclusions) ? raw.exclusions.map(String) : Array.isArray(raw.exclus) ? raw.exclus.map(String) : [];
       return {
         id: String(raw.id || `db-hajj-${index}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}`),
         agenceId: String(raw.agenceId || raw.agencyId || 'agence-a-verifier'),
@@ -153,10 +153,10 @@ export async function getHajjPackages() {
         featured: raw.featured === true,
         hotelMakkah: typeof raw.hotelMakkah === 'string' ? raw.hotelMakkah : typeof raw.hotel_makkah === 'string' ? raw.hotel_makkah : undefined,
         hotelMadinah: typeof raw.hotelMadinah === 'string' ? raw.hotelMadinah : typeof raw.hotel_madinah === 'string' ? raw.hotel_madinah : undefined,
-        sourceUrl: typeof raw.sourceUrl === 'string' ? raw.sourceUrl : undefined,
+        sourceUrl: typeof raw.sourceUrl === 'string' ? raw.sourceUrl : typeof raw.url_source === 'string' ? raw.url_source : typeof raw.website === 'string' ? raw.website : undefined,
         airline: typeof raw.airline === 'string' ? raw.airline : typeof raw.compagnie === 'string' ? raw.compagnie : undefined,
-        requiredDocuments: Array.isArray(raw.requiredDocuments) ? raw.requiredDocuments.map(String) : Array.isArray(raw.documentsRequis) ? raw.documentsRequis.map(String) : undefined,
-        lastVerifiedAt: typeof raw.lastVerifiedAt === 'string' ? raw.lastVerifiedAt : undefined,
+        requiredDocuments: Array.isArray(raw.requiredDocuments) ? raw.requiredDocuments.map(String) : Array.isArray(raw.required_documents) ? raw.required_documents.map(String) : Array.isArray(raw.documentsRequis) ? raw.documentsRequis.map(String) : Array.isArray(raw.documents_requis) ? raw.documents_requis.map(String) : undefined,
+        lastVerifiedAt: typeof raw.lastVerifiedAt === 'string' ? raw.lastVerifiedAt : typeof raw.derniere_verification === 'string' ? raw.derniere_verification : undefined,
         qualityScore: Number.isFinite(Number(raw.qualityScore)) ? Number(raw.qualityScore) : undefined,
         qualityBreakdown: raw.qualityBreakdown && typeof raw.qualityBreakdown === 'object' ? raw.qualityBreakdown as HajjPackage['qualityBreakdown'] : undefined,
         seasonYear: Number(raw.seasonYear || raw.season || 0) || undefined,
