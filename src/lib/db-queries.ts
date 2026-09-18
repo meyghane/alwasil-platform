@@ -33,13 +33,27 @@ type Category = 'event' | 'job' | 'solidarity' | 'institute' | 'health' | 'libra
 // jsonb reste largement suffisant, à revoir si le volume grossit fortement.
 async function getRaw<T>(category: Category, subType: string): Promise<T[]> {
   try { const rows = await db
-    .select({ metadata: items.metadata })
+    .select({ metadata: items.metadata, title: items.title, description: items.description, city: items.city, sourceUrl: items.sourceUrl })
     .from(items)
     .where(and(eq(items.category, category), eq(items.status, 'approved')));
 
   return rows
     .filter((r) => (r.metadata as Record<string, unknown> | null)?.subType === subType)
-    .map((r) => withoutEmDashes((r.metadata as { raw: unknown }).raw as T)); } catch {
+    .map((r) => {
+      const metadata = (r.metadata || {}) as Record<string, unknown>;
+      const raw = (metadata.raw && typeof metadata.raw === 'object' ? metadata.raw : {}) as Record<string, unknown>;
+      // Les imports peuvent conserver certains champs dans la colonne items
+      // plutôt que dans metadata.raw. On les fusionne sans écraser les détails
+      // déjà enrichis dans la fiche originale.
+      return withoutEmDashes({
+        ...r,
+        ...raw,
+        title: raw.title || r.title,
+        description: raw.description || r.description,
+        city: raw.city || r.city,
+        sourceUrl: raw.sourceUrl || r.sourceUrl,
+      } as T);
+    }); } catch {
     const fallback: Record<string, unknown[]> = { 'event:event': allEvents, 'institute:institut': allInstituts, 'library:librairie': librairies, 'job:job_offer': jobOffers, 'job:talent_profile': talentProfiles, 'health:psy': psyProfiles, 'health:hijama': hijamaProfiles, 'health:medical': medicalProfiles, 'health:roqya': roqyaProfiles, 'solidarity:cagnotte': cagnottes, 'solidarity:initiative': initiatives, 'solidarity:visite_malade': visiteMalades, 'solidarity:voyage_humanitaire': voyagesHumanitaires, 'solidarity:association': associations };
     return (fallback[`${category}:${subType}`] ?? []) as T[];
   }
