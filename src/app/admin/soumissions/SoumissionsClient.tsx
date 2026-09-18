@@ -34,7 +34,6 @@ export default function SoumissionsClient() {
  const [actionLoading, setActionLoading] = useState<string | null>(null);
  const [editing, setEditing] = useState<string | null>(null);
  const [editValues, setEditValues] = useState<Record<string, string>>({});
- const [telegramSetup, setTelegramSetup] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
  const [category, setCategory] = useState('all');
 
  async function load() {
@@ -74,14 +73,6 @@ export default function SoumissionsClient() {
      await load();
      if (result.needsMoreDetails) alert('Fiche enregistrée, mais les informations nécessaires à la publication sont encore incomplètes.');
    } finally { setActionLoading(null); }
- }
-
- async function activateTelegramButtons() {
-   setTelegramSetup('loading');
-   try {
-     const response = await fetch('/api/telegram-setup', { method: 'POST' });
-     setTelegramSetup(response.ok ? 'ok' : 'error');
-   } catch { setTelegramSetup('error'); }
  }
 
  useEffect(() => { load(); }, []);
@@ -136,10 +127,6 @@ export default function SoumissionsClient() {
  {categories.map(value => <option key={value} value={value}>{value}</option>)}
  </select>
 
- <button onClick={activateTelegramButtons} disabled={telegramSetup === 'loading'} style={{ padding: '0.4rem 0.875rem', borderRadius: 8, border: '1px solid #7652CA', background: 'white', color: '#7652CA', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}>
- {telegramSetup === 'loading' ? 'Activation...' : telegramSetup === 'ok' ? 'Telegram activé' : 'Activer les boutons Telegram'}
- </button>
- {telegramSetup === 'error' && <span role="alert" style={{ fontSize: 12, color: '#b91c1c' }}>Activation impossible. Vérifie la configuration.</span>}
  <button onClick={load} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', borderRadius: '8px', border: '1px solid #f0ebfa', backgroundColor: 'white', color: '#6b7280', fontSize: '0.78rem', cursor: 'pointer' }}>
  <RefreshCw size={12} /> Rafraîchir
  </button>
