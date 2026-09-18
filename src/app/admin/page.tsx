@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 import { CATEGORIES_LIST } from '@/lib/admin-forms';
 import AdminLogout from './AdminLogout';
-import AdminSidebar from './AdminSidebar';
 import {
  Waves, BookOpen, Calendar, Briefcase, Brain, Activity,
  Library, HandCoins, Plane, History, ArrowLeft, Plus,
@@ -58,7 +57,7 @@ export default async function AdminPage() {
  </div>
  </div>
 
- <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: '75%' }}>
+ <div className="admin-top-links" style={{ display: 'none', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: '75%' }}>
  <Link href="/admin/auto" style={{
  display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
  fontSize: '0.78rem', color: GOLD, textDecoration: 'none',
@@ -113,7 +112,7 @@ export default async function AdminPage() {
  </div>
  </div>
 
- <div style={{ display: 'flex', alignItems: 'stretch' }}><AdminSidebar /><main className="container" style={{ padding: '2.5rem 1.5rem', maxWidth: '1000px', flex: 1 }}>
+ <main className="container" style={{ padding: '2.5rem 1.5rem', maxWidth: '1000px' }}>
 
  {/* Ajout Rapide - bandeau Wassil */}
  <Link href="/modo/ajout-rapide" style={{ textDecoration: 'none', display: 'block', marginBottom: '1.5rem' }}>
@@ -232,7 +231,7 @@ export default async function AdminPage() {
  </ol>
  </div>
  </div>
- </main></div>
+ </main>
  </div>
  );
 }
