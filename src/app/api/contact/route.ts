@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const normalized = Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, clean(value)]));
     const email = clean(normalized.email, 240);
     if (email && !EMAIL_RE.test(email)) return NextResponse.json({ error: 'Adresse email invalide.' }, { status: 400 });
-    if (type === 'hajj-devis' && (!clean(normalized.nom) || !email || !clean(normalized.type))) return NextResponse.json({ error: 'Champs Hajj requis manquants.' }, { status: 400 });
+    if (type === 'hajj-devis' && (!clean(normalized.nom) || !email || !clean(normalized.type) || !clean(normalized.budget))) return NextResponse.json({ error: 'Nom, email, type de voyage et budget sont obligatoires.' }, { status: 400 });
     if (type === 'hajj-devis' && normalized.consentFollowUp !== 'true') return NextResponse.json({ error: 'Le consentement de suivi est requis.' }, { status: 400 });
 
     const ipHash = hash(clientIp(req));

@@ -175,9 +175,9 @@ const FORM_CONFIG: Record<FormType, {
  { name: 'nom', label: 'Nom complet', type: 'text', required: true },
  { name: 'email', label: 'Email', type: 'email', required: true },
  { name: 'phone', label: 'Téléphone', type: 'text' },
- { name: 'type', label: 'Type de voyage', type: 'select', options: ['Hajj 2026', 'Omra Ramadan', 'Omra hors saison', 'Omra Express'], required: true },
+ { name: 'type', label: 'Type de voyage', type: 'select', options: ['Hajj 2027', 'Omra Ramadan', 'Omra hors saison', 'Omra Express'], required: true },
  { name: 'personnes', label: 'Nombre de personnes', type: 'select', options: ['1', '2', '3–4', '5+'] },
- { name: 'budget', label: 'Budget indicatif / personne', type: 'select', options: ['< 1 500€', '1 500–3 000€', '3 000–6 000€', '6 000€+'] },
+ { name: 'budget', label: 'Budget indicatif / personne', type: 'select', options: ['< 1 500€', '1 500–3 000€', '3 000–6 000€', '6 000€+'], required: true },
  { name: 'depart', label: 'Ville de départ souhaitée', type: 'select', options: ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Autre'] },
  { name: 'message', label: 'Demandes particulières', type: 'textarea' },
  { name: 'consentFollowUp', label: 'J’accepte qu’Al‑Wasil et le partenaire sélectionné me recontactent au sujet de cette demande.', type: 'checkbox', required: true },
@@ -292,10 +292,13 @@ function ContactForm() {
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify({ type, offerId: offerId || undefined, partnerId: partnerId || undefined, fields: { ...values, sujet_precision: sujetAutre || undefined }, honeypot: values.website_confirm, provenance: provenance() }),
  });
- if (!res.ok) throw new Error('Erreur serveur');
+ if (!res.ok) {
+  const payload = await res.json().catch(() => null) as { error?: string } | null;
+  throw new Error(payload?.error || 'Erreur serveur');
+ }
  setSent(true);
- } catch {
- setError('Une erreur est survenue. Réessaie ou écris-nous directement.');
+ } catch (submissionError) {
+ setError(submissionError instanceof Error ? submissionError.message : 'Une erreur est survenue. Réessaie ou écris-nous directement.');
  } finally {
  setSending(false);
  }
