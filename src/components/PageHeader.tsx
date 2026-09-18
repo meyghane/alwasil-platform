@@ -20,6 +20,8 @@ const BANNERS: Record<string, string> = {
  'Justice & Droits': '/images/page-banners/justice-v1.webp',
  'Librairies': '/images/page-banners/bookshops-v1.webp',
  'Piscines Burkini': '/images/page-banners/pools-v1.webp',
+ 'Convertis': '/images/page-banners/convertis-v1.png',
+ 'Lieux de prière': '/images/page-banners/mosquees-v1.png',
 };
 
 export default function PageHeader({ title, titleAr, description, count, countLabel }: PageHeaderProps) {

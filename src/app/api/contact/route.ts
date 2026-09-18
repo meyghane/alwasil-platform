@@ -46,7 +46,20 @@ export async function POST(req: NextRequest) {
     if (type === 'hajj-devis' && normalized.consentFollowUp !== 'true') return NextResponse.json({ error: 'Le consentement de suivi est requis.' }, { status: 400 });
 
     const ipHash = hash(clientIp(req));
-    const fingerprint = hash(`${type}|${email.toLowerCase()}|${clean(normalized.titre).toLowerCase()}|${clean(normalized.message).toLowerCase()}`);
+    // Une même personne doit pouvoir envoyer une nouvelle demande si son
+    // projet change. Le fingerprint ne doit donc pas dépendre uniquement de
+    // l'email : sinon tous les formulaires avec message vide sont fusionnés.
+    const fingerprint = hash([
+      type,
+      email.toLowerCase(),
+      clean(normalized.nom).toLowerCase(),
+      clean(normalized.phone).replace(/\D/g, ''),
+      clean(normalized.type).toLowerCase(),
+      clean(normalized.budget).toLowerCase(),
+      clean(normalized.ville_depart || normalized.depart).toLowerCase(),
+      clean(normalized.titre).toLowerCase(),
+      clean(normalized.message).toLowerCase(),
+    ].join('|'));
     const recent = new Date(Date.now() - 30 * 60 * 1000);
     const [duplicate] = await db.select({ id: formSubmissions.id }).from(formSubmissions).where(and(eq(formSubmissions.fingerprint, fingerprint), gt(formSubmissions.createdAt, recent))).limit(1);
     if (duplicate) return NextResponse.json({ error: 'Cette demande a déjà été reçue récemment.' }, { status: 409 });

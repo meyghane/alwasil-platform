@@ -1,0 +1,29 @@
+'use client';
+
+import { ArrowRight, LocateFixed, MapPin } from 'lucide-react';
+import { useState } from 'react';
+import type { Mosquee } from '@/lib/sheets';
+
+const bounds = { north: 51.1, south: 41.2, west: -5.2, east: 9.7 };
+function point(lat: number, lng: number) {
+  return { left: `${Math.max(2, Math.min(98, ((lng - bounds.west) / (bounds.east - bounds.west)) * 100))}%`, top: `${Math.max(4, Math.min(96, ((bounds.north - lat) / (bounds.north - bounds.south)) * 100))}%` };
+}
+
+export default function LieuxPriereMap({ lieux }: { lieux: Mosquee[] }) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [user, setUser] = useState<{ lat: number; lng: number } | null>(null);
+  const mapped = lieux.filter(lieu => lieu.latitude && lieu.longitude);
+  const locate = () => navigator.geolocation?.getCurrentPosition(({ coords }) => setUser({ lat: coords.latitude, lng: coords.longitude }));
+  return <>
+    <section aria-label="Carte des lieux de prière" style={{ border: '1px solid #e7e5e4', borderTop: '4px solid #ECFF58', borderRadius: 18, overflow: 'hidden', background: '#dbe8ed', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, padding: '1rem 1.1rem', background: 'white' }}><div><strong>Les lieux référencés autour de vous</strong><p style={{ margin: '.25rem 0 0', color: '#57534e', fontSize: '.86rem' }}>{mapped.length} lieu{mapped.length > 1 ? 'x' : ''} géolocalisé{mapped.length > 1 ? 's' : ''}</p></div><button type="button" onClick={locate} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, border: '1px solid #080808', borderRadius: 999, background: '#ECFF58', padding: '.65rem .85rem', fontWeight: 700, cursor: 'pointer' }}><LocateFixed size={16} /> Me localiser</button></div>
+      <div style={{ position: 'relative', minHeight: 390, overflow: 'hidden', backgroundImage: "linear-gradient(rgba(240,248,250,.22),rgba(240,248,250,.22)), url('https://tile.openstreetmap.org/6/32/22.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        {mapped.map((lieu, index) => { const id = lieu.id_osm || `${lieu.nom}-${index}`; const p = point(lieu.latitude, lieu.longitude); return <button key={id} type="button" aria-label={`Voir ${lieu.nom}`} onClick={() => setSelected(selected === id ? null : id)} style={{ position: 'absolute', left: p.left, top: p.top, transform: 'translate(-50%,-100%)', border: 0, background: 'transparent', cursor: 'pointer', zIndex: selected === id ? 4 : 2 }}><MapPin size={selected === id ? 32 : 27} fill={selected === id ? '#ECFF58' : '#7652CA'} color="#080808" /><span style={{ position: 'absolute', left: '50%', top: '100%', transform: 'translate(-50%, .3rem)', whiteSpace: 'nowrap', fontSize: '.7rem', fontWeight: 700, background: '#fff', padding: '.2rem .4rem', borderRadius: 6, boxShadow: '0 1px 5px rgba(0,0,0,.16)' }}>{lieu.nom}</span></button>; })}
+        {user && <span aria-label="Votre position" title="Votre position" style={{ position: 'absolute', ...point(user.lat, user.lng), width: 18, height: 18, borderRadius: '50%', background: '#2563eb', border: '4px solid white', boxShadow: '0 0 0 7px rgba(37,99,235,.25)', transform: 'translate(-50%,-50%)', zIndex: 5 }} />}
+        {selected && (() => { const lieu = mapped.find((item, index) => (item.id_osm || `${item.nom}-${index}`) === selected); if (!lieu) return null; const address = [lieu.adresse, lieu.ville].filter(Boolean).join(', '); return <div style={{ position: 'absolute', left: 16, bottom: 16, maxWidth: 310, background: 'white', borderRadius: 14, padding: '1rem', boxShadow: '0 8px 24px rgba(0,0,0,.2)', zIndex: 6 }}><strong>{lieu.nom}</strong><p style={{ margin: '.35rem 0 .7rem', color: '#57534e', fontSize: '.85rem' }}>{address || 'Adresse à préciser'}</p><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address || lieu.nom)}`} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#7652CA', fontWeight: 700, fontSize: '.85rem' }}>Ouvrir l’itinéraire <ArrowRight size={15} /></a></div>; })()}
+        <small style={{ position: 'absolute', right: 10, bottom: 8, background: 'rgba(255,255,255,.88)', padding: '.25rem .45rem', borderRadius: 5 }}>© OpenStreetMap</small>
+      </div>
+    </section>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(250px,1fr))', gap: 14 }}>{lieux.map((lieu, index) => { const address = [lieu.adresse, lieu.ville].filter(Boolean).join(', '); const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address || lieu.nom)}`; return <article key={lieu.id_osm || `${lieu.nom}-${index}`} style={{ border: '1px solid #e7e5e4', borderTop: '4px solid #ECFF58', borderRadius: 18, overflow: 'hidden', background: 'white' }}><div style={{ height: 145, position: 'relative', overflow: 'hidden', background: '#dfe8ea' }}><img src="/images/brand/mosque-v2.png" alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 42%' }} /><span style={{ position: 'absolute', left: 12, bottom: 10, background: '#ECFF58', color: '#080808', borderRadius: 999, padding: '.28rem .55rem', fontSize: '.72rem', fontWeight: 800 }}>Lieu de prière</span></div><div style={{ padding: '1.1rem' }}><h2 style={{ fontSize: '1rem', margin: '0 0 .6rem' }}>{lieu.nom}</h2><p style={{ color: '#57534e', fontSize: '.86rem', lineHeight: 1.45, minHeight: 42 }}><MapPin size={15} style={{ verticalAlign: 'middle', marginRight: 6 }} />{address || 'Adresse à préciser'}</p><a href={maps} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 7, color: '#080808', fontWeight: 700, fontSize: '.85rem' }}>Itinéraire Google Maps <ArrowRight size={15} /></a></div></article>; })}</div>
+  </>;
+}

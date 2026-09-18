@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 const links=[['/events','Événements'],['/solidarity','Solidarité'],['/education','Apprentissage'],['/hajj','Hajj & Omra']];
-const services=[['/convertis','Convertis'],['/lieux-priere','Mosquées'],['/jobs','Emploi'],['/sante','Santé'],['/justice','Droit & justice'],['/librairies','Librairies'],['/piscines','Piscines']];
+const services=[['/jobs','Emploi'],['/sante','Santé'],['/justice','Droit & justice'],['/librairies','Librairies'],['/piscines','Piscines'],['/convertis','Convertis'],['/lieux-priere','Mosquées']];
 export default function Navigation(){
  const [open,setOpen]=useState(false); const [wide,setWide]=useState(false);
  useEffect(()=>{const m=window.matchMedia('(min-width: 1050px)');const update=()=>{setWide(m.matches);setOpen(false);};update();m.addEventListener('change',update);return()=>m.removeEventListener('change',update);},[]);
