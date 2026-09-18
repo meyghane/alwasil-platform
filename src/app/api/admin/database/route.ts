@@ -42,17 +42,17 @@ export async function PATCH(req: NextRequest) {
       if (!title) return NextResponse.json({ error: 'Le titre est requis' }, { status: 400 });
       if (sourceUrl && !/^https:\/\/[^\s]+$/i.test(sourceUrl)) return NextResponse.json({ error: 'Lien HTTPS invalide' }, { status: 400 });
       await db.update(items).set({ title, description, city, sourceUrl: sourceUrl || null, updatedAt: new Date() }).where(eq(items.id, id));
-      await db.insert(moderationLog).values({ itemId: id, action: 'edited', actor });
+      await db.insert(moderationLog).values({ itemId: id, action: 'edited', previousStatus: item.status, newStatus: item.status, actor });
     } else if (action === 'delete') {
-      await db.insert(moderationLog).values({ itemId: id, action: 'deleted', actor });
+      await db.insert(moderationLog).values({ itemId: id, action: 'deleted', previousStatus: item.status, newStatus: 'expired', actor });
       // Suppression logique : la fiche disparaît du site, mais l'historique reste intact.
       await db.update(items).set({ status: 'expired', updatedAt: new Date(), metadata: { ...(item.metadata || {}), deleted: true, deletedAt: new Date().toISOString() } }).where(eq(items.id, id));
     } else if (action === 'archive') {
       await db.update(items).set({ status: 'expired', updatedAt: new Date(), metadata: { ...(item.metadata || {}), archived: true, deleted: false } }).where(eq(items.id, id));
-      await db.insert(moderationLog).values({ itemId: id, action: 'archived', actor });
+      await db.insert(moderationLog).values({ itemId: id, action: 'archived', previousStatus: item.status, newStatus: 'expired', actor });
     } else if (action === 'restore') {
       await db.update(items).set({ status: 'approved', updatedAt: new Date(), metadata: { ...(item.metadata || {}), archived: false, deleted: false }, lastVerifiedAt: new Date(), nextReviewAt: new Date(Date.now() + 30 * 86400000) }).where(eq(items.id, id));
-      await db.insert(moderationLog).values({ itemId: id, action: 'approved', actor });
+      await db.insert(moderationLog).values({ itemId: id, action: 'approved', previousStatus: item.status, newStatus: 'approved', actor });
     } else {
       await db.update(items).set({ nextReviewAt: new Date(), updatedAt: new Date() }).where(eq(items.id, id));
       await db.insert(moderationLog).values({ itemId: id, action: 'reverification_requested', actor });

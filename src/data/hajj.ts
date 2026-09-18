@@ -30,6 +30,9 @@ export type HajjPackage = {
  priceTriple?: number; // chambre triple
  priceQuad?: number; // chambre quadruple
  priceSingle?: number; // chambre single (supplément)
+ airline?: string;
+ requiredDocuments?: string[];
+ lastVerifiedAt?: string;
  distanceMasjidNabawi?: number; // mètres
  distanceMasjidHaram?: number; // mètres
  includes: string[];

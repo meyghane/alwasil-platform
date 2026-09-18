@@ -16,6 +16,6 @@ export default function robots(): MetadataRoute.Robots {
  { userAgent: 'GoogleOther', allow: '/' },
  { userAgent: 'Googlebot', allow: '/' },
  ],
- sitemap: 'https://alwasil-platform.vercel.app/sitemap.xml',
+ sitemap: 'https://al-wasil.fr/sitemap.xml',
  };
 }

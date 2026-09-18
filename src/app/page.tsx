@@ -44,7 +44,7 @@ const QUICK_CATEGORIES = [
 
 const SECTIONS: Section[] = [
   { href: '/events', icon: Calendar, color: '#3a0a45', bg: '#ecfdf5', title: 'Événements', arabic: 'اللقاء', description: 'Conférences, séminaires, maraudes et rencontres communautaires en France.', tags: ['Conférences', 'Maraudes', 'Séminaires', 'En ligne'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80' },
-  { href: '/hajj', icon: Plane, color: '#4a0e58', bg: '#ecfdf5', title: 'Hajj & Omra', arabic: 'الحج', description: 'Comparez les agences, offres 2026 et guide du pèlerin.', tags: ['Hajj 2026', 'Omra', 'Comparateur'], image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80' },
+  { href: '/hajj', icon: Plane, color: '#4a0e58', bg: '#ecfdf5', title: 'Hajj & Omra', arabic: 'الحج', description: 'Trouvez une offre vérifiable et préparez votre demande avec un accompagnement humain.', tags: ['Hajj 2027', 'Omra', 'Accompagnement'], image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=800&q=80' },
   { href: '/solidarity', icon: HeartHandshake, color: '#2c0835', bg: '#f0ebfa', title: 'Solidarité', arabic: 'التكافل', description: 'Cagnottes, maraudes, collectes et initiatives solidaires partout en France.', tags: ['Cagnottes', 'Maraudes', 'Urgence', 'Gaza'], image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80' },
   { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#f0ebfa', title: 'Apprentissage', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
   { href: '/librairies', icon: Library, color: '#2c0835', bg: '#ecfdf5', title: 'Librairies', arabic: 'المكتبة', description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.', tags: ['Corans', 'Livres', 'Enfants'], image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80' },
@@ -175,21 +175,21 @@ export default async function Home() {
             <span><Plane size={15} aria-hidden="true" /> PRÉPARER SON VOYAGE</span>
             <div>
               <h2 id="hajj-showcase-title">Un voyage spirituel.<br/><mark>Des choix éclairés.</mark></h2>
-              <p>Comparez les agences agréées, les formules et les départs pour préparer votre Hajj ou votre Omra avec plus de sérénité.</p>
+              <p>Explorez les formules et les départs documentés, puis demandez un accompagnement pour préparer votre Hajj ou votre Omra avec plus de sérénité.</p>
             </div>
             <div className="hajj-showcase__actions">
-              <Link href="/hajj">Comparer les agences <ArrowRight size={17} /></Link>
+              <Link href="/hajj">Découvrir les offres <ArrowRight size={17} /></Link>
               <Link href="/annonceurs">Vous êtes une agence ?</Link>
             </div>
           </div>
           <div className="hajj-showcase__visual">
             <img src="/images/testimonials/hajj-flight.png" alt="Voyageuse regardant le paysage depuis un avion en route vers son pèlerinage" />
-            <span>Hajj &amp; Omra 2026</span>
+            <span>Hajj &amp; Omra 2027</span>
           </div>
         </div>
         <div className="hajj-showcase__stats" aria-label="Chiffres clés Hajj et Omra">
           <div><strong>13</strong><span>agences agréées<br/>référencées</span></div>
-          <div><strong>20+</strong><span>formules à<br/>comparer</span></div>
+          <div><strong>20+</strong><span>formules<br/>documentées</span></div>
           <div><strong>Toute l’année</strong><span>des départs depuis<br/>l’Île-de-France</span></div>
         </div>
       </section>

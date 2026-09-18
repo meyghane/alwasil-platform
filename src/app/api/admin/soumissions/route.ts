@@ -109,7 +109,7 @@ export async function PATCH(req: NextRequest) {
  }
 
  const neonItem = /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(id)
-   ? await db.select({ id: items.id, category: items.category, title: items.title, description: items.description, metadata: items.metadata }).from(items).where(eq(items.id, id)).limit(1)
+   ? await db.select({ id: items.id, category: items.category, title: items.title, description: items.description, metadata: items.metadata, status: items.status }).from(items).where(eq(items.id, id)).limit(1)
    : [];
  if (neonItem.length > 0) {
  if (status === 'en ligne' && neonItem[0].metadata?.requiresEnrichment === true) return NextResponse.json({ error: 'Cette fiche rapide doit être complétée et vérifiée avant publication.' }, { status: 400 });
@@ -122,7 +122,7 @@ export async function PATCH(req: NextRequest) {
    title: withoutEmDashes(neonItem[0].title), description: withoutEmDashes(neonItem[0].description),
    metadata: withoutEmDashes(metadata),
    ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
- await db.insert(moderationLog).values({ itemId: id, action: status === 'en ligne' ? 'approved' : nextStatus === 'expired' ? 'archived' : 'rejected', actor: (await isAdminLoggedIn()) ? 'admin:site' : 'moderator:site' }).catch(error => console.error('[admin] moderation log write failed:', error));
+ await db.insert(moderationLog).values({ itemId: id, action: status === 'en ligne' ? 'approved' : nextStatus === 'expired' ? 'archived' : 'rejected', previousStatus: neonItem[0].status, newStatus: nextStatus, actor: (await isAdminLoggedIn()) ? 'admin:site' : 'moderator:site' }).catch(error => console.error('[admin] moderation log write failed:', error));
  revalidatePath('/');
  const category = neonItem[0].category;
  const publicPage = category === 'event' ? '/events'

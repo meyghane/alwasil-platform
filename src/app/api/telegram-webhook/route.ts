@@ -146,7 +146,7 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     await answerReviewCallback(query.id, 'Cette fiche a déjà été traitée.').catch(() => {});
     return NextResponse.json({ ok: true });
   }
-  await db.insert(moderationLog).values({ itemId: id, action: approving ? 'approved' : 'rejected', actor: `telegram:${allowedUser}` })
+  await db.insert(moderationLog).values({ itemId: id, action: approving ? 'approved' : 'rejected', previousStatus: 'pending', newStatus: approving ? 'approved' : 'rejected', actor: `telegram:${query.from?.id || allowedUser}` })
     .catch(error => console.error('[telegram] moderation log write failed:', error));
   revalidatePath('/');
   revalidatePath(CATEGORY_PATH[candidate.category] || '/');

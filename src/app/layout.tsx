@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ChatBotWrapper from '@/components/ChatBotWrapper';
 import CookieConsent from '@/components/CookieConsent';
+import AudienceTracker from '@/components/AudienceTracker';
 
 const BASE_URL = 'https://alwasil-platform.vercel.app';
 
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
  keywords: [
  'librairie islamique Paris', 'piscine burkini Île-de-France', 'emploi voile accepté',
  'hijama certifié Paris', 'psychologue musulman', 'roqya char\'iyya France',
- 'Hajj 2026 France', 'Omra pas cher', 'agence Hajj comparateur',
+ 'Hajj 2027 France', 'Omra 2026-2027', 'offres Hajj Omra vérifiées',
  'cagnotte islamique', 'événements islamiques France', 'cours arabe Paris',
  'solidarité musulmane', 'plateforme communauté musulmane France', 'Al-Wasil',
  ],
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
  <Footer />
  <ChatBotWrapper />
  <CookieConsent />
+ <AudienceTracker />
  </body>
  </html>
  );

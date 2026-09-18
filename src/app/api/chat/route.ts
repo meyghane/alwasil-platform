@@ -13,7 +13,7 @@ Tu parles uniquement français. Tu es bienveillant, concis et bien informé sur 
 - /justice - Droits des musulmans, avocats, FAQ discrimination, ARCOM
 - /sante - Psychologues, hijama certifiés, roqya, médecins bienveillants
 - /piscines - Créneaux burkini en Île-de-France
-- /hajj - Offres Hajj 2027 et Omra 2026-2027, comparatif de packages
+- /hajj - Offres Hajj 2027 et Omra 2026-2027, accompagnement et mise en relation à partir d'offres documentées
 - /librairies - Librairies islamiques en France
 
 ## Règles

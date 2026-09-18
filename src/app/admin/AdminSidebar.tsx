@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Archive, Database, FileCheck, Flag, Gauge, History, LayoutDashboard, LogOut, Settings, Users, Zap } from 'lucide-react';
+import { Archive, BarChart3, Database, FileCheck, Flag, Gauge, History, LayoutDashboard, LogOut, Settings, Users, Zap } from 'lucide-react';
 import AdminLogout from './AdminLogout';
 
 // Navigation persistante de l'espace admin, avec compteurs en temps réel.
@@ -11,7 +11,7 @@ import AdminLogout from './AdminLogout';
 const groups = [
   { label: 'Modération', links: [['/admin/soumissions', 'À traiter', FileCheck], ['/admin/base', 'Toutes les fiches', Database], ['/admin/signalements', 'Signalements', Flag]] },
   { label: 'Qualité des données', links: [['/admin/fraicheur', 'Fiches à revérifier', Gauge], ['/admin/couverture', 'Couverture géographique', Archive], ['/admin/historique', 'Historique des actions', History], ['/admin/journal', 'Erreurs et alertes', History]] },
-  { label: 'Fonctionnement', links: [['/admin/auto', 'Automatisations', Zap], ['/admin/comptes', 'Comptes et modérateurs', Users], ['/admin/leads', 'Demandes Hajj/Omra', Settings]] },
+  { label: 'Fonctionnement', links: [['/admin/auto', 'Automatisations', Zap], ['/admin/audience', 'Audience et publicités', BarChart3], ['/admin/comptes', 'Comptes et modérateurs', Users], ['/admin/leads', 'Demandes Hajj/Omra', Settings]] },
 ] as const;
 
 export default function AdminSidebar({ mobileOpen = false, onNavigate }: { mobileOpen?: boolean; onNavigate?: () => void }) {

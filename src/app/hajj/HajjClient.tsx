@@ -75,6 +75,18 @@ function offerQualityScore(pkg: HajjPackage, agence: HajjAgence | undefined): nu
  return Math.round(completeness * 50 + rating * 25 + reviewConfidence * 15 + age * 10);
 }
 
+function isPastOffer(pkg: HajjPackage): boolean {
+ const text = `${pkg.departure || ''} ${pkg.seasonYear || ''}`.toLocaleLowerCase('fr-FR');
+ const yearMatch = text.match(/20(\d{2})/);
+ if (!yearMatch) return false;
+ const year = Number(`20${yearMatch[1]}`);
+ const monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+ const month = monthNames.findIndex(name => text.includes(name));
+ if (year < new Date().getFullYear()) return true;
+ if (year > new Date().getFullYear() || month < 0) return false;
+ return month < new Date().getMonth();
+}
+
 export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProps) {
  const [tab, setTab] = useState<Tab>('packages');
  const [typeFilter, setTypeFilter] = useState<VoyageType | 'all'>('all');
@@ -88,7 +100,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  // Les anciennes offres Hajj 2026 ne doivent plus être proposées comme si elles étaient disponibles.
  // Elles restent dans la source historique, mais seules les offres 2027 vérifiées pourront apparaître ici.
- const currentPackages = hajjPackages.filter(p => p.type !== 'hajj' || (p.seasonYear ?? 0) >= 2027);
+ const currentPackages = hajjPackages.filter(p => !isPastOffer(p) && (p.type !== 'hajj' || (p.seasonYear ?? 0) >= 2027));
  const filteredPackages = currentPackages.filter(p => {
  const q = search.toLowerCase();
  return (typeFilter === 'all' || p.type === typeFilter) &&
@@ -107,7 +119,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  return (
  <div>
- <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Comparez les agences françaises, préparez le Hajj 2027 et trouvez une offre Omra vérifiable." color="#7652CA" emoji="" />
+ <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Explorez des offres vérifiables, puis bénéficiez d’un accompagnement pour contacter le professionnel adapté à votre projet." color="#7652CA" emoji="" />
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
 
  {/* Tabs */}
@@ -206,7 +218,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <StarsDisplay count={pkg.stars} />
  </div>
 
- <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}>{pkg.name}</h3>
+ <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}><a href={`/hajj/offres/${encodeURIComponent(pkg.id)}`} style={{ color: 'inherit', textDecoration: 'none' }}>{pkg.name}</a></h3>
  <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
  Offre comparative à vérifier auprès d&apos;Al-Wasil
  </p>

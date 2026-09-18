@@ -52,6 +52,8 @@ export const moderationLog = pgTable('moderation_log', {
     .notNull()
     .references(() => items.id),
   action: moderationActionEnum('action').notNull(),
+  previousStatus: text('previous_status'),
+  newStatus: text('new_status'),
   actor: text('actor').notNull(),
   actedAt: timestamp('acted_at', { withTimezone: true }).notNull().defaultNow(),
 });
@@ -98,6 +100,16 @@ export const formSubmissions = pgTable('form_submissions', {
   utm: jsonb('utm').$type<Record<string, string>>().notNull().default({}),
   status: text('status').notNull().default('accepted'),
   errorCode: text('error_code'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const audienceEvents = pgTable('audience_events', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  eventType: text('event_type').notNull().default('page_view'),
+  path: text('path').notNull(),
+  slot: text('slot'),
+  referrer: text('referrer'),
+  consent: boolean('consent').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
