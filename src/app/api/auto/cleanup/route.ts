@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { and, eq, lt } from 'drizzle-orm';
 import { db } from '@/db';
-import { items } from '@/db/schema';
+import { formSubmissions, items } from '@/db/schema';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 
 export async function GET(req: NextRequest) {
@@ -17,6 +17,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
   const now = new Date();
+
+  const formRetentionCutoff = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+  const deletedFormSubmissions = await db.delete(formSubmissions).where(lt(formSubmissions.createdAt, formRetentionCutoff)).returning({ id: formSubmissions.id });
 
   const expired = await db
     .update(items)
@@ -29,5 +32,5 @@ export async function GET(req: NextRequest) {
     revalidatePath('/');
   }
 
-  return NextResponse.json({ ok: true, today: now.toISOString().split('T')[0], expired: expired.length });
+  return NextResponse.json({ ok: true, today: now.toISOString().split('T')[0], expired: expired.length, deletedFormSubmissions: deletedFormSubmissions.length });
 }

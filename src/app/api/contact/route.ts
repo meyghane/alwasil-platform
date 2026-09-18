@@ -1,110 +1,82 @@
+import { createHash } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { db } from '@/db';
-import { leads, leadEvents, reports } from '@/db/schema';
-const recentSubmissions = new Map<string, number>();
+import { automationErrors, formSubmissions, leadEvents, leads, reports } from '@/db/schema';
+import { and, eq, gt } from 'drizzle-orm';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const FORM_TYPES = new Set(['initiative', 'evenement', 'profil-emploi', 'offre-emploi', 'cagnotte', 'librairie', 'revendiquer-librairie', 'piscine', 'correction', 'question-juridique', 'hajj-devis', 'avis', 'mosquee', 'suggestion', 'annonceur', 'general']);
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_FIELDS = 40;
+
+type ContactBody = {
+  type?: unknown;
+  fields?: unknown;
+  offerId?: unknown;
+  partnerId?: unknown;
+  honeypot?: unknown;
+  provenance?: { page?: unknown; campaign?: unknown; referrer?: unknown; utm?: unknown };
+};
+
+function clean(value: unknown, max = 2000): string {
+  return typeof value === 'string' ? value.replace(/[\u2012\u2013\u2014]/g, ' - ').replace(/\s+/g, ' ').trim().slice(0, max) : '';
+}
+function hash(value: string): string { return createHash('sha256').update(value).digest('hex'); }
+function clientIp(req: NextRequest): string {
+  return (req.headers.get('x-forwarded-for')?.split(',')[0] || req.headers.get('x-real-ip') || 'unknown').trim();
+}
 
 export async function POST(req: NextRequest) {
- try {
- const body = await req.json();
- const { type, fields, offerId, partnerId } = body;
- const key = `${req.headers.get('x-forwarded-for') ?? 'local'}:${type}`;
- const previous = recentSubmissions.get(key) ?? 0;
- if (Date.now() - previous < 30_000) return NextResponse.json({ error: 'Merci de patienter avant une nouvelle demande.' }, { status: 429 });
- if (type === 'hajj-devis' && (!fields?.nom || !fields?.email || !fields?.type)) return NextResponse.json({ error: 'Champs Hajj requis manquants' }, { status: 400 });
- if (type === 'hajj-devis' && fields.consentFollowUp !== 'true') return NextResponse.json({ error: 'Le consentement de suivi est requis.' }, { status: 400 });
- // Le refus d'un formulaire incomplet ne doit pas consommer le délai anti-spam.
- recentSubmissions.set(key, Date.now());
+  try {
+    const body = await req.json() as ContactBody;
+    const type = clean(body.type, 40);
+    const fields = body.fields && typeof body.fields === 'object' && !Array.isArray(body.fields) ? body.fields as Record<string, unknown> : null;
+    if (!FORM_TYPES.has(type) || !fields || Object.keys(fields).length > MAX_FIELDS) return NextResponse.json({ error: 'Formulaire invalide.' }, { status: 400 });
+    if (clean(body.honeypot)) return NextResponse.json({ ok: true });
 
- let leadId: string | undefined;
- if (type === 'correction') {
-   try {
-     await db.insert(reports).values({
-       type,
-       page: fields?.page ? String(fields.page).slice(0, 120) : undefined,
-       element: fields?.element ? String(fields.element).slice(0, 240) : undefined,
-       message: fields?.correction ? String(fields.correction).slice(0, 2000) : (fields?.message ? String(fields.message).slice(0, 2000) : undefined),
-       email: fields?.email ? String(fields.email).slice(0, 240) : undefined,
-     });
-   } catch (error) { console.error('[contact] report persistence error:', error); }
- }
- if (type === 'hajj-devis') {
-   const [lead] = await db.insert(leads).values({ offerId: offerId || undefined, partnerId: partnerId || undefined, name: String(fields.nom).slice(0, 120), email: String(fields.email).slice(0, 240), phone: fields.phone ? String(fields.phone).slice(0, 40) : undefined, travelType: String(fields.type), qualification: fields, source: 'hajj-offer', consentFollowUp: true }).returning({ id: leads.id });
-   leadId = lead.id;
-   await db.insert(leadEvents).values({ leadId, event: 'created', actor: 'public_form', payload: { offerId, partnerId } });
- }
+    const normalized = Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, clean(value)]));
+    const email = clean(normalized.email, 240);
+    if (email && !EMAIL_RE.test(email)) return NextResponse.json({ error: 'Adresse email invalide.' }, { status: 400 });
+    if (type === 'hajj-devis' && (!clean(normalized.nom) || !email || !clean(normalized.type))) return NextResponse.json({ error: 'Champs Hajj requis manquants.' }, { status: 400 });
+    if (type === 'hajj-devis' && normalized.consentFollowUp !== 'true') return NextResponse.json({ error: 'Le consentement de suivi est requis.' }, { status: 400 });
 
- const TO_EMAIL = process.env.CONTACT_EMAIL || 'meyghvne@gmail.com';
- const now = new Date().toLocaleString('fr-FR');
+    const ipHash = hash(clientIp(req));
+    const fingerprint = hash(`${type}|${email.toLowerCase()}|${clean(normalized.titre).toLowerCase()}|${clean(normalized.message).toLowerCase()}`);
+    const recent = new Date(Date.now() - 30 * 60 * 1000);
+    const [duplicate] = await db.select({ id: formSubmissions.id }).from(formSubmissions).where(and(eq(formSubmissions.fingerprint, fingerprint), gt(formSubmissions.createdAt, recent))).limit(1);
+    if (duplicate) return NextResponse.json({ error: 'Cette demande a déjà été reçue récemment.' }, { status: 409 });
+    const [recentIp] = await db.select({ id: formSubmissions.id }).from(formSubmissions).where(and(eq(formSubmissions.ipHash, ipHash), gt(formSubmissions.createdAt, new Date(Date.now() - 30 * 1000)))).limit(1);
+    if (recentIp) return NextResponse.json({ error: 'Merci de patienter avant une nouvelle demande.' }, { status: 429 });
 
- // ── 1. Email via Resend ─────────────────────────────────────
- const subject = `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` - ${leadId}` : ''}`;
- const html = `
- <h2>Nouvelle soumission via Al-Wasil - ${type}</h2>
- <table style="border-collapse:collapse;width:100%">
- ${Object.entries(fields as Record<string, string>)
- .map(([k, v]) => `
- <tr>
- <td style="padding:8px 12px;border:1px solid #e5e7eb;font-weight:600;background:#f9fafb;width:180px">${k}</td>
- <td style="padding:8px 12px;border:1px solid #e5e7eb">${v || ' - '}</td>
- </tr>`)
- .join('')}
- </table>
- <p style="margin-top:24px">
- <a href="https://alwasil-platform.vercel.app/admin/soumissions" style="background:#c9973a;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700">
- Valider dans l'admin
- </a>
- </p>
- <p style="margin-top:16px;color:#6b7280;font-size:13px">Envoyé depuis al-wasil.fr - ${now}</p>
- `;
+    const provenance = body.provenance || {};
+    const rawUtm = provenance.utm && typeof provenance.utm === 'object' ? provenance.utm as Record<string, unknown> : {};
+    const utm = Object.fromEntries(Object.entries(rawUtm).filter(([key, value]) => key.startsWith('utm_') && typeof value === 'string').map(([key, value]) => [key, clean(value, 160)]));
+    const [submission] = await db.insert(formSubmissions).values({ fingerprint, formType: type, ipHash, page: clean(provenance.page, 240), campaign: clean(provenance.campaign, 160), referrer: clean(provenance.referrer, 500), utm }).returning({ id: formSubmissions.id });
 
- resend.emails.send({
- from: 'Al-Wasil <onboarding@resend.dev>',
- to: [TO_EMAIL],
- subject,
- html,
- replyTo: (fields as Record<string, string>)?.email || undefined,
- }).catch(e => console.error('[contact] Resend error:', e));
+    let leadId: string | undefined;
+    if (type === 'correction') {
+      await db.insert(reports).values({ type, page: clean(normalized.page, 120) || undefined, element: clean(normalized.element, 240) || undefined, message: clean(normalized.correction, 2000) || clean(normalized.message, 2000) || undefined, email: email || undefined });
+    }
+    if (type === 'hajj-devis') {
+      const [lead] = await db.insert(leads).values({ offerId: clean(body.offerId) || undefined, partnerId: clean(body.partnerId) || undefined, name: clean(normalized.nom, 120), email, phone: clean(normalized.phone, 40) || undefined, travelType: clean(normalized.type, 80), qualification: normalized, source: 'hajj-offer', utm, consentFollowUp: true }).returning({ id: leads.id });
+      leadId = lead.id;
+      await db.insert(leadEvents).values({ leadId, event: 'created', actor: 'public_form', payload: { submissionId: submission.id, page: clean(provenance.page, 240) } });
+    }
 
- // ── 2. Make webhook → Gemini → Google Sheet ─────────────────
- const makeUrl = process.env.MAKE_WEBHOOK_URL;
- if (makeUrl) {
- const row = {
- id: `${type}-${Date.now()}`,
- categorie: type,
- status: 'à vérifier',
- soumis_le: new Date().toISOString(),
- soumis_par: 'public',
- ...fields,
- };
- fetch(makeUrl, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify(row),
- }).catch(e => console.error('[contact] Make webhook error:', e));
- }
-
- // ── 3. Telegram notification ────────────────────────────────
- const tgToken = process.env.TELEGRAM_BOT_TOKEN;
- const tgChatId = process.env.TELEGRAM_CHAT_ID;
- if (tgToken && tgChatId) {
- const nom = (fields as Record<string, string>)?.name ||
- (fields as Record<string, string>)?.nom ||
- (fields as Record<string, string>)?.titre || '';
- const ville = (fields as Record<string, string>)?.ville || '';
- const text = ` <b>Nouvelle soumission publique</b>\n\n <b>${type}</b>${nom ? `\n ${nom}` : ''}${ville ? `\n ${ville}` : ''}\n\n <a href="https://alwasil-platform.vercel.app/admin/soumissions">Valider maintenant</a>`;
-
- fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ chat_id: tgChatId, text, parse_mode: 'HTML' }),
- }).catch(e => console.error('[contact] Telegram error:', e));
- }
-
- return NextResponse.json({ ok: true });
- } catch (e) {
- return NextResponse.json({ error: String(e) }, { status: 500 });
- }
+    const to = process.env.CONTACT_EMAIL || 'meyghvne@gmail.com';
+    const html = `<h2>Nouvelle soumission Al-Wasil - ${type}</h2><pre>${JSON.stringify(normalized, null, 2)}</pre><p>Page: ${clean(provenance.page, 240) || 'non renseignée'}</p>`;
+    try {
+      const result = await resend.emails.send({ from: process.env.RESEND_FROM_EMAIL || 'Al-Wasil <onboarding@resend.dev>', to: [to], subject: `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` - ${leadId}` : ''}`, html, replyTo: email || undefined });
+      if (result.error) throw new Error(result.error.message);
+    } catch (error) {
+      await db.insert(automationErrors).values({ stage: 'contact_email', code: 'send_failed' });
+      await db.update(formSubmissions).set({ status: 'email_failed', errorCode: 'send_failed' }).where(eq(formSubmissions.id, submission.id));
+      console.error('[contact] email delivery failed:', error instanceof Error ? error.message : 'unknown');
+    }
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    console.error('[contact] request failed:', error instanceof Error ? error.message : 'unknown');
+    return NextResponse.json({ error: 'Impossible de traiter la demande pour le moment.' }, { status: 500 });
+  }
 }

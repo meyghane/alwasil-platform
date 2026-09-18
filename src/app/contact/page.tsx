@@ -259,6 +259,11 @@ function ContactForm() {
  const [error, setError] = useState('');
  const [sujetAutre, setSujetAutre] = useState('');
 
+ const provenance = () => {
+  const query = new URLSearchParams(window.location.search);
+  return { page: window.location.pathname, referrer: document.referrer, campaign: query.get('utm_campaign') || undefined, utm: Object.fromEntries(query.entries()) };
+ };
+
  useEffect(() => {
   setValues({
    ...(prefilledElement ? { element: prefilledElement } : {}),
@@ -285,7 +290,7 @@ function ContactForm() {
  const res = await fetch('/api/contact', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ type, offerId: offerId || undefined, partnerId: partnerId || undefined, fields: { ...values, sujet_precision: sujetAutre || undefined } }),
+ body: JSON.stringify({ type, offerId: offerId || undefined, partnerId: partnerId || undefined, fields: { ...values, sujet_precision: sujetAutre || undefined }, honeypot: values.website_confirm, provenance: provenance() }),
  });
  if (!res.ok) throw new Error('Erreur serveur');
  setSent(true);
@@ -327,6 +332,9 @@ function ContactForm() {
  </div>
  ) : (
  <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+ <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+ <label>Site web<input tabIndex={-1} autoComplete="off" value={values.website_confirm ?? ''} onChange={e => setValues(p => ({ ...p, website_confirm: e.target.value }))} /></label>
+ </div>
  {config.fields.map(field => (
  <div key={field.name}>
  <label style={{ fontSize: '0.83rem', fontWeight: 600, display: 'block', marginBottom: '0.35rem', color: 'var(--text-primary)' }}>

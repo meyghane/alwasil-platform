@@ -87,6 +87,20 @@ export const reports = pgTable('reports', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const formSubmissions = pgTable('form_submissions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  fingerprint: text('fingerprint').notNull(),
+  formType: text('form_type').notNull(),
+  ipHash: text('ip_hash').notNull(),
+  page: text('page'),
+  campaign: text('campaign'),
+  referrer: text('referrer'),
+  utm: jsonb('utm').$type<Record<string, string>>().notNull().default({}),
+  status: text('status').notNull().default('accepted'),
+  errorCode: text('error_code'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const leadStatusEnum = pgEnum('lead_status', ['new', 'qualified', 'assigned', 'accepted', 'quoted', 'won', 'lost', 'expired']);
 export const assignmentStatusEnum = pgEnum('assignment_status', ['proposed', 'accepted', 'refused', 'expired']);
 export const commissionStatusEnum = pgEnum('commission_status', ['pending', 'due', 'paid', 'disputed']);
