@@ -9,7 +9,10 @@ export function moderationChatId(): string {
 }
 
 export function isAuthorizedReviewAction(userId: string, chatId: string, allowedUserId: string, allowedChatId: string): boolean {
-  return !!userId && !!chatId && userId === allowedUserId && chatId === allowedChatId;
+  // Le chat Telegram et l'identifiant de l'utilisateur sont deux valeurs
+  // différentes. L'ancien contrôle comparait parfois l'utilisateur au chat,
+  // ce qui rejetait systématiquement les boutons dans un groupe.
+  return !!userId && !!chatId && (!allowedUserId || userId === allowedUserId) && chatId === allowedChatId;
 }
 
 export function reviewUrl(id: string): string {
@@ -24,7 +27,7 @@ export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' |
   const eventNotReady = item.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10));
   return { inline_keyboard: [
     ...(!campaign && !eventNotReady ? [[
-      { text: needsEdit ? 'Valider malgré les infos manquantes' : 'Valider', callback_data: `a:${item.id}` },
+      { text: needsEdit ? 'Valider malgré infos manquantes' : 'Valider', callback_data: `${needsEdit ? 'v' : 'a'}:${item.id}` },
       { text: 'Refuser', callback_data: `r:${item.id}` },
     ]] : [[{ text: 'Refuser', callback_data: `r:${item.id}` }]]),
     [{ text: campaign ? 'Vérifier la cagnotte sur le site' : 'Modifier ou voir la fiche', url: reviewUrl(item.id) }],

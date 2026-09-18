@@ -110,7 +110,7 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     await answerReviewCallback(query.id, 'Action non autorisée.').catch(() => {});
     return NextResponse.json({ ok: true });
   }
-  const match = /^([ar]):([0-9a-f]{8}-[0-9a-f-]{27,})$/i.exec(query.data || '');
+  const match = /^([arv]):([0-9a-f]{8}-[0-9a-f-]{27,})$/i.exec(query.data || '');
   if (!match) {
     await answerReviewCallback(query.id, 'Bouton non reconnu.').catch(() => {});
     return NextResponse.json({ ok: true });
@@ -121,8 +121,9 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     await answerReviewCallback(query.id, 'Cette fiche a déjà été traitée.').catch(() => {});
     return NextResponse.json({ ok: true });
   }
-  const approving = action === 'a';
-  if (approving && candidate.metadata?.requiresEnrichment === true) {
+  const approving = action === 'a' || action === 'v';
+  const forceApproval = action === 'v';
+  if (approving && !forceApproval && candidate.metadata?.requiresEnrichment === true) {
     await answerReviewCallback(query.id, 'Complète cette fiche sur le site avant de la publier.').catch(() => {});
     return NextResponse.json({ ok: true });
   }
@@ -168,7 +169,10 @@ export async function POST(req: NextRequest) {
   }
   let update: { update_id?: number; message?: TelegramMessage; edited_message?: TelegramMessage; callback_query?: TelegramCallback };
   try { update = await req.json(); } catch { return NextResponse.json({ error: 'JSON invalide' }, { status: 400 }); }
-  if (update.callback_query) return handleCallback(update.callback_query, allowedChat);
+  if (update.callback_query) {
+    const allowedUser = process.env.TELEGRAM_MODERATOR_USER_ID || process.env.TELEGRAM_ADMIN_USER_ID || '';
+    return handleCallback(update.callback_query, allowedUser);
+  }
   const msg = update.message || update.edited_message;
   if (!msg) return NextResponse.json({ ok: true });
   const chatId = String(msg.chat?.id ?? '');
