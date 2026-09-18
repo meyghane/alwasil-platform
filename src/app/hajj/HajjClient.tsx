@@ -15,7 +15,6 @@ type Tab = 'packages' | 'agences' | 'guide';
 
 const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
  { key: 'packages', label: 'Comparer les offres', icon: Plane },
- { key: 'agences', label: 'Agences de confiance', icon: Building2 },
  { key: 'guide', label: 'Guide du pèlerin', icon: BookOpen },
 ];
 
@@ -186,9 +185,8 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  </div>
 
  <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}>{pkg.name}</h3>
- <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
- par <AgenceNameById id={pkg.agenceId} agences={hajjAgences} />
- {agence?.agrée && <span style={{ marginLeft: '0.4rem', fontSize: '0.68rem', backgroundColor: '#f0ebfa', color: '#543398', padding: '0.1rem 0.35rem', borderRadius: '3px', fontWeight: 700 }}> Agréé</span>}
+ <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+ Offre comparative à vérifier auprès d&apos;Al-Wasil
  </p>
 
  {/* Prix */}
