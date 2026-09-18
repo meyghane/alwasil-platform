@@ -12,7 +12,7 @@ export const categoryEnum = pgEnum('category', [
 ]);
 
 export const statusEnum = pgEnum('status', ['pending', 'approved', 'rejected', 'expired']);
-export const moderationActionEnum = pgEnum('moderation_action', ['approved', 'rejected']);
+export const moderationActionEnum = pgEnum('moderation_action', ['approved', 'rejected', 'edited', 'archived', 'reverification_requested', 'deleted']);
 
 export const items = pgTable('items', {
   id: uuid('id').primaryKey().defaultRandom(),
