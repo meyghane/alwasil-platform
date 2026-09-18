@@ -4,6 +4,7 @@ import { db } from '@/db';
 import { items, moderationLog } from '@/db/schema';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 import { withoutEmDashes } from '@/lib/typography';
+import { revalidatePath } from 'next/cache';
 
 export async function GET(req: NextRequest) {
   if (!(await isAdminLoggedIn())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
@@ -27,9 +28,9 @@ export async function PATCH(req: NextRequest) {
   try { body = await req.json(); } catch { return NextResponse.json({ error: 'JSON invalide' }, { status: 400 }); }
   const id = body.id;
   const action = body.action;
-  if (!id || !['archive', 'delete', 'reverify', 'edit'].includes(action || '')) return NextResponse.json({ error: 'Action invalide' }, { status: 400 });
+  if (!id || !['archive', 'delete', 'restore', 'reverify', 'edit'].includes(action || '')) return NextResponse.json({ error: 'Action invalide' }, { status: 400 });
   try {
-    const [item] = await db.select({ id: items.id, status: items.status }).from(items).where(eq(items.id, id)).limit(1);
+    const [item] = await db.select({ id: items.id, status: items.status, metadata: items.metadata, category: items.category }).from(items).where(eq(items.id, id)).limit(1);
     if (!item) return NextResponse.json({ error: 'Fiche introuvable' }, { status: 404 });
     const actor = 'admin';
     if (action === 'edit') {
@@ -45,13 +46,21 @@ export async function PATCH(req: NextRequest) {
     } else if (action === 'delete') {
       await db.insert(moderationLog).values({ itemId: id, action: 'deleted', actor });
       // Suppression logique : la fiche disparaît du site, mais l'historique reste intact.
-      await db.update(items).set({ status: 'expired', updatedAt: new Date(), metadata: { deleted: true, deletedAt: new Date().toISOString() } }).where(eq(items.id, id));
+      await db.update(items).set({ status: 'expired', updatedAt: new Date(), metadata: { ...(item.metadata || {}), deleted: true, deletedAt: new Date().toISOString() } }).where(eq(items.id, id));
     } else if (action === 'archive') {
-      await db.update(items).set({ status: 'expired', updatedAt: new Date(), metadata: { archived: true } }).where(eq(items.id, id));
+      await db.update(items).set({ status: 'expired', updatedAt: new Date(), metadata: { ...(item.metadata || {}), archived: true, deleted: false } }).where(eq(items.id, id));
       await db.insert(moderationLog).values({ itemId: id, action: 'archived', actor });
+    } else if (action === 'restore') {
+      await db.update(items).set({ status: 'approved', updatedAt: new Date(), metadata: { ...(item.metadata || {}), archived: false, deleted: false }, lastVerifiedAt: new Date(), nextReviewAt: new Date(Date.now() + 30 * 86400000) }).where(eq(items.id, id));
+      await db.insert(moderationLog).values({ itemId: id, action: 'approved', actor });
     } else {
       await db.update(items).set({ nextReviewAt: new Date(), updatedAt: new Date() }).where(eq(items.id, id));
       await db.insert(moderationLog).values({ itemId: id, action: 'reverification_requested', actor });
+    }
+    if (action === 'edit' || action === 'archive' || action === 'delete' || action === 'restore') {
+      const paths: Record<string, string> = { event: '/events', job: '/jobs', solidarity: '/solidarity', institute: '/education', health: '/sante', library: '/librairies', pool: '/piscines', hajj: '/hajj' };
+      revalidatePath('/');
+      revalidatePath(paths[item.category] || '/');
     }
     return NextResponse.json({ ok: true });
   } catch { return NextResponse.json({ error: 'Action impossible' }, { status: 500 }); }
