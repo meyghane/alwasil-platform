@@ -187,8 +187,6 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.25rem' }}>
  {sorted.map(pkg => {
  const typeColor = VOYAGE_TYPE_COLORS[pkg.type];
- const agence = hajjAgences.find(a => a.id === pkg.agenceId);
- const qualityScore = offerQualityScore(pkg, agence);
  const placesRatio = pkg.placesRestantes && pkg.places ? pkg.placesRestantes / pkg.places : 1;
  return (
  <div key={pkg.id} className="card" style={{ padding: 0, overflow: 'hidden', border: `1px solid ${typeColor}33`, borderTop: `3px solid ${typeColor}`, background: `linear-gradient(180deg, ${typeColor}08 0%, #ffffff 60%)` }}>
@@ -212,15 +210,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
  Offre comparative à vérifier auprès d&apos;Al-Wasil
  </p>
- <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
-  <span style={{ padding: '0.18rem 0.5rem', borderRadius: '999px', background: pkg.verificationStatus === 'verified' ? '#dcfce7' : '#fef3c7', color: pkg.verificationStatus === 'verified' ? '#166534' : '#92400e', fontSize: '0.68rem', fontWeight: 700 }}>
-   {pkg.verificationStatus === 'verified' ? 'Offre vérifiée' : 'À vérifier'}
-  </span>
-  {pkg.sourceUrl && <a href={pkg.sourceUrl} target="_blank" rel="noreferrer" style={{ color: '#6540b5', fontSize: '0.68rem', fontWeight: 700 }}>Voir la source</a>}
- </div>
- <span style={{ display: 'inline-flex', marginBottom: '0.7rem', padding: '0.2rem 0.55rem', borderRadius: '999px', backgroundColor: qualityScore >= 75 ? '#ecfdf5' : '#f5f3ff', color: qualityScore >= 75 ? '#047857' : '#6540b5', fontSize: '0.7rem', fontWeight: 700 }}>
-  Score qualité Al-Wasil : {qualityScore}/100
- </span>
+ {pkg.sourceUrl && <div style={{ marginBottom: '0.65rem' }}><a href={pkg.sourceUrl} target="_blank" rel="noreferrer" style={{ color: '#6540b5', fontSize: '0.68rem', fontWeight: 700 }}>Voir la source</a></div>}
 
  {/* Prix */}
  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.75rem' }}>
