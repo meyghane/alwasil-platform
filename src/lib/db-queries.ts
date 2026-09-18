@@ -128,6 +128,7 @@ export async function getHajjPackages() {
       const rawDuration = Number(raw.duration ?? raw.duree_jours ?? 9);
       const includes = Array.isArray(raw.includes) ? raw.includes.map(String) : Array.isArray(raw.inclusions) ? raw.inclusions.map(String) : Array.isArray(raw.inclus) ? raw.inclus.map(String) : ['Voir les conditions auprès de l’agence'];
       const excludes = Array.isArray(raw.excludes) ? raw.excludes.map(String) : Array.isArray(raw.exclusions) ? raw.exclusions.map(String) : Array.isArray(raw.exclus) ? raw.exclus.map(String) : [];
+      const externalReviews = Array.isArray(raw.externalReviews) ? raw.externalReviews.filter((review): review is Record<string, unknown> => Boolean(review && typeof review === 'object')).map(review => ({ source: String(review.source || review.url || 'Source externe'), rating: Number.isFinite(Number(review.rating)) ? Number(review.rating) : undefined, reviewCount: Number.isFinite(Number(review.reviewCount)) ? Number(review.reviewCount) : undefined, summary: typeof review.summary === 'string' ? review.summary : undefined, collectedAt: String(review.collectedAt || review.collected_at || '') })).filter(review => review.collectedAt) : undefined;
       return {
         id: String(raw.id || `db-hajj-${index}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}`),
         agenceId: String(raw.agenceId || raw.agencyId || 'agence-a-verifier'),
@@ -161,6 +162,7 @@ export async function getHajjPackages() {
         qualityBreakdown: raw.qualityBreakdown && typeof raw.qualityBreakdown === 'object' ? raw.qualityBreakdown as HajjPackage['qualityBreakdown'] : undefined,
         seasonYear: Number(raw.seasonYear || raw.season || 0) || undefined,
         verificationStatus: raw.verificationStatus === 'verified' ? 'verified' : 'to_verify',
+        externalReviews,
       } satisfies HajjPackage;
     });
   }

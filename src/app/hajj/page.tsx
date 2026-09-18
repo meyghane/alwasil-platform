@@ -4,6 +4,8 @@ import HajjClient from './HajjClient';
 export const metadata = {
   title: 'Offres Hajj 2027 et Omra 2026-2027 en France | Al-Wasil',
   description: 'Découvrez des offres Hajj et Omra depuis la France, avec prix, départs, hôtels, distances et prestations détaillées. Al-Wasil vous accompagne dans votre demande de devis.',
+  alternates: { canonical: 'https://al-wasil.fr/hajj' },
+  openGraph: { title: 'Offres Hajj 2027 et Omra en France | Al-Wasil', description: 'Trouvez une offre Hajj ou Omra et demandez un devis accompagné par Al-Wasil.', url: 'https://al-wasil.fr/hajj', type: 'website' },
 };
 
 // Les offres sont modérées dans Neon et doivent apparaître juste après

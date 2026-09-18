@@ -29,3 +29,10 @@ test('une mosquée incomplète reste à compléter', () => {
 test('une catégorie inconnue est rejetée', () => {
   assert.equal(prepareTelegramSubmission({ categorie: 'inconnue', titre: 'X' }, ''), null);
 });
+
+test('une annonce evenement contenant Omra rejoint le pipeline des offres', () => {
+  const proposal = prepareTelegramSubmission({ categorie: 'evenement', titre: 'Omra décembre 2027 - départ Paris', ville: 'Paris', prix: '1890 €', hotel: 'Hôtel 4', documents_requis: 'Passeport' }, 'Offre Omra complète');
+  assert.equal(proposal?.categoryKey, 'hajj');
+  assert.equal(proposal?.data.price, 1890);
+  assert.equal(proposal?.data.departure, 'Paris');
+});

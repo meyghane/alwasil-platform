@@ -50,6 +50,7 @@ export type HajjPackage = {
  sourceUrl?: string;
  seasonYear?: number;
  verificationStatus?: 'verified' | 'to_verify' | 'expired';
+ externalReviews?: Array<{ source: string; rating?: number; reviewCount?: number; summary?: string; collectedAt: string }>;
 };
 
 export const VOYAGE_TYPE_LABELS: Record<VoyageType, string> = {

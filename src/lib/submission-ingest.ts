@@ -60,10 +60,25 @@ export async function ingestManualSubmission(input: {
   };
   const existing = await db.select({
     id: items.id, category: items.category, title: items.title, city: items.city,
-    dateStart: items.dateStart, sourceUrl: items.sourceUrl, metadata: items.metadata,
+    description: items.description, department: items.department, dateStart: items.dateStart, sourceUrl: items.sourceUrl, metadata: items.metadata,
   }).from(items).where(inArray(items.status, ['pending', 'approved']));
   const duplicate = existing.find(item => duplicateReasons(candidate, item).length > 0);
-  if (duplicate) return { duplicate: true as const, id: duplicate.id };
+  if (duplicate) {
+    const previousMetadata = (duplicate.metadata || {}) as Record<string, unknown>;
+    const previousRaw = (previousMetadata.raw && typeof previousMetadata.raw === 'object' ? previousMetadata.raw : {}) as Record<string, unknown>;
+    const mergedRaw = { ...raw, ...previousRaw };
+    for (const [key, value] of Object.entries(raw)) if (value !== undefined && value !== null && value !== '' && previousRaw[key] === undefined) mergedRaw[key] = value;
+    await db.update(items).set({
+      description: duplicate.description || first(raw, ['description', 'texte_libre']) || null,
+      city: duplicate.city || city,
+      department: duplicate.department || department,
+      dateStart: duplicate.dateStart || dateStart,
+      sourceUrl: duplicate.sourceUrl || url,
+      updatedAt: new Date(),
+      metadata: { ...previousMetadata, raw: mergedRaw, lastEnrichedAt: new Date().toISOString(), enrichmentSource: input.source },
+    }).where(inArray(items.id, [duplicate.id]));
+    return { duplicate: true as const, id: duplicate.id, enriched: true as const };
+  }
 
   const [inserted] = await db.insert(items).values({
     category: effectiveMapping.category, status: 'pending', title,

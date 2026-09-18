@@ -23,9 +23,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
  ];
 
  const offers = await getHajjPackages();
- return [...routes, ...offers.map(offer => ({ url: `/hajj/offres/${encodeURIComponent(offer.id)}`, priority: 0.75, changeFrequency: 'weekly' as const }))].map(route => ({
+ return [...routes, ...offers.map(offer => ({ url: `/hajj/offres/${encodeURIComponent(offer.id)}`, priority: 0.75, changeFrequency: 'weekly' as const, lastModified: offer.lastVerifiedAt }))].map(route => ({
  url: `${BASE_URL}${route.url}`,
- lastModified: new Date().toISOString(),
+ lastModified: 'lastModified' in route && (typeof route.lastModified === 'string' || route.lastModified instanceof Date) ? route.lastModified : new Date(),
  changeFrequency: route.changeFrequency,
  priority: route.priority,
  }));

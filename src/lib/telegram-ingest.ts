@@ -13,6 +13,12 @@ const CATEGORIES: Record<string, string> = {
 function str(value: unknown, max = 1000): string {
   return typeof value === 'string' ? value.trim().slice(0, max) : '';
 }
+function numberValue(value: unknown): number | undefined {
+  const match = String(value ?? '').replace(/\s/g, '').match(/\d+(?:[.,]\d+)?/);
+  if (!match) return undefined;
+  const parsed = Number(match[0].replace(',', '.'));
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
 
 export function prepareTelegramSubmission(result: Record<string, unknown>, messageText: string): TelegramSubmission | null {
   const categoryKey = CATEGORIES[str(result.categorie, 30).toLowerCase()];
@@ -31,9 +37,29 @@ export function prepareTelegramSubmission(result: Record<string, unknown>, messa
   const travelText = `${title} ${description}`.toLocaleLowerCase('fr-FR');
   const inferredTravel = /\b(omra|omrah|hajj|hadj)\b/.test(travelText);
   const effectiveCategoryKey = inferredTravel && categoryKey === 'evenement' ? 'hajj' : categoryKey;
+  if (effectiveCategoryKey === 'hajj') {
+    const priceText = str(result.prix ?? result.price ?? result.prix_par_personne, 80);
+    const price = numberValue(priceText);
+    const departure = str(result.depart ?? result.departure ?? result.ville_depart, 120) || city;
+    const packageData = {
+      ...base, name: title, type: 'package', travelType: /hajj|hadj/.test(travelText) ? 'Hajj' : 'Omra',
+      departure, price, duration: numberValue(result.duree ?? result.duration),
+      dates: str(result.dates ?? result.periode ?? result.date, 160),
+      hotelMakkah: str(result.hotelMakkah ?? result.hotel_makkah ?? result.hotel, 160) || undefined,
+      hotelMadinah: str(result.hotelMadinah ?? result.hotel_madinah, 160) || undefined,
+      distance_haram: numberValue(result.distance_haram ?? result.distanceMasjidHaram),
+      distance_nabawi: numberValue(result.distance_nabawi ?? result.distanceMasjidNabawi),
+      inclusions: result.inclusions ?? result.inclus ?? undefined, exclusions: result.exclusions ?? result.exclus ?? undefined,
+      requiredDocuments: result.documents_requis ?? result.documentsRequis ?? result.documents ?? undefined,
+      placesRestantes: numberValue(result.places_restantes ?? result.placesRestantes),
+      partnerReference: str(result.organisateur ?? result.agence ?? result.organizer, 160),
+      verified: false, requires_enrichment: !city || !price || !departure,
+    };
+    return { categoryKey: 'hajj', data: packageData };
+  }
   if (effectiveCategoryKey === 'evenement') {
     const validDate = /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date));
-    return { categoryKey, data: {
+    return { categoryKey: effectiveCategoryKey, data: {
       ...base, category: str(result.event_category, 30) || 'autre', date: validDate ? date : '',
       timeStart: str(result.heure ?? result.timeStart, 20),
       location: str(result.lieu ?? result.location, 160), organizer: str(result.organisateur ?? result.organizer, 160),
