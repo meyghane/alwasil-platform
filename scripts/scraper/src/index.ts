@@ -89,6 +89,14 @@ async function main() {
     const digestItems: DigestItem[] = [];
 
     for (const ev of eventsToInsert) {
+      const junkTitle = /^(suivre|voir|like|aimer|inscrivez[- ]vous|en savoir plus|cliquez|share|partager)\b/i.test(ev.titre.trim());
+      const eventContext = `${ev.titre} ${ev.description || ''}`;
+      const hasEventContext = /(conférence|cours|maraude|séminaire|webinaire|mosquée|iftar|collecte|rencontre|atelier|formation|prière|forum|conférence)/i.test(eventContext);
+      if (junkTitle || !hasEventContext) {
+        await logAutomationError(`event_rejected_low_quality:${ev.titre.slice(0, 80)}`, 'scraper_events');
+        console.warn(`[events] Candidat ignoré : ${ev.titre}`);
+        continue;
+      }
     const category = inferEventCategory(ev.categorie, ev.titre, ev.description) || normalizeEventCategory(ev.categorie);
     const id = await insertEvent({
       title: ev.titre,

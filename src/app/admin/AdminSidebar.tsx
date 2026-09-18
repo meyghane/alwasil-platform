@@ -9,7 +9,7 @@ import AdminLogout from './AdminLogout';
 // Navigation persistante de l'espace admin, avec compteurs en temps réel.
 
 const groups = [
-  { label: 'Contenu', links: [['/admin/base', 'Base du site', Database], ['/admin/soumissions', 'Nouvelles fiches', FileCheck], ['/admin/signalements', 'Signalements', Flag]] },
+  { label: 'Contenu', links: [['/admin/base', 'Gestion des fiches', Database], ['/admin/soumissions', 'Nouvelles fiches', FileCheck], ['/admin/signalements', 'Signalements', Flag]] },
   { label: 'Qualité', links: [['/admin/fraicheur', 'Fraîcheur', Gauge], ['/admin/couverture', 'Couverture', Archive], ['/admin/historique', 'Historique', History], ['/admin/journal', 'Journal', History]] },
   { label: 'Exploitation', links: [['/admin/auto', 'Automatisations', Zap], ['/admin/comptes', 'Comptes', Users], ['/admin/leads', 'Leads Hajj', Settings]] },
 ] as const;

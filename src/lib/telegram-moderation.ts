@@ -27,7 +27,7 @@ export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' |
   const eventNotReady = item.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10));
   return { inline_keyboard: [
     ...(!campaign && !eventNotReady ? [[
-      { text: needsEdit ? 'Valider malgré infos manquantes' : 'Valider', callback_data: `${needsEdit ? 'v' : 'a'}:${item.id}` },
+      { text: 'Valider', callback_data: `${needsEdit ? 'v' : 'a'}:${item.id}` },
       { text: 'Refuser', callback_data: `r:${item.id}` },
     ]] : [[{ text: 'Refuser', callback_data: `r:${item.id}` }]]),
     [{ text: campaign ? 'Vérifier la cagnotte sur le site' : 'Modifier ou voir la fiche', url: reviewUrl(item.id) }],
@@ -39,9 +39,24 @@ export function reviewPreview(item: Pick<Item, 'id' | 'category' | 'title' | 'de
   const date = typeof raw.date === 'string' ? raw.date : item.dateStart?.toISOString().slice(0, 10);
   const location = typeof raw.location === 'string' ? raw.location : typeof raw.address === 'string' ? raw.address : '';
   const organizer = typeof raw.organizer === 'string' ? raw.organizer : '';
+  const available = [
+    item.title ? `Titre : ${item.title}` : '',
+    item.city ? `Ville : ${item.city}` : '',
+    date ? `Date : ${date}` : '',
+    location ? `Lieu : ${location}` : '',
+    organizer ? `Organisateur : ${organizer}` : '',
+    item.sourceUrl ? `Source : ${item.sourceUrl}` : '',
+  ].filter(Boolean);
+  const missing = [
+    !item.city ? 'ville' : '',
+    !date && item.category === 'event' ? 'date' : '',
+    !location ? 'adresse ou lieu précis' : '',
+    !organizer ? 'organisateur' : '',
+    !item.sourceUrl ? 'source vérifiable' : '',
+  ].filter(Boolean);
   const notes = [
-    item.metadata?.requiresEnrichment === true ? 'Informations à compléter avant publication.' : '',
-    item.category === 'event' && !date ? 'Date de l’événement absente.' : '',
+    `Informations disponibles : ${available.join(' · ')}`,
+    `Informations manquantes : ${missing.length ? missing.join(', ') : 'aucune'}`,
     item.category === 'event' && date && date < new Date().toISOString().slice(0, 10) ? 'Événement potentiellement passé.' : '',
     item.category === 'solidarity' && item.metadata?.subType === 'cagnotte' ? 'Collecte à vérifier sur sa source avant publication.' : '',
   ].filter(Boolean);
