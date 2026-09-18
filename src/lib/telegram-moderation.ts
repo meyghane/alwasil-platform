@@ -23,8 +23,8 @@ export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' |
   const eventDate = typeof raw.date === 'string' ? raw.date : item.dateStart?.toISOString().slice(0, 10);
   const eventNotReady = item.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10));
   return { inline_keyboard: [
-    ...(!campaign && !needsEdit && !eventNotReady ? [[
-      { text: 'Valider', callback_data: `a:${item.id}` },
+    ...(!campaign && !eventNotReady ? [[
+      { text: needsEdit ? 'Valider malgré les infos manquantes' : 'Valider', callback_data: `a:${item.id}` },
       { text: 'Refuser', callback_data: `r:${item.id}` },
     ]] : [[{ text: 'Refuser', callback_data: `r:${item.id}` }]]),
     [{ text: campaign ? 'Vérifier la cagnotte sur le site' : 'Modifier ou voir la fiche', url: reviewUrl(item.id) }],
