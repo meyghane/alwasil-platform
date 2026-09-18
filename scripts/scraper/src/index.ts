@@ -21,16 +21,17 @@ async function main() {
     throw new Error(`Configuration manquante: ${missing.join(', ')}. Vérifier les secrets GitHub Actions.`);
   }
 
-  if (await hadAnyQuotaErrorToday()) {
-    console.log('[budget] Quota Gemini 429 déjà rencontré aujourd’hui. Toutes les catégories sont en pause.');
-    return;
+  const quotaBlockedToday = await hadAnyQuotaErrorToday();
+  if (quotaBlockedToday) {
+    console.log('[budget] Quota Gemini 429 déjà rencontré aujourd’hui. Gemini est désactivé, la source de secours reste active.');
+    await logAutomationError('gemini_quota_blocked', 'scraper_events');
   }
 
   const dailyLimit = Math.min(20, Math.max(0, Number.parseInt(process.env.EVENTS_DAILY_CALL_BUDGET || '7', 10) || 0));
   const tokenLimit = Math.min(250_000, Math.max(0, Number.parseInt(process.env.EVENTS_DAILY_TOKEN_BUDGET || '120000', 10) || 0));
   const previous = await getTodayUsage('events');
-  if (previous.quotaErrors > 0 || previous.modelCalls >= dailyLimit || previous.tokensUsed >= tokenLimit) {
-    console.log('[budget] Événements en pause : quota 429 ou budget quotidien atteint.');
+  if (previous.modelCalls >= dailyLimit || previous.tokensUsed >= tokenLimit) {
+    console.log('[budget] Événements en pause : budget quotidien atteint.');
     await runCagnottes();
     return;
   }
@@ -40,7 +41,7 @@ async function main() {
     console.log('\n--- Gemini Events Search ---');
     const existingKeys = await getExistingEventKeys();
     const departmentCounts = await getDepartmentCounts();
-    const geminiEvents = await scrapeEventsWithGemini(
+    const geminiEvents = quotaBlockedToday ? [] : await scrapeEventsWithGemini(
       existingKeys, departmentCounts, dailyLimit - previous.modelCalls,
       (kind, amount) => { if (kind === 'call') usage.modelCalls += amount; else usage.tokensUsed += amount; },
       () => previous.modelCalls + usage.modelCalls < dailyLimit && previous.tokensUsed + usage.tokensUsed < tokenLimit,
@@ -54,6 +55,7 @@ async function main() {
       await logAutomationError('events_zero_results', 'scraper_events');
       console.warn('[events] Gemini a répondu sans événement. Activation de la source de secours RSS.');
       const fallback = await scrapeEventsFromRss(existingKeys);
+      usage.itemsFound = fallback.length;
       if (fallback.length) {
         console.log(`[events] RSS fallback: ${fallback.length} candidats à vérifier`);
         await logAutomationError(`events_fallback_${fallback.length}`, 'scraper_events');
@@ -117,7 +119,7 @@ async function main() {
   } finally {
     await saveUsage(runId, 'events', usage);
   }
-  if (!usage.quotaErrors) await runCagnottes();
+  if (!usage.quotaErrors && !quotaBlockedToday) await runCagnottes();
   if (usage.itemsFound === 0 && usage.itemsInserted === 0) {
     throw new Error('Scraping événements terminé sans fiche : consulter le journal admin.');
   }
