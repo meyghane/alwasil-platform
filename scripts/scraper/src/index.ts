@@ -9,6 +9,7 @@ import { scrapeEventsWithGemini, scrapeCagnottesWithGemini } from './utils/gemin
 import { scrapeEventsFromRss } from './utils/rss-events';
 import { sendDigestEmail, sendCagnotteNotice } from './utils/email';
 import { normalizeEventCategory } from './types';
+import { inferEventCategory } from './utils/event-category';
 import type { DigestItem } from './types';
 
 async function notifyTelegram(item: { id: string; title: string; category: string; city?: string | null; sourceUrl?: string | null }): Promise<void> {
@@ -79,7 +80,7 @@ async function main() {
       if (fallback.length) {
         console.log(`[events] RSS fallback: ${fallback.length} candidats à vérifier`);
         await logAutomationError(`events_fallback_${fallback.length}`, 'scraper_events');
-        eventsToInsert = fallback.map(event => ({ ...event, heure: 'À confirmer', organisateur: 'Source RSS à vérifier', categorie: 'autre', gratuit: false }));
+        eventsToInsert = fallback.map(event => ({ ...event, heure: 'À confirmer', organisateur: 'Source RSS à vérifier', categorie: inferEventCategory(event.titre, event.description), gratuit: false }));
       } else {
         await logAutomationError('events_no_source_results', 'scraper_events');
       }
@@ -88,7 +89,7 @@ async function main() {
     const digestItems: DigestItem[] = [];
 
     for (const ev of eventsToInsert) {
-    const category = normalizeEventCategory(ev.categorie);
+    const category = inferEventCategory(ev.categorie, ev.titre, ev.description) || normalizeEventCategory(ev.categorie);
     const id = await insertEvent({
       title: ev.titre,
       description: ev.description || '',
@@ -96,7 +97,7 @@ async function main() {
       department: ev.departement || null,
       dateStart: ev.date_iso ? new Date(ev.date_iso) : null,
       sourceUrl: ev.url_source || null,
-      tags: [category],
+      tags: [category, ...(category === 'maraude' ? ['solidarite'] : [])],
       raw: {
         id: `scraped-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
         title: ev.titre,
@@ -108,7 +109,7 @@ async function main() {
         department: ev.departement || '00',
         organizer: ev.organisateur || 'Non précisé',
         description: ev.description || '',
-        tags: [category],
+        tags: [category, ...(category === 'maraude' ? ['solidarite'] : [])],
         format: 'presentiel',
         isFree: ev.gratuit ?? true,
         registrationUrl: ev.url_source || undefined,
