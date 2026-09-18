@@ -106,7 +106,9 @@ async function analyze(key: string, text: string, media: { data: string; mime: s
 
 async function handleCallback(query: TelegramCallback, allowedUser: string): Promise<NextResponse> {
   const originChat = String(query.message?.chat?.id ?? '');
-  if (!isAuthorizedReviewAction(String(query.from?.id ?? ''), originChat, allowedUser, moderationChatId())) {
+  const allowedChats = new Set([process.env.TELEGRAM_MODERATION_CHAT_ID, process.env.TELEGRAM_CHAT_ID].filter(Boolean));
+  const authorized = !!originChat && allowedChats.has(originChat) && isAuthorizedReviewAction(String(query.from?.id ?? ''), originChat, allowedUser, originChat);
+  if (!authorized) {
     await answerReviewCallback(query.id, 'Action non autorisée.').catch(() => {});
     return NextResponse.json({ ok: true });
   }
@@ -122,11 +124,6 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     return NextResponse.json({ ok: true });
   }
   const approving = action === 'a' || action === 'v';
-  const forceApproval = action === 'v';
-  if (approving && !forceApproval && candidate.metadata?.requiresEnrichment === true) {
-    await answerReviewCallback(query.id, 'Complète cette fiche sur le site avant de la publier.').catch(() => {});
-    return NextResponse.json({ ok: true });
-  }
   if (approving && candidate.category === 'solidarity' && candidate.metadata?.subType === 'cagnotte') {
     await answerReviewCallback(query.id, 'Vérifie la cagnotte sur le site avant publication.').catch(() => {});
     return NextResponse.json({ ok: true });

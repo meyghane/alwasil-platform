@@ -21,16 +21,15 @@ export function reviewUrl(id: string): string {
 
 export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' | 'dateStart'>): Keyboard {
   const campaign = item.category === 'solidarity' && item.metadata?.subType === 'cagnotte';
-  const needsEdit = item.metadata?.requiresEnrichment === true;
   const raw = (item.metadata?.raw || {}) as Record<string, unknown>;
   const eventDate = typeof raw.date === 'string' ? raw.date : item.dateStart?.toISOString().slice(0, 10);
   const eventNotReady = item.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10));
   return { inline_keyboard: [
     ...(!campaign && !eventNotReady ? [[
-      { text: 'Valider', callback_data: `${needsEdit ? 'v' : 'a'}:${item.id}` },
+      { text: 'Valider', callback_data: `a:${item.id}` },
       { text: 'Refuser', callback_data: `r:${item.id}` },
     ]] : [[{ text: 'Refuser', callback_data: `r:${item.id}` }]]),
-    [{ text: campaign ? 'Vérifier la cagnotte sur le site' : 'Modifier ou voir la fiche', url: reviewUrl(item.id) }],
+    [{ text: campaign ? 'Vérifier la cagnotte sur le site' : 'Compléter / voir la fiche', url: reviewUrl(item.id) }],
   ] };
 }
 
