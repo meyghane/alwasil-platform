@@ -23,6 +23,10 @@ function clean(value: unknown, max = 2000): string {
   return typeof value === 'string' ? value.replace(/[\u2012\u2013\u2014]/g, ' - ').replace(/\s+/g, ' ').trim().slice(0, max) : '';
 }
 function hash(value: string): string { return createHash('sha256').update(value).digest('hex'); }
+function uuidOrUndefined(value: unknown): string | undefined {
+  const candidate = clean(value, 80);
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(candidate) ? candidate : undefined;
+}
 function clientIp(req: NextRequest): string {
   return (req.headers.get('x-forwarded-for')?.split(',')[0] || req.headers.get('x-real-ip') || 'unknown').trim();
 }
@@ -59,7 +63,13 @@ export async function POST(req: NextRequest) {
       await db.insert(reports).values({ type, page: clean(normalized.page, 120) || undefined, element: clean(normalized.element, 240) || undefined, message: clean(normalized.correction, 2000) || clean(normalized.message, 2000) || undefined, email: email || undefined });
     }
     if (type === 'hajj-devis') {
-      const [lead] = await db.insert(leads).values({ offerId: clean(body.offerId) || undefined, partnerId: clean(body.partnerId) || undefined, name: clean(normalized.nom, 120), email, phone: clean(normalized.phone, 40) || undefined, travelType: clean(normalized.type, 80), qualification: normalized, source: 'hajj-offer', utm, consentFollowUp: true }).returning({ id: leads.id });
+      // Les anciennes cartes utilisent encore des identifiants lisibles comme
+      // « pkg6 »/« a5 ». Ils ne sont pas des UUID Neon : on ne les injecte pas
+      // dans les colonnes relationnelles, mais on conserve l’offre dans
+      // qualification pour garder la traçabilité de la demande.
+      const legacyOfferId = clean(body.offerId, 80);
+      const legacyPartnerId = clean(body.partnerId, 80);
+      const [lead] = await db.insert(leads).values({ offerId: uuidOrUndefined(body.offerId), partnerId: uuidOrUndefined(body.partnerId), name: clean(normalized.nom, 120), email, phone: clean(normalized.phone, 40) || undefined, travelType: clean(normalized.type, 80), qualification: { ...normalized, offerId: legacyOfferId || undefined, partnerId: legacyPartnerId || undefined }, source: 'hajj-offer', utm, consentFollowUp: true }).returning({ id: leads.id });
       leadId = lead.id;
       await db.insert(leadEvents).values({ leadId, event: 'created', actor: 'public_form', payload: { submissionId: submission.id, page: clean(provenance.page, 240) } });
     }
