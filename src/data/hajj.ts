@@ -33,6 +33,7 @@ export type HajjPackage = {
  airline?: string;
  requiredDocuments?: string[];
  lastVerifiedAt?: string;
+ qualityScore?: number; // score interne Al-Wasil, jamais affiché au public
  distanceMasjidNabawi?: number; // mètres
  distanceMasjidHaram?: number; // mètres
  includes: string[];

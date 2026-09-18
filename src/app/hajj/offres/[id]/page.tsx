@@ -54,9 +54,9 @@ export default async function HajjOfferPage({ params }: Props) {
       <ul>{offer.includes.map(item => <li key={item}>{item}</li>)}</ul>
       {offer.excludes.length > 0 && <><h2 style={{ fontSize: '1.15rem' }}>Non inclus ou en supplément</h2><ul>{offer.excludes.map(item => <li key={item}>{item}</li>)}</ul></>}
       {offer.requiredDocuments && offer.requiredDocuments.length > 0 && <><h2 style={{ fontSize: '1.15rem' }}>Documents généralement requis</h2><ul>{offer.requiredDocuments.map(item => <li key={item}>{item}</li>)}</ul></>}
-      {offer.lastVerifiedAt && <p style={{ fontSize: '.82rem', color: '#59565f' }}>Informations vérifiées le {new Date(offer.lastVerifiedAt).toLocaleDateString('fr-FR')}.</p>}
+      {offer.lastVerifiedAt && <p style={{ fontSize: '.82rem', color: '#59565f' }}>Fiche actualisée le {new Date(offer.lastVerifiedAt).toLocaleDateString('fr-FR')}.</p>}
       <p style={{ fontSize: '.8rem', color: '#59565f', marginTop: '1.5rem' }}>Les prix, disponibilités et conditions sont à confirmer avant réservation. Al-Wasil facilite la mise en relation et ne remplace pas le contrat avec l’agence.</p>
-      <div style={{ display: 'flex', gap: '.75rem', flexWrap: 'wrap', marginTop: '1rem' }}><a href={`/contact?type=hajj-devis&offer_id=${encodeURIComponent(offer.id)}&partner_id=${encodeURIComponent(offer.agenceId)}`} style={{ background: '#7652CA', color: 'white', padding: '.75rem 1rem', borderRadius: 9, textDecoration: 'none', fontWeight: 700 }}>Demander un devis</a>{offer.sourceUrl && <a href={offer.sourceUrl} target="_blank" rel="noreferrer" style={{ padding: '.75rem 1rem', color: '#543398', fontWeight: 700 }}>Voir la source</a>}</div>
+      <div style={{ display: 'flex', gap: '.75rem', flexWrap: 'wrap', marginTop: '1rem' }}><a href={`/contact?type=hajj-devis&offer_id=${encodeURIComponent(offer.id)}&partner_id=${encodeURIComponent(offer.agenceId)}`} style={{ background: '#7652CA', color: 'white', padding: '.75rem 1rem', borderRadius: 9, textDecoration: 'none', fontWeight: 700 }}>Demander un devis</a></div>
     </article>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />

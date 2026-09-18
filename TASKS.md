@@ -22,6 +22,8 @@
   - Champs prêts pour les tarifs par chambre, compagnie, hôtels, documents requis et dernière vérification ; les données effectivement confirmées restent à enrichir offre par offre.
 - [ ] **Ajouter le SEO/GEO Hajj/Omra** - titres, descriptions, maillage interne, FAQ, données structurées Organization/Offer/Product/Breadcrumb, sitemap, robots.txt et fichier d'instructions LLM.
 - [ ] **Documenter la méthode éditoriale** - page Qui sommes-nous, transparence du classement, vérification des agences, sources, avis, prix et distinction sponsorisé/naturel.
+  - Pour chaque professionnel : distinguer identité légale/immatriculation, qualité des informations de l’offre, avis externes sourcés et affirmations marketing non vérifiées.
+  - Ne pas convertir automatiquement « leader », « agréé », « + de 7 000 pèlerins » ou une note affichée par le site source en score Al-Wasil sans preuve indépendante et date de vérification.
 - [ ] **Finaliser le suivi audience et publicité** - mesurer les pages et emplacements après consentement, puis ajouter des emplacements Partenaire Al-Wasil clairement signalés.
 
 ## Waiting On

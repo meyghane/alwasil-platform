@@ -19,6 +19,21 @@ const batch = [
   { title: 'Omra Premium Octobre 2026 - départ Paris', city: 'Paris', season: '2026', price: 2150, duration: 9, departure: '19 octobre 2026', sourceUrl: 'https://www.agence-omra.fr/', agency: 'Agence Omra', description: 'Formule premium annoncée depuis Paris avec hôtel Conrad à environ 100 mètres du Haram, visa, vol et accompagnement francophone annoncés. Dernières places à confirmer.' },
 ];
 
+function internalQualityScore(offer) {
+  const checks = [
+    Boolean(offer.sourceUrl),
+    Boolean(offer.departure),
+    Number.isFinite(offer.price) && offer.price > 0,
+    Number.isFinite(offer.duration) && offer.duration > 0,
+    Boolean(offer.description && offer.description.length >= 100),
+    Boolean(offer.airline),
+    Boolean(offer.hotelMakkah || offer.hotelMadinah),
+    Array.isArray(offer.includes) && offer.includes.length > 0,
+    Array.isArray(offer.requiredDocuments) && offer.requiredDocuments.length > 0,
+  ];
+  return Math.round(checks.filter(Boolean).length / checks.length * 100);
+}
+
 const existing = await db.select({ id: items.id, category: items.category, title: items.title, city: items.city, dateStart: items.dateStart, sourceUrl: items.sourceUrl, metadata: items.metadata })
   .from(items).where(inArray(items.status, ['pending', 'approved']));
 
@@ -46,6 +61,7 @@ for (const offer of batch) {
     requiredDocuments: offer.requiredDocuments,
     verificationStatus: 'to_verify',
     lastVerifiedAt: '2026-09-18',
+    qualityScore: internalQualityScore(offer),
     tags: ['omra', 'offre', offer.season],
   };
   const candidate = { id: 'new', category: 'hajj', title: offer.title, city: offer.city, dateStart: null, sourceUrl: offer.sourceUrl, metadata: { raw } };

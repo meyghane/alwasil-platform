@@ -57,6 +57,7 @@ function AgenceNameById({ id, agences }: { id: string; agences: HajjAgence[] }) 
 }
 
 function offerQualityScore(pkg: HajjPackage, agence: HajjAgence | undefined): number {
+ if (typeof pkg.qualityScore === 'number') return Math.max(0, Math.min(100, pkg.qualityScore));
  const fields = [
   pkg.description.length >= 120,
   pkg.includes.length >= 3,
@@ -220,10 +221,8 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}><a href={`/hajj/offres/${encodeURIComponent(pkg.id)}`} style={{ color: 'inherit', textDecoration: 'none' }}>{pkg.name}</a></h3>
  <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
- Offre comparative à vérifier auprès d&apos;Al-Wasil
+ Offre référencée et accompagnée par Al-Wasil
  </p>
- {pkg.sourceUrl && <div style={{ marginBottom: '0.65rem' }}><a href={pkg.sourceUrl} target="_blank" rel="noreferrer" style={{ color: '#6540b5', fontSize: '0.68rem', fontWeight: 700 }}>Voir la source</a></div>}
-
  {/* Prix */}
  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.75rem' }}>
  <span style={{ fontSize: '1.75rem', fontWeight: 800, color: typeColor }}>
@@ -309,6 +308,14 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <p>Aucune offre ne correspond à vos critères.</p>
  </div>
  )}
+ <section aria-labelledby="hajj-faq" style={{ marginTop: '2rem', maxWidth: '820px' }}>
+  <h2 id="hajj-faq" style={{ fontSize: '1.35rem', marginBottom: '0.75rem' }}>Questions fréquentes</h2>
+  {[
+   ['Al-Wasil vend-il directement les séjours ?', 'Non. Al-Wasil référence des offres documentées, vous aide à formuler votre demande et la transmet au professionnel concerné. Le contrat et le paiement sont ensuite conclus directement avec lui.'],
+   ['Les prix et les places sont-ils définitifs ?', 'Non. Ils correspondent à la dernière information disponible au moment de la vérification. Le professionnel doit confirmer le prix, les places et les conditions avant toute réservation.'],
+   ['Que contient une demande de devis ?', 'Vos dates, votre ville de départ, le nombre de voyageurs, votre budget et vos besoins particuliers. Ces informations permettent au professionnel de répondre avec une formule adaptée.'],
+  ].map(([question, answer]) => <details key={question} style={{ background: 'white', border: '1px solid #e2d7f5', borderRadius: 10, padding: '0.8rem 1rem', marginBottom: '0.55rem' }}><summary style={{ cursor: 'pointer', fontWeight: 700 }}>{question}</summary><p style={{ color: 'var(--text-secondary)', lineHeight: 1.55, marginBottom: 0 }}>{answer}</p></details>)}
+ </section>
  </>
  )}
 

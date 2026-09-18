@@ -149,6 +149,7 @@ export async function getHajjPackages() {
         airline: typeof raw.airline === 'string' ? raw.airline : typeof raw.compagnie === 'string' ? raw.compagnie : undefined,
         requiredDocuments: Array.isArray(raw.requiredDocuments) ? raw.requiredDocuments.map(String) : Array.isArray(raw.documentsRequis) ? raw.documentsRequis.map(String) : undefined,
         lastVerifiedAt: typeof raw.lastVerifiedAt === 'string' ? raw.lastVerifiedAt : undefined,
+        qualityScore: Number.isFinite(Number(raw.qualityScore)) ? Number(raw.qualityScore) : undefined,
         seasonYear: Number(raw.seasonYear || raw.season || 0) || undefined,
         verificationStatus: raw.verificationStatus === 'verified' ? 'verified' : 'to_verify',
       } satisfies HajjPackage;
