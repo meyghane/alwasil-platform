@@ -1,4 +1,4 @@
-// Chatbot Wasil - Gemini 1.5 Flash (gratuit, quasi illimité)
+// Chatbot Wasil - Gemini Flash avec sélection dynamique du modèle disponible
 // Clé API gratuite : https://aistudio.google.com/app/apikey → GEMINI_API_KEY dans .env.local + Vercel
 
 const SYSTEM_PROMPT = `Tu es "Wasil", l'assistant d'Al-Wasil, la plateforme communautaire pour les musulmans de France (surtout Île-de-France).
@@ -13,7 +13,7 @@ Tu parles uniquement français. Tu es bienveillant, concis et bien informé sur 
 - /justice - Droits des musulmans, avocats, FAQ discrimination, ARCOM
 - /sante - Psychologues, hijama certifiés, roqya, médecins bienveillants
 - /piscines - Créneaux burkini en Île-de-France
-- /hajj - Agences Hajj & Omra 2026, comparatif packages
+- /hajj - Offres Hajj 2027 et Omra 2026-2027, comparatif de packages
 - /librairies - Librairies islamiques en France
 
 ## Règles
@@ -22,7 +22,26 @@ Tu parles uniquement français. Tu es bienveillant, concis et bien informé sur 
 - Ne génère jamais de fatwas. Pour questions religieuses complexes : "Consulte un imam de confiance."
 - Tu peux utiliser inshallah, barakallah naturellement`;
 
-export async function POST(request: Request) {
+let cachedGeminiModel: string | null = null;
+
+async function chooseGeminiModel(key: string): Promise<string> {
+ if (cachedGeminiModel) return cachedGeminiModel;
+ const preferred = ['gemini-3.6-flash', 'gemini-3.6-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+ try {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`, { signal: AbortSignal.timeout(8000) });
+  const catalog = await response.json() as { models?: Array<{ name?: string; supportedGenerationMethods?: string[] }> };
+  const available = (catalog.models || [])
+   .filter(model => model.supportedGenerationMethods?.includes('generateContent'))
+   .map(model => (model.name || '').replace(/^models\//, ''))
+   .filter(Boolean);
+  cachedGeminiModel = preferred.find(model => available.includes(model)) || available.find(model => /flash/i.test(model)) || null;
+ } catch (error) {
+  console.warn('[chat] Gemini model catalog unavailable:', error instanceof Error ? error.message : 'unknown error');
+ }
+ return cachedGeminiModel || 'gemini-2.5-flash';
+}
+
+ export async function POST(request: Request) {
  const { messages } = await request.json();
 
  const apiKey = process.env.GEMINI_API_KEY;
@@ -43,14 +62,14 @@ export async function POST(request: Request) {
  };
 
  const res = await fetch(
- `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:streamGenerateContent?key=${apiKey}&alt=sse`,
+ `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(await chooseGeminiModel(apiKey))}:streamGenerateContent?key=${encodeURIComponent(apiKey)}&alt=sse`,
  { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
  );
 
  if (!res.ok) {
  const err = await res.text();
  console.error('[chat] Gemini error:', err);
- return Response.json({ error: 'Erreur Gemini API' }, { status: 500 });
+ return Response.json({ error: 'Le service de recherche est temporairement indisponible.' }, { status: 502 });
  }
 
  // Transposer SSE Gemini → notre format SSE { text }
