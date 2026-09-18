@@ -35,6 +35,7 @@ export default function SoumissionsClient() {
  const [editing, setEditing] = useState<string | null>(null);
  const [editValues, setEditValues] = useState<Record<string, string>>({});
  const [category, setCategory] = useState('all');
+ const [search, setSearch] = useState('');
 
  async function load() {
  setLoading(true);
@@ -79,6 +80,7 @@ export default function SoumissionsClient() {
 
  async function updateStatus(item: Soumission, status: 'en ligne' | 'pas en ligne' | 'archivé') {
  if (status === 'archivé' && !window.confirm('Confirmer l’archivage ? La fiche ne sera plus visible sur le site.')) return;
+ if (status === 'en ligne' && item.status === 'archivé' && !window.confirm('Confirmer la remise en ligne ? Cette fiche redeviendra visible sur le site.')) return;
  const verifiedCampaign = item.requires_campaign_check === 'oui' && status === 'en ligne';
  if (verifiedCampaign && !window.confirm('As-tu vérifié sur la page source que la collecte est active, que l’organisateur est fiable et que la destination des dons est exacte ? Confirmer publiera cette cagnotte.')) return;
  const id = item.id;
@@ -97,7 +99,13 @@ export default function SoumissionsClient() {
  }
 
  const categories = Array.from(new Set(items.map(item => item.categorie).filter(Boolean))).sort();
- const filtered = items.filter(item => (filter === 'all' || item.status === filter) && (category === 'all' || item.categorie === category));
+ const normalizedSearch = search.trim().toLocaleLowerCase('fr-FR');
+ const filtered = items.filter(item => {
+   if (filter !== 'all' && item.status !== filter) return false;
+   if (category !== 'all' && item.categorie !== category) return false;
+   if (!normalizedSearch) return true;
+   return Object.values(item).some(value => typeof value === 'string' && value.toLocaleLowerCase('fr-FR').includes(normalizedSearch));
+ });
  const pending = items.filter(i => i.status === 'à vérifier').length;
 
  return (
@@ -126,6 +134,8 @@ export default function SoumissionsClient() {
  <option value="all">Toutes les catégories</option>
  {categories.map(value => <option key={value} value={value}>{value}</option>)}
  </select>
+
+ <input value={search} onChange={event => setSearch(event.target.value)} placeholder="Rechercher une fiche, une ville, un mot-clé..." aria-label="Rechercher dans toutes les fiches" style={{ minWidth: 250, flex: '1 1 280px', padding: '0.45rem 0.75rem', borderRadius: 20, border: '1.5px solid #f0ebfa', background: 'white', color: '#080808', fontSize: '0.8rem' }} />
 
  <button onClick={load} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', borderRadius: '8px', border: '1px solid #f0ebfa', backgroundColor: 'white', color: '#6b7280', fontSize: '0.78rem', cursor: 'pointer' }}>
  <RefreshCw size={12} /> Rafraîchir
