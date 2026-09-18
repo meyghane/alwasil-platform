@@ -139,7 +139,7 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  <p style={{ fontSize: '1.1rem', fontWeight: 500 }}>Aucun institut trouvé</p>
  </div>
  ) : (
- <div style={{
+ <div className="directory-grid" style={{
  display: 'grid',
  gridTemplateColumns: 'repeat(3, 1fr)',
  gap: '1rem',

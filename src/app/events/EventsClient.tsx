@@ -8,7 +8,6 @@ import {
  EVENT_CATEGORY_COLORS,
  type Event,
  type EventCategory,
- CURRENT_VERIFIED_EVENT_IDS,
 } from '@/data/events';
 import DeptFilter from '@/components/DeptFilter';
 import PageHeader from '@/components/PageHeader';
@@ -25,8 +24,6 @@ const CATEGORIES: { key: EventCategory | 'all'; label: string }[] = [
  { key: 'jeunesse', label: 'Jeunesse' },
  { key: 'collecte', label: 'Collecte' },
 ];
-const VERIFIED_CURRENT_EVENTS = new Set<string>(CURRENT_VERIFIED_EVENT_IDS);
-
 function formatDate(iso: string): string {
  const d = new Date(iso);
  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -44,7 +41,7 @@ export default function EventsClient({ events }: EventsClientProps) {
 
  // Compteurs par département
  const deptCounts: Record<string, number> = {};
- events.filter(e => isUpcoming(e.date, e.endDate) && VERIFIED_CURRENT_EVENTS.has(e.id)).forEach(e => {
+ events.filter(e => isUpcoming(e.date, e.endDate)).forEach(e => {
  deptCounts[e.department] = (deptCounts[e.department] ?? 0) + 1;
  });
 
@@ -57,7 +54,10 @@ export default function EventsClient({ events }: EventsClientProps) {
  ev.tags.some(t => t.toLowerCase().includes(q));
  const matchDept = selectedDept === 'Tout' || ev.department === selectedDept;
  const matchCat = selectedCategory === 'all' || ev.category === selectedCategory;
- const matchTime = showPast ? true : isUpcoming(ev.date, ev.endDate) && VERIFIED_CURRENT_EVENTS.has(ev.id);
+ // getEvents ne renvoie que les fiches Neon approuvées et les anciennes fiches
+ // statiques explicitement vérifiées. Les nouvelles fiches validées doivent
+ // donc rester visibles sans dépendre d'une liste blanche historique.
+ const matchTime = showPast ? true : isUpcoming(ev.date, ev.endDate);
  return matchSearch && matchDept && matchCat && matchTime;
  });
 
@@ -162,7 +162,7 @@ export default function EventsClient({ events }: EventsClientProps) {
  <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Essayez de modifier vos filtres de recherche.</p>
  </div>
  ) : (
- <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+ <div className="directory-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
  {sorted.map(ev => (
  <EventCard key={ev.id} event={ev} />
  ))}

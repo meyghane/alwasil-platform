@@ -509,6 +509,24 @@ a {
 }
 
 @media (max-width: 600px) {
+  .directory-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+  .directory-grid > * {
+    min-width: 0;
+    width: 100%;
+  }
+  .directory-grid h3,
+  .directory-grid p,
+  .directory-grid span,
+  .directory-grid a {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+  .directory-grid h3 {
+    font-size: 1rem !important;
+  }
   .page-banner { min-height: 520px; }
   .page-banner__image { object-position: 64% 50%; }
   .page-banner__image--pools { object-position: 36% 50%; }
