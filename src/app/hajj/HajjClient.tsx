@@ -56,6 +56,25 @@ function AgenceNameById({ id, agences }: { id: string; agences: HajjAgence[] }) 
  return <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{agence?.name ?? ' - '}</span>;
 }
 
+function offerQualityScore(pkg: HajjPackage, agence: HajjAgence | undefined): number {
+ const fields = [
+  pkg.description.length >= 120,
+  pkg.includes.length >= 3,
+  pkg.excludes.length > 0,
+  Boolean(pkg.departure),
+  Boolean(pkg.sourceUrl),
+  Boolean(pkg.hotelMakkah),
+  Boolean(pkg.hotelMadinah),
+  Boolean(pkg.distanceMasjidHaram || pkg.distanceMasjidNabawi),
+  pkg.verificationStatus === 'verified',
+ ];
+ const completeness = fields.filter(Boolean).length / fields.length;
+ const rating = agence ? Math.min(5, Math.max(0, agence.rating)) / 5 : pkg.stars / 5;
+ const reviewConfidence = agence ? Math.min(1, Math.log10(Math.max(1, agence.reviews)) / 4) : 0;
+ const age = agence ? Math.min(1, Math.max(0, new Date().getFullYear() - agence.since) / 20) : 0;
+ return Math.round(completeness * 50 + rating * 25 + reviewConfidence * 15 + age * 10);
+}
+
 export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProps) {
  const [tab, setTab] = useState<Tab>('packages');
  const [typeFilter, setTypeFilter] = useState<VoyageType | 'all'>('all');
@@ -80,7 +99,11 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  });
 
  // Sort: featured first
- const sorted = [...filteredPackages].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+ const sorted = [...filteredPackages].sort((a, b) => {
+  const scoreA = offerQualityScore(a, hajjAgences.find(agency => agency.id === a.agenceId));
+  const scoreB = offerQualityScore(b, hajjAgences.find(agency => agency.id === b.agenceId));
+  return scoreB - scoreA || Number(b.featured) - Number(a.featured);
+ });
 
  return (
  <div>
@@ -165,6 +188,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  {sorted.map(pkg => {
  const typeColor = VOYAGE_TYPE_COLORS[pkg.type];
  const agence = hajjAgences.find(a => a.id === pkg.agenceId);
+ const qualityScore = offerQualityScore(pkg, agence);
  const placesRatio = pkg.placesRestantes && pkg.places ? pkg.placesRestantes / pkg.places : 1;
  return (
  <div key={pkg.id} className="card" style={{ padding: 0, overflow: 'hidden', border: `1px solid ${typeColor}33`, borderTop: `3px solid ${typeColor}`, background: `linear-gradient(180deg, ${typeColor}08 0%, #ffffff 60%)` }}>
@@ -188,6 +212,9 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
  Offre comparative à vérifier auprès d&apos;Al-Wasil
  </p>
+ <span style={{ display: 'inline-flex', marginBottom: '0.7rem', padding: '0.2rem 0.55rem', borderRadius: '999px', backgroundColor: qualityScore >= 75 ? '#ecfdf5' : '#f5f3ff', color: qualityScore >= 75 ? '#047857' : '#6540b5', fontSize: '0.7rem', fontWeight: 700 }}>
+  Score qualité Al-Wasil : {qualityScore}/100
+ </span>
 
  {/* Prix */}
  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.75rem' }}>
