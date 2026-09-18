@@ -38,7 +38,15 @@ async function getRaw<T>(category: Category, subType: string): Promise<T[]> {
     .where(and(eq(items.category, category), eq(items.status, 'approved')));
 
   return rows
-    .filter((r) => (r.metadata as Record<string, unknown> | null)?.subType === subType)
+    .filter((r) => {
+      const metadata = (r.metadata as Record<string, unknown> | null) || {};
+      const raw = (metadata.raw && typeof metadata.raw === 'object' ? metadata.raw : {}) as Record<string, unknown>;
+      const storedType = metadata.subType;
+      // La page Apprentissage présente aussi les mosquées, mais leur thème
+      // dépend du type réel de la fiche, pas de la catégorie SQL historique.
+      if (category === 'institute' && subType === 'institut') return storedType === 'institut' || storedType === 'mosquee' || raw.type === 'mosquee';
+      return storedType === subType;
+    })
     .map((r) => {
       const metadata = (r.metadata || {}) as Record<string, unknown>;
       const raw = (metadata.raw && typeof metadata.raw === 'object' ? metadata.raw : {}) as Record<string, unknown>;

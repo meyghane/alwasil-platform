@@ -16,7 +16,7 @@ const TYPE_FILTERS: { key: PiscineType | 'all'; label: string }[] = [
  { key: 'associative', label: ' Associatives' },
 ];
 
-const ACCENT = '#7652CA';
+const ACCENT = '#2F80ED';
 
 const JOUR_COLORS: Record<string, string> = {
  Lundi: '#6366f1', Mardi: '#7652CA', Mercredi: '#7652CA',

@@ -180,10 +180,10 @@ export default function EducationClient({ instituts }: EducationClientProps) {
 
 const TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; icon: LucideIcon }> = {
  'institut': { label: 'Institut', color: '#7652CA', bg: '#f0ebfa', icon: BookOpen },
- 'mosquee': { label: 'Mosquée', color: '#4a0e58', bg: '#f8f0ff', icon: Landmark },
- 'professeur': { label: 'Professeur', color: '#6540b5', bg: '#faf5e8', icon: GraduationCap },
- 'en-ligne': { label: 'Formation en ligne', color: '#543398', bg: '#faf3e0', icon: Monitor },
- 'cercle': { label: 'Cercle de science', color: '#7b2d6e', bg: '#fdf0f8', icon: Users },
+ 'mosquee': { label: 'Mosquée', color: '#080808', bg: '#ECFF58', icon: Landmark },
+ 'professeur': { label: 'Professeur', color: '#2F80ED', bg: '#eaf3ff', icon: GraduationCap },
+ 'en-ligne': { label: 'Formation en ligne', color: '#008f78', bg: '#e5fff8', icon: Monitor },
+ 'cercle': { label: 'Cercle de science', color: '#e0527d', bg: '#fff0f5', icon: Users },
 };
 
 const AUDIENCE_CONFIG: Record<string, { label: string; icon: LucideIcon; color: string; bg: string }> = {
@@ -204,7 +204,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  overflow: 'hidden',
  display: 'flex',
  flexDirection: 'column',
- boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+ boxShadow: '0 2px 8px rgba(8,8,8,0.05)',
  }}>
  {/* Header coloré */}
  <div style={{

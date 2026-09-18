@@ -9,6 +9,7 @@ import { items, moderationLog } from '@/db/schema';
 import { eq, inArray } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { withoutEmDashes } from '@/lib/typography';
+import { findSchoolHolidayPeriod, holidayLabel } from '@/lib/school-holidays';
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
 
@@ -82,7 +83,9 @@ export async function PATCH(req: NextRequest) {
    const value = (key: string, max: number): string => typeof edits[key] === 'string' ? withoutEmDashes(edits[key].trim().slice(0, max)) : '';
    const title = value('title', 240);
    if (!title) return NextResponse.json({ error: 'Un titre est nécessaire' }, { status: 400 });
-   const date = value('date', 10);
+   const enteredDate = value('date', 10);
+   const holiday = findSchoolHolidayPeriod(`${title} ${value('description', 3000)}`);
+   const date = enteredDate || holiday?.start || '';
    if (date && (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date)))) {
      return NextResponse.json({ error: 'Date invalide' }, { status: 400 });
    }
@@ -95,11 +98,13 @@ export async function PATCH(req: NextRequest) {
    const timeStart = value('timeStart', 20);
    const complete = current.category === 'event' ? !!(date && city && department && organizer && timeStart)
      : !!(city && department);
+   const description = value('description', 3000);
+   const enrichedDescription = holiday && !description.toLocaleLowerCase('fr-FR').includes(holiday.start) ? `${description}\n\nPériode repérée : ${holidayLabel(holiday)}.` : description;
    const metadata = withoutEmDashes({ ...current.metadata, raw: { ...raw, id: raw.id || current.id, title, name: title,
-     description: value('description', 3000), city, department, date, organizer, timeStart,
+     description: enrichedDescription, city, department, date, organizer, timeStart,
      location: value('location', 240), address: value('address', 240), website: url, registrationUrl: url },
      requiresEnrichment: edits.verifiedDetails === true ? !complete : current.metadata?.requiresEnrichment });
-   await db.update(items).set({ title, description: value('description', 3000), city, department,
+   await db.update(items).set({ title, description: enrichedDescription, city, department,
      sourceUrl: url || null, dateStart: date ? new Date(`${date}T12:00:00Z`) : null,
      metadata, updatedAt: new Date() }).where(eq(items.id, id));
    return NextResponse.json({ ok: true, needsMoreDetails: metadata.requiresEnrichment === true });
