@@ -39,6 +39,7 @@ const COURSE_FILTERS: { key: CourseType | 'all'; label: string }[] = [
 export default function EducationClient({ instituts }: EducationClientProps) {
  const [search, setSearch] = useState('');
  const [selectedCourse, setSelectedCourse] = useState<CourseType | 'all'>('all');
+ const [selectedType, setSelectedType] = useState<'all' | 'institut' | 'mosquee'>('all');
  const [selectedDept, setSelectedDept] = useState('Tout');
  const [showFilters, setShowFilters] = useState(false);
 
@@ -51,8 +52,9 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  const q = search.toLowerCase();
  const matchSearch = !q || inst.name.toLowerCase().includes(q) || inst.city.toLowerCase().includes(q) || inst.tags.some(t => t.toLowerCase().includes(q));
  const matchCourse = selectedCourse === 'all' || inst.courses.includes(selectedCourse);
+ const matchType = selectedType === 'all' || (selectedType === 'mosquee' ? inst.type === 'mosquee' : inst.type !== 'mosquee');
  const matchDept = selectedDept === 'Tout' || inst.department === selectedDept;
- return matchSearch && matchCourse && matchDept;
+ return matchSearch && matchCourse && matchType && matchDept;
  });
 
  return (
@@ -98,6 +100,13 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  </div>
 
  <DeptFilter value={selectedDept} onChange={setSelectedDept} counts={deptCounts} />
+
+ <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }} aria-label="Filtrer par type de lieu">
+ {([['all', 'Instituts et mosquées'], ['institut', 'Instituts / écoles'], ['mosquee', 'Mosquées']] as const).map(([key, label]) => {
+ const isActive = selectedType === key;
+ return <button key={key} onClick={() => setSelectedType(key)} style={{ padding: '0.4rem 0.8rem', borderRadius: '999px', border: `1px solid ${isActive ? '#7652CA' : '#e7e5e4'}`, backgroundColor: isActive ? '#7652CA' : 'white', color: isActive ? 'white' : '#57534e', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}>{label}</button>;
+ })}
+ </div>
 
  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
  {COURSE_FILTERS.map(cf => {
