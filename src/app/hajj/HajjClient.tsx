@@ -14,7 +14,7 @@ type HajjClientProps = { hajjAgences: HajjAgence[]; hajjPackages: HajjPackage[] 
 type Tab = 'packages' | 'agences' | 'guide';
 
 const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
- { key: 'packages', label: 'Comparer les offres', icon: Plane },
+ { key: 'packages', label: 'Trouver mon offre', icon: Plane },
  { key: 'guide', label: 'Guide du pèlerin', icon: BookOpen },
 ];
 
@@ -191,8 +191,8 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  {typeFilter === 'hajj' && sorted.length === 0 && (
  <div style={{ marginBottom: '1.25rem', padding: '1rem 1.1rem', borderRadius: '0.75rem', border: '1px solid #7652CA55', backgroundColor: '#7652CA0d', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
- <strong style={{ color: '#543398' }}>Hajj 2027 : offres en cours de vérification.</strong>{' '}
- Les anciennes offres 2026 ont été retirées de la comparaison. Nous afficherons ici uniquement des offres 2027 publiées par une agence identifiable, avec une source, des conditions et une date de dernière vérification.
+ <strong style={{ color: '#543398' }}>Hajj 2027 : offres à venir.</strong>{' '}
+ Les offres seront présentées au fur et à mesure des disponibilités, avec leurs conditions et leurs détails pratiques.
  </div>
  )}
 

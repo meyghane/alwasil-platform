@@ -13,25 +13,22 @@ const batch = [
   { title: 'Omra Janvier 2027 - départ Paris', city: 'Paris', season: '2027', price: 1790, duration: 9, departure: '06 - 16 janvier 2027', sourceUrl: 'https://www.almourafiq.com/', agency: 'Al Mourafiq', description: 'Départ annoncé depuis Paris, vol direct, hôtel proche du Haram et guide francophone annoncés par la source. Prix et conditions à vérifier.' },
   { title: 'Omra Décembre 2026 - vacances scolaires', city: 'Paris', season: '2026-2027', price: 2290, duration: 9, departure: '17 - 25 décembre 2026', sourceUrl: 'https://www.almourafiq.com/', agency: 'Al Mourafiq', description: 'Départ annoncé depuis Paris pendant les vacances scolaires, vol direct, hôtel proche du Haram et guide francophone annoncés par la source. Prix et conditions à vérifier.' },
   { title: 'Omra Premium Janvier 2027 - départ Paris', city: 'Paris', season: '2027', price: 1790, duration: 10, departure: '20 - 30 janvier 2027', sourceUrl: 'https://www.omragroupe.fr/omra-janvier', agency: 'Omra Groupe', description: 'Offre annoncée depuis Paris avec vol Saudia, hôtel Conrad 5 étoiles à environ 100 mètres du Haram et hôtel Bosphorus à Médine. Disponibilité et conditions à confirmer.' },
-  { title: 'Omra Janvier 2027 - formule confort Paris', city: 'Paris', season: '2027', price: 1299, priceQuad: 1299, priceTriple: 1399, priceDouble: 1499, priceSingle: 1999, duration: 10, departure: '18 - 28 janvier 2027', sourceUrl: 'https://www.omradiscount.fr/omra/agence-omra-paris', agency: 'Omra Discount', airline: 'Saudia', hotelMakkah: 'Sheraton', hotelMadinah: 'View Al Madinah', includes: ['Vol', 'Visa', 'Hôtel à La Mecque', 'Hôtel à Médine'], requiredDocuments: ['Passeport valide', 'Photo d’identité', 'Carte de séjour pour les résidents français'], description: 'Formule annoncée au départ de Paris avec plusieurs niveaux de chambre, hôtels à Médine et La Mecque, visa et accompagnement à confirmer auprès de la source.' },
-  { title: 'Omra Nouvel An 2027 - départ Paris', city: 'Paris', season: '2026-2027', price: 1999, priceQuad: 1699, priceTriple: 1799, priceDouble: 1999, priceSingle: 2599, duration: 9, departure: '24 décembre 2026 - 2 janvier 2027', sourceUrl: 'https://www.omradiscount.fr/omra/agence-omra-paris', agency: 'Omra Discount', airline: 'Saudia', hotelMakkah: 'Sheraton', hotelMadinah: 'View Al Madinah', includes: ['Vol', 'Visa', 'Hôtel à La Mecque', 'Hôtel à Médine'], requiredDocuments: ['Passeport valide', 'Photo d’identité', 'Carte de séjour pour les résidents français'], description: 'Départ annoncé pendant les vacances de fin d’année, avec compagnie aérienne et hôtels indiqués par la source. Prix, places et conditions à confirmer.' },
-  { title: 'Omra Décembre 2026 - formule confort Paris', city: 'Paris', season: '2026', price: 1890, priceQuad: 1299, priceTriple: 1399, priceDouble: 1499, priceSingle: 1999, duration: 9, departure: '21 - 30 décembre 2026', sourceUrl: 'https://www.omradiscount.fr/omra/agence-omra-paris', agency: 'Omra Discount', airline: 'Saudia', hotelMakkah: 'Sheraton Jabal Kaaba', hotelMadinah: 'View Al Madinah', includes: ['Vol', 'Visa', 'Hôtel à Médine', 'Hôtel à La Mecque'], requiredDocuments: ['Passeport valide', 'Photo d’identité', 'Carte de séjour pour les résidents français'], description: 'Séjour annoncé au départ de Paris avec hôtel à Médine et hôtel à La Mecque. Plusieurs catégories de chambres proposées selon la source. Disponibilité à confirmer.' },
+  { title: 'Omra Janvier 2027 - formule confort Paris', city: 'Paris', season: '2027', price: 1299, priceQuad: 1299, priceTriple: 1399, priceDouble: 1499, priceSingle: 1999, duration: 10, departure: '18 - 28 janvier 2027', sourceUrl: 'https://www.omradiscount.fr/omra/agence-omra-paris', agency: 'Omra Discount', identityVerified: true, externalReviewCount: 90, airline: 'Saudia', hotelMakkah: 'Sheraton', hotelMadinah: 'View Al Madinah', includes: ['Vol', 'Visa', 'Hôtel à La Mecque', 'Hôtel à Médine'], requiredDocuments: ['Passeport valide', 'Photo d’identité', 'Carte de séjour pour les résidents français'], description: 'Formule annoncée au départ de Paris avec plusieurs niveaux de chambre, hôtels à Médine et La Mecque, visa et accompagnement à confirmer auprès de la source.' },
+  { title: 'Omra Nouvel An 2027 - départ Paris', city: 'Paris', season: '2026-2027', price: 1999, priceQuad: 1699, priceTriple: 1799, priceDouble: 1999, priceSingle: 2599, duration: 9, departure: '24 décembre 2026 - 2 janvier 2027', sourceUrl: 'https://www.omradiscount.fr/omra/agence-omra-paris', agency: 'Omra Discount', identityVerified: true, externalReviewCount: 90, airline: 'Saudia', hotelMakkah: 'Sheraton', hotelMadinah: 'View Al Madinah', includes: ['Vol', 'Visa', 'Hôtel à La Mecque', 'Hôtel à Médine'], requiredDocuments: ['Passeport valide', 'Photo d’identité', 'Carte de séjour pour les résidents français'], description: 'Départ annoncé pendant les vacances de fin d’année, avec compagnie aérienne et hôtels indiqués par la source. Prix, places et conditions à confirmer.' },
+  { title: 'Omra Décembre 2026 - formule confort Paris', city: 'Paris', season: '2026', price: 1890, priceQuad: 1299, priceTriple: 1399, priceDouble: 1499, priceSingle: 1999, duration: 9, departure: '21 - 30 décembre 2026', sourceUrl: 'https://www.omradiscount.fr/omra/agence-omra-paris', agency: 'Omra Discount', identityVerified: true, externalReviewCount: 90, airline: 'Saudia', hotelMakkah: 'Sheraton Jabal Kaaba', hotelMadinah: 'View Al Madinah', includes: ['Vol', 'Visa', 'Hôtel à Médine', 'Hôtel à La Mecque'], requiredDocuments: ['Passeport valide', 'Photo d’identité', 'Carte de séjour pour les résidents français'], description: 'Séjour annoncé au départ de Paris avec hôtel à Médine et hôtel à La Mecque. Plusieurs catégories de chambres proposées selon la source. Disponibilité à confirmer.' },
   { title: 'Omra Premium Octobre 2026 - départ Paris', city: 'Paris', season: '2026', price: 2150, duration: 9, departure: '19 octobre 2026', sourceUrl: 'https://www.agence-omra.fr/', agency: 'Agence Omra', description: 'Formule premium annoncée depuis Paris avec hôtel Conrad à environ 100 mètres du Haram, visa, vol et accompagnement francophone annoncés. Dernières places à confirmer.' },
 ];
 
 function internalQualityScore(offer) {
-  const checks = [
-    Boolean(offer.sourceUrl),
-    Boolean(offer.departure),
-    Number.isFinite(offer.price) && offer.price > 0,
-    Number.isFinite(offer.duration) && offer.duration > 0,
-    Boolean(offer.description && offer.description.length >= 100),
-    Boolean(offer.airline),
-    Boolean(offer.hotelMakkah || offer.hotelMadinah),
-    Array.isArray(offer.includes) && offer.includes.length > 0,
-    Array.isArray(offer.requiredDocuments) && offer.requiredDocuments.length > 0,
-  ];
-  return Math.round(checks.filter(Boolean).length / checks.length * 100);
+  const breakdown = {
+    professionalIdentity: offer.identityVerified === true ? 20 : 0,
+    offerCompleteness: [offer.departure, offer.price, offer.duration, offer.description, offer.airline, offer.hotelMakkah || offer.hotelMadinah].filter(Boolean).length / 6 * 25,
+    freshness: offer.lastVerifiedAt && offer.sourceUrl ? 20 : offer.sourceUrl ? 10 : 0,
+    clarity: [offer.includes?.length, offer.excludes?.length, offer.requiredDocuments?.length].filter(Boolean).length / 3 * 15,
+    externalReviews: Number.isFinite(offer.externalReviewCount) && offer.externalReviewCount > 0 ? 10 : 0,
+    transparency: offer.sourceUrl && offer.description && !offer.description.toLowerCase().includes('à confirmer') ? 10 : 5,
+  };
+  return { score: Math.round(Object.values(breakdown).reduce((sum, value) => sum + value, 0)), breakdown };
 }
 
 const existing = await db.select({ id: items.id, category: items.category, title: items.title, city: items.city, dateStart: items.dateStart, sourceUrl: items.sourceUrl, metadata: items.metadata })
@@ -61,7 +58,8 @@ for (const offer of batch) {
     requiredDocuments: offer.requiredDocuments,
     verificationStatus: 'to_verify',
     lastVerifiedAt: '2026-09-18',
-    qualityScore: internalQualityScore(offer),
+    qualityScore: internalQualityScore(offer).score,
+    qualityBreakdown: internalQualityScore(offer).breakdown,
     tags: ['omra', 'offre', offer.season],
   };
   const candidate = { id: 'new', category: 'hajj', title: offer.title, city: offer.city, dateStart: null, sourceUrl: offer.sourceUrl, metadata: { raw } };

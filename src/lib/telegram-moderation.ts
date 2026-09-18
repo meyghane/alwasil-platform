@@ -1,5 +1,6 @@
 import type { items } from '@/db/schema';
 import { withoutEmDashes } from '@/lib/typography';
+import { itemEventDate } from '@/lib/event-dates';
 
 type Item = typeof items.$inferSelect;
 type Keyboard = { inline_keyboard: Array<Array<{ text: string; callback_data?: string; url?: string }>> };
@@ -22,8 +23,8 @@ export function reviewUrl(id: string): string {
 export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' | 'dateStart'>): Keyboard {
   const campaign = item.category === 'solidarity' && item.metadata?.subType === 'cagnotte';
   const raw = (item.metadata?.raw || {}) as Record<string, unknown>;
-  const eventDate = typeof raw.date === 'string' ? raw.date : item.dateStart?.toISOString().slice(0, 10);
-  const eventNotReady = item.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10));
+  const eventDate = itemEventDate(raw, item.dateStart);
+  const eventNotReady = item.category === 'event' && !!eventDate && eventDate < new Date().toISOString().slice(0, 10);
   return { inline_keyboard: [
     ...(!campaign && !eventNotReady ? [[
       { text: 'Valider', callback_data: `a:${item.id}` },
@@ -35,7 +36,7 @@ export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' |
 
 export function reviewPreview(item: Pick<Item, 'id' | 'category' | 'title' | 'description' | 'city' | 'dateStart' | 'sourceUrl' | 'metadata'>): string {
   const raw = (item.metadata?.raw || {}) as Record<string, unknown>;
-  const date = typeof raw.date === 'string' ? raw.date : item.dateStart?.toISOString().slice(0, 10);
+  const date = itemEventDate(raw, item.dateStart);
   const location = typeof raw.location === 'string' ? raw.location : typeof raw.address === 'string' ? raw.address : '';
   const organizer = typeof raw.organizer === 'string' ? raw.organizer : '';
   const available = [

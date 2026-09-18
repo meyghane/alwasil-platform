@@ -34,6 +34,7 @@ export type HajjPackage = {
  requiredDocuments?: string[];
  lastVerifiedAt?: string;
  qualityScore?: number; // score interne Al-Wasil, jamais affiché au public
+ qualityBreakdown?: { professionalIdentity: number; offerCompleteness: number; freshness: number; clarity: number; externalReviews: number; transparency: number };
  distanceMasjidNabawi?: number; // mètres
  distanceMasjidHaram?: number; // mètres
  includes: string[];

@@ -8,6 +8,7 @@ import { prepareTelegramSubmission } from '@/lib/telegram-ingest';
 import { answerReviewCallback, closeReviewButtons, isAuthorizedReviewAction, moderationChatId, sendReview } from '@/lib/telegram-moderation';
 import { withoutEmDashes } from '@/lib/typography';
 import { revalidatePath } from 'next/cache';
+import { itemEventDate } from '@/lib/event-dates';
 
 type TelegramMessage = {
   chat?: { id?: number }; from?: { id?: number };
@@ -129,8 +130,8 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     return NextResponse.json({ ok: true });
   }
   const raw = (candidate.metadata?.raw || {}) as Record<string, unknown>;
-  const eventDate = typeof raw.date === 'string' ? raw.date : candidate.dateStart?.toISOString().slice(0, 10);
-  if (approving && candidate.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10))) {
+  const eventDate = itemEventDate(raw, candidate.dateStart);
+  if (approving && candidate.category === 'event' && eventDate && eventDate < new Date().toISOString().slice(0, 10)) {
     await answerReviewCallback(query.id, 'Date absente ou événement passé. Vérifie sur le site.').catch(() => {});
     return NextResponse.json({ ok: true });
   }
@@ -140,7 +141,11 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     title: withoutEmDashes(candidate.title), description: withoutEmDashes(candidate.description),
     metadata: withoutEmDashes({ ...candidate.metadata,
       moderation: { action: approving ? 'approved' : 'rejected', actor: `telegram:${allowedUser}`, at: now.toISOString() } }),
-    ...(approving ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}),
+    ...(approving ? {
+      lastVerifiedAt: now,
+      nextReviewAt: new Date(now.getTime() + 30 * 86400000),
+      ...(candidate.category === 'event' && eventDate && !candidate.dateStart ? { dateStart: new Date(`${eventDate}T12:00:00Z`) } : {}),
+    } : {}),
   }).where(and(eq(items.id, id), eq(items.status, 'pending'))).returning({ id: items.id });
   if (!updated) {
     await answerReviewCallback(query.id, 'Cette fiche a déjà été traitée.').catch(() => {});

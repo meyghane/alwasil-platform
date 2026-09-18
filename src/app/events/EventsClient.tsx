@@ -37,7 +37,6 @@ export default function EventsClient({ events }: EventsClientProps) {
  const [search, setSearch] = useState('');
  const [selectedDept, setSelectedDept] = useState('Tout');
  const [selectedCategory, setSelectedCategory] = useState<EventCategory | 'all'>('all');
- const [showPast, setShowPast] = useState(false);
 
  // Compteurs par département
  const deptCounts: Record<string, number> = {};
@@ -57,7 +56,7 @@ export default function EventsClient({ events }: EventsClientProps) {
  // getEvents ne renvoie que les fiches Neon approuvées et les anciennes fiches
  // statiques explicitement vérifiées. Les nouvelles fiches validées doivent
  // donc rester visibles sans dépendre d'une liste blanche historique.
- const matchTime = showPast ? true : isUpcoming(ev.date, ev.endDate);
+ const matchTime = isUpcoming(ev.date, ev.endDate);
  return matchSearch && matchDept && matchCat && matchTime;
  });
 
@@ -137,20 +136,6 @@ export default function EventsClient({ events }: EventsClientProps) {
  </button>
  );
  })}
- <button
- onClick={() => setShowPast(!showPast)}
- style={{
- marginLeft: 'auto',
- fontSize: '0.8rem',
- color: '#59565f',
- background: 'none',
- border: 'none',
- cursor: 'pointer',
- textDecoration: 'underline'
- }}
- >
- {showPast ? 'Masquer les archives' : 'Voir les archives'}
- </button>
  </div>
  </div>
 

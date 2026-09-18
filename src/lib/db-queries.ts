@@ -131,7 +131,7 @@ export async function getHajjPackages() {
         price: Number.isFinite(rawPrice) ? rawPrice : 0,
         includes,
         excludes,
-        description: String(raw.description || 'Offre importée depuis une source publique, à vérifier avant réservation.'),
+        description: String(raw.description || 'Offre référencée par Al-Wasil. Les conditions sont présentées dans cette fiche et précisées lors de la demande de devis.'),
         departure: String(raw.departure || raw.depart || ''),
         priceDouble: Number(raw.priceDouble ?? raw.prix_double) || undefined,
         priceTriple: Number(raw.priceTriple ?? raw.prix_triple) || undefined,
@@ -150,6 +150,7 @@ export async function getHajjPackages() {
         requiredDocuments: Array.isArray(raw.requiredDocuments) ? raw.requiredDocuments.map(String) : Array.isArray(raw.documentsRequis) ? raw.documentsRequis.map(String) : undefined,
         lastVerifiedAt: typeof raw.lastVerifiedAt === 'string' ? raw.lastVerifiedAt : undefined,
         qualityScore: Number.isFinite(Number(raw.qualityScore)) ? Number(raw.qualityScore) : undefined,
+        qualityBreakdown: raw.qualityBreakdown && typeof raw.qualityBreakdown === 'object' ? raw.qualityBreakdown as HajjPackage['qualityBreakdown'] : undefined,
         seasonYear: Number(raw.seasonYear || raw.season || 0) || undefined,
         verificationStatus: raw.verificationStatus === 'verified' ? 'verified' : 'to_verify',
       } satisfies HajjPackage;
