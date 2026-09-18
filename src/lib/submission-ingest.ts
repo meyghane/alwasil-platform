@@ -3,6 +3,7 @@ import { items } from '@/db/schema';
 import { duplicateReasons, type Candidate, normalizeUrl } from '@/lib/data-quality';
 import { inArray } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
+import { withoutEmDashes } from '@/lib/typography';
 
 type Category = typeof items.$inferInsert.category;
 const CATEGORY_MAP: Record<string, { category: Category; subType: string }> = {
@@ -36,7 +37,7 @@ export async function ingestManualSubmission(input: {
 }) {
   const mapping = CATEGORY_MAP[input.categoryKey];
   if (!mapping) throw new Error('Catégorie non prise en charge');
-  const raw: Record<string, unknown> = { ...input.data, id: randomUUID() };
+  const raw: Record<string, unknown> = withoutEmDashes({ ...input.data, id: randomUUID() });
   const title = first(raw, input.categoryKey === 'psy' ? ['name', 'title'] : ['title', 'name', 'titre', 'nom']);
   if (!title || title.length > 240) throw new Error('Titre invalide');
   const city = first(raw, ['city', 'ville', 'location']) || null;

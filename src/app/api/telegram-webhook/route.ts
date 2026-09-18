@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { db } from '@/db';
-import { items } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { items, moderationLog } from '@/db/schema';
+import { and, desc, eq } from 'drizzle-orm';
 import { ingestManualSubmission } from '@/lib/submission-ingest';
 import { prepareTelegramSubmission } from '@/lib/telegram-ingest';
+import { answerReviewCallback, closeReviewButtons, isAuthorizedReviewAction, moderationChatId, sendReview } from '@/lib/telegram-moderation';
+import { withoutEmDashes } from '@/lib/typography';
+import { revalidatePath } from 'next/cache';
 
 type TelegramMessage = {
   chat?: { id?: number }; from?: { id?: number };
@@ -12,6 +15,15 @@ type TelegramMessage = {
   photo?: Array<{ file_id: string }>;
   document?: { file_id: string; mime_type?: string };
   voice?: { file_id: string }; audio?: { file_id: string };
+};
+type TelegramCallback = {
+  id: string; data?: string; from?: { id?: number };
+  message?: { message_id?: number; chat?: { id?: number } };
+};
+
+const CATEGORY_PATH: Record<string, string> = {
+  event: '/events', institute: '/education', solidarity: '/solidarity', job: '/jobs',
+  library: '/librairies', pool: '/piscines', health: '/sante', hajj: '/hajj',
 };
 
 function secretFor(token: string): string {
@@ -92,6 +104,60 @@ async function analyze(key: string, text: string, media: { data: string; mime: s
   return result as Record<string, unknown>;
 }
 
+async function handleCallback(query: TelegramCallback, allowedUser: string): Promise<NextResponse> {
+  const originChat = String(query.message?.chat?.id ?? '');
+  if (!isAuthorizedReviewAction(String(query.from?.id ?? ''), originChat, allowedUser, moderationChatId())) {
+    await answerReviewCallback(query.id, 'Action non autorisée.').catch(() => {});
+    return NextResponse.json({ ok: true });
+  }
+  const match = /^([ar]):([0-9a-f]{8}-[0-9a-f-]{27,})$/i.exec(query.data || '');
+  if (!match) {
+    await answerReviewCallback(query.id, 'Bouton non reconnu.').catch(() => {});
+    return NextResponse.json({ ok: true });
+  }
+  const [, action, id] = match;
+  const [candidate] = await db.select().from(items).where(eq(items.id, id)).limit(1);
+  if (!candidate || candidate.status !== 'pending') {
+    await answerReviewCallback(query.id, 'Cette fiche a déjà été traitée.').catch(() => {});
+    return NextResponse.json({ ok: true });
+  }
+  const approving = action === 'a';
+  if (approving && candidate.metadata?.requiresEnrichment === true) {
+    await answerReviewCallback(query.id, 'Complète cette fiche sur le site avant de la publier.').catch(() => {});
+    return NextResponse.json({ ok: true });
+  }
+  if (approving && candidate.category === 'solidarity' && candidate.metadata?.subType === 'cagnotte') {
+    await answerReviewCallback(query.id, 'Vérifie la cagnotte sur le site avant publication.').catch(() => {});
+    return NextResponse.json({ ok: true });
+  }
+  const raw = (candidate.metadata?.raw || {}) as Record<string, unknown>;
+  const eventDate = typeof raw.date === 'string' ? raw.date : candidate.dateStart?.toISOString().slice(0, 10);
+  if (approving && candidate.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10))) {
+    await answerReviewCallback(query.id, 'Date absente ou événement passé. Vérifie sur le site.').catch(() => {});
+    return NextResponse.json({ ok: true });
+  }
+  const now = new Date();
+  const [updated] = await db.update(items).set({
+    status: approving ? 'approved' : 'rejected', updatedAt: now,
+    title: withoutEmDashes(candidate.title), description: withoutEmDashes(candidate.description),
+    metadata: withoutEmDashes({ ...candidate.metadata,
+      moderation: { action: approving ? 'approved' : 'rejected', actor: `telegram:${allowedUser}`, at: now.toISOString() } }),
+    ...(approving ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}),
+  }).where(and(eq(items.id, id), eq(items.status, 'pending'))).returning({ id: items.id });
+  if (!updated) {
+    await answerReviewCallback(query.id, 'Cette fiche a déjà été traitée.').catch(() => {});
+    return NextResponse.json({ ok: true });
+  }
+  await db.insert(moderationLog).values({ itemId: id, action: approving ? 'approved' : 'rejected', actor: `telegram:${allowedUser}` })
+    .catch(error => console.error('[telegram] moderation log write failed:', error));
+  revalidatePath('/');
+  revalidatePath(CATEGORY_PATH[candidate.category] || '/');
+  if (candidate.category === 'institute') revalidatePath('/api/mosques');
+  await answerReviewCallback(query.id, approving ? 'Fiche publiée.' : 'Fiche refusée.').catch(() => {});
+  if (query.message?.message_id) await closeReviewButtons(originChat, query.message.message_id).catch(() => {});
+  return NextResponse.json({ ok: true, id, status: approving ? 'approved' : 'rejected' });
+}
+
 export async function POST(req: NextRequest) {
   const token = process.env.TELEGRAM_BOT_TOKEN || '';
   const allowedChat = process.env.TELEGRAM_CHAT_ID || '';
@@ -100,13 +166,28 @@ export async function POST(req: NextRequest) {
   if (!validSecret(secretFor(token), req.headers.get('x-telegram-bot-api-secret-token'))) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
-  let update: { update_id?: number; message?: TelegramMessage; edited_message?: TelegramMessage };
+  let update: { update_id?: number; message?: TelegramMessage; edited_message?: TelegramMessage; callback_query?: TelegramCallback };
   try { update = await req.json(); } catch { return NextResponse.json({ error: 'JSON invalide' }, { status: 400 }); }
+  if (update.callback_query) return handleCallback(update.callback_query, allowedChat);
   const msg = update.message || update.edited_message;
   if (!msg) return NextResponse.json({ ok: true });
   const chatId = String(msg.chat?.id ?? '');
-  if (!chatId || chatId !== allowedChat || String(msg.from?.id ?? '') !== allowedChat) return NextResponse.json({ ok: true });
+  if (String(msg.from?.id ?? '') !== allowedChat) return NextResponse.json({ ok: true });
   const text = (msg.text || msg.caption || '').trim();
+  if (/^\/chatid(?:@\w+)?$/.test(text) && chatId) {
+    await sendMessage(token, chatId, `Identifiant de cette conversation : ${chatId}`);
+    return NextResponse.json({ ok: true });
+  }
+  const nextMatch = /^\/suivantes(?:@\w+)?(?:\s+(\d{1,3}))?$/.exec(text);
+  if (nextMatch && chatId === moderationChatId()) {
+    const offset = Math.min(Number(nextMatch[1] || '0'), 500);
+    const pending = await db.select().from(items).where(eq(items.status, 'pending'))
+      .orderBy(desc(items.createdAt)).limit(5).offset(offset);
+    if (!pending.length) await sendMessage(token, chatId, 'Aucune autre fiche à vérifier.');
+    for (const item of pending) await sendReview(item);
+    return NextResponse.json({ ok: true, previews: pending.length });
+  }
+  if (chatId !== allowedChat) return NextResponse.json({ ok: true });
   const updateId = update.update_id;
   if (!Number.isSafeInteger(updateId) || text.length > 5000) return NextResponse.json({ error: 'Message invalide' }, { status: 400 });
   const source = `telegram:${updateId}`;
@@ -125,6 +206,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
     const result = await ingestManualSubmission({ categoryKey: proposal.categoryKey, data: proposal.data, actor: `telegram:${chatId}`, source });
+    if (!result.duplicate) {
+      const [inserted] = await db.select().from(items).where(eq(items.id, result.id)).limit(1);
+      if (inserted) await sendReview(inserted).catch(error => console.error('[telegram] moderation notification failed:', error));
+    }
     await sendMessage(token, chatId, result.duplicate
       ? 'Cette ressource semble déjà présente. Vérifie les fiches en modération.'
       : `Ressource reçue : ${String(proposal.data.title)}. Elle attend ta validation dans https://al-wasil.fr/admin/soumissions. Rien n’a été publié automatiquement.`);

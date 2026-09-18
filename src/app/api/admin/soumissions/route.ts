@@ -8,6 +8,7 @@ import { db } from '@/db';
 import { items } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { withoutEmDashes } from '@/lib/typography';
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
 
@@ -35,6 +36,12 @@ export async function GET() {
  ville: item.city || undefined,
  description: item.description || undefined,
  url_source: item.sourceUrl || undefined,
+ date_evenement: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.date === 'string' ? String((item.metadata?.raw as Record<string, unknown>).date) : undefined,
+ lieu: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.location === 'string' ? String((item.metadata?.raw as Record<string, unknown>).location) : undefined,
+ adresse: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.address === 'string' ? String((item.metadata?.raw as Record<string, unknown>).address) : undefined,
+ organisateur: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.organizer === 'string' ? String((item.metadata?.raw as Record<string, unknown>).organizer) : undefined,
+ heure: typeof (item.metadata?.raw as Record<string, unknown> | undefined)?.timeStart === 'string' ? String((item.metadata?.raw as Record<string, unknown>).timeStart) : undefined,
+ departement: item.department || undefined,
  source_system: 'neon',
  requires_campaign_check: item.category === 'solidarity' && item.metadata?.subType === 'cagnotte' ? 'oui' : undefined,
  requires_enrichment: item.metadata?.requiresEnrichment === true ? 'oui' : undefined,
@@ -49,7 +56,7 @@ export async function GET() {
      }
    } catch { /* Les fiches Neon restent visibles si Sheets ne répond pas. */ }
  }
- return NextResponse.json({ soumissions: [...neonSoumissions, ...legacy], source: 'neon+legacy' });
+ return NextResponse.json({ soumissions: withoutEmDashes([...neonSoumissions, ...legacy]), source: 'neon+legacy' });
  } catch {
  return NextResponse.json({ soumissions: [], error: 'Neon indisponible' }, { status: 503 });
  }
@@ -61,7 +68,37 @@ export async function PATCH(req: NextRequest) {
  return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
  }
 
- const { id, status, verifiedCampaign } = await req.json();
+ const { id, status, verifiedCampaign, edits } = await req.json();
+
+ if (id && edits && typeof edits === 'object' && !Array.isArray(edits)) {
+   if (!(await isAdminLoggedIn())) return NextResponse.json({ error: 'Administrateur requis pour corriger cette fiche' }, { status: 403 });
+   const [current] = await db.select().from(items).where(eq(items.id, id)).limit(1);
+   if (!current || current.status !== 'pending') return NextResponse.json({ error: 'Fiche introuvable ou déjà traitée' }, { status: 404 });
+   const value = (key: string, max: number): string => typeof edits[key] === 'string' ? withoutEmDashes(edits[key].trim().slice(0, max)) : '';
+   const title = value('title', 240);
+   if (!title) return NextResponse.json({ error: 'Un titre est nécessaire' }, { status: 400 });
+   const date = value('date', 10);
+   if (date && (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date)))) {
+     return NextResponse.json({ error: 'Date invalide' }, { status: 400 });
+   }
+   const url = value('sourceUrl', 1000);
+   if (url && !/^https:\/\/[^\s]+$/i.test(url)) return NextResponse.json({ error: 'Lien HTTPS invalide' }, { status: 400 });
+   const raw = (current.metadata?.raw || {}) as Record<string, unknown>;
+   const city = value('city', 120);
+   const department = value('department', 3);
+   const organizer = value('organizer', 160);
+   const timeStart = value('timeStart', 20);
+   const complete = current.category === 'event' ? !!(date && city && department && organizer && timeStart)
+     : !!(city && department);
+   const metadata = withoutEmDashes({ ...current.metadata, raw: { ...raw, id: raw.id || current.id, title, name: title,
+     description: value('description', 3000), city, department, date, organizer, timeStart,
+     location: value('location', 240), address: value('address', 240), website: url, registrationUrl: url },
+     requiresEnrichment: edits.verifiedDetails === true ? !complete : current.metadata?.requiresEnrichment });
+   await db.update(items).set({ title, description: value('description', 3000), city, department,
+     sourceUrl: url || null, dateStart: date ? new Date(`${date}T12:00:00Z`) : null,
+     metadata, updatedAt: new Date() }).where(eq(items.id, id));
+   return NextResponse.json({ ok: true, needsMoreDetails: metadata.requiresEnrichment === true });
+ }
 
  if (!id || !status) {
  return NextResponse.json({ error: 'id et status requis' }, { status: 400 });
@@ -72,7 +109,7 @@ export async function PATCH(req: NextRequest) {
  }
 
  const neonItem = /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(id)
-   ? await db.select({ id: items.id, category: items.category, metadata: items.metadata }).from(items).where(eq(items.id, id)).limit(1)
+   ? await db.select({ id: items.id, category: items.category, title: items.title, description: items.description, metadata: items.metadata }).from(items).where(eq(items.id, id)).limit(1)
    : [];
  if (neonItem.length > 0) {
  if (status === 'en ligne' && neonItem[0].metadata?.requiresEnrichment === true) return NextResponse.json({ error: 'Cette fiche rapide doit être complétée et vérifiée avant publication.' }, { status: 400 });
@@ -80,7 +117,10 @@ export async function PATCH(req: NextRequest) {
  if (campaign && status === 'en ligne' && verifiedCampaign !== true) return NextResponse.json({ error: 'Vérifiez la collecte et confirmez avant publication.' }, { status: 400 });
  const now = new Date();
  const metadata = campaign && status === 'en ligne' ? { ...neonItem[0].metadata, raw: { ...(neonItem[0].metadata?.raw as Record<string, unknown> || {}), verified: true } } : neonItem[0].metadata;
- await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: now, metadata, ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
+ await db.update(items).set({ status: status === 'en ligne' ? 'approved' : 'rejected', updatedAt: now,
+   title: withoutEmDashes(neonItem[0].title), description: withoutEmDashes(neonItem[0].description),
+   metadata: withoutEmDashes(metadata),
+   ...(status === 'en ligne' ? { lastVerifiedAt: now, nextReviewAt: new Date(now.getTime() + 30 * 86400000) } : {}) }).where(eq(items.id, id));
  revalidatePath('/');
  const category = neonItem[0].category;
  const publicPage = category === 'event' ? '/events'

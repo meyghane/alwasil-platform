@@ -31,18 +31,54 @@ export default function SoumissionsClient() {
  const [filter, setFilter] = useState<'all' | 'à vérifier' | 'en ligne' | 'pas en ligne'>('à vérifier');
  const [expanded, setExpanded] = useState<string | null>(null);
  const [actionLoading, setActionLoading] = useState<string | null>(null);
+ const [editing, setEditing] = useState<string | null>(null);
+ const [editValues, setEditValues] = useState<Record<string, string>>({});
+ const [telegramSetup, setTelegramSetup] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
 
  async function load() {
  setLoading(true);
  try {
  const res = await fetch('/api/admin/soumissions');
  const json = await res.json();
- setItems(json.soumissions || []);
+ const submissions = (json.soumissions || []) as Soumission[];
+ setItems(submissions);
+ const linkedId = new URLSearchParams(window.location.search).get('item');
+ if (linkedId && submissions.some(item => item.id === linkedId)) setExpanded(linkedId);
  } catch {
  setItems([]);
  } finally {
  setLoading(false);
  }
+ }
+
+ function startEdit(item: Soumission) {
+   setEditing(item.id);
+   setExpanded(item.id);
+   setEditValues({ title: item.name || item.titre || '', description: item.description || '',
+     city: item.ville || '', department: item.departement || '', sourceUrl: item.url_source || '',
+     date: item.date_evenement || '', organizer: item.organisateur || '', timeStart: item.heure || '',
+     location: item.lieu || '', address: item.adresse || '' });
+ }
+
+ async function saveEdit(id: string) {
+   setActionLoading(id);
+   try {
+     const res = await fetch('/api/admin/soumissions', { method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ id, edits: { ...editValues, verifiedDetails: true } }) });
+     const result = await res.json();
+     if (!res.ok) { alert(result.error || 'Correction impossible.'); return; }
+     setEditing(null);
+     await load();
+     if (result.needsMoreDetails) alert('Fiche enregistrée, mais les informations nécessaires à la publication sont encore incomplètes.');
+   } finally { setActionLoading(null); }
+ }
+
+ async function activateTelegramButtons() {
+   setTelegramSetup('loading');
+   try {
+     const response = await fetch('/api/telegram-setup', { method: 'POST' });
+     setTelegramSetup(response.ok ? 'ok' : 'error');
+   } catch { setTelegramSetup('error'); }
  }
 
  useEffect(() => { load(); }, []);
@@ -90,6 +126,10 @@ export default function SoumissionsClient() {
  );
  })}
 
+ <button onClick={activateTelegramButtons} disabled={telegramSetup === 'loading'} style={{ padding: '0.4rem 0.875rem', borderRadius: 8, border: '1px solid #7652CA', background: 'white', color: '#7652CA', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}>
+ {telegramSetup === 'loading' ? 'Activation...' : telegramSetup === 'ok' ? 'Telegram activé' : 'Activer les boutons Telegram'}
+ </button>
+ {telegramSetup === 'error' && <span role="alert" style={{ fontSize: 12, color: '#b91c1c' }}>Activation impossible. Vérifie la configuration.</span>}
  <button onClick={load} style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.875rem', borderRadius: '8px', border: '1px solid #f0ebfa', backgroundColor: 'white', color: '#6b7280', fontSize: '0.78rem', cursor: 'pointer' }}>
  <RefreshCw size={12} /> Rafraîchir
  </button>
@@ -121,7 +161,7 @@ export default function SoumissionsClient() {
  boxShadow: item.status === 'à vérifier' ? '0 2px 8px rgba(245,158,11,0.08)' : '0 1px 4px rgba(109,40,217,0.05)',
  }}>
  {/* Row principal */}
- <div style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+ <div style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
  {/* Status dot */}
  <div style={{
  width: 10, height: 10, borderRadius: '50%', flexShrink: 0,
@@ -159,6 +199,8 @@ export default function SoumissionsClient() {
  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.875rem', backgroundColor: '#f0ebfa', color: '#6b7280', border: '1px solid #f0ebfa', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', opacity: isLoading ? 0.6 : 1 }}>
  <XCircle size={13} /> Rejeter
  </button>
+ {item.source_system === 'neon' && <button onClick={() => startEdit(item)} disabled={isLoading}
+ style={{ padding: '0.45rem 0.875rem', borderRadius: 8, border: '1px solid #7652CA', background: 'white', color: '#7652CA', fontWeight: 700, cursor: 'pointer' }}>Modifier</button>}
  </>
  )}
  {item.status === 'en ligne' && (
@@ -176,6 +218,18 @@ export default function SoumissionsClient() {
  {/* Détails dépliables */}
  {isExpanded && (
  <div style={{ borderTop: '1px solid #f0ebfa', padding: '1rem 1.25rem', backgroundColor: '#faf9ff' }}>
+ {editing === item.id && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10, marginBottom: 20 }}>
+ {([['title', 'Titre'], ['description', 'Description'], ['city', 'Ville'], ['department', 'Département'], ['date', 'Date de l’événement (AAAA-MM-JJ)'], ['timeStart', 'Heure'], ['organizer', 'Organisateur'], ['location', 'Lieu'], ['address', 'Adresse'], ['sourceUrl', 'Lien source HTTPS']] as const).map(([key, label]) => (
+   <label key={key} style={{ display: 'grid', gap: 4, fontSize: 12, fontWeight: 700 }}>{label}
+     <input value={editValues[key] || ''} onChange={event => setEditValues(previous => ({ ...previous, [key]: event.target.value }))}
+       style={{ width: '100%', padding: 9, border: '1px solid #d1c6ea', borderRadius: 8, fontSize: 14 }} />
+   </label>
+ ))}
+ <div style={{ display: 'flex', alignItems: 'end', gap: 8 }}>
+   <button onClick={() => saveEdit(item.id)} disabled={isLoading} style={{ padding: '10px 16px', borderRadius: 8, border: 0, background: '#7652CA', color: 'white', fontWeight: 700 }}>Enregistrer</button>
+   <button onClick={() => setEditing(null)} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid #d1c6ea', background: 'white' }}>Annuler</button>
+ </div>
+ </div>}
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.5rem' }}>
  {Object.entries(item)
  .filter(([k]) => !['id', 'status', 'soumis_le', 'soumis_par', 'categorie', 'destinationTab', 'sheetTab'].includes(k))

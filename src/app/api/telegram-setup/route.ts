@@ -12,7 +12,7 @@ export async function POST() {
   const secret = createHash('sha256').update(token).digest('hex');
   const response = await fetch(`https://api.telegram.org/bot${token}/setWebhook`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url: 'https://al-wasil.fr/api/telegram-webhook', secret_token: secret, allowed_updates: ['message', 'edited_message'] }),
+    body: JSON.stringify({ url: 'https://al-wasil.fr/api/telegram-webhook', secret_token: secret, allowed_updates: ['message', 'edited_message', 'callback_query'] }),
     signal: AbortSignal.timeout(10000),
   });
   if (!response.ok) return NextResponse.json({ error: 'Configuration Telegram échouée' }, { status: 502 });
