@@ -118,6 +118,8 @@ export async function getHajjPackages() {
       const city = String(raw.city || raw.ville || 'Paris');
       const rawPrice = Number(raw.price ?? raw.prix ?? raw.prix_a_partir ?? 0);
       const rawDuration = Number(raw.duration ?? raw.duree_jours ?? 9);
+      const includes = Array.isArray(raw.includes) ? raw.includes.map(String) : Array.isArray(raw.inclus) ? raw.inclus.map(String) : ['Voir les conditions auprès de l’agence'];
+      const excludes = Array.isArray(raw.excludes) ? raw.excludes.map(String) : Array.isArray(raw.exclus) ? raw.exclus.map(String) : [];
       return {
         id: String(raw.id || `db-hajj-${index}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}`),
         agenceId: String(raw.agenceId || raw.agencyId || 'agence-a-verifier'),
@@ -127,10 +129,18 @@ export async function getHajjPackages() {
         duration: Number.isFinite(rawDuration) && rawDuration > 0 ? rawDuration : 9,
         departCities: [city] as Array<'Paris' | 'Lyon' | 'Marseille' | 'Bordeaux' | 'Lille' | 'Nantes' | 'Strasbourg'>,
         price: Number.isFinite(rawPrice) ? rawPrice : 0,
-        includes: Array.isArray(raw.includes) ? raw.includes.map(String) : ['Voir les conditions auprès de l’agence'],
-        excludes: [],
+        includes,
+        excludes,
         description: String(raw.description || 'Offre importée depuis une source publique, à vérifier avant réservation.'),
         departure: String(raw.departure || raw.depart || ''),
+        priceDouble: Number(raw.priceDouble ?? raw.prix_double) || undefined,
+        distanceMasjidHaram: Number(raw.distanceMasjidHaram ?? raw.distance_haram) || undefined,
+        distanceMasjidNabawi: Number(raw.distanceMasjidNabawi ?? raw.distance_nabawi) || undefined,
+        places: Number(raw.places) || undefined,
+        placesRestantes: Number(raw.placesRestantes ?? raw.places_restantes) || undefined,
+        promo: typeof raw.promo === 'string' ? raw.promo : undefined,
+        hotelMakkah: typeof raw.hotelMakkah === 'string' ? raw.hotelMakkah : typeof raw.hotel_makkah === 'string' ? raw.hotel_makkah : undefined,
+        hotelMadinah: typeof raw.hotelMadinah === 'string' ? raw.hotelMadinah : typeof raw.hotel_madinah === 'string' ? raw.hotel_madinah : undefined,
         sourceUrl: typeof raw.sourceUrl === 'string' ? raw.sourceUrl : undefined,
         seasonYear: Number(raw.seasonYear || raw.season || 0) || undefined,
         verificationStatus: raw.verificationStatus === 'verified' ? 'verified' : 'to_verify',

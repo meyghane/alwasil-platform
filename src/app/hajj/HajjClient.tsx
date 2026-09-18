@@ -212,6 +212,12 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
  Offre comparative à vérifier auprès d&apos;Al-Wasil
  </p>
+ <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+  <span style={{ padding: '0.18rem 0.5rem', borderRadius: '999px', background: pkg.verificationStatus === 'verified' ? '#dcfce7' : '#fef3c7', color: pkg.verificationStatus === 'verified' ? '#166534' : '#92400e', fontSize: '0.68rem', fontWeight: 700 }}>
+   {pkg.verificationStatus === 'verified' ? 'Offre vérifiée' : 'À vérifier'}
+  </span>
+  {pkg.sourceUrl && <a href={pkg.sourceUrl} target="_blank" rel="noreferrer" style={{ color: '#6540b5', fontSize: '0.68rem', fontWeight: 700 }}>Voir la source</a>}
+ </div>
  <span style={{ display: 'inline-flex', marginBottom: '0.7rem', padding: '0.2rem 0.55rem', borderRadius: '999px', backgroundColor: qualityScore >= 75 ? '#ecfdf5' : '#f5f3ff', color: qualityScore >= 75 ? '#047857' : '#6540b5', fontSize: '0.7rem', fontWeight: 700 }}>
   Score qualité Al-Wasil : {qualityScore}/100
  </span>
@@ -245,6 +251,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  {pkg.distanceMasjidNabawi && <span> {pkg.distanceMasjidNabawi}m du Nabawi</span>}
  {pkg.departure && <span> {pkg.departure}</span>}
  {pkg.hotelMakkah && <span> {pkg.hotelMakkah.length > 22 ? pkg.hotelMakkah.slice(0, 22) + '…' : pkg.hotelMakkah}</span>}
+ {pkg.hotelMadinah && <span> {pkg.hotelMadinah.length > 22 ? pkg.hotelMadinah.slice(0, 22) + '…' : pkg.hotelMadinah}</span>}
  </div>
  </div>
 
