@@ -94,6 +94,34 @@ export async function getHajjAgences() {
   catch { return staticHajjAgences; }
 }
 export async function getHajjPackages() {
-  try { const rows = await getRaw<HajjPackage>('hajj', 'package'); return rows.length ? rows : staticHajjPackages; }
+  try {
+    const rows = await getRaw<Record<string, unknown>>('hajj', 'package');
+    if (!rows.length) return staticHajjPackages;
+    return rows.map((raw, index) => {
+      const title = String(raw.name || raw.title || `Offre Hajj/Omra ${index + 1}`);
+      const typeText = `${title} ${String(raw.type || '')}`.toLocaleLowerCase('fr-FR');
+      const type = typeText.includes('hajj') ? 'hajj' : typeText.includes('ramadan') ? 'omra-ramadan' : 'omra-hors-saison';
+      const city = String(raw.city || raw.ville || 'Paris');
+      const rawPrice = Number(raw.price ?? raw.prix ?? raw.prix_a_partir ?? 0);
+      const rawDuration = Number(raw.duration ?? raw.duree_jours ?? 9);
+      return {
+        id: String(raw.id || `db-hajj-${index}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}`),
+        agenceId: String(raw.agenceId || raw.agencyId || 'agence-a-verifier'),
+        type,
+        name: title,
+        stars: (Number(raw.stars) >= 3 && Number(raw.stars) <= 5 ? Number(raw.stars) : 4) as 3 | 4 | 5,
+        duration: Number.isFinite(rawDuration) && rawDuration > 0 ? rawDuration : 9,
+        departCities: [city] as Array<'Paris' | 'Lyon' | 'Marseille' | 'Bordeaux' | 'Lille' | 'Nantes' | 'Strasbourg'>,
+        price: Number.isFinite(rawPrice) ? rawPrice : 0,
+        includes: Array.isArray(raw.includes) ? raw.includes.map(String) : ['Voir les conditions auprès de l’agence'],
+        excludes: [],
+        description: String(raw.description || 'Offre importée depuis une source publique, à vérifier avant réservation.'),
+        departure: String(raw.departure || raw.depart || ''),
+        sourceUrl: typeof raw.sourceUrl === 'string' ? raw.sourceUrl : undefined,
+        seasonYear: Number(raw.seasonYear || raw.season || 0) || undefined,
+        verificationStatus: raw.verificationStatus === 'verified' ? 'verified' : 'to_verify',
+      } satisfies HajjPackage;
+    });
+  }
   catch { return staticHajjPackages; }
 }
