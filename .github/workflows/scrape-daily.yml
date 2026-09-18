@@ -35,9 +35,14 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DATABASE_URL: '${{ secrets.DATABASE_URL }}'
+          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
+          TELEGRAM_MODERATION_CHAT_ID: '${{ secrets.TELEGRAM_MODERATION_CHAT_ID }}'
+          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
         run: |
           test -n "$GEMINI_API_KEY" || { echo "::error::Secret GEMINI_API_KEY manquant"; exit 1; }
           test -n "$DATABASE_URL" || { echo "::error::Secret DATABASE_URL manquant"; exit 1; }
+          test -n "$TELEGRAM_BOT_TOKEN" || { echo "::error::Secret TELEGRAM_BOT_TOKEN manquant"; exit 1; }
+          test -n "$TELEGRAM_MODERATION_CHAT_ID$TELEGRAM_CHAT_ID" || { echo "::error::Secret TELEGRAM_MODERATION_CHAT_ID ou TELEGRAM_CHAT_ID manquant"; exit 1; }
           echo "Secrets requis présents (valeurs masquées)."
 
       # Tentative 1 — retry automatique jusqu'à 3 fois si une source plante

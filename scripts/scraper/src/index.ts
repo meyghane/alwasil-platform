@@ -14,7 +14,10 @@ import type { DigestItem } from './types';
 async function notifyTelegram(item: { id: string; title: string; category: string; city?: string | null; sourceUrl?: string | null }): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_MODERATION_CHAT_ID || process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
+  if (!token || !chatId) {
+    console.warn('[telegram] notification ignorée : TELEGRAM_BOT_TOKEN ou identifiant du groupe manquant dans GitHub Actions');
+    return;
+  }
   const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
