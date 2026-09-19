@@ -131,7 +131,9 @@ export async function getHajjPackages() {
       const externalReviews = Array.isArray(raw.externalReviews) ? raw.externalReviews.filter((review): review is Record<string, unknown> => Boolean(review && typeof review === 'object')).map(review => ({ source: String(review.source || review.url || 'Source externe'), rating: Number.isFinite(Number(review.rating)) ? Number(review.rating) : undefined, reviewCount: Number.isFinite(Number(review.reviewCount)) ? Number(review.reviewCount) : undefined, summary: typeof review.summary === 'string' ? review.summary : undefined, collectedAt: String(review.collectedAt || review.collected_at || '') })).filter(review => review.collectedAt) : undefined;
       return {
         id: String(raw.id || `db-hajj-${index}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}`),
-        agenceId: String(raw.agenceId || raw.agencyId || 'agence-a-verifier'),
+        // Ne jamais afficher un faux identifiant d'agence. Le nom reste une
+        // référence interne temporaire tant qu'un partner_id réel n'existe pas.
+        agenceId: String(raw.agenceId || raw.agencyId || raw.agency || raw.agence || ''),
         type,
         name: title,
         stars: (Number(raw.stars) >= 3 && Number(raw.stars) <= 5 ? Number(raw.stars) : 4) as 3 | 4 | 5,

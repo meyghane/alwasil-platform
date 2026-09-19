@@ -378,7 +378,8 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  {/* ─── GUIDE DU PÈLERIN ─── */}
  {tab === 'guide' && (
- <div style={{ maxWidth: '720px' }}>
+ <article style={{ maxWidth: '820px' }}>
+ <header style={{ marginBottom: '2.5rem' }}><p style={{ color: '#7652CA', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.08em', fontSize: '.75rem', marginBottom: '.6rem' }}>Préparer son pèlerinage</p><h2 style={{ fontSize: 'clamp(1.7rem, 4vw, 2.6rem)', lineHeight: 1.05, margin: 0, maxWidth: 680 }}>Les informations essentielles avant votre Hajj ou votre Omra</h2><p style={{ maxWidth: 680, color: 'var(--text-secondary)', lineHeight: 1.7, marginTop: '1rem' }}>Documents, budget, calendrier et conseils pratiques : cette page vous aide à préparer votre départ avec méthode. Les conditions administratives et sanitaires doivent toujours être confirmées auprès de votre agence et des autorités compétentes.</p></header>
  {[
  {
  icon: '',
@@ -449,22 +450,13 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  ],
  },
  ].map(section => (
- <div key={section.title} className="card" style={{ marginBottom: '1.25rem', padding: '1.5rem' }}>
- <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, fontSize: '1rem', marginBottom: '1rem', color: section.color }}>
- <span style={{ fontSize: '1.35rem' }}>{section.icon}</span>
- {section.title}
- </h3>
- <ul style={{ paddingLeft: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
- {section.items.map(item => (
- <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
- <span style={{ color: section.color, flexShrink: 0, marginTop: '2px' }}>›</span>
- {item}
- </li>
+ <section key={section.title} style={{ marginBottom: '2.4rem', paddingBottom: '2rem', borderBottom: '1px solid #e6e1ef' }}>
+ <h3 style={{ fontWeight: 800, fontSize: '1.35rem', marginBottom: '.85rem', color: section.color }}>{section.title}</h3>
+ <ul style={{ paddingLeft: '1.2rem', margin: 0, display: 'grid', gap: '.65rem' }}>{section.items.map(item => <li key={item} style={{ fontSize: '.95rem', color: 'var(--text-secondary)', lineHeight: 1.65, paddingLeft: '.25rem' }}>{item}</li>)}</ul>
+ </section>
  ))}
- </ul>
- </div>
- ))}
- </div>
+ <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '.86rem' }}>Al-Wasil facilite la recherche d’une offre et la mise en relation avec un professionnel. Les formalités, tarifs, visas, réservations et conditions finales relèvent de l’agence sélectionnée.</p>
+ </article>
  )}
  </div>
  </div>

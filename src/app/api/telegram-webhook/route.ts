@@ -9,6 +9,7 @@ import { answerReviewCallback, closeReviewButtons, isAuthorizedReviewAction, mod
 import { withoutEmDashes } from '@/lib/typography';
 import { revalidatePath } from 'next/cache';
 import { itemEventDate } from '@/lib/event-dates';
+import { assessHajjOfferReadiness } from '@/lib/hajj-offer-quality';
 
 type TelegramMessage = {
   chat?: { id?: number }; from?: { id?: number };
@@ -85,7 +86,7 @@ async function chooseGeminiModel(key: string): Promise<string> {
 }
 
 async function analyze(key: string, text: string, media: { data: string; mime: string } | null): Promise<Record<string, unknown>> {
-  const parts: Array<Record<string, unknown>> = [{ text: `Extrais les informations factuelles de cette proposition. Si une donnée manque, laisse une chaîne vide. N'invente rien. Catégories autorisées: evenement, mosquee, institut, cagnotte, piscine, emploi, librairie, psy, hijama, roqya, hajj. Champs JSON: categorie, titre, description, ville, departement, date_iso au format YYYY-MM-DD si connu, heure, lieu, organisateur, adresse, contact, site_web, gratuit, event_category, tags. Texte transmis: ${text}` }];
+  const parts: Array<Record<string, unknown>> = [{ text: `Extrais les informations factuelles de cette proposition. Si une donnée manque, laisse une chaîne vide. N'invente rien. Catégories autorisées: evenement, mosquee, institut, cagnotte, piscine, emploi, librairie, psy, hijama, roqya, hajj. Champs JSON: categorie, titre, description, ville, departement, date_iso au format YYYY-MM-DD si connu, heure, lieu, organisateur, agence, agence_email, agence_telephone, adresse, contact, site_web, prix, duree, depart, dates, periode, hotelMakkah, hotelMadinah, airline, inclusions, documents_requis, gratuit, event_category, tags. Pour une agence, ne déduis jamais un email ou téléphone : ne les remplis que s’ils figurent explicitement dans le texte ou la source. Texte transmis: ${text}` }];
   if (media) parts.push({ inline_data: { mime_type: media.mime, data: media.data } });
   const model = await chooseGeminiModel(key);
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`, {
@@ -190,7 +191,7 @@ export async function POST(req: NextRequest) {
     const pending = await db.select().from(items).where(eq(items.status, 'pending'))
       .orderBy(desc(items.createdAt)).limit(5).offset(offset);
     if (!pending.length) await sendMessage(token, chatId, 'Aucune autre fiche à vérifier.');
-    for (const item of pending) await sendReview(item);
+    for (const item of pending) await sendReview(item).catch((error) => console.warn('[telegram] pending item held back:', error instanceof Error ? error.message : error));
     return NextResponse.json({ ok: true, previews: pending.length });
   }
   if (chatId !== allowedChat) return NextResponse.json({ ok: true });
@@ -212,13 +213,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
     const result = await ingestManualSubmission({ categoryKey: proposal.categoryKey, data: proposal.data, actor: `telegram:${chatId}`, source });
-    if (!result.duplicate) {
+    if (!result.duplicate) await db.insert(moderationLog).values({ itemId: result.id, action: 'edited', previousStatus: null, newStatus: 'pending', actor: `telegram:${chatId}` }).catch(error => console.error('[telegram] ingestion audit write failed:', error));
+    let blockedMessage = '';
+    if (!result.duplicate && proposal.categoryKey === 'hajj') {
+      const readiness = assessHajjOfferReadiness(proposal.data);
+      if (!readiness.eligible) blockedMessage = ` Fiche enregistrée à enrichir, mais non envoyée en modération : ${readiness.missing.join(', ')}.`;
+    }
+    if (!result.duplicate && !blockedMessage) {
       const [inserted] = await db.select().from(items).where(eq(items.id, result.id)).limit(1);
       if (inserted) await sendReview(inserted).catch(error => console.error('[telegram] moderation notification failed:', error));
     }
     await sendMessage(token, chatId, result.duplicate
       ? 'Cette ressource semble déjà présente. Vérifie les fiches en modération.'
-      : `Ressource reçue : ${String(proposal.data.title)}. Elle attend ta validation dans https://al-wasil.fr/admin/soumissions. Rien n’a été publié automatiquement.`);
+      : `Ressource reçue : ${String(proposal.data.title)}.${blockedMessage || ' Elle attend ta validation dans https://al-wasil.fr/admin/soumissions. Rien n’a été publié automatiquement.'}`);
     return NextResponse.json({ ok: true, id: result.id });
   } catch (error) {
     console.error('[telegram] ingestion failure:', error);

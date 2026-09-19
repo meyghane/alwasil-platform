@@ -1,5 +1,6 @@
 import { normalizeUrl } from '@/lib/data-quality';
 import { findSchoolHolidayPeriod, holidayLabel } from '@/lib/school-holidays';
+import { assessHajjOfferReadiness } from '@/lib/hajj-offer-quality';
 
 export type TelegramSubmission = { categoryKey: string; data: Record<string, unknown> };
 
@@ -52,9 +53,17 @@ export function prepareTelegramSubmission(result: Record<string, unknown>, messa
       inclusions: result.inclusions ?? result.inclus ?? undefined, exclusions: result.exclusions ?? result.exclus ?? undefined,
       requiredDocuments: result.documents_requis ?? result.documentsRequis ?? result.documents ?? undefined,
       placesRestantes: numberValue(result.places_restantes ?? result.placesRestantes),
-      partnerReference: str(result.organisateur ?? result.agence ?? result.organizer, 160),
-      verified: false, requires_enrichment: !city || !price || !departure,
+      agency: str(result.agence ?? result.organisateur ?? result.organizer, 160),
+      agencyEmail: str(result.agence_email ?? result.agencyEmail ?? result.email_agence, 240),
+      agencyPhone: str(result.agence_telephone ?? result.agencyPhone ?? result.telephone_agence ?? result.contact, 100),
+      agencyContactSource: str(result.source_contact_agence ?? result.agencyContactSource, 120),
+      agencyContactVerified: result.agencyContactVerified === true,
+      partnerReference: str(result.agence ?? result.organisateur ?? result.organizer, 160),
+      verified: false,
+      requires_enrichment: true,
     };
+    const readiness = assessHajjOfferReadiness(packageData);
+    packageData.requires_enrichment = !readiness.eligible;
     return { categoryKey: 'hajj', data: packageData };
   }
   if (effectiveCategoryKey === 'evenement') {

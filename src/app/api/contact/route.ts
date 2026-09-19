@@ -1,13 +1,13 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { db } from '@/db';
 import { automationErrors, formSubmissions, leadEvents, leads, reports } from '@/db/schema';
 import { and, eq, gt } from 'drizzle-orm';
+import { validateContactFields } from '@/lib/contact-validation';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FORM_TYPES = new Set(['initiative', 'evenement', 'profil-emploi', 'offre-emploi', 'cagnotte', 'librairie', 'revendiquer-librairie', 'piscine', 'correction', 'question-juridique', 'hajj-devis', 'avis', 'mosquee', 'suggestion', 'annonceur', 'general']);
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_FIELDS = 40;
 
 type ContactBody = {
@@ -23,10 +23,6 @@ function clean(value: unknown, max = 2000): string {
   return typeof value === 'string' ? value.replace(/[\u2012\u2013\u2014]/g, ' - ').replace(/\s+/g, ' ').trim().slice(0, max) : '';
 }
 function hash(value: string): string { return createHash('sha256').update(value).digest('hex'); }
-function uuidOrUndefined(value: unknown): string | undefined {
-  const candidate = clean(value, 80);
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(candidate) ? candidate : undefined;
-}
 function clientIp(req: NextRequest): string {
   return (req.headers.get('x-forwarded-for')?.split(',')[0] || req.headers.get('x-real-ip') || 'unknown').trim();
 }
@@ -41,9 +37,8 @@ export async function POST(req: NextRequest) {
 
     const normalized = Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, clean(value)]));
     const email = clean(normalized.email, 240);
-    if (email && !EMAIL_RE.test(email)) return NextResponse.json({ error: 'Adresse email invalide.' }, { status: 400 });
-    if (type === 'hajj-devis' && (!clean(normalized.nom) || !email || !clean(normalized.type) || !clean(normalized.budget))) return NextResponse.json({ error: 'Nom, email, type de voyage et budget sont obligatoires.' }, { status: 400 });
-    if (type === 'hajj-devis' && normalized.consentFollowUp !== 'true') return NextResponse.json({ error: 'Le consentement de suivi est requis.' }, { status: 400 });
+    const validationError = validateContactFields(type, normalized);
+    if (validationError) return NextResponse.json({ error: validationError }, { status: 400 });
 
     const ipHash = hash(clientIp(req));
     // Une même personne doit pouvoir envoyer une nouvelle demande si son
@@ -82,7 +77,11 @@ export async function POST(req: NextRequest) {
       // qualification pour garder la traçabilité de la demande.
       const legacyOfferId = clean(body.offerId, 80);
       const legacyPartnerId = clean(body.partnerId, 80);
-      const [lead] = await db.insert(leads).values({ offerId: uuidOrUndefined(body.offerId), partnerId: uuidOrUndefined(body.partnerId), name: clean(normalized.nom, 120), email, phone: clean(normalized.phone, 40) || undefined, travelType: clean(normalized.type, 80), qualification: { ...normalized, offerId: legacyOfferId || undefined, partnerId: legacyPartnerId || undefined }, source: 'hajj-offer', utm, consentFollowUp: true }).returning({ id: leads.id });
+      // Les colonnes offer_id et partner_id sont textuelles pour conserver les
+      // anciennes cartes (pkg1, a1, db-hajj-...). Ne pas les convertir en
+      // UUID : cela supprimait le rattachement de l’offre au ticket.
+      const ticketReference = `AW-${new Date().getFullYear()}-${randomUUID().slice(0, 6).toUpperCase()}`;
+      const [lead] = await db.insert(leads).values({ ticketReference, offerId: legacyOfferId || undefined, partnerId: legacyPartnerId || undefined, name: clean(normalized.nom, 120), email, phone: clean(normalized.phone, 40) || undefined, travelType: clean(normalized.type, 80), qualification: { ...normalized, offerId: legacyOfferId || undefined, partnerId: legacyPartnerId || undefined }, source: 'hajj-offer', utm, consentFollowUp: true }).returning({ id: leads.id });
       leadId = lead.id;
       await db.insert(leadEvents).values({ leadId, event: 'created', actor: 'public_form', payload: { submissionId: submission.id, page: clean(provenance.page, 240) } });
     }
@@ -90,7 +89,7 @@ export async function POST(req: NextRequest) {
     const to = process.env.CONTACT_EMAIL || 'meyghvne@gmail.com';
     const html = `<h2>Nouvelle soumission Al-Wasil - ${type}</h2><pre>${JSON.stringify(normalized, null, 2)}</pre><p>Page: ${clean(provenance.page, 240) || 'non renseignée'}</p>`;
     try {
-      const result = await resend.emails.send({ from: process.env.RESEND_FROM_EMAIL || 'Al-Wasil <onboarding@resend.dev>', to: [to], subject: `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` - ${leadId}` : ''}`, html, replyTo: email || undefined });
+      const result = await resend.emails.send({ from: process.env.RESEND_FROM_EMAIL || 'Mégane - Al-Wasil <megane@al-wasil.fr>', to: [to], subject: `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` - ${leadId}` : ''}`, html, replyTo: email || undefined });
       if (result.error) throw new Error(result.error.message);
     } catch (error) {
       await db.insert(automationErrors).values({ stage: 'contact_email', code: 'send_failed' });

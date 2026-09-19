@@ -1,6 +1,7 @@
 import type { items } from '@/db/schema';
 import { withoutEmDashes } from '@/lib/typography';
 import { itemEventDate } from '@/lib/event-dates';
+import { assessHajjOfferReadiness } from '@/lib/hajj-offer-quality';
 
 type Item = typeof items.$inferSelect;
 type Keyboard = { inline_keyboard: Array<Array<{ text: string; callback_data?: string; url?: string }>> };
@@ -24,9 +25,11 @@ export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' |
   const campaign = item.category === 'solidarity' && item.metadata?.subType === 'cagnotte';
   const raw = (item.metadata?.raw || {}) as Record<string, unknown>;
   const eventDate = itemEventDate(raw, item.dateStart);
-  const eventNotReady = item.category === 'event' && !!eventDate && eventDate < new Date().toISOString().slice(0, 10);
+  const eventNotReady = item.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10));
+  const hajjNotReady = item.category === 'hajj' && !assessHajjOfferReadiness(raw).eligible;
+  const enrichmentNotReady = item.metadata?.requiresEnrichment === true;
   return { inline_keyboard: [
-    ...(!campaign && !eventNotReady ? [[
+    ...(!campaign && !eventNotReady && !hajjNotReady && !enrichmentNotReady ? [[
       { text: 'Valider', callback_data: `a:${item.id}` },
       { text: 'Refuser', callback_data: `r:${item.id}` },
     ]] : [[{ text: 'Refuser', callback_data: `r:${item.id}` }]]),
@@ -87,6 +90,10 @@ async function telegramCall(method: string, payload: Record<string, unknown>): P
 }
 
 export async function sendReview(item: Item): Promise<void> {
+  if (item.category === 'hajj') {
+    const readiness = assessHajjOfferReadiness((item.metadata?.raw || {}) as Record<string, unknown>);
+    if (!readiness.eligible) throw new Error(`Offre Hajj/Omra bloquée avant modération: ${readiness.missing.join(', ')}`);
+  }
   const chatId = moderationChatId();
   if (!chatId) return;
   await telegramCall('sendMessage', { chat_id: chatId, text: reviewPreview(item),

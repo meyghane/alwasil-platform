@@ -6,8 +6,13 @@ import { isAdminLoggedIn } from '@/lib/admin-auth';
 
 export async function GET() {
   if (!(await isAdminLoggedIn())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
-  const rows = await db.select({ log: moderationLog, title: items.title, category: items.category, currentStatus: items.status }).from(moderationLog).leftJoin(items, eq(items.id, moderationLog.itemId)).orderBy(desc(moderationLog.actedAt)).limit(500);
-  return NextResponse.json({ history: rows.map(row => ({ ...row.log, title: row.title, category: row.category, currentStatus: row.currentStatus })) });
+  try {
+    const rows = await db.select({ log: moderationLog, title: items.title, category: items.category, currentStatus: items.status }).from(moderationLog).leftJoin(items, eq(items.id, moderationLog.itemId)).orderBy(desc(moderationLog.actedAt)).limit(500);
+    return NextResponse.json({ history: rows.map(row => ({ ...row.log, title: row.title, category: row.category, currentStatus: row.currentStatus })) });
+  } catch (error) {
+    console.error('[admin/history] read failed', error);
+    return NextResponse.json({ history: [], error: 'Historique Neon indisponible' }, { status: 503 });
+  }
 }
 
 export async function PATCH(req: NextRequest) {

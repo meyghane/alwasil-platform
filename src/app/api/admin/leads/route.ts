@@ -33,7 +33,7 @@ export async function PATCH(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const qualification = (lead.qualification || {}) as Record<string, unknown>;
   const result = await resend.emails.send({
-   from: process.env.RESEND_FROM_EMAIL || 'Al-Wasil <onboarding@resend.dev>',
+   from: process.env.RESEND_FROM_EMAIL || 'Mégane - Al-Wasil <megane@al-wasil.fr>',
    to: [partner.email], replyTo: lead.email,
    subject: `[Relance Al-Wasil] Demande ${lead.travelType} - ${lead.name}`,
    text: `Bonjour,\n\nNous revenons vers vous au sujet de la demande ${lead.travelType} de ${lead.name}.\n\nBudget : ${String(qualification.budget || 'non précisé')}\nDépart : ${String(qualification.depart || qualification.ville_depart || 'non précisé')}\nVoyageurs : ${String(qualification.voyageurs || qualification.nombre || 'non précisé')}\n\nMerci de nous indiquer si vous pouvez proposer une formule et ses conditions.\n\nCordialement,\nMégane - Al-Wasil`,

@@ -10,6 +10,8 @@ import { eq, inArray } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { withoutEmDashes } from '@/lib/typography';
 import { findSchoolHolidayPeriod, holidayLabel } from '@/lib/school-holidays';
+import { assessHajjOfferReadiness } from '@/lib/hajj-offer-quality';
+import { enrichMosque } from '@/lib/mosque-enrichment';
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
 
@@ -113,6 +115,11 @@ export async function PATCH(req: NextRequest) {
    const url = value('sourceUrl', 1000);
    if (url && !/^https:\/\/[^\s]+$/i.test(url)) return NextResponse.json({ error: 'Lien HTTPS invalide' }, { status: 400 });
    const raw = (current.metadata?.raw || {}) as Record<string, unknown>;
+   const isMosque = current.category === 'institute' && (current.metadata?.subType === 'mosquee' || raw.type === 'mosquee');
+   let researched = null;
+   if (isMosque && (current.metadata?.requiresEnrichment === true || title.toLocaleLowerCase('fr-FR') === 'mosquée')) {
+     researched = await enrichMosque({ ...raw, title, city: value('city', 120), department: value('department', 3), address: value('address', 300) });
+   }
    const city = value('city', 120);
    const department = value('department', 3);
    const organizer = value('organizer', 160);
@@ -135,9 +142,12 @@ export async function PATCH(req: NextRequest) {
      const entered = value(key, max);
      return entered || (typeof raw[key] === 'string' ? raw[key] as string : undefined);
    };
-   const rawUpdated: Record<string, unknown> = { ...raw, id: raw.id || current.id, title, name: title,
-     description: enrichedDescription, city, department, date, organizer, timeStart,
-     location: optional('location'), address: optional('address'), website: url || raw.website, registrationUrl: url || raw.registrationUrl };
+   const finalTitle = researched?.title || title;
+   const finalDescription = researched?.description || enrichedDescription;
+   const rawUpdated: Record<string, unknown> = { ...raw, id: raw.id || current.id, title: finalTitle, name: finalTitle,
+     description: finalDescription, city: researched?.city || city, department: researched?.department || department, date, organizer, timeStart,
+     location: researched?.location || optional('location'), address: researched?.address || optional('address'), website: researched?.website || url || raw.website, phone: researched?.phone || raw.phone, registrationUrl: url || raw.registrationUrl,
+     provenance: researched?.sources || raw.provenance };
    const hajjTextFields: Record<string, string | undefined> = {
      departure: optional('departure'), duration: optional('duration', 80), airline: optional('airline', 120),
      hotelMakkah: optional('hotelMakkah', 180), hotelMadinah: optional('hotelMadinah', 180),
@@ -151,16 +161,20 @@ export async function PATCH(req: NextRequest) {
    if (isHajjOffer) rawUpdated.subType = 'package';
    const priceAvailable = numeric('price') !== undefined || raw.price !== undefined || raw.prix !== undefined || raw.pricePerPerson !== undefined;
    const complete = nextCategory === 'event' ? !!(date && city && department && organizer && timeStart)
-     : nextCategory === 'hajj' ? !!(city && priceAvailable)
+     : nextCategory === 'hajj' ? assessHajjOfferReadiness(rawUpdated).eligible
      : !!(city && department);
+   const enrichmentMissing = researched?.missing || [];
+   const mosqueComplete = !isMosque || (!!finalTitle && finalTitle.toLocaleLowerCase('fr-FR') !== 'mosquée' && !!rawUpdated.address && !!(researched?.sources?.length || url || raw.website));
    const metadata = withoutEmDashes({ ...current.metadata, subType: isHajjOffer ? 'package' : current.metadata?.subType, raw: rawUpdated,
-     requiresEnrichment: edits.verifiedDetails === true ? !complete : current.metadata?.requiresEnrichment });
-   await db.update(items).set({ category: nextCategory, title, description: enrichedDescription, city, department,
+     enrichment: researched ? { checkedAt: new Date().toISOString(), sources: researched.sources, missing: enrichmentMissing } : current.metadata?.enrichment,
+     requiresEnrichment: isMosque ? !mosqueComplete : edits.verifiedDetails === true ? !complete : current.metadata?.requiresEnrichment });
+   await db.update(items).set({ category: nextCategory, title: finalTitle, description: finalDescription, city: String(rawUpdated.city || city) || null, department: String(rawUpdated.department || department) || null,
      sourceUrl: url || null, dateStart: date ? new Date(`${date}T12:00:00Z`) : null,
      metadata, updatedAt: new Date() }).where(eq(items.id, id));
    revalidatePath('/hajj');
    revalidatePath('/events');
-   return NextResponse.json({ ok: true, needsMoreDetails: metadata.requiresEnrichment === true });
+   await db.insert(moderationLog).values({ itemId: id, action: 'edited', previousStatus: current.status, newStatus: current.status, actor: (await isAdminLoggedIn()) ? 'admin:site' : 'moderator:site' });
+   return NextResponse.json({ ok: true, needsMoreDetails: metadata.requiresEnrichment === true, missing: enrichmentMissing });
  }
 
  if (!id || !status) {
@@ -172,10 +186,25 @@ export async function PATCH(req: NextRequest) {
  }
 
  const neonItem = /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(id)
-   ? await db.select({ id: items.id, category: items.category, title: items.title, description: items.description, metadata: items.metadata, status: items.status }).from(items).where(eq(items.id, id)).limit(1)
+   ? await db.select({ id: items.id, category: items.category, title: items.title, description: items.description, city: items.city, department: items.department, sourceUrl: items.sourceUrl, metadata: items.metadata, status: items.status }).from(items).where(eq(items.id, id)).limit(1)
    : [];
  if (neonItem.length > 0) {
- if (status === 'en ligne' && neonItem[0].metadata?.requiresEnrichment === true) return NextResponse.json({ error: 'Cette fiche rapide doit être complétée et vérifiée avant publication.' }, { status: 400 });
+ if (status === 'en ligne' && neonItem[0].metadata?.requiresEnrichment === true && neonItem[0].category === 'institute') {
+   const raw = (neonItem[0].metadata?.raw || {}) as Record<string, unknown>;
+   const researched = await enrichMosque({ ...raw, title: neonItem[0].title, city: neonItem[0].city, department: neonItem[0].department });
+   if (researched) {
+     const finalTitle = researched.title || neonItem[0].title;
+     const finalDescription = researched.description || neonItem[0].description;
+     const complete = !!researched.title && researched.title.toLocaleLowerCase('fr-FR') !== 'mosquée' && !!researched.address && !!researched.sources?.length;
+     const nextMetadata = { ...neonItem[0].metadata, raw: { ...raw, title: finalTitle, name: finalTitle, description: finalDescription, address: researched.address, location: researched.location, website: researched.website, phone: researched.phone, provenance: researched.sources }, enrichment: { checkedAt: new Date().toISOString(), sources: researched.sources, missing: researched.missing }, requiresEnrichment: !complete };
+     await db.update(items).set({ title: finalTitle, description: finalDescription, city: researched.city || neonItem[0].city, department: researched.department || neonItem[0].department, sourceUrl: researched.website || neonItem[0].sourceUrl, metadata: nextMetadata, updatedAt: new Date() }).where(eq(items.id, id));
+     neonItem[0].metadata = nextMetadata;
+     neonItem[0].title = finalTitle;
+     neonItem[0].description = finalDescription;
+     if (!complete) return NextResponse.json({ error: `Enrichissement effectué, validation suspendue. Données manquantes : ${researched.missing.join(', ') || 'informations vérifiables'}.`, missing: researched.missing }, { status: 422 });
+   }
+ }
+ if (status === 'en ligne' && neonItem[0].metadata?.requiresEnrichment === true) return NextResponse.json({ error: 'Enrichissement indisponible : la fiche reste à revérifier, sans publication.', missing: ['enrichissement web vérifiable'] }, { status: 422 });
  const campaign = neonItem[0].category === 'solidarity' && neonItem[0].metadata?.subType === 'cagnotte';
  if (campaign && status === 'en ligne' && verifiedCampaign !== true) return NextResponse.json({ error: 'Vérifiez la collecte et confirmez avant publication.' }, { status: 400 });
  const now = new Date();

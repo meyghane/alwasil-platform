@@ -5,7 +5,7 @@
 // le scraping dans leurs CGU ; voir ARCHITECTURE.md décision Epic B).
 import { randomUUID } from 'node:crypto';
 import { getExistingEventKeys, getExistingCagnotteUrls, getDepartmentCounts, getTodayUsage, hadAnyQuotaErrorToday, insertEvent, insertCagnotte, logAutomationError, saveUsage, type CategoryUsage } from './utils/db';
-import { scrapeEventsWithGemini, scrapeCagnottesWithGemini } from './utils/gemini';
+import { prioritizeDepartments, scrapeEventsWithGemini, scrapeCagnottesWithGemini } from './utils/gemini';
 import { scrapeEventsFromRss } from './utils/rss-events';
 import { sendDigestEmail, sendCagnotteNotice } from './utils/email';
 import { normalizeEventCategory } from './types';
@@ -32,6 +32,31 @@ async function notifyTelegram(item: { id: string; title: string; category: strin
   if (!response.ok) throw new Error(`Telegram HTTP ${response.status}`);
 }
 
+async function notifyDailyReport(report: { date: string; zones: string[]; eventsFound: number; eventsInserted: number; eventCalls: number; eventQuotaErrors: number; cagnottesFound: number; cagnottesInserted: number; cagnottesCalls: number; errors: string[] }): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_MODERATION_CHAT_ID || process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+  const text = [
+    `Rapport de veille Al-Wasil · ${report.date}`,
+    '',
+    `Zones interrogées : ${report.zones.length ? report.zones.join(', ') : 'non déterminées'}`,
+    `Événements : ${report.eventsFound} trouvés · ${report.eventsInserted} nouvelles soumissions · ${report.eventCalls} recherches`,
+    `Cagnottes/solidarité : ${report.cagnottesFound} trouvées · ${report.cagnottesInserted} nouvelles soumissions · ${report.cagnottesCalls} recherches`,
+    '',
+    'Catégories non exécutées aujourd’hui : mosquées, instituts/cours, santé, librairies, piscines, droit/justice, Hajj/Omra.',
+    report.eventQuotaErrors ? `Blocage quota : ${report.eventQuotaErrors} erreur(s), recherches arrêtées.` : '',
+    report.errors.length ? `Erreurs ou limites : ${report.errors.join(' · ')}` : 'Aucune erreur bloquante enregistrée.',
+    '',
+    'Les fiches proposées ci-dessous restent en attente de validation. Les catégories non exécutées ne sont pas considérées comme vérifiées sans résultat.',
+  ].filter(Boolean).join('\n');
+  const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text, disable_web_page_preview: true }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!response.ok) throw new Error(`Telegram rapport HTTP ${response.status}`);
+}
+
 async function main() {
   const today = new Date().toISOString().split('T')[0];
   console.log(`\n==== Al-Wasil Scraper · ${today} ====\n`);
@@ -53,20 +78,29 @@ async function main() {
   const previous = await getTodayUsage('events');
   if (previous.modelCalls >= dailyLimit || previous.tokensUsed >= tokenLimit) {
     console.log('[budget] Événements en pause : budget quotidien atteint.');
-    await runCagnottes();
+    const cagnottes = await runCagnottes();
+    await notifyDailyReport({ date: today, zones: [], eventsFound: 0, eventsInserted: 0, eventCalls: 0, eventQuotaErrors: 0,
+      cagnottesFound: cagnottes.itemsFound, cagnottesInserted: cagnottes.itemsInserted, cagnottesCalls: cagnottes.modelCalls,
+      errors: ['Événements non exécutés : budget quotidien atteint.'] });
     return;
   }
   const usage: CategoryUsage = { modelCalls: 0, tokensUsed: 0, itemsFound: 0, itemsInserted: 0, quotaErrors: 0 };
+  let reportZones: string[] = [];
+  const reportErrors: string[] = [];
+  let reportCagnottesFound = 0;
+  let reportCagnottesInserted = 0;
+  let reportCagnottesCalls = 0;
   const runId = randomUUID();
   try {
     console.log('\n--- Gemini Events Search ---');
     const existingKeys = await getExistingEventKeys();
     const departmentCounts = await getDepartmentCounts();
+    reportZones = prioritizeDepartments(departmentCounts, Math.floor(Date.now() / 86_400_000)).slice(0, dailyLimit);
     const geminiEvents = quotaBlockedToday ? [] : await scrapeEventsWithGemini(
       existingKeys, departmentCounts, dailyLimit - previous.modelCalls,
       (kind, amount) => { if (kind === 'call') usage.modelCalls += amount; else usage.tokensUsed += amount; },
       () => previous.modelCalls + usage.modelCalls < dailyLimit && previous.tokensUsed + usage.tokensUsed < tokenLimit,
-      () => { usage.quotaErrors++; },
+      () => { usage.quotaErrors++; reportErrors.push('Quota Gemini atteint pendant la recherche.'); },
     );
     usage.itemsFound = geminiEvents.length;
     console.log(`Gemini: ${geminiEvents.length} events found`);
@@ -83,6 +117,7 @@ async function main() {
         eventsToInsert = fallback.map(event => ({ ...event, heure: 'À confirmer', organisateur: 'Source RSS à vérifier', categorie: inferEventCategory(event.titre, event.description), gratuit: false }));
       } else {
         await logAutomationError('events_no_source_results', 'scraper_events');
+        reportErrors.push('Aucun résultat fiable depuis Gemini ni la source RSS.');
       }
     }
 
@@ -149,7 +184,24 @@ async function main() {
   } finally {
     await saveUsage(runId, 'events', usage);
   }
-  if (!usage.quotaErrors && !quotaBlockedToday) await runCagnottes();
+  if (!usage.quotaErrors && !quotaBlockedToday) {
+    const cagnottes = await runCagnottes();
+    reportCagnottesFound = cagnottes.itemsFound;
+    reportCagnottesInserted = cagnottes.itemsInserted;
+    reportCagnottesCalls = cagnottes.modelCalls;
+  }
+  await notifyDailyReport({
+    date: today,
+    zones: reportZones,
+    eventsFound: usage.itemsFound,
+    eventsInserted: usage.itemsInserted,
+    eventCalls: usage.modelCalls,
+    eventQuotaErrors: usage.quotaErrors,
+    cagnottesFound: reportCagnottesFound,
+    cagnottesInserted: reportCagnottesInserted,
+    cagnottesCalls: reportCagnottesCalls,
+    errors: reportErrors,
+  }).catch(error => console.warn('[telegram] rapport quotidien non envoyé:', error instanceof Error ? error.message : 'unknown'));
   if (usage.itemsFound === 0 && usage.itemsInserted === 0) {
     throw new Error('Scraping événements terminé sans fiche : consulter le journal admin.');
   }
@@ -161,7 +213,7 @@ async function runCagnottes() {
   const previous = await getTodayUsage('cagnottes');
   if (previous.quotaErrors > 0 || previous.modelCalls >= dailyLimit || previous.tokensUsed >= tokenLimit) {
     console.log('[budget] Cagnottes en pause : quota ou budget quotidien atteint.');
-    return;
+    return usageSnapshot(0, 0, 0);
   }
   const usage: CategoryUsage = { modelCalls: 0, tokensUsed: 0, itemsFound: 0, itemsInserted: 0, quotaErrors: 0 };
   try {
@@ -197,6 +249,11 @@ async function runCagnottes() {
   } finally {
     await saveUsage(randomUUID(), 'cagnottes', usage);
   }
+  return usageSnapshot(usage.itemsFound, usage.itemsInserted, usage.modelCalls);
+}
+
+function usageSnapshot(itemsFound: number, itemsInserted: number, modelCalls: number) {
+  return { itemsFound, itemsInserted, modelCalls };
 }
 
 main().catch(async (e) => {
