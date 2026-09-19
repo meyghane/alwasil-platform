@@ -6,7 +6,7 @@ import { assessHajjOfferReadiness } from '../src/lib/hajj-offer-quality.ts';
 const archive = process.argv.includes('--archive');
 const rows = await db.select().from(items).where(eq(items.category, 'hajj'));
 const report = rows.map((item) => {
-  const raw = (item.metadata?.raw || {}) as Record<string, unknown>;
+  const raw = item.metadata?.raw && typeof item.metadata.raw === 'object' ? item.metadata.raw : {};
   const readiness = assessHajjOfferReadiness(raw);
   return { id: item.id, title: item.title, status: item.status, sourceUrl: item.sourceUrl, eligible: readiness.eligible, missing: readiness.missing };
 });
