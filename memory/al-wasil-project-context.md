@@ -229,6 +229,14 @@ Neon doit être la source de vérité. Google Sheets peut rester export/sauvegar
 
 ## 7. Ce qui reste à faire
 
+### Bugs prioritaires signalés
+
+- Telegram affiche parfois « publié » alors que la fiche n’est pas visible sur la page publique : vérifier la transition `pending → approved`, la revalidation du bon chemin, les filtres publics, le cache et la réponse Telegram. Le bouton ne doit confirmer « publié » que lorsque la mise à jour Neon a réussi et que la fiche est réellement récupérable par la route publique. Sinon, afficher « publication échouée » avec une action de correction.
+- Telegram renvoie plusieurs fois les mêmes notifications : ajouter une déduplication durable par identifiant de fiche, identifiant `update_id`, source Telegram et type de notification. Une notification déjà envoyée ne doit pas être renvoyée à chaque passage, redémarrage du webhook ou commande `/suivantes`. Les envois doivent être journalisés avec date, destinataire et résultat.
+- Les fiches remontées par la recherche sont trop pauvres : instaurer une qualité minimale par catégorie avant soumission/modération. Pour mosquées/instituts : nom, type exact, ville, département, adresse ou zone, téléphone ou contact public, source officielle, description utile, horaires si disponibles et informations de cours lorsque l’établissement est présenté comme institut. Une fiche pauvre doit rester à enrichir et ne doit pas être proposée comme fiche publiable.
+- Les fiches Telegram doivent conserver les champs structurés extraits : catégorie, sous-catégorie, ville, département, adresse, contact, source, date de vérification, niveau de confiance, tags, description, horaires/cours et liens utiles. Ne pas réduire une fiche riche à une simple description libre.
+- Le chatbot doit être audité et réparé : vérifier le modèle configuré, les erreurs d’appel, les timeouts, les réponses vides, la recherche dans les seules fiches publiques approuvées, les liens vers les pages existantes, la non-divulgation des sources et statuts internes, ainsi que l’interdiction d’inventer une fiche ou un contact. Ajouter un état d’erreur clair et un fallback utile lorsque la question ne peut pas être traitée.
+
 ### Obligatoire avant communication publique large
 
 - pousser les commits vers GitHub ;
@@ -291,8 +299,11 @@ Travaille dans l’ordre suivant :
 4. tester formulaire Hajj/Omra, email, ticket CRM et modération Telegram ;
 5. enrichir ou archiver les fiches pending selon les sources officielles ;
 6. finaliser partners, partner_id, attribution, relances et commissions ;
-7. améliorer les automatisations de veille et leurs rapports ;
-8. ne jamais publier automatiquement une fiche nouvelle.
+7. réparer et tester le chatbot sur des questions événements, mosquées, instituts, solidarité et Hajj/Omra ;
+8. réparer Telegram : publication réellement visible, déduplication des notifications, journal des envois et contrôles d’échec ;
+9. renforcer la qualité minimale et l’extraction structurée des fiches mosquées/instituts ;
+10. améliorer les automatisations de veille et leurs rapports ;
+11. ne jamais publier automatiquement une fiche nouvelle.
 
 À chaque étape, indique : ce qui a été réellement exécuté, ce qui a été vérifié, ce qui est bloqué, et ce que l’administratrice doit faire elle-même.
 Ne dis jamais “terminé” si c’est seulement codé localement ou si ce n’est pas déployé.
