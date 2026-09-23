@@ -6,7 +6,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { and, eq, lt } from 'drizzle-orm';
 import { db } from '@/db';
-import { formSubmissions, items } from '@/db/schema';
+import { items } from '@/db/schema';
+import { runRetention } from '@/lib/retention-store';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
 
 export async function GET(req: NextRequest) {
@@ -18,8 +19,7 @@ export async function GET(req: NextRequest) {
   }
   const now = new Date();
 
-  const formRetentionCutoff = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-  const deletedFormSubmissions = await db.delete(formSubmissions).where(lt(formSubmissions.createdAt, formRetentionCutoff)).returning({ id: formSubmissions.id });
+  const retention = await runRetention(true, now);
 
   const expired = await db
     .update(items)
@@ -32,5 +32,5 @@ export async function GET(req: NextRequest) {
     revalidatePath('/');
   }
 
-  return NextResponse.json({ ok: true, today: now.toISOString().split('T')[0], expired: expired.length, deletedFormSubmissions: deletedFormSubmissions.length });
+  return NextResponse.json({ ok: true, today: now.toISOString().split('T')[0], expired: expired.length, retention });
 }

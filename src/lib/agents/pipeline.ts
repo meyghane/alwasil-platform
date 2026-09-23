@@ -11,11 +11,12 @@ export type AgentPorts = {
   verifyPublic(id: string): Promise<boolean>;
   rollback(id: string): Promise<void>;
   finish(report: RunReport): Promise<void>;
+  sourceChecked?(id: string, errorCode: string | null): Promise<void>;
 };
 
 export async function runAgents(ports: AgentPorts, now = new Date(), runId: string = randomUUID()): Promise<RunReport> {
   const started = Date.now();
-  const report: RunReport = { id: runId, startedAt: now.toISOString(), zones: [], categories: [], found: 0, published: 0, corrected: 0, duplicates: 0, rejected: 0, archived: 0, deferred: 0, errors: [], quotaReached: false, uncovered: [], actions: [] };
+  const report: RunReport = { id: runId, startedAt: now.toISOString(), zones: [], categories: [], sources: [], added: 0, rejectionReasons: [], found: 0, published: 0, corrected: 0, duplicates: 0, rejected: 0, archived: 0, deferred: 0, errors: [], quotaReached: false, uncovered: [], actions: [] };
   try {
     const plan = discoverSources(await ports.sources(), AUTO_CATEGORIES, 3, Math.floor(now.getTime()/86400000));
     report.uncovered = plan.uncovered; report.quotaReached = plan.quotaReached;
@@ -24,6 +25,8 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
       if (Date.now()-started>35000) { report.quotaReached=true; report.uncovered.push(`${source.category} : budget de temps atteint`); break; }
       report.zones = [...new Set([...report.zones, ...source.departments.filter(d => plan.plannedZones.includes(d as never))])];
       report.categories = [...new Set([...report.categories, source.category])];
+      report.sources.push(source.url);
+      let sourceError: string | null = null;
       try {
         const candidates = extractStructured(await ports.fetch(source.url), source, now.toISOString());
         if (!candidates.length) report.actions.push(`${source.category} : source sans fiche structurée exploitable, adaptateur nécessaire.`);
@@ -31,16 +34,18 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
           if (report.found >= 50 || Date.now()-started>35000) { report.quotaReached = true; break; }
           report.found++;
           const assessment = assessRecord(record, source, false, now);
-          if (assessment.decision === 'blocked') { report.rejected++; continue; }
+          if (assessment.decision === 'blocked') { report.rejected++; report.rejectionReasons.push(...assessment.reasons); continue; }
           const saved = await ports.save(record, assessment);
           if (saved.duplicate) { report.duplicates++; continue; }
+          report.added++;
           if (!saved.published) { report.deferred++; continue; }
           let visible = false;
           try { visible = await ports.verifyPublic(saved.id); } catch { /* Never confirm unverified publication. */ }
           if (visible) report.published++;
           else { await ports.rollback(saved.id); report.deferred++; report.errors.push('Publication non visible : remise en attente.'); }
         }
-      } catch { report.errors.push(`${source.category} : recherche ou enregistrement indisponible.`); }
+      } catch { sourceError = 'source_or_storage_unavailable'; report.errors.push(`${source.category} : recherche ou enregistrement indisponible.`); }
+      finally { await ports.sourceChecked?.(source.id, sourceError); }
     }
     report.uncovered.push('Hajj/Omra, cagnottes, santé, droit : validation humaine ; emploi non demandé.');
   } catch { report.errors.push('Registre de sources indisponible.'); }

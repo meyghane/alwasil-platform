@@ -329,3 +329,13 @@ Le projet sera considéré comme terminé lorsque :
 - Resend, Telegram, GitHub Actions et Vercel sont configurés ;
 - tests, build, migrations et sauvegardes sont documentés ;
 - un déploiement propre a été vérifié sur le domaine public.
+
+## Point de reprise vérifié : 23 septembre 2026
+
+Le lot suivant 7c552df est décrit dans docs/RELEASE_READINESS_2026-09-23.md. Il reste local, sans push ni déploiement. Tests : 73 réussis ; build Next.js 16.3.6 : 97 routes ; relais scraper compilé. Contrôles HTTP locaux : pages testées 200, API privées 401, JSON de connexion invalide 400, configuration de session insuffisante 503.
+
+Neon vérifié : migrations 0015/0016 présentes, deux partenaires vérifiés sans accord commercial présumé, un lead avec ticket, aucun lien partenaire invalide ; quatre propositions Hajj archivées avec instantanés, total 23 archivées et zéro pending. Aucune nouvelle offre publiée. Zéro source autorisée et zéro exécution d’agent : ne pas présenter une couverture comme réalisée.
+
+Blocages : secret de session local trop court (minimum 32 caractères désormais), rotation des anciens identifiants codés en dur nécessaire, Gemini HTTP 400, RESEND_FROM_EMAIL absent, CRON_SECRET GitHub à configurer, identifiants Telegram dédiés à confirmer, autorisation des sources et politique de conservation à valider. Aucun effacement/anonymisation de données personnelles exécuté. Ne jamais afficher les valeurs des secrets.
+
+Recette persistante PostgreSQL isolée réussie, mais transport Telegram simulé et visibilité contrôlée par SQL dans cette recette : ne remplace pas la recette HTTP/Telegram de production. Confirmation de livraison email finale, recette visuelle authentifiée et audit anti-tentatives répétées restent à réaliser. Demander validation du bilan avant tout push.

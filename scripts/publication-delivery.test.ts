@@ -9,7 +9,7 @@ const mosque = { name: 'Fixture mosquée', type: 'mosquee', city: 'Paris', depar
 test('fiche mosquée riche acceptée', () => assert.equal(assessInstitute(mosque).eligible, true));
 test('fiche institut exige des cours détaillés', () => {
   assert.equal(assessInstitute({ ...mosque, type: 'institut' }).eligible, false);
-  assert.equal(assessInstitute({ ...mosque, type: 'institut', courses: ['Arabe débutant : cours hebdomadaire pour adultes'] }).eligible, true);
+  assert.equal(assessInstitute({ ...mosque, type: 'institut', courses: ['Arabe débutant : cours hebdomadaire pour adultes'], audience:['adultes'], format:['presentiel'], horaires:'samedi' }).eligible, true);
 });
 test('fiche pauvre bloquée', () => assert.equal(assessInstitute({ name: 'Fixture', city: 'Paris' }).eligible, false));
 test('extraction institut conserve cours et horaires structurés', () => {

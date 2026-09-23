@@ -19,6 +19,8 @@ export function assessRecord(record: RecordData, source: Source, duplicate = fal
   if (record.category === 'piscine') missing.push('adaptateur requis : type de piscine et politique de tenue à vérifier');
   if (!(AUTO_CATEGORIES as readonly string[]).includes(record.category)) missing.push('validation humaine de cette catégorie');
   const reasons = missing.filter((value): value is string => typeof value === 'string' && !!value);
+  if (record.commercial) reasons.push('fiche commerciale : validation humaine');
+  if (!record.phone && !record.email) reasons.push('contact public manquant');
   return reasons.length ? { decision: 'deferred', confidence: 'medium', reasons } : { decision: 'automatic', confidence: 'high', reasons: ['source officielle autorisée', 'données structurées complètes', 'aucun conflit détecté'] };
 }
 

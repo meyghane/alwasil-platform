@@ -1,5 +1,5 @@
 // Gestion des sessions utilisateur (admin + modo)
-const SECRET = process.env.ADMIN_SESSION_SECRET || 'fallback_secret_change_me';
+const SECRET = process.env.ADMIN_SESSION_SECRET || '';
 const USER_COOKIE = 'aw_user';
 const MAX_AGE = 60 * 60 * 8; // 8h
 
@@ -28,6 +28,7 @@ export interface ModoAccount {
 
 // ── Crypto (même algo que admin-auth.ts) ────────────────────────
 async function getKey(): Promise<CryptoKey> {
+ if (SECRET.length < 32) throw new Error('Configuration de session absente ou insuffisante');
  return crypto.subtle.importKey('raw', new TextEncoder().encode(SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
 }
 
@@ -53,12 +54,13 @@ export async function createUserToken(session: UserSession): Promise<string> {
 }
 
 export async function verifyUserToken(token: string): Promise<UserSession | null> {
+ if (SECRET.length < 32) return null;
  const [payload, sig] = token.split('.');
  if (!payload || !sig) return null;
  if (!(await verifySignature(payload, sig))) return null;
  try {
  const data = JSON.parse(atob(payload));
- if (Date.now() - data.ts > MAX_AGE * 1000) return null;
+ if (!Number.isFinite(data.ts) || data.ts > Date.now() || Date.now() - data.ts > MAX_AGE * 1000 || !['admin','modo'].includes(data.role)) return null;
  return { id: data.id, email: data.email, role: data.role, name: data.name, permissions: data.permissions };
  } catch {
  return null;
@@ -127,36 +129,14 @@ async function sha256(str: string): Promise<string> {
 // Comptes permanents - hash SHA-256 uniquement (le mot de passe en clair n'est pas stocké)
 // Admin : al-wasil@hotmail.com / salamaleykoum
 // Modo test : test@gmail.com / test
-const PERMANENT_ACCOUNTS: { email: string; hash: string; role: UserRole; name: string }[] = [
- { email: 'al-wasil@hotmail.com', hash: '6aa5c51674b639060fd6e1e055d8dbe58d53c0e80f7f950fb4d0b2eebdc205ac', role: 'admin', name: 'Admin' },
- { email: 'test@gmail.com', hash: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', role: 'modo', name: 'Modo Test' },
-];
-
-// Vérification directe des identifiants (fallback si hash échoue)
-const DIRECT_CREDENTIALS: { email: string; password: string; role: UserRole; name: string }[] = [
- { email: 'al-wasil@hotmail.com', password: 'salamaleykoum', role: 'admin', name: 'Admin' },
- { email: 'test@gmail.com', password: 'test', role: 'modo', name: 'Modo Test' },
-];
-
 export async function authenticateUser(email: string, password: string): Promise<UserSession | null> {
+ if (SECRET.length < 32 || typeof email !== 'string' || typeof password !== 'string' || !email.trim() || !password || password.length > 1024) return null;
  const hashed = await sha256(password);
-
- // 1a. Vérification directe (la plus fiable)
- const direct = DIRECT_CREDENTIALS.find(a => a.email === email && a.password === password);
- if (direct) {
- return { id: direct.role === 'admin' ? 'admin' : `modo-${direct.email}`, email, role: direct.role, name: direct.name, permissions: ['all'] };
- }
-
- // 1b. Comptes permanents via hash SHA-256
- const permanent = PERMANENT_ACCOUNTS.find(a => a.email === email && a.hash === hashed);
- if (permanent) {
- return { id: permanent.role === 'admin' ? 'admin' : `modo-${permanent.email}`, email, role: permanent.role, name: permanent.name, permissions: ['all'] };
- }
 
  // 2. Admin depuis env vars (compatibilité ancienne config)
  if (email === process.env.ADMIN_EMAIL) {
  const adminPwd = process.env.ADMIN_PASSWORD || '';
- if (password === adminPwd || hashed === adminPwd) {
+ if (adminPwd && (password === adminPwd || hashed === adminPwd)) {
  return { id: 'admin', email, role: 'admin', name: 'Admin', permissions: ['all'] };
  }
  }
@@ -179,6 +159,7 @@ export async function authenticateUser(email: string, password: string): Promise
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify({ action: 'login', email, password: hashed }),
+ signal: AbortSignal.timeout(8000),
  });
  if (res.ok) {
  const data = await res.json();

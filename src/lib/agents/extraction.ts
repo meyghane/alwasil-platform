@@ -33,6 +33,7 @@ export function extractStructured(html: string, source: Source, fetchedAt: strin
     const title = text(node.name); const description = text(node.description);
     return {
       title, description, category: source.category, subType: source.category,
+      commercial: !!node.offers || !!node.priceRange || source.category === 'librairie',
       city: text(address.addressLocality), department, address: text(address.streetAddress),
       phone: text(node.telephone), email: text(node.email), website: text(node.url) || source.url,
       hours: strings(node.openingHours || node.schedule), courses: strings(node.hasCourse), audience: strings(node.audience),

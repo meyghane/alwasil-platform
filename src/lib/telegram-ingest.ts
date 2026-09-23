@@ -93,7 +93,7 @@ export function prepareTelegramSubmission(result: Record<string, unknown>, messa
       courses: Array.isArray(result.courses ?? result.cours) ? (result.courses ?? result.cours) : [],
       audience: Array.isArray(result.audience) ? result.audience : [],
       horaires: str(result.horaires, 1000), lastVerifiedAt: str(result.lastVerifiedAt ?? result.date_verification, 40),
-      confidence: str(result.confidence, 40), format: ['presentiel'], verified: false,
+      confidence: str(result.confidence, 40), format: Array.isArray(result.format) ? result.format : str(result.format, 100) ? [str(result.format, 100)] : [], verified: false,
       requires_enrichment: true,
     };
     data.requires_enrichment = !assessInstitute(data).eligible;

@@ -8,8 +8,10 @@ const subTypes: Record<string,string> = { evenement: 'event', hajj: 'package', e
 export async function registeredSources(): Promise<Source[]> {
   return await client()`SELECT id,url,category,departments,trust,official,evidence,enabled FROM agent_sources` as Source[];
 }
-export async function saveAgentRecord(record: RecordData, assessment: Assessment) {
-  const sql = client();
+export async function recordSourceCheck(id: string, errorCode: string | null) {
+  await client()`UPDATE agent_sources SET last_checked_at=now(),run_count=run_count+1,error_count=error_count+CASE WHEN ${errorCode}::text IS NULL THEN 0 ELSE 1 END,last_error_code=${errorCode} WHERE id=${id}::uuid`;
+}
+export async function saveAgentRecord(record: RecordData, assessment: Assessment, sql = client()) {
   const existing = await sql`SELECT id,title,city,metadata FROM items WHERE category=${categories[record.category]}::category AND status IN ('pending','approved')`;
   const duplicate = existing.find(row => {
     const prior = row.metadata?.agentRecord as RecordData | undefined;
@@ -33,8 +35,7 @@ export async function saveAgentRecord(record: RecordData, assessment: Assessment
   ) SELECT id FROM inserted`;
   return { id: String(rows[0]?.id || ''), duplicate: rows.length === 0, published: rows.length > 0 && status === 'approved' };
 }
-export async function rollbackInvisible(id: string) {
-  const sql = client();
+export async function rollbackInvisible(id: string, sql = client()) {
   await sql`WITH prior AS (SELECT * FROM items WHERE id=${id}::uuid AND status='approved' FOR UPDATE), changed AS (
     UPDATE items SET status='pending',metadata=items.metadata || '{"autoPublished":false}'::jsonb,updated_at=now() FROM prior WHERE items.id=prior.id RETURNING items.*
   ) INSERT INTO agent_item_history(item_id,action,actor,before_snapshot,after_snapshot,reasons)
@@ -46,4 +47,8 @@ export async function saveAgentReport(report: RunReport) {
 export async function claimRun(key: string) {
   const rows = await client()`INSERT INTO agent_runs(run_key) VALUES (${key}) ON CONFLICT DO NOTHING RETURNING id`;
   return rows[0]?.id ? String(rows[0].id) : null;
+}
+export async function existingRun(key: string) {
+  const [run] = await client()`SELECT status FROM agent_runs WHERE run_key=${key}`;
+  return run?.status || 'unknown';
 }

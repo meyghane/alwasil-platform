@@ -1,115 +1,37 @@
-name: Scraping Quotidien Al-Wasil
+name: Veille contrôlée Al-Wasil
 
 on:
-  # Trois passages quotidiens : découverte, déduplication puis digest email.
-  # Le workflow reste aussi lançable manuellement pour les tests.
   schedule:
-    - cron: '0 6,12,18 * * *'
+    - cron: '0 8 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   scrape:
-    name: Scraping & Email Digest
+    name: Pipeline des sources autorisées
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 5
     concurrency:
       group: alwasil-daily-scrape
       cancel-in-progress: false
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 22
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
+          cache: npm
           cache-dependency-path: scripts/scraper/package-lock.json
-
-      - name: Install dependencies
+      - name: Installer
         working-directory: scripts/scraper
         run: npm ci
-
-      - name: Validate required secrets
+      - name: Vérifier la configuration
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
-          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
-          TELEGRAM_MODERATION_CHAT_ID: '${{ secrets.TELEGRAM_MODERATION_CHAT_ID }}'
-          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
-        run: |
-          test -n "$GEMINI_API_KEY" || { echo "::error::Secret GEMINI_API_KEY manquant"; exit 1; }
-          test -n "$DATABASE_URL" || { echo "::error::Secret DATABASE_URL manquant"; exit 1; }
-          test -n "$TELEGRAM_BOT_TOKEN" || { echo "::error::Secret TELEGRAM_BOT_TOKEN manquant"; exit 1; }
-          test -n "$TELEGRAM_MODERATION_CHAT_ID$TELEGRAM_CHAT_ID" || { echo "::error::Secret TELEGRAM_MODERATION_CHAT_ID ou TELEGRAM_CHAT_ID manquant"; exit 1; }
-          echo "Secrets requis présents (valeurs masquées)."
-
-      # Tentative 1 — retry automatique jusqu'à 3 fois si une source plante
-      - name: Run scraper (attempt 1)
-        id: scrape1
-        working-directory: scripts/scraper
-        continue-on-error: true
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
-          RESEND_API_KEY: '${{ secrets.RESEND_API_KEY }}'
-          MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
-          ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
-          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
-          TELEGRAM_MODERATION_CHAT_ID: '${{ secrets.TELEGRAM_MODERATION_CHAT_ID }}'
-          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
-          SITE_URL: https://al-wasil.fr
-          EVENTS_DAILY_CALL_BUDGET: '7'
-          CAGNOTTES_DAILY_CALL_BUDGET: '3'
-          EVENTS_DAILY_TOKEN_BUDGET: '120000'
-          CAGNOTTES_DAILY_TOKEN_BUDGET: '50000'
-        run: npm run scrape
-
-      - name: Wait before retry
-        if: steps.scrape1.outcome == 'failure'
-        run: sleep 60
-
-      - name: Run scraper (attempt 2)
-        id: scrape2
-        if: steps.scrape1.outcome == 'failure'
-        working-directory: scripts/scraper
-        continue-on-error: true
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
-          RESEND_API_KEY: '${{ secrets.RESEND_API_KEY }}'
-          MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
-          ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
-          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
-          TELEGRAM_MODERATION_CHAT_ID: '${{ secrets.TELEGRAM_MODERATION_CHAT_ID }}'
-          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
-          SITE_URL: https://al-wasil.fr
-          EVENTS_DAILY_CALL_BUDGET: '7'
-          CAGNOTTES_DAILY_CALL_BUDGET: '3'
-          EVENTS_DAILY_TOKEN_BUDGET: '120000'
-          CAGNOTTES_DAILY_TOKEN_BUDGET: '50000'
-        run: npm run scrape
-
-      - name: Wait before retry
-        if: steps.scrape2.outcome == 'failure'
-        run: sleep 120
-
-      - name: Run scraper (attempt 3 — final)
-        if: steps.scrape2.outcome == 'failure'
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: test -n "$CRON_SECRET" || { echo "::error::CRON_SECRET manquant"; exit 1; }
+      - name: Exécuter une fois le pipeline contrôlé
         working-directory: scripts/scraper
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
-          RESEND_API_KEY: '${{ secrets.RESEND_API_KEY }}'
-          MODERATE_SECRET: '${{ secrets.MODERATE_SECRET }}'
-          ADMIN_EMAIL: '${{ secrets.ADMIN_EMAIL }}'
-          TELEGRAM_BOT_TOKEN: '${{ secrets.TELEGRAM_BOT_TOKEN }}'
-          TELEGRAM_MODERATION_CHAT_ID: '${{ secrets.TELEGRAM_MODERATION_CHAT_ID }}'
-          TELEGRAM_CHAT_ID: '${{ secrets.TELEGRAM_CHAT_ID }}'
-          SITE_URL: https://al-wasil.fr
-          EVENTS_DAILY_CALL_BUDGET: '7'
-          CAGNOTTES_DAILY_CALL_BUDGET: '3'
-          EVENTS_DAILY_TOKEN_BUDGET: '120000'
-          CAGNOTTES_DAILY_TOKEN_BUDGET: '50000'
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: npm run scrape

@@ -13,6 +13,10 @@ export function assessInstitute(raw: Record<string, unknown>) {
     !text(raw.lastVerifiedAt) || Number.isNaN(Date.parse(text(raw.lastVerifiedAt))) ? 'date de vérification' : '',
     !['high', 'medium', 'élevé', 'moyen'].includes(text(raw.confidence)) ? 'niveau de confiance' : '',
     type === 'institut' && (!Array.isArray(raw.courses) || !raw.courses.some(course => text(course).length >= 10)) ? 'cours détaillés' : '',
+    type === 'institut' && (!Array.isArray(raw.audience) || !raw.audience.some(value => text(value))) ? 'public concerné' : '',
+    type === 'institut' && (!Array.isArray(raw.format) || !raw.format.some(value => text(value))) ? 'format' : '',
+    type === 'institut' && !text(raw.horaires) && (!Array.isArray(raw.hours) || !raw.hours.some(value => text(value))) ? 'horaires ou modalités' : '',
+    type === 'institut' && (!Array.isArray(raw.tags) || !raw.tags.some(value => text(value))) ? 'tags' : '',
   ].filter(Boolean);
   return { eligible: missing.length === 0, missing };
 }

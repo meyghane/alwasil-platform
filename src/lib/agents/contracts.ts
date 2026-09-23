@@ -1,16 +1,16 @@
-export const AUTO_CATEGORIES = ['mosquee', 'institut', 'evenement', 'association', 'librairie', 'piscine'] as const;
-export type AgentCategory = typeof AUTO_CATEGORIES[number] | 'hajj' | 'cagnotte' | 'sante' | 'justice' | 'emploi';
+export const AUTO_CATEGORIES = ['mosquee', 'institut', 'evenement', 'association', 'librairie'] as const;
+export type AgentCategory = typeof AUTO_CATEGORIES[number] | 'piscine' | 'hajj' | 'cagnotte' | 'sante' | 'justice' | 'emploi';
 export type Source = { id: string; url: string; category: AgentCategory; departments: string[]; trust: 'pending' | 'trusted' | 'blocked'; official: boolean; evidence: string; enabled: boolean };
 export type RecordData = {
   title: string; category: AgentCategory; subType: string; description: string;
   city: string; department: string; address: string; phone: string; email: string;
   website: string; hours: string[]; courses: string[]; audience: string[]; format: string[];
   tags: string[]; verifiedAt: string; image?: string; date?: string; organizer?: string;
-  latitude?: number; longitude?: number; historicalIds?: string[];
+  latitude?: number; longitude?: number; historicalIds?: string[]; commercial?: boolean;
   provenance: { sourceId: string; url: string; fetchedAt: string; contentHash: string; fields: string[] };
 };
 export type Assessment = { decision: 'automatic' | 'deferred' | 'blocked'; confidence: 'high' | 'medium' | 'low'; reasons: string[] };
-export type RunReport = { id: string; startedAt: string; zones: string[]; categories: string[]; found: number; published: number; corrected: number; duplicates: number; rejected: number; archived: number; deferred: number; errors: string[]; quotaReached: boolean; uncovered: string[]; actions: string[] };
+export type RunReport = { id: string; startedAt: string; zones: string[]; categories: string[]; sources: string[]; added: number; rejectionReasons: string[]; found: number; published: number; corrected: number; duplicates: number; rejected: number; archived: number; deferred: number; errors: string[]; quotaReached: boolean; uncovered: string[]; actions: string[] };
 export const AGENTS = {
   discovery: { input: 'sources, zones, quotas', output: 'sources exécutables, couverture', permission: 'lecture sources officielles' },
   extraction: { input: 'document JSON-LD', output: 'RecordData avec provenance', permission: 'aucune écriture' },

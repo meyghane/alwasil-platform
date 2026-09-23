@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { RefreshCw, Archive, RotateCcw, ShieldCheck } from 'lucide-react';
 type RecordRow = { id: string; title: string; status: string; updated_at: string; confidence: string; reasons: string[]; automatic: string; source_url: string };
-type SourceRow = { id: string; url: string; category: string; departments: string[]; trust: string; evidence: string };
+type SourceRow = { id: string; url: string; category: string; departments: string[]; trust: string; evidence: string; domain: string; adapter: string; authorized_at: string | null; last_checked_at: string | null; run_count: number; error_count: number; last_error_code: string | null };
 type Data = { records: RecordRow[]; sources: SourceRow[]; runs: Array<{ id: string; status: string; report: Record<string, unknown> }>; deliveries: Array<{ notification_type: string; result: string }> };
 const button = { border: '1px solid #ddd', borderRadius: 999, padding: '.6rem 1rem', background: '#ECFF58', color: '#080808', cursor: 'pointer' };
 export default function AgentsConsole() {
@@ -36,12 +36,12 @@ export default function AgentsConsole() {
     <h2>Sources</h2>
     <form onSubmit={event => { event.preventDefault(); const form = new FormData(event.currentTarget); act({ action:'source',url:form.get('url'),category:form.get('category'),departments:String(form.get('departments')).split(',').map(x=>x.trim()),evidence:form.get('evidence'),trust:'pending' }); }} style={{ display:'flex',flexWrap:'wrap',gap:12 }}>
       <label>URL officielle <input type="url" name="url" required /></label>
-      <label>Catégorie <select name="category">{['mosquee','institut','evenement','association','librairie','piscine'].map(category=><option key={category}>{category}</option>)}</select></label>
+      <label>Catégorie <select name="category">{['mosquee','institut','evenement','association','librairie'].map(category=><option key={category}>{category}</option>)}</select></label>
       <label>Départements séparés par virgules <input name="departments" required /></label>
       <label>Preuve de fiabilité <input name="evidence" required minLength={30} /></label>
       <button style={button} disabled={busy}>Enregistrer en attente</button>
     </form>
-    {data?.sources.map(source=><div key={source.id} style={{ padding:12,borderBottom:'1px solid #ddd',overflowWrap:'anywhere' }}><p>{source.url} · {source.category} · {source.trust}</p><p>{source.evidence}</p><button style={button} disabled={busy} onClick={()=>act({ ...source,action:'source',trust:'trusted' })}>Autoriser cette source officielle</button> <button style={button} disabled={busy} onClick={()=>act({ ...source,action:'source',trust:'blocked' })}>Source problématique</button></div>)}
+    {data?.sources.map(source=><div key={source.id} style={{ padding:12,borderBottom:'1px solid #ddd',overflowWrap:'anywhere' }}><p>{source.url} · {source.category} · {source.trust}</p><p>{source.evidence}</p><p>Domaine : {source.domain} · Adaptateur : {source.adapter} · Départements : {source.departments.join(', ')}</p><p>Active : {source.trust === 'trusted' ? 'oui' : 'non'} · Autorisation : {source.authorized_at ? new Date(source.authorized_at).toLocaleString('fr-FR') : 'en attente'} · Dernière vérification : {source.last_checked_at ? new Date(source.last_checked_at).toLocaleString('fr-FR') : 'jamais'}</p><p>Exécutions : {source.run_count} · Erreurs : {source.error_count} · Dernière erreur : {source.last_error_code || 'aucune'}</p><button style={button} disabled={busy} onClick={()=>act({ ...source,action:'source',trust:'trusted' })}>Autoriser cette source officielle</button> <button style={button} disabled={busy} onClick={()=>act({ ...source,action:'source',trust:'blocked' })}>Source problématique</button></div>)}
     <h2>Rapports et erreurs</h2>
     {data?.runs.map(run=><details key={run.id}><summary>Exécution {run.status}</summary><pre style={{ whiteSpace:'pre-wrap',overflowWrap:'anywhere' }}>{JSON.stringify(run.report,null,2)}</pre></details>)}
     {data?.deliveries.map((delivery,index)=><p key={index}>Telegram : {delivery.notification_type} · {delivery.result}. Vérifier la livraison avant toute relance.</p>)}

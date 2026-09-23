@@ -1,4 +1,5 @@
-const names = ['DATABASE_URL','RESEND_API_KEY','GEMINI_API_KEY','TELEGRAM_BOT_TOKEN','TELEGRAM_CHAT_ID','TELEGRAM_MODERATION_CHAT_ID','TELEGRAM_MODERATOR_USER_ID','CRON_SECRET','MODERATE_SECRET','RESEND_FROM_EMAIL'];
+const names = ['DATABASE_URL','RESEND_API_KEY','GEMINI_API_KEY','TELEGRAM_BOT_TOKEN','TELEGRAM_CHAT_ID','TELEGRAM_MODERATION_CHAT_ID','TELEGRAM_MODERATOR_USER_ID','CRON_SECRET','MODERATE_SECRET','RESEND_FROM_EMAIL','ADMIN_EMAIL','ADMIN_PASSWORD','ADMIN_SESSION_SECRET','PERSONAL_DATA_RETENTION_ENABLED'];
+console.log(JSON.stringify({ secureSessionConfigured: (process.env.ADMIN_SESSION_SECRET || '').length >= 32 }));
 console.log(JSON.stringify({ configuration: Object.fromEntries(names.map(name => [name, !!process.env[name]])) }));
 console.log(JSON.stringify({ malformedConfiguration: Object.fromEntries(names.filter(name => process.env[name]).map(name => [name, { whitespace: process.env[name] !== process.env[name].trim(), escapedNewline: /\\n$/.test(process.env[name]), placeholder: /redacted|encrypted|sensitive/i.test(process.env[name]) }])) }));
 async function check(name, url, options, summarize) {

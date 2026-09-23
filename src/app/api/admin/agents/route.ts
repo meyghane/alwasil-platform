@@ -36,8 +36,8 @@ export async function POST(request: Request) {
       const departments = Array.isArray(body.departments) ? body.departments.map(String).filter(d => /^(?:\d{2,3}|2A|2B)$/.test(d)) : [];
       if (!departments.length) return Response.json({ error: 'Départements requis.' }, { status: 422 });
       await sql`WITH prior AS (SELECT * FROM agent_sources WHERE url=${url.href}), changed AS (
-        INSERT INTO agent_sources(url,category,departments,trust,official,evidence) VALUES (${url.href},${category},${departments},${trust},${trust === 'trusted'},${evidence})
-        ON CONFLICT(url) DO UPDATE SET trust=excluded.trust,official=excluded.official,evidence=excluded.evidence,category=excluded.category,departments=excluded.departments,updated_at=now() RETURNING *
+        INSERT INTO agent_sources(url,domain,category,departments,trust,official,evidence,authorized_at) VALUES (${url.href},${url.hostname},${category},${departments},${trust},${trust === 'trusted'},${evidence},CASE WHEN ${trust}='trusted' THEN now() ELSE NULL END)
+        ON CONFLICT(url) DO UPDATE SET domain=excluded.domain,trust=excluded.trust,official=excluded.official,evidence=excluded.evidence,category=excluded.category,departments=excluded.departments,authorized_at=excluded.authorized_at,updated_at=now() RETURNING *
       ) INSERT INTO agent_source_history(source_id,actor,before_snapshot,after_snapshot)
         SELECT changed.id,'admin',to_jsonb(prior),to_jsonb(changed) FROM changed LEFT JOIN prior ON changed.id=prior.id`;
       return Response.json({ ok: true });

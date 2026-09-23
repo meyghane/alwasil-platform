@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { and, desc, eq } from 'drizzle-orm';
-import { Resend } from 'resend';
+import { desc } from 'drizzle-orm';
+import { neon } from '@neondatabase/serverless';
+import { POST as sendLeadMessage } from './messages/route';
 import { db } from '@/db';
-import { leads, leadEvents, leadAssignments, partners } from '@/db/schema';
+import { leads, leadEvents, partners } from '@/db/schema';
 import { isAdminLoggedIn } from '@/lib/admin-auth';
-import { getUserSession } from '@/lib/user-auth';
-type LeadStatus = NonNullable<typeof leads.$inferInsert.status>;
+import { canContactPartner } from '@/lib/partner-quality';
 export async function GET() {
  if (!(await isAdminLoggedIn())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
  try {
@@ -13,8 +13,8 @@ export async function GET() {
   const eventRows = leadRows.length ? await db.select().from(leadEvents).orderBy(desc(leadEvents.createdAt)) : [];
   const eventsByLead = new Map<string, typeof eventRows>();
   for (const event of eventRows) eventsByLead.set(event.leadId, [...(eventsByLead.get(event.leadId) || []), event]);
-  const partnerRows = await db.select({ id: partners.id, name: partners.name, email: partners.email, status: partners.status }).from(partners).orderBy(partners.name);
-  return NextResponse.json({ leads: leadRows.map(lead => ({ ...lead, events: eventsByLead.get(lead.id) || [] })), partners: partnerRows });
+  const partnerRows = await db.select().from(partners).orderBy(partners.name);
+  return NextResponse.json({ leads: leadRows.map(lead => ({ ...lead, events: eventsByLead.get(lead.id) || [] })), partners: partnerRows.map(partner=>({...partner,contactAllowed:canContactPartner(partner)})) });
  } catch (error) {
   console.error('[admin/leads] read failed:', error instanceof Error ? error.message : 'unknown');
   return NextResponse.json({ error: 'La base des demandes est temporairement indisponible.' }, { status: 503 });
@@ -22,53 +22,40 @@ export async function GET() {
 }
 export async function PATCH(req: Request) {
  if (!(await isAdminLoggedIn())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
- const session = await getUserSession();
- const actor = session ? `${session.role}:${session.email}` : 'admin:legacy';
- const { id, status, partnerId, rollbackEventId, remindPartner } = await req.json();
- const allowed = ['new','qualified','assigned','accepted','quoted','won','lost','expired'];
- if (remindPartner && id) {
-  const [lead] = await db.select().from(leads).where(eq(leads.id, String(id))).limit(1);
-  const partner = lead?.partnerId ? (await db.select().from(partners).where(eq(partners.id, lead.partnerId)).limit(1))[0] : null;
-  if (!lead || !partner || !lead.consentFollowUp || partner.status !== 'verified' || !partner.sourceUrl || !partner.verifiedAt || !partner.email) return NextResponse.json({ error: 'Agence vérifiée et consentement requis pour la relance.' }, { status: 400 });
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const qualification = (lead.qualification || {}) as Record<string, unknown>;
-  const result = await resend.emails.send({
-   from: process.env.RESEND_FROM_EMAIL || 'Mégane - Al-Wasil <megane@al-wasil.fr>',
-   to: [partner.email], replyTo: lead.email,
-   subject: `[Relance Al-Wasil] Demande ${lead.travelType} - ${lead.name}`,
-   text: `Bonjour,\n\nNous revenons vers vous au sujet de la demande ${lead.travelType} de ${lead.name}.\n\nBudget : ${String(qualification.budget || 'non précisé')}\nDépart : ${String(qualification.depart || qualification.ville_depart || 'non précisé')}\nVoyageurs : ${String(qualification.voyageurs || qualification.nombre || 'non précisé')}\n\nMerci de nous indiquer si vous pouvez proposer une formule et ses conditions.\n\nCordialement,\nMégane - Al-Wasil`,
-  });
-  if (result.error) return NextResponse.json({ error: 'La relance email n’a pas pu être envoyée.' }, { status: 502 });
-  await db.insert(leadEvents).values({ leadId: lead.id, event: 'partner_reminded', actor, payload: { partnerId: partner.id, email: partner.email } });
-  return NextResponse.json({ ok: true, reminded: true });
- }
- if (rollbackEventId) {
-  const [event] = await db.select().from(leadEvents).where(eq(leadEvents.id, String(rollbackEventId))).limit(1);
-  const payload = (event?.payload || {}) as Record<string, unknown>;
-  const previousStatus = typeof payload.previousStatus === 'string' ? payload.previousStatus : '';
-  const actionStatusText = typeof payload.status === 'string' ? payload.status : '';
-  if (!event || event.event !== 'status_changed' || !allowed.includes(previousStatus) || !allowed.includes(actionStatusText)) {
-   return NextResponse.json({ error: 'Cette action ne peut pas être annulée.' }, { status: 400 });
+ try {
+  const body = await req.json();
+  const { id, status, partnerId, rollbackEventId, remindPartner, updatedAt } = body || {};
+  if (remindPartner && id) return sendLeadMessage(new Request(req.url, {method:'POST',headers:req.headers,body:JSON.stringify({id,recipient:'partner',message:'Bonjour, nous revenons vers vous au sujet de cette demande Al-Wasil. Merci de nous confirmer sa prise en charge et les prochaines étapes.'})}));
+  const allowed = ['new','qualified','assigned','accepted','quoted','won','lost','expired'];
+  const sql = neon(process.env.DATABASE_URL!);
+  let leadId = id, nextStatus = status, nextPartner: string | null | undefined = undefined;
+  let eventName = 'status_changed';
+  if (rollbackEventId) {
+   if (!/^[0-9a-f-]{36}$/i.test(String(rollbackEventId))) return NextResponse.json({error:'Action invalide'},{status:400});
+   const [event] = await sql`SELECT * FROM lead_events WHERE id=${rollbackEventId}::uuid`;
+   if (!event || !['status_changed','assigned'].includes(event.event) || !allowed.includes(event.payload?.previousStatus)) return NextResponse.json({error:'Retour arrière non disponible'},{status:422});
+   const [latest] = await sql`SELECT id FROM lead_events WHERE lead_id=${event.lead_id}::uuid AND event IN ('status_changed','assigned','action_rolled_back') ORDER BY created_at DESC,id DESC LIMIT 1`;
+   if (latest?.id !== event.id) return NextResponse.json({error:'Une action plus récente existe. Recharge le ticket.'},{status:409});
+   leadId=event.lead_id;nextStatus=event.payload.previousStatus;nextPartner=event.payload.previousPartnerId || null;eventName='action_rolled_back';
   }
-  const actionStatus = actionStatusText as LeadStatus;
-  const [lead] = await db.update(leads).set({ status: previousStatus as LeadStatus, updatedAt: new Date() }).where(and(eq(leads.id, event.leadId), eq(leads.status, actionStatus))).returning({ id: leads.id });
-  if (!lead) return NextResponse.json({ error: 'Lead introuvable' }, { status: 404 });
-  await db.insert(leadEvents).values({ leadId: event.leadId, event: 'action_rolled_back', actor, payload: { revertedEventId: event.id, restoredStatus: previousStatus } });
-  return NextResponse.json({ ok: true, restoredStatus: previousStatus });
- }
- if (!id || (!allowed.includes(status) && !partnerId)) return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
- if (partnerId) {
-  const [partner] = await db.select().from(partners).where(eq(partners.id, String(partnerId))).limit(1);
-  if (!partner || partner.status !== 'verified' || !partner.email || !partner.sourceUrl || !partner.verifiedAt) return NextResponse.json({ error: 'Agence non vérifiée ou contact manquant' }, { status: 422 });
-  const [assigned] = await db.update(leads).set({ partnerId: String(partnerId), status: 'assigned', updatedAt: new Date() }).where(eq(leads.id, id)).returning({ id: leads.id });
-  if (!assigned) return NextResponse.json({ error: 'Lead introuvable' }, { status: 404 });
-  await db.insert(leadEvents).values({ leadId: id, event: 'assigned', actor, payload: { partnerId: String(partnerId) } });
-  return NextResponse.json({ ok: true, assigned: true });
- }
- const [current] = await db.select({ id: leads.id, status: leads.status }).from(leads).where(eq(leads.id, id)).limit(1);
- if (!current) return NextResponse.json({ error: 'Lead introuvable' }, { status: 404 });
- const [lead] = await db.update(leads).set({ status, updatedAt: new Date() }).where(eq(leads.id, id)).returning({ id: leads.id });
- if (!lead) return NextResponse.json({ error: 'Lead introuvable' }, { status: 404 });
- await db.insert(leadEvents).values({ leadId: id, event: 'status_changed', actor, payload: { status, previousStatus: current.status } });
- return NextResponse.json({ ok: true });
+  if (typeof leadId!=='string'||!/^[0-9a-f-]{36}$/i.test(leadId)) return NextResponse.json({error:'Ticket invalide'},{status:400});
+  const [current] = await sql`SELECT * FROM leads WHERE id=${leadId}::uuid`;
+  if (!current) return NextResponse.json({error:'Ticket introuvable'},{status:404});
+  if (!updatedAt || new Date(current.updated_at).toISOString() !== updatedAt) return NextResponse.json({error:'Le ticket a changé. Recharge avant de modifier.'},{status:409});
+  if (current.anonymized_at) return NextResponse.json({error:'Ticket anonymisé : identité non restaurable'},{status:422});
+  if (partnerId) {nextPartner=String(partnerId);nextStatus='assigned';eventName='assigned';}
+  if (nextPartner) {
+   const [partner]=await sql`SELECT * FROM partners WHERE id::text=${nextPartner}`;
+   if (!partner || !canContactPartner({status:partner.status,email:partner.email,phone:partner.phone,sourceUrl:partner.source_url,verifiedAt:partner.verified_at})) return NextResponse.json({error:'Agence non vérifiée'},{status:422});
+  }
+  if (!allowed.includes(nextStatus)) return NextResponse.json({error:'Statut invalide'},{status:400});
+  if (nextPartner === undefined) nextPartner=current.partner_id;
+  const payload={previousStatus:current.status,previousPartnerId:current.partner_id,status:nextStatus,partnerId:nextPartner,...(rollbackEventId?{revertedEventId:rollbackEventId}:{})};
+  const changed=await sql`WITH changed AS (
+    UPDATE leads SET status=${nextStatus}::lead_status,partner_id=${nextPartner},updated_at=now()
+    WHERE id=${leadId}::uuid AND updated_at=${updatedAt}::timestamptz RETURNING id
+  ) INSERT INTO lead_events(lead_id,event,actor,payload)
+    SELECT id,${eventName},'admin',${JSON.stringify(payload)}::jsonb FROM changed RETURNING lead_id`;
+  return NextResponse.json({ok:changed.length===1},{status:changed.length?200:409});
+ } catch { return NextResponse.json({error:'Modification impossible. Vérifier le ticket et réessayer.'},{status:503}); }
 }

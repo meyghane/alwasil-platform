@@ -1,5 +1,5 @@
 // Web Crypto API - compatible Edge Runtime (middleware) + Node.js
-const SECRET = process.env.ADMIN_SESSION_SECRET || 'fallback_secret';
+const SECRET = process.env.ADMIN_SESSION_SECRET || '';
 const COOKIE_NAME = 'aw_admin';
 const MAX_AGE = 60 * 60 * 8; // 8 heures
 
@@ -14,6 +14,7 @@ async function getKey(secret: string): Promise<CryptoKey> {
 }
 
 async function sign(data: string): Promise<string> {
+ if (SECRET.length < 32) throw new Error('Configuration de session absente ou insuffisante');
  const key = await getKey(SECRET);
  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -35,12 +36,13 @@ export async function createSessionToken(): Promise<string> {
 }
 
 export async function verifySessionToken(token: string): Promise<boolean> {
+ if (SECRET.length < 32) return false;
  const [payload, sig] = token.split('.');
  if (!payload || !sig) return false;
  if (!(await verify(payload, sig))) return false;
  try {
  const { ts } = JSON.parse(atob(payload));
- return Date.now() - ts < MAX_AGE * 1000;
+ return Number.isFinite(ts) && ts <= Date.now() && Date.now() - ts < MAX_AGE * 1000;
  } catch {
  return false;
  }
@@ -77,13 +79,14 @@ export async function createValidationToken(data: object): Promise<string> {
 }
 
 export async function verifyValidationToken(token: string): Promise<{ data: Record<string, unknown> } | null> {
+ if (SECRET.length < 32) return null;
  const [payload, sig] = token.split('.');
  if (!payload || !sig) return null;
  if (!(await verify(payload, sig))) return null;
  try {
  const padded = payload.replace(/-/g, '+').replace(/_/g, '/');
  const parsed = JSON.parse(atob(padded));
- if (Date.now() > parsed.exp) return null;
+ if (!Number.isFinite(parsed.exp) || Date.now() > parsed.exp) return null;
  return { data: parsed.data };
  } catch {
  return null;

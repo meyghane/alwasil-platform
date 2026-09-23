@@ -1,8 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import type { DeliveryStore } from './delivery-ledger';
 
-export function telegramStore(): DeliveryStore {
-  const sql = neon(process.env.DATABASE_URL!);
+export function telegramStore(sql = neon(process.env.DATABASE_URL!)): DeliveryStore {
   return {
     async claim(d) {
       const rows = await sql`INSERT INTO telegram_deliveries (dedupe_key,item_id,update_id,source,recipient,notification_type)
@@ -11,7 +10,7 @@ export function telegramStore(): DeliveryStore {
       return rows.length === 1;
     },
     async finish(key, result) {
-      await sql`UPDATE telegram_deliveries SET result=${result}, completed_at=now() WHERE dedupe_key=${key}`;
+      await sql`UPDATE telegram_deliveries SET result=${result}, error_code=${result === 'uncertain' ? 'delivery_unconfirmed' : null}, completed_at=now() WHERE dedupe_key=${key}`;
     },
   };
 }

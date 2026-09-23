@@ -12,7 +12,11 @@ export function publicationIssues(item: PublishCandidate): string[] {
   if (item.metadata?.requiresEnrichment === true) return ['enrichissement requis'];
   if (item.category === 'event') {
     const date = itemEventDate(raw, item.dateStart);
-    if (!date || date < new Date().toISOString().slice(0, 10)) return ['date absente ou événement passé'];
+    const missing = [];
+    if (!date || date < new Date().toISOString().slice(0, 10)) missing.push('date absente ou événement passé');
+    for (const [field,value] of Object.entries({ville:raw.city,lieu:raw.venue || raw.location || raw.lieu || raw.address,organisateur:raw.organizer || raw.organisateur,description:raw.description,source:raw.sourceUrl,inscription:raw.registrationUrl || raw.url})) if (typeof value!=='string'||!value.trim()) missing.push(field);
+    if (!Array.isArray(raw.tags)||!raw.tags.length) missing.push('tags');
+    return missing;
   }
   return [];
 }

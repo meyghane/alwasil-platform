@@ -9,7 +9,7 @@ export const REGION_ZONES = [
 
 export function discoverSources(sources: Source[], categories: readonly AgentCategory[], budget: number, day: number) {
   const zones = [...REGION_ZONES[((day % REGION_ZONES.length) + REGION_ZONES.length) % REGION_ZONES.length]];
-  const eligible = sources.filter(s => s.enabled && s.trust !== 'blocked' && categories.includes(s.category) && s.departments.some(d => zones.includes(d as never)));
+  const eligible = sources.filter(s => s.enabled && s.trust === 'trusted' && categories.includes(s.category) && s.departments.some(d => zones.includes(d as never)));
   const selected = eligible.slice(0, Math.max(0, Math.min(budget, 5)));
   return { selected, plannedZones: zones, quotaReached: eligible.length > selected.length,
     uncovered: categories.filter(category => !selected.some(s => s.category === category)).map(category => `${category} : aucune source exécutée dans ${zones.join(', ')}`) };
