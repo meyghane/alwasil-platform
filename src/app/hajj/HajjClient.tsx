@@ -70,7 +70,7 @@ function offerQualityScore(pkg: HajjPackage, agence: HajjAgence | undefined): nu
   pkg.verificationStatus === 'verified',
  ];
  const completeness = fields.filter(Boolean).length / fields.length;
- const rating = agence ? Math.min(5, Math.max(0, agence.rating)) / 5 : pkg.stars / 5;
+ const rating = agence ? Math.min(5, Math.max(0, agence.rating)) / 5 : (pkg.stars || 0) / 5;
  const reviewConfidence = agence ? Math.min(1, Math.log10(Math.max(1, agence.reviews)) / 4) : 0;
  const age = agence ? Math.min(1, Math.max(0, new Date().getFullYear() - agence.since) / 20) : 0;
  return Math.round(completeness * 50 + rating * 25 + reviewConfidence * 15 + age * 10);
@@ -216,7 +216,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  </span>
  )}
  </div>
- <StarsDisplay count={pkg.stars} />
+ {pkg.stars && <StarsDisplay count={pkg.stars} />}
  </div>
 
  <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}><a href={`/hajj/offres/${encodeURIComponent(pkg.id)}`} style={{ color: 'inherit', textDecoration: 'none' }}>{pkg.name}</a></h3>

@@ -2,6 +2,8 @@ import type { items } from '@/db/schema';
 import { withoutEmDashes } from '@/lib/typography';
 import { itemEventDate } from '@/lib/event-dates';
 import { assessHajjOfferReadiness } from '@/lib/hajj-offer-quality';
+import { assessInstitute } from '@/lib/institute-quality';
+import { deliverOnce } from '@/lib/delivery-ledger';
 
 type Item = typeof items.$inferSelect;
 type Keyboard = { inline_keyboard: Array<Array<{ text: string; callback_data?: string; url?: string }>> };
@@ -27,7 +29,7 @@ export function reviewKeyboard(item: Pick<Item, 'id' | 'category' | 'metadata' |
   const eventDate = itemEventDate(raw, item.dateStart);
   const eventNotReady = item.category === 'event' && (!eventDate || eventDate < new Date().toISOString().slice(0, 10));
   const hajjNotReady = item.category === 'hajj' && !assessHajjOfferReadiness(raw).eligible;
-  const enrichmentNotReady = item.metadata?.requiresEnrichment === true;
+  const enrichmentNotReady = item.metadata?.requiresEnrichment === true || (item.category === 'institute' && !assessInstitute(raw).eligible);
   return { inline_keyboard: [
     ...(!campaign && !eventNotReady && !hajjNotReady && !enrichmentNotReady ? [[
       { text: 'Valider', callback_data: `a:${item.id}` },
@@ -89,15 +91,17 @@ async function telegramCall(method: string, payload: Record<string, unknown>): P
   return body.result;
 }
 
-export async function sendReview(item: Item): Promise<void> {
+export async function sendReview(item: Item): Promise<boolean> {
   if (item.category === 'hajj') {
     const readiness = assessHajjOfferReadiness((item.metadata?.raw || {}) as Record<string, unknown>);
     if (!readiness.eligible) throw new Error(`Offre Hajj/Omra bloquée avant modération: ${readiness.missing.join(', ')}`);
   }
   const chatId = moderationChatId();
-  if (!chatId) return;
-  await telegramCall('sendMessage', { chat_id: chatId, text: reviewPreview(item),
-    disable_web_page_preview: true, reply_markup: reviewKeyboard(item) });
+  if (!chatId || item.status !== 'pending') return false;
+  const { telegramStore } = await import('@/lib/telegram-delivery');
+  return deliverOnce(telegramStore(), { key: `review:${chatId}:${item.id}`, itemId: item.id, source: item.source, recipient: chatId, type: 'review' },
+    () => telegramCall('sendMessage', { chat_id: chatId, text: reviewPreview(item),
+      disable_web_page_preview: true, reply_markup: reviewKeyboard(item) }));
 }
 
 export async function sendModerationText(text: string): Promise<void> {

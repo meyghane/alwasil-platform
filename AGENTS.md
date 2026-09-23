@@ -1,5 +1,9 @@
 # Al-Wasil — Brief Codex (mis à jour juillet 2026)
 
+## Politique actuelle du 22 septembre 2026
+
+Lire `docs/AGENT_ARCHITECTURE.md`. La demande actuelle autorise une publication automatique contrôlée pour les catégories ordinaires explicitement permises et les sources officielles approuvées. Les imports Telegram/manuels restent pending ; Hajj/Omra et catégories sensibles exigent une validation. Neon est la source principale et Telegram sert à la modération. Ces règles remplacent les passages historiques contradictoires ci-dessous.
+
 ## Direction artistique actuelle — priorité sur les anciennes palettes ci-dessous
 Lire `DIRECTION_ARTISTIQUE.md` avant toute intervention visuelle. DA validée le 16 septembre 2026 : blanc, citron #ECFF58, noir #080808, violet #7652CA ; boutons pilules ; photos lumineuses ; mosaïque de carrés arrondis/ovales. Header blanc commun et logo compact. Les anciennes descriptions noir/or, corail et palettes multicolores ci-dessous sont historiques.
 

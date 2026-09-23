@@ -11,6 +11,7 @@ import { revalidatePath } from 'next/cache';
 import { withoutEmDashes } from '@/lib/typography';
 import { findSchoolHolidayPeriod, holidayLabel } from '@/lib/school-holidays';
 import { assessHajjOfferReadiness } from '@/lib/hajj-offer-quality';
+import { publicationIssues } from '@/lib/publication';
 import { enrichMosque } from '@/lib/mosque-enrichment';
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_WEBHOOK_URL || '';
@@ -186,9 +187,13 @@ export async function PATCH(req: NextRequest) {
  }
 
  const neonItem = /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(id)
-   ? await db.select({ id: items.id, category: items.category, title: items.title, description: items.description, city: items.city, department: items.department, sourceUrl: items.sourceUrl, metadata: items.metadata, status: items.status }).from(items).where(eq(items.id, id)).limit(1)
+   ? await db.select({ id: items.id, category: items.category, title: items.title, description: items.description, city: items.city, department: items.department, sourceUrl: items.sourceUrl, metadata: items.metadata, status: items.status, dateStart: items.dateStart }).from(items).where(eq(items.id, id)).limit(1)
    : [];
  if (neonItem.length > 0) {
+ if (status === 'en ligne') {
+   const missing = publicationIssues(neonItem[0]);
+   if (missing.length) return NextResponse.json({ error: 'Fiche à compléter avant publication.', missing }, { status: 422 });
+ }
  if (status === 'en ligne' && neonItem[0].metadata?.requiresEnrichment === true && neonItem[0].category === 'institute') {
    const raw = (neonItem[0].metadata?.raw || {}) as Record<string, unknown>;
    const researched = await enrichMosque({ ...raw, title: neonItem[0].title, city: neonItem[0].city, department: neonItem[0].department });
@@ -209,7 +214,7 @@ export async function PATCH(req: NextRequest) {
  if (campaign && status === 'en ligne' && verifiedCampaign !== true) return NextResponse.json({ error: 'Vérifiez la collecte et confirmez avant publication.' }, { status: 400 });
  const now = new Date();
  const metadata = campaign && status === 'en ligne' ? { ...neonItem[0].metadata, raw: { ...(neonItem[0].metadata?.raw as Record<string, unknown> || {}), verified: true } } : neonItem[0].metadata;
- const nextStatus = status === 'en ligne' ? 'approved' : status === 'archivé' || status === 'expiré' ? 'expired' : 'rejected';
+ const nextStatus = status === 'en ligne' ? 'approved' : status === 'à vérifier' ? 'pending' : status === 'archivé' || status === 'expiré' ? 'expired' : 'rejected';
  await db.update(items).set({ status: nextStatus, updatedAt: now,
    title: withoutEmDashes(neonItem[0].title), description: withoutEmDashes(neonItem[0].description),
    metadata: withoutEmDashes(metadata),
@@ -226,44 +231,9 @@ export async function PATCH(req: NextRequest) {
    : category === 'health' ? '/sante'
    : category === 'hajj' ? '/hajj' : '/';
  revalidatePath(publicPage);
- if (category === 'institute') revalidatePath('/api/mosques');
+ if (category === 'institute') { revalidatePath('/api/mosques'); revalidatePath('/lieux-priere'); }
  return NextResponse.json({ ok: true, id, status, source: 'neon' });
  }
 
- try {
- // Met à jour via Apps Script
- const res = await fetch(APPS_SCRIPT_URL, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({
- action: 'updateStatus',
- id,
- status,
- }),
- });
-
- if (!res.ok) {
- return NextResponse.json({ error: 'Erreur Apps Script' }, { status: 500 });
- }
-
- // Si "en ligne" → invalider le cache du site
- if (status === 'en ligne') {
- try {
- await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://alwasil-platform.vercel.app'}/api/revalidate`, {
- method: 'POST',
- headers: {
- 'Content-Type': 'application/json',
- 'x-revalidate-secret': process.env.REVALIDATE_SECRET || '',
- },
- body: JSON.stringify({ paths: ['/', '/events', '/education', '/piscines', '/jobs', '/solidarity'] }),
- });
- } catch {
- // Revalidation non critique
- }
- }
-
- return NextResponse.json({ ok: true, id, status });
- } catch {
- return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
- }
+ return NextResponse.json({ error: 'Fiche absente de Neon. Importer en attente avant modération.' }, { status: 422 });
 }

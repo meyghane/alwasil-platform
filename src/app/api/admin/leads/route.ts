@@ -29,7 +29,7 @@ export async function PATCH(req: Request) {
  if (remindPartner && id) {
   const [lead] = await db.select().from(leads).where(eq(leads.id, String(id))).limit(1);
   const partner = lead?.partnerId ? (await db.select().from(partners).where(eq(partners.id, lead.partnerId)).limit(1))[0] : null;
-  if (!lead || !partner) return NextResponse.json({ error: 'Aucune agence attribuée à ce ticket.' }, { status: 400 });
+  if (!lead || !partner || !lead.consentFollowUp || partner.status !== 'verified' || !partner.sourceUrl || !partner.verifiedAt || !partner.email) return NextResponse.json({ error: 'Agence vérifiée et consentement requis pour la relance.' }, { status: 400 });
   const resend = new Resend(process.env.RESEND_API_KEY);
   const qualification = (lead.qualification || {}) as Record<string, unknown>;
   const result = await resend.emails.send({
@@ -58,8 +58,8 @@ export async function PATCH(req: Request) {
  }
  if (!id || (!allowed.includes(status) && !partnerId)) return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
  if (partnerId) {
-  const [partner] = await db.select({ id: partners.id }).from(partners).where(eq(partners.id, String(partnerId))).limit(1);
-  if (!partner) return NextResponse.json({ error: 'Agence introuvable' }, { status: 404 });
+  const [partner] = await db.select().from(partners).where(eq(partners.id, String(partnerId))).limit(1);
+  if (!partner || partner.status !== 'verified' || !partner.email || !partner.sourceUrl || !partner.verifiedAt) return NextResponse.json({ error: 'Agence non vérifiée ou contact manquant' }, { status: 422 });
   const [assigned] = await db.update(leads).set({ partnerId: String(partnerId), status: 'assigned', updatedAt: new Date() }).where(eq(leads.id, id)).returning({ id: leads.id });
   if (!assigned) return NextResponse.json({ error: 'Lead introuvable' }, { status: 404 });
   await db.insert(leadEvents).values({ leadId: id, event: 'assigned', actor, payload: { partnerId: String(partnerId) } });

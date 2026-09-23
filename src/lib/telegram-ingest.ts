@@ -1,6 +1,7 @@
 import { normalizeUrl } from '@/lib/data-quality';
 import { findSchoolHolidayPeriod, holidayLabel } from '@/lib/school-holidays';
 import { assessHajjOfferReadiness } from '@/lib/hajj-offer-quality';
+import { assessInstitute } from '@/lib/institute-quality';
 
 export type TelegramSubmission = { categoryKey: string; data: Record<string, unknown> };
 
@@ -85,12 +86,18 @@ export function prepareTelegramSubmission(result: Record<string, unknown>, messa
     } };
   }
   if (effectiveCategoryKey === 'mosquee' || effectiveCategoryKey === 'institut') {
-    return { categoryKey: effectiveCategoryKey, data: {
+    const data = {
       ...base, name: title, type: categoryKey === 'mosquee' ? 'mosquee' : 'institut',
-      address: str(result.adresse ?? result.address, 240), phone: str(result.contact, 100),
-      courses: [], audience: [], format: ['presentiel'], verified: false,
-      requires_enrichment: !city || !department,
-    } };
+      address: str(result.adresse ?? result.address, 240), phone: str(result.phone ?? result.telephone ?? result.contact, 100),
+      email: str(result.email, 240), zone: str(result.zone, 240),
+      courses: Array.isArray(result.courses ?? result.cours) ? (result.courses ?? result.cours) : [],
+      audience: Array.isArray(result.audience) ? result.audience : [],
+      horaires: str(result.horaires, 1000), lastVerifiedAt: str(result.lastVerifiedAt ?? result.date_verification, 40),
+      confidence: str(result.confidence, 40), format: ['presentiel'], verified: false,
+      requires_enrichment: true,
+    };
+    data.requires_enrichment = !assessInstitute(data).eligible;
+    return { categoryKey: effectiveCategoryKey, data };
   }
   return { categoryKey: effectiveCategoryKey, data: { ...base, name: title, departure: holiday ? holidayLabel(holiday) : undefined, requires_enrichment: true } };
 }

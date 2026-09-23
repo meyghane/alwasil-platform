@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
 
 type Message = {
@@ -8,11 +9,11 @@ type Message = {
  content: string;
 };
 
-function renderMarkdown(text: string): string {
- return text
- .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#7652CA;font-weight:600;text-decoration:underline">$1</a>')
- .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
- .replace(/\n/g, '<br/>');
+function renderMarkdown(text: string) {
+ return text.split(/(\[[^\]]+\]\(\/[^)]+\))/g).map((part, index) => {
+  const match = /^\[([^\]]+)\]\((\/(?!\/)[a-z0-9/-]+)\)$/i.exec(part);
+  return match ? <Link key={index} href={match[2]} style={{ color: '#7652CA', fontWeight: 600 }}>{match[1]}</Link> : part;
+ });
 }
 
 export default function ChatBot() {
@@ -20,7 +21,7 @@ export default function ChatBot() {
  const [messages, setMessages] = useState<Message[]>([
  {
  role: 'assistant',
- content: 'As-salamu alaykum ! Je suis Wasil, l\'assistant d\'Al-Wasil. Je suis là pour t\'aider à trouver des cours, des événements, des initiatives solidaires ou des ressources juridiques. Comment puis-je t\'aider ?',
+ content: 'As-salamu alaykum ! Je suis Wasil. Je recherche les fiches disponibles sur Al-Wasil : cours, mosquées, événements, solidarité et Hajj/Omra. Quelle catégorie et quelle ville cherches-tu ?',
  },
  ]);
  const [input, setInput] = useState('');
@@ -45,38 +46,16 @@ export default function ChatBot() {
  try {
  const res = await fetch('/api/chat', {
  method: 'POST',
+ signal: AbortSignal.timeout(12000),
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify({
- messages: newMessages.map(m => ({ role: m.role, content: m.content })),
+ messages: newMessages.slice(-20).map(m => ({ role: m.role, content: m.content })),
  }),
  });
 
- if (!res.ok) throw new Error('API error');
-
- const reader = res.body!.getReader();
- const decoder = new TextDecoder();
- let fullText = '';
-
- while (true) {
- const { done, value } = await reader.read();
- if (done) break;
-
- const chunk = decoder.decode(value);
- const lines = chunk.split('\n');
- for (const line of lines) {
- if (line.startsWith('data: ')) {
- const data = line.slice(6);
- if (data === '[DONE]') break;
- try {
- const parsed = JSON.parse(data);
- fullText += parsed.text;
- setStreamingText(fullText);
- } catch { /* skip */ }
- }
- }
- }
-
- setMessages(prev => [...prev, { role: 'assistant', content: fullText }]);
+ const data = await res.json() as { text?: string; error?: string };
+ if (!res.ok || !data.text?.trim()) throw new Error('Recherche indisponible');
+ setMessages(prev => [...prev, { role: 'assistant', content: data.text! }]);
  setStreamingText('');
  } catch {
  setMessages(prev => [...prev, {
@@ -90,9 +69,9 @@ export default function ChatBot() {
 
  const SUGGESTIONS = [
  'Cours d\'arabe près de chez moi',
- 'Prochain iftar à Paris',
- 'Mes droits au travail',
- 'Bénévolat ce weekend',
+ 'Événements à Paris',
+ 'Mosquées à Paris',
+ 'Solidarité à Paris',
  ];
 
  return (
@@ -134,6 +113,7 @@ export default function ChatBot() {
  width: '380px',
  maxWidth: 'calc(100vw - 2rem)',
  height: '520px',
+ maxHeight: 'calc(100dvh - 3rem)',
  backgroundColor: 'white',
  borderRadius: '1rem',
  boxShadow: '0 8px 40px rgba(0,0,0,0.18)',
@@ -163,10 +143,11 @@ export default function ChatBot() {
  </div>
  <div>
  <p style={{ fontWeight: 700, fontSize: '0.95rem', margin: 0 }}>Wasil</p>
- <p style={{ fontSize: '0.72rem', opacity: 0.85, margin: 0 }}>Assistant Al-Wasil · En ligne</p>
+ <p style={{ fontSize: '0.72rem', opacity: 0.85, margin: 0 }}>Recherche dans Al-Wasil</p>
  </div>
  </div>
  <button
+ aria-label="Fermer la recherche"
  onClick={() => setOpen(false)}
  style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '0.25rem' }}
  >
@@ -208,9 +189,9 @@ export default function ChatBot() {
  borderRadius: msg.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
  fontSize: '0.875rem',
  lineHeight: 1.55,
+ whiteSpace: 'pre-wrap',
  }}
- dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
- />
+ >{renderMarkdown(msg.content)}</div>
  {msg.role === 'user' && (
  <div style={{
  width: '28px', height: '28px', borderRadius: '50%',
@@ -243,8 +224,7 @@ export default function ChatBot() {
  fontSize: '0.875rem',
  lineHeight: 1.55,
  }}
- dangerouslySetInnerHTML={{ __html: renderMarkdown(streamingText) + '<span style="display:inline-block;width:2px;height:14px;background:#7652CA;margin-left:2px;animation:blink 0.8s infinite">▌</span>' }}
- />
+ >{renderMarkdown(streamingText)}</div>
  </div>
  )}
 
@@ -303,6 +283,8 @@ export default function ChatBot() {
  value={input}
  onChange={e => setInput(e.target.value)}
  onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
+ aria-label="Ta recherche"
+ maxLength={2000}
  placeholder="Pose ta question..."
  disabled={loading}
  style={{
@@ -315,6 +297,7 @@ export default function ChatBot() {
  }}
  />
  <button
+ aria-label="Envoyer la recherche"
  onClick={sendMessage}
  disabled={loading || !input.trim()}
  style={{

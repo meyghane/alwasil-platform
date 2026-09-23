@@ -30,8 +30,8 @@ export default async function HajjPage() {
     '@graph': [
       { '@type': 'CollectionPage', '@id': 'https://al-wasil.fr/hajj#page', name: 'Offres Hajj 2027 et Omra 2026-2027 en France', url: 'https://al-wasil.fr/hajj', isPartOf: { '@id': 'https://al-wasil.fr/#website' } },
       { '@type': 'FAQPage', mainEntity: faq },
-      ...hajjPackages.slice(0, 50).map(pkg => ({ '@type': 'Product', name: pkg.name, description: pkg.description, offers: { '@type': 'Offer', price: pkg.price, priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url: 'https://al-wasil.fr/hajj' } })),
+      ...hajjPackages.slice(0, 50).map(pkg => ({ '@type': 'Product', name: pkg.name, description: pkg.description, offers: { '@type': 'Offer', price: pkg.price, priceCurrency: 'EUR', url: `https://al-wasil.fr/hajj/offres/${pkg.id}` } })),
     ],
   };
-  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} /><HajjClient hajjAgences={hajjAgences} hajjPackages={hajjPackages} /></>;
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} /><HajjClient hajjAgences={hajjAgences} hajjPackages={hajjPackages} /></>;
 }

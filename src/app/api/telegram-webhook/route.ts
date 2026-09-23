@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { db } from '@/db';
 import { items, moderationLog } from '@/db/schema';
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, inArray } from 'drizzle-orm';
+import { publicationIssues, confirmPublicPublication } from '@/lib/publication';
+import { telegramStore, unsentReviewIds } from '@/lib/telegram-delivery';
 import { ingestManualSubmission } from '@/lib/submission-ingest';
 import { prepareTelegramSubmission } from '@/lib/telegram-ingest';
 import { answerReviewCallback, closeReviewButtons, isAuthorizedReviewAction, moderationChatId, sendReview } from '@/lib/telegram-moderation';
@@ -131,6 +133,10 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     return NextResponse.json({ ok: true });
   }
   const raw = (candidate.metadata?.raw || {}) as Record<string, unknown>;
+  if (approving && publicationIssues(candidate).length) {
+    await answerReviewCallback(query.id, 'Publication échouée : complète et vérifie la fiche dans /admin/soumissions.').catch(() => {});
+    return NextResponse.json({ ok: false, publicationFailed: true });
+  }
   const eventDate = itemEventDate(raw, candidate.dateStart);
   if (approving && candidate.category === 'event' && eventDate && eventDate < new Date().toISOString().slice(0, 10)) {
     await answerReviewCallback(query.id, 'Date absente ou événement passé. Vérifie sur le site.').catch(() => {});
@@ -156,30 +162,54 @@ async function handleCallback(query: TelegramCallback, allowedUser: string): Pro
     .catch(error => console.error('[telegram] moderation log write failed:', error));
   revalidatePath('/');
   revalidatePath(CATEGORY_PATH[candidate.category] || '/');
-  if (candidate.category === 'institute') revalidatePath('/api/mosques');
+  if (candidate.category === 'institute') { revalidatePath('/api/mosques'); revalidatePath('/lieux-priere'); }
+  if (candidate.category === 'hajj') revalidatePath(`/hajj/offres/${id}`);
+  revalidatePath(`/api/public/items/${id}`);
+  if (approving && !await confirmPublicPublication(id, async itemId => {
+    const response = await fetch(`https://al-wasil.fr/api/public/items/${encodeURIComponent(itemId)}`, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+    if (!response.ok) return false;
+    const visible = await response.json() as { id?: string };
+    return visible.id === itemId;
+  })) {
+    const reverted = await db.update(items).set({ status: 'pending', updatedAt: new Date() }).where(and(eq(items.id, id), eq(items.status, 'approved'))).returning({ id: items.id });
+    if (reverted.length) await db.insert(moderationLog).values({ itemId: id, action: 'edited', previousStatus: 'approved', newStatus: 'pending', actor: 'telegram:publication_failed' });
+    revalidatePath('/');
+    if (candidate.category === 'institute') { revalidatePath('/api/mosques'); revalidatePath('/lieux-priere'); }
+    revalidatePath(CATEGORY_PATH[candidate.category] || '/');
+    revalidatePath(`/api/public/items/${id}`);
+    await answerReviewCallback(query.id, 'Publication échouée : visibilité non confirmée. Fiche remise en attente ; vérifier dans /admin/soumissions.').catch(() => {});
+    return NextResponse.json({ ok: false, publicationFailed: true });
+  }
   await answerReviewCallback(query.id, approving ? 'Fiche publiée.' : 'Fiche refusée.').catch(() => {});
   if (query.message?.message_id) await closeReviewButtons(originChat, query.message.message_id).catch(() => {});
   return NextResponse.json({ ok: true, id, status: approving ? 'approved' : 'rejected' });
 }
 
-export async function POST(req: NextRequest) {
+async function handleUpdate(req: NextRequest) {
   const token = process.env.TELEGRAM_BOT_TOKEN || '';
   const allowedChat = process.env.TELEGRAM_CHAT_ID || '';
   const geminiKey = process.env.GEMINI_API_KEY || '';
-  if (!token || !allowedChat || !geminiKey) return NextResponse.json({ error: 'Bot non configuré' }, { status: 503 });
+  if (!token || !allowedChat) return NextResponse.json({ error: 'Bot non configuré' }, { status: 503 });
   if (!validSecret(secretFor(token), req.headers.get('x-telegram-bot-api-secret-token'))) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
   let update: { update_id?: number; message?: TelegramMessage; edited_message?: TelegramMessage; callback_query?: TelegramCallback };
   try { update = await req.json(); } catch { return NextResponse.json({ error: 'JSON invalide' }, { status: 400 }); }
+  if (!Number.isSafeInteger(update.update_id)) return NextResponse.json({ error: 'Message invalide' }, { status: 400 });
+  const delivery = telegramStore();
+  const updateKey = `update:${update.update_id}`;
+  try {
+    if (!await delivery.claim({ key: updateKey, updateId: update.update_id, source: 'telegram', recipient: String(update.callback_query?.message?.chat?.id || update.message?.chat?.id || update.edited_message?.chat?.id || ''), type: 'update' })) return NextResponse.json({ ok: true, duplicateUpdate: true });
+  } catch { return NextResponse.json({ error: 'Journal Telegram indisponible' }, { status: 503 }); }
   if (update.callback_query) {
-    const allowedUser = process.env.TELEGRAM_MODERATOR_USER_ID || process.env.TELEGRAM_ADMIN_USER_ID || '';
+    const allowedUser = process.env.TELEGRAM_MODERATOR_USER_ID || process.env.TELEGRAM_ADMIN_USER_ID || allowedChat;
     return handleCallback(update.callback_query, allowedUser);
   }
   const msg = update.message || update.edited_message;
   if (!msg) return NextResponse.json({ ok: true });
   const chatId = String(msg.chat?.id ?? '');
-  if (String(msg.from?.id ?? '') !== allowedChat) return NextResponse.json({ ok: true });
+  const allowedUser = process.env.TELEGRAM_MODERATOR_USER_ID || process.env.TELEGRAM_ADMIN_USER_ID || allowedChat;
+  if (String(msg.from?.id ?? '') !== allowedUser) return NextResponse.json({ ok: true });
   const text = (msg.text || msg.caption || '').trim();
   if (/^\/chatid(?:@\w+)?$/.test(text) && chatId) {
     await sendMessage(token, chatId, `Identifiant de cette conversation : ${chatId}`);
@@ -187,9 +217,9 @@ export async function POST(req: NextRequest) {
   }
   const nextMatch = /^\/suivantes(?:@\w+)?(?:\s+(\d{1,3}))?$/.exec(text);
   if (nextMatch && chatId === moderationChatId()) {
-    const offset = Math.min(Number(nextMatch[1] || '0'), 500);
-    const pending = await db.select().from(items).where(eq(items.status, 'pending'))
-      .orderBy(desc(items.createdAt)).limit(5).offset(offset);
+    const ids = await unsentReviewIds(chatId);
+    const pending = ids.length ? await db.select().from(items).where(and(eq(items.status, 'pending'), inArray(items.id, ids)))
+      .orderBy(desc(items.createdAt)).limit(5) : [];
     if (!pending.length) await sendMessage(token, chatId, 'Aucune autre fiche à vérifier.');
     for (const item of pending) await sendReview(item).catch((error) => console.warn('[telegram] pending item held back:', error instanceof Error ? error.message : error));
     return NextResponse.json({ ok: true, previews: pending.length });
@@ -201,6 +231,7 @@ export async function POST(req: NextRequest) {
   const existing = await db.select({ id: items.id }).from(items).where(eq(items.source, source)).limit(1);
   if (existing.length) return NextResponse.json({ ok: true, duplicateUpdate: true });
   try {
+    if (!geminiKey) throw new Error('Analyse indisponible');
     const media = await downloadMedia(token, msg);
     if (!text && !media) {
       await sendMessage(token, chatId, 'Envoie un texte, une image ou un vocal contenant une ressource à référencer.');
@@ -231,5 +262,22 @@ export async function POST(req: NextRequest) {
     console.error('[telegram] ingestion failure:', error);
     await sendMessage(token, chatId, 'Je n’ai pas pu enregistrer cette ressource. Réessaie plus tard ou utilise le formulaire du site.').catch(() => {});
     return NextResponse.json({ error: 'Traitement indisponible' }, { status: 503 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  const token = process.env.TELEGRAM_BOT_TOKEN || '';
+  const authenticated = !!token && validSecret(secretFor(token), req.headers.get('x-telegram-bot-api-secret-token'));
+  const body = await req.clone().json().catch(() => null) as { update_id?: number } | null;
+  try {
+    const response = await handleUpdate(req);
+    const result = await response.clone().json().catch(() => ({}));
+    if (authenticated && Number.isSafeInteger(body?.update_id) && !result.duplicateUpdate) {
+      await telegramStore().finish(`update:${body!.update_id}`, response.ok && result.ok !== false ? 'sent' : 'uncertain');
+    }
+    return response;
+  } catch {
+    if (authenticated && Number.isSafeInteger(body?.update_id)) await telegramStore().finish(`update:${body!.update_id}`, 'uncertain').catch(() => {});
+    return NextResponse.json({ error: 'Traitement interrompu. Vérifier le journal avant de relancer.' }, { status: 503 });
   }
 }

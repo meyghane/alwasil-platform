@@ -2,7 +2,11 @@
 
 > Document de reprise pour une nouvelle conversation avec Astra/Codex.
 > Ce fichier ne contient aucun secret, token, mot de passe ou identifiant privé.
-> Dernière mise à jour : 22 septembre 2026.
+> Dernière mise à jour : 23 septembre 2026.
+
+> Point de reprise vérifié : 58 tests passent, build Next.js et scraper réussis, migrations Neon additives appliquées. Aucun push ni déploiement des correctifs. Registre d’agents vide ; Gemini renvoie HTTP 400. Les 4 offres Hajj pending restent bloquées, les 19 anciennes fiches archivées sont conservées. Lire `docs/RELEASE_READINESS_2026-09-22.md` pour distinguer code local, preuves réelles et validations encore nécessaires. Ne pas présenter le projet comme terminé.
+
+> Nouvelle instruction de l’utilisatrice reçue le 22 septembre : créer huit agents et dix-neuf skills réutilisables, avec publication automatique contrôlée des catégories ordinaires à forte confiance. Cette instruction remplace la prohibition générale d’auto-publication présente dans les sections historiques. Les imports Telegram/manuels et Hajj/Omra restent soumis à validation. Consulter `docs/AGENT_ARCHITECTURE.md`. Les changements de cette reprise sont en cours de vérification ; leur présence locale ne signifie pas qu’ils sont déployés.
 
 ## 1. Mission du projet
 

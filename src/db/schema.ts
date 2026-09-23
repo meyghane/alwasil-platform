@@ -118,6 +118,7 @@ export const assignmentStatusEnum = pgEnum('assignment_status', ['proposed', 'ac
 export const commissionStatusEnum = pgEnum('commission_status', ['pending', 'due', 'paid', 'disputed']);
 
 export const partners = pgTable('partners', {
+  sourceUrl: text('source_url'), verifiedAt: timestamp('verified_at', { withTimezone: true }),
   id: uuid('id').primaryKey().defaultRandom(), name: text('name').notNull(), email: text('email').notNull(),
   phone: text('phone'), status: text('status').notNull().default('pending'), commissionRate: real('commission_rate').notNull().default(0.04), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });

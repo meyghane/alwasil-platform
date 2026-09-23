@@ -139,7 +139,7 @@ async function callGemini<T>(prompt: string, recordUsage: UsageRecorder, canCall
   return [];
 }
 
-export async function scrapeEventsWithGemini(existingKeys: Set<string>, departmentCounts: Record<string, number>, maxCalls: number, recordUsage: UsageRecorder, canCall: () => boolean, onQuota: () => void): Promise<GeminiEvent[]> {
+export async function scrapeEventsWithGemini(existingKeys: Set<string>, departmentCounts: Record<string, number>, maxCalls: number, recordUsage: UsageRecorder, canCall: () => boolean, onQuota: () => void, onZone: (department: string) => void = () => {}): Promise<GeminiEvent[]> {
   const today = new Date().toISOString().split('T')[0];
   const allEvents: GeminiEvent[] = [];
   const seenKeys = new Set(existingKeys);
@@ -155,7 +155,7 @@ export async function scrapeEventsWithGemini(existingKeys: Set<string>, departme
     const prompt = `Aujourd'hui : ${today}. Cherche 5 vrais événements islamiques à venir en France via cette recherche : "${strategy}". Priorité au département ${department}. Ces combinaisons titre/ville/date sont déjà dans la base, ne les répète pas : ${existingList}. Retourne UNIQUEMENT un tableau JSON valide, sans markdown. Chaque objet : titre (string), date_iso (YYYY-MM-DD, après ${today}), heure (ex: 14h00), ville, departement (2 chiffres), organisateur, categorie (conference/maraude/cours/iftar/webinaire/collecte/autre), description (2 phrases max), url_source (URL réelle), gratuit (boolean).`;
     let events: GeminiEvent[];
     try {
-      events = await callGemini<GeminiEvent>(prompt, recordUsage, canCall);
+      events = await callGemini<GeminiEvent>(prompt, (kind, amount) => { if (kind === 'call') onZone(department); recordUsage(kind,amount); }, canCall);
     } catch (error) {
       if (error instanceof GeminiQuotaError) { onQuota(); break; }
       if (error instanceof BudgetExhaustedError) break;

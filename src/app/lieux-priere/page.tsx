@@ -1,7 +1,7 @@
 import PageHeader from '@/components/PageHeader';
 import Link from 'next/link';
 import LieuxPriereMap from '@/components/LieuxPriereMap';
-import { getMosquees } from '@/lib/sheets';
+import { getPublicMosques } from '@/lib/public-places';
 
 export const metadata = {
   title: 'Lieux de prière en France | Al-Wasil',
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function LieuxPrierePage() {
-  const lieux = (await getMosquees()).slice(0, 60);
+  const lieux = await getPublicMosques();
   return <main>
     <PageHeader title="Lieux de prière" titleAr="أماكن الصلاة" description="Mosquées et salles de prière près de chez vous, avec les informations disponibles." color="#ECFF58" emoji="" />
     <div className="container" style={{ maxWidth: 1100, padding: '2rem 1rem 5rem' }}>

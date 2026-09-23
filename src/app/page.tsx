@@ -13,7 +13,6 @@ import { getInstituts, getEvents, getJobOffers } from '@/lib/db-queries';
 import { HOME_THEME as V } from '@/lib/home-theme';
 import RubriqueCard from '@/components/home/RubriqueCard';
 import EditorialHero from '@/components/home/EditorialHero';
-import CommunityStories from '@/components/home/CommunityStories';
 import SolidarityPreview from '@/components/home/SolidarityPreview';
 import UpcomingEventsRail from '@/components/home/UpcomingEventsRail';
 import BackToSchool from '@/components/home/BackToSchool';
@@ -49,7 +48,7 @@ const SECTIONS: Section[] = [
   { href: '/education', icon: BookOpen, color: '#4a0e58', bg: '#f0ebfa', title: 'Apprentissage', arabic: 'العلم', description: 'Instituts, cours d\'arabe, cercles d\'étude et professeurs de Coran.', tags: ['Instituts', 'Arabe', 'Halaqa', 'Tajwid'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80' },
   { href: '/librairies', icon: Library, color: '#2c0835', bg: '#ecfdf5', title: 'Librairies', arabic: 'المكتبة', description: 'Librairies islamiques d\'Île-de-France : livres, Corans, arabe.', tags: ['Corans', 'Livres', 'Enfants'], image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80' },
   { href: '/jobs', icon: Briefcase, color: '#4a0e58', bg: '#ecfdf5', title: 'Emploi', arabic: 'الأمل', description: 'Offres voile accepté, prière OK. Réseau CMN et vivier de talents.', tags: ['Voile OK', 'Prière OK', 'CDI / Freelance'], image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80' },
-  { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#f0ebfa', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues orientés communauté, hijama certifiés et roqya.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
+  { href: '/sante', icon: Stethoscope, color: '#3a0a45', bg: '#f0ebfa', title: 'Santé', arabic: 'الشفاء', description: 'Psychologues, hijama et accompagnement : consultez les informations de chaque professionnel.', tags: ['Psychologues', 'Hijama', 'Roqya'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80' },
   { href: '/piscines', icon: Waves, color: '#662a94', bg: '#f0ebfa', title: 'Piscines Burkini', arabic: 'السباحة', description: 'Créneaux burkini et maillots couvrants en Île-de-France.', tags: ['Créneaux femmes', 'Burkini', 'IdF'], image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=800&q=80' },
   { href: '/justice', icon: ShieldCheck, color: '#3a0a45', bg: '#f0ebfa', title: 'Justice & Droits', arabic: 'العدل', description: 'Vos droits en France, FAQ voile/prière et signalements ARCOM.', tags: ['Voile au travail', 'ARCOM', 'Discrimination'], image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80' },
 ];
@@ -61,7 +60,7 @@ const CAT_LABELS: Record<string, string> = {
 };
 
 const STEPS = [
-  { icon: <Search size={24} color={V.primary} strokeWidth={1.8} />, step: '01', title: 'Cherche', desc: 'Tape ta ville, une catégorie ou un mot-clé. Filtre par département. Le moteur connaît plus de 1000 ressources vérifiées.' },
+  { icon: <Search size={24} color={V.primary} strokeWidth={1.8} />, step: '01', title: 'Cherche', desc: 'Tape ta ville, une catégorie ou un mot-clé. Filtre par département. Consulte les fiches disponibles dans chaque rubrique.' },
   { icon: <CheckCircle size={24} color={V.primary} strokeWidth={1.8} />, step: '02', title: 'Trouve instantanément', desc: 'Résultats filtrés et organisés. Chaque fiche est vérifiée ou soumise par la communauté. Contacts directs inclus.' },
   { icon: <Zap size={24} color={V.primary} strokeWidth={1.8} />, step: '03', title: 'Agis directement', desc: 'Clique, appelle, postule ou donne directement. Et si quelque chose manque, ajoute-le pour aider les suivants.' },
 ];
@@ -77,20 +76,9 @@ const CONTRIBUTION_ITEMS = [
 function buildStats(events: Event[], instituts: Institut[], jobOffers: JobOffer[]): StatItem[] {
   const upcomingCount = events.filter(e => new Date(e.date) >= new Date()).length;
   return [
-    { count: 1040,               label: 'mosquées référencées en France',              icon: Building2 },
-    { count: upcomingCount,      label: 'événements islamiques à venir en IDF',         icon: Calendar },
-    { count: instituts.length,   label: 'instituts & professeurs de Coran',            icon: BookOpen },
-    { count: 8,                  label: 'piscines burkini référencées en IDF',          icon: Waves },
-    { count: 20,                 label: 'praticiens de santé sensibilisés',             icon: Stethoscope },
-    { count: 10,                 label: 'cagnottes communautaires actives',             icon: HandCoins },
-    { count: jobOffers.length,   label: 'offres d\'emploi voile & prière acceptés',    icon: Briefcase },
-    { count: 10,                 label: 'librairies islamiques référencées',            icon: Library },
-    { count: 8,                  label: 'packages Hajj & Omra à comparer',             icon: Plane },
-    { count: 5,                  label: 'juristes & avocats spécialisés',              icon: Scale },
-    { count: 10,                 label: 'associations islamiques répertoriées',         icon: Users },
-    { count: 6,                  label: 'initiatives solidaires organisées',            icon: HeartHandshake },
-    { count: 6,                  label: 'profils talents CMN disponibles',             icon: UserCheck },
-    { count: 5,                  label: 'agences Hajj agréées & comparées',            icon: Landmark },
+    { count: upcomingCount, label: 'événements à venir référencés', icon: Calendar },
+    { count: instituts.length, label: 'établissements d’apprentissage et lieux de prière', icon: BookOpen },
+    { count: jobOffers.length, label: 'offres d’emploi référencées', icon: Briefcase },
   ];
 }
 
@@ -188,14 +176,14 @@ export default async function Home() {
           </div>
         </div>
         <div className="hajj-showcase__stats" aria-label="Chiffres clés Hajj et Omra">
-          <div><strong>13</strong><span>agences agréées<br/>référencées</span></div>
-          <div><strong>20+</strong><span>formules<br/>documentées</span></div>
-          <div><strong>Toute l’année</strong><span>des départs depuis<br/>l’Île-de-France</span></div>
+          <div><strong>Comparer</strong><span>les informations<br/>des offres</span></div>
+          <div><strong>Préparer</strong><span>son projet<br/>de voyage</span></div>
+          <div><strong>Vérifier</strong><span>les conditions<br/>auprès du professionnel</span></div>
         </div>
       </section>
 
       <BackToSchool />
-      <CommunityStories />
+      {/* Les témoignages seront affichés après collecte et vérification réelles. */}
 
       {/* ─── COMMENT ÇA MARCHE ──────────────────────────────── */}
       <section className="how-it-works">
@@ -229,7 +217,7 @@ export default async function Home() {
               return (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', padding: '0 2.25rem', borderRight: '1px solid rgba(255,255,255,0.07)', flexShrink: 0, whiteSpace: 'nowrap' }}>
                   <Icon size={14} color={V.lime} strokeWidth={1.8} style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>Plus de {s.count}</span>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>{s.count}</span>
                   <span style={{ fontSize: '0.72rem', fontWeight: 400, color: 'rgba(255,255,255,0.55)' }}>{s.label}</span>
                 </div>
               );

@@ -11,7 +11,7 @@ import AdminLogout from './AdminLogout';
 const groups = [
   { label: 'Modération', links: [['/admin/soumissions', 'À traiter', FileCheck], ['/admin/base', 'Toutes les fiches', Database], ['/admin/signalements', 'Signalements', Flag]] },
   { label: 'Qualité des données', links: [['/admin/fraicheur', 'Fiches à revérifier', Gauge], ['/admin/couverture', 'Couverture géographique', Archive], ['/admin/historique', 'Historique des actions', History], ['/admin/journal', 'Erreurs et alertes', History]] },
-  { label: 'Fonctionnement', links: [['/admin/auto', 'Automatisations', Zap], ['/admin/audience', 'Audience et publicités', BarChart3], ['/admin/comptes', 'Comptes et modérateurs', Users], ['/admin/leads', 'Demandes Hajj/Omra', Settings]] },
+  { label: 'Fonctionnement', links: [['/admin/agents', 'Agents et corrections', Zap], ['/admin/auto', 'Automatisations', Zap], ['/admin/audience', 'Audience et publicités', BarChart3], ['/admin/comptes', 'Comptes et modérateurs', Users], ['/admin/leads', 'Demandes Hajj/Omra', Settings]] },
 ] as const;
 
 export default function AdminSidebar({ mobileOpen = false, onNavigate }: { mobileOpen?: boolean; onNavigate?: () => void }) {

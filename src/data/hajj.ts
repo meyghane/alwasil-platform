@@ -22,7 +22,7 @@ export type HajjPackage = {
  agenceId: string;
  type: VoyageType;
  name: string;
- stars: StarRating;
+ stars?: StarRating;
  duration: number; // jours
  departCities: DepartCity[];
  price: number; // prix de base par personne

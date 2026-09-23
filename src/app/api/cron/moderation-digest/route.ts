@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { and, count, desc, eq, notLike } from 'drizzle-orm';
+import { and, count, desc, eq, notLike, inArray } from 'drizzle-orm';
+import { unsentReviewIds } from '@/lib/telegram-delivery';
 import { db } from '@/db';
 import { items } from '@/db/schema';
 import { moderationChatId, sendModerationText, sendReview } from '@/lib/telegram-moderation';
@@ -16,8 +17,8 @@ export async function GET(req: NextRequest) {
     const pending = and(eq(items.status, 'pending'), notLike(items.source, 'telegram:%'));
     const [total] = await db.select({ value: count() }).from(items).where(pending);
     if (total.value === 0) return NextResponse.json({ ok: true, pending: 0 });
-    const recent = await db.select().from(items).where(pending).orderBy(desc(items.createdAt)).limit(5);
-    await sendModerationText(`${total.value} fiches automatiques attendent une vérification. Voici les 5 plus récentes. Toutes les autres sont dans https://al-wasil.fr/admin/soumissions`);
+    const ids = await unsentReviewIds(moderationChatId());
+    const recent = ids.length ? await db.select().from(items).where(and(pending, inArray(items.id, ids))).orderBy(desc(items.createdAt)).limit(5) : [];
     for (const item of recent) await sendReview(item);
     return NextResponse.json({ ok: true, pending: total.value, previews: recent.length });
   } catch (error) {

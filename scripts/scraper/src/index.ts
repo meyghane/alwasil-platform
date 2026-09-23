@@ -4,6 +4,7 @@
 // d'un site nommé — HelloAsso/LaunchGood retirés le 25/07/2026 car interdisent
 // le scraping dans leurs CGU ; voir ARCHITECTURE.md décision Epic B).
 import { randomUUID } from 'node:crypto';
+import { telegramOnce } from './utils/telegram-ledger';
 import { getExistingEventKeys, getExistingCagnotteUrls, getDepartmentCounts, getTodayUsage, hadAnyQuotaErrorToday, insertEvent, insertCagnotte, logAutomationError, saveUsage, type CategoryUsage } from './utils/db';
 import { prioritizeDepartments, scrapeEventsWithGemini, scrapeCagnottesWithGemini } from './utils/gemini';
 import { scrapeEventsFromRss } from './utils/rss-events';
@@ -19,17 +20,19 @@ async function notifyTelegram(item: { id: string; title: string; category: strin
     console.warn('[telegram] notification ignorée : TELEGRAM_BOT_TOKEN ou identifiant du groupe manquant dans GitHub Actions');
     return;
   }
+  await telegramOnce(`review:${chatId}:${item.id}`, chatId, 'review', async () => {
   const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       chat_id: chatId,
       text: ['À vérifier sur Al-Wasil', `${item.title} (${item.category})`, item.city ? `Ville : ${item.city}` : '', item.sourceUrl ? `Source : ${item.sourceUrl}` : '', `Ouvrir : https://al-wasil.fr/admin/soumissions?item=${item.id}`].filter(Boolean).join('\n'),
       disable_web_page_preview: true,
-      reply_markup: { inline_keyboard: [[{ text: 'Valider', callback_data: `a:${item.id}` }, { text: 'Refuser', callback_data: `r:${item.id}` }], [{ text: 'Modifier ou voir', url: `https://al-wasil.fr/admin/soumissions?item=${item.id}` }]] },
+      reply_markup: { inline_keyboard: [[{ text: 'Vérifier la fiche', url: `https://al-wasil.fr/admin/soumissions?item=${item.id}` }]] },
     }),
     signal: AbortSignal.timeout(10000),
   });
-  if (!response.ok) throw new Error(`Telegram HTTP ${response.status}`);
+  if (!response.ok || !(await response.json() as { ok?: boolean }).ok) throw new Error(`Telegram HTTP ${response.status}`);
+  }, item.id);
 }
 
 async function notifyDailyReport(report: { date: string; zones: string[]; eventsFound: number; eventsInserted: number; eventCalls: number; eventQuotaErrors: number; cagnottesFound: number; cagnottesInserted: number; cagnottesCalls: number; errors: string[] }): Promise<void> {
@@ -39,22 +42,26 @@ async function notifyDailyReport(report: { date: string; zones: string[]; events
   const text = [
     `Rapport de veille Al-Wasil · ${report.date}`,
     '',
-    `Zones interrogées : ${report.zones.length ? report.zones.join(', ') : 'non déterminées'}`,
+    `Zones réellement interrogées : ${report.zones.length ? report.zones.join(', ') : 'aucune'}`,
     `Événements : ${report.eventsFound} trouvés · ${report.eventsInserted} nouvelles soumissions · ${report.eventCalls} recherches`,
     `Cagnottes/solidarité : ${report.cagnottesFound} trouvées · ${report.cagnottesInserted} nouvelles soumissions · ${report.cagnottesCalls} recherches`,
     '',
     'Catégories non exécutées aujourd’hui : mosquées, instituts/cours, santé, librairies, piscines, droit/justice, Hajj/Omra.',
+    'Doublons et rejets amont : voir le journal de recherche ; les écarts trouvé/inséré ne sont pas assimilés à des doublons.',
+    'Zones non couvertes : tous les départements absents de la liste ci-dessus. Les cagnottes utilisent une recherche nationale, sans preuve de couverture de chaque zone.',
     report.eventQuotaErrors ? `Blocage quota : ${report.eventQuotaErrors} erreur(s), recherches arrêtées.` : '',
     report.errors.length ? `Erreurs ou limites : ${report.errors.join(' · ')}` : 'Aucune erreur bloquante enregistrée.',
     '',
     'Les fiches proposées ci-dessous restent en attente de validation. Les catégories non exécutées ne sont pas considérées comme vérifiées sans résultat.',
   ].filter(Boolean).join('\n');
+  await telegramOnce(`scraper-report:${chatId}:${report.date}`,chatId,'daily_report',async()=>{
   const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: chatId, text, disable_web_page_preview: true }),
     signal: AbortSignal.timeout(10000),
   });
-  if (!response.ok) throw new Error(`Telegram rapport HTTP ${response.status}`);
+  if (!response.ok || !(await response.json() as { ok?:boolean }).ok) throw new Error(`Telegram rapport HTTP ${response.status}`);
+  });
 }
 
 async function main() {
@@ -95,12 +102,12 @@ async function main() {
     console.log('\n--- Gemini Events Search ---');
     const existingKeys = await getExistingEventKeys();
     const departmentCounts = await getDepartmentCounts();
-    reportZones = prioritizeDepartments(departmentCounts, Math.floor(Date.now() / 86_400_000)).slice(0, dailyLimit);
     const geminiEvents = quotaBlockedToday ? [] : await scrapeEventsWithGemini(
       existingKeys, departmentCounts, dailyLimit - previous.modelCalls,
       (kind, amount) => { if (kind === 'call') usage.modelCalls += amount; else usage.tokensUsed += amount; },
       () => previous.modelCalls + usage.modelCalls < dailyLimit && previous.tokensUsed + usage.tokensUsed < tokenLimit,
       () => { usage.quotaErrors++; reportErrors.push('Quota Gemini atteint pendant la recherche.'); },
+      department => { if (!reportZones.includes(department)) reportZones.push(department); },
     );
     usage.itemsFound = geminiEvents.length;
     console.log(`Gemini: ${geminiEvents.length} events found`);

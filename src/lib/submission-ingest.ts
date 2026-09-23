@@ -18,7 +18,7 @@ const CATEGORY_MAP: Record<string, { category: Category; subType: string }> = {
   librairie: { category: 'library', subType: 'librairie' },
   cagnotte: { category: 'solidarity', subType: 'cagnotte' },
   agence_hajj: { category: 'hajj', subType: 'agence' },
-  hajj: { category: 'hajj', subType: 'agence' },
+  hajj: { category: 'hajj', subType: 'package' },
 };
 
 function first(data: Record<string, unknown>, keys: string[]): string {

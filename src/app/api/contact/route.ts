@@ -5,6 +5,8 @@ import { db } from '@/db';
 import { automationErrors, formSubmissions, leadEvents, leads, reports } from '@/db/schema';
 import { and, eq, gt } from 'drizzle-orm';
 import { validateContactFields } from '@/lib/contact-validation';
+import { getHajjPackages } from '@/lib/db-queries';
+import { deliverRecordedEmail } from '@/lib/email-delivery';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FORM_TYPES = new Set(['initiative', 'evenement', 'profil-emploi', 'offre-emploi', 'cagnotte', 'librairie', 'revendiquer-librairie', 'piscine', 'correction', 'question-juridique', 'hajj-devis', 'avis', 'mosquee', 'suggestion', 'annonceur', 'general']);
@@ -34,6 +36,12 @@ export async function POST(req: NextRequest) {
     const fields = body.fields && typeof body.fields === 'object' && !Array.isArray(body.fields) ? body.fields as Record<string, unknown> : null;
     if (!FORM_TYPES.has(type) || !fields || Object.keys(fields).length > MAX_FIELDS) return NextResponse.json({ error: 'Formulaire invalide.' }, { status: 400 });
     if (clean(body.honeypot)) return NextResponse.json({ ok: true });
+    const originalError = validateContactFields(type, fields);
+    if (originalError) return NextResponse.json({ error: originalError }, { status: 400 });
+    const requestedOfferId = clean(body.offerId, 80);
+    const selectedOffer = type === 'hajj-devis' && requestedOfferId ? (await getHajjPackages()).find(offer => offer.id === requestedOfferId) : undefined;
+    if (type === 'hajj-devis' && requestedOfferId && !selectedOffer) return NextResponse.json({ error: 'Cette offre n’est plus disponible. Recharge la page ou envoie une demande générale.' }, { status: 422 });
+    if (type === 'hajj-devis' && body.partnerId && (!selectedOffer || clean(body.partnerId, 80) !== selectedOffer.agenceId)) return NextResponse.json({ error: 'Agence non vérifiée pour cette offre.' }, { status: 422 });
 
     const normalized = Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, clean(value)]));
     const email = clean(normalized.email, 240);
@@ -46,6 +54,7 @@ export async function POST(req: NextRequest) {
     // l'email : sinon tous les formulaires avec message vide sont fusionnés.
     const fingerprint = hash([
       type,
+      requestedOfferId,
       email.toLowerCase(),
       clean(normalized.nom).toLowerCase(),
       clean(normalized.phone).replace(/\D/g, ''),
@@ -76,7 +85,7 @@ export async function POST(req: NextRequest) {
       // dans les colonnes relationnelles, mais on conserve l’offre dans
       // qualification pour garder la traçabilité de la demande.
       const legacyOfferId = clean(body.offerId, 80);
-      const legacyPartnerId = clean(body.partnerId, 80);
+      const legacyPartnerId = selectedOffer?.agenceId || '';
       // Les colonnes offer_id et partner_id sont textuelles pour conserver les
       // anciennes cartes (pkg1, a1, db-hajj-...). Ne pas les convertir en
       // UUID : cela supprimait le rattachement de l’offre au ticket.
@@ -87,15 +96,12 @@ export async function POST(req: NextRequest) {
     }
 
     const to = process.env.CONTACT_EMAIL || 'meyghvne@gmail.com';
-    const html = `<h2>Nouvelle soumission Al-Wasil - ${type}</h2><pre>${JSON.stringify(normalized, null, 2)}</pre><p>Page: ${clean(provenance.page, 240) || 'non renseignée'}</p>`;
-    try {
-      const result = await resend.emails.send({ from: process.env.RESEND_FROM_EMAIL || 'Mégane - Al-Wasil <megane@al-wasil.fr>', to: [to], subject: `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` - ${leadId}` : ''}`, html, replyTo: email || undefined });
-      if (result.error) throw new Error(result.error.message);
-    } catch (error) {
+    const text = `Nouvelle soumission Al-Wasil - ${type}\n${JSON.stringify(normalized, null, 2)}\nPage: ${clean(provenance.page, 240) || 'non renseignée'}`;
+    await deliverRecordedEmail(() => resend.emails.send({ from: process.env.RESEND_FROM_EMAIL || 'Mégane - Al-Wasil <megane@al-wasil.fr>', to: [to], subject: `[Al-Wasil] Nouvelle soumission : ${type}${leadId ? ` - ${leadId}` : ''}`, text, replyTo: email || undefined }), async () => {
       await db.insert(automationErrors).values({ stage: 'contact_email', code: 'send_failed' });
       await db.update(formSubmissions).set({ status: 'email_failed', errorCode: 'send_failed' }).where(eq(formSubmissions.id, submission.id));
-      console.error('[contact] email delivery failed:', error instanceof Error ? error.message : 'unknown');
-    }
+      console.error('[contact] email delivery failed');
+    });
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('[contact] request failed:', error instanceof Error ? error.message : 'unknown');
