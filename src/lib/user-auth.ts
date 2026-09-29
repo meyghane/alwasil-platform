@@ -131,6 +131,7 @@ async function sha256(str: string): Promise<string> {
 // Modo test : test@gmail.com / test
 export async function authenticateUser(email: string, password: string): Promise<UserSession | null> {
  if (SECRET.length < 32 || typeof email !== 'string' || typeof password !== 'string' || !email.trim() || !password || password.length > 1024) return null;
+ email = email.trim().toLowerCase();
  const hashed = await sha256(password);
 
  // 2. Admin depuis env vars (compatibilité ancienne config)
@@ -144,7 +145,7 @@ export async function authenticateUser(email: string, password: string): Promise
  // 2. Comptes modo depuis MODO_ACCOUNTS env var (test + fallback)
  const envAccounts = getModoAccountsFromEnv();
  const envUser = envAccounts.find(u =>
- u.email === email && (u.password === password || u.password === hashed) && u.actif
+ u.email.trim().toLowerCase() === email && (u.password === password || u.password.toLowerCase() === hashed) && u.actif
  );
  if (envUser) {
  return { id: envUser.id, email: envUser.email, role: envUser.role, name: envUser.name, permissions: envUser.permissions };

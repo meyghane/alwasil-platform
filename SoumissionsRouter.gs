@@ -144,7 +144,7 @@ function handleLogin(data) {
   for (var i = 1; i < rows.length; i++) {
     var r = rows[i];
     var actif = String(r[actifIdx]).toLowerCase();
-    if (r[emailIdx] === data.email && r[passIdx] === data.password && actif !== 'non' && actif !== 'false') {
+    if (String(r[emailIdx]).trim().toLowerCase() === String(data.email).trim().toLowerCase() && String(r[passIdx]).trim() === String(data.password).trim() && actif !== 'non' && actif !== 'false') {
       var permsRaw = r[permIdx] || 'all';
       var permissions = String(permsRaw).split(',').map(function(p) { return p.trim(); });
       return jsonOk({
@@ -214,7 +214,7 @@ function handleUpdatePassword(data) {
   var passIdx  = headers.indexOf('PASSWORD');
 
   for (var i = 1; i < rows.length; i++) {
-    if (rows[i][emailIdx] === data.email) {
+    if (String(rows[i][emailIdx]).trim().toLowerCase() === String(data.email).trim().toLowerCase()) {
       sheet.getRange(i + 1, passIdx + 1).setValue(data.newPassword);
       return jsonOk({ ok: true });
     }

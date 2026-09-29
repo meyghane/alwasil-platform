@@ -9,7 +9,7 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const SECRET = process.env.ADMIN_SESSION_SECRET || 'fallback';
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://alwasil-platform.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://al-wasil.fr';
 
 async function assertAdmin() {
  if (await isAdminLoggedIn()) return true;
@@ -23,6 +23,22 @@ async function createInviteToken(data: object): Promise<string> {
  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
  const sigHex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
  return `${payload}.${sigHex}`;
+}
+
+async function readInviteToken(token: string): Promise<Record<string, any> | null> {
+ try {
+  const [payload, sig] = token.split('.');
+  if (!payload || !sig) return null;
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const expected = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+  const expectedHex = Array.from(new Uint8Array(expected)).map(b => b.toString(16).padStart(2, '0')).join('');
+  if (expectedHex !== sig) return null;
+  const data = JSON.parse(atob(payload));
+  if (!data.email || !data.exp || Date.now() > data.exp) return null;
+  return data;
+ } catch {
+  return null;
+ }
 }
 
 export async function POST(req: NextRequest) {
@@ -76,14 +92,8 @@ export async function GET(req: NextRequest) {
  if (!token) return NextResponse.json({ error: 'Token manquant' }, { status: 400 });
 
  try {
- const [payload, sig] = token.split('.');
- const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
- const expected = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
- const expectedHex = Array.from(new Uint8Array(expected)).map(b => b.toString(16).padStart(2, '0')).join('');
- if (expectedHex !== sig) return NextResponse.json({ error: 'Token invalide' }, { status: 400 });
-
- const data = JSON.parse(atob(payload));
- if (Date.now() > data.exp) return NextResponse.json({ error: 'Invitation expirée' }, { status: 400 });
+ const data = await readInviteToken(token);
+ if (!data) return NextResponse.json({ error: 'Lien invalide ou expiré' }, { status: 400 });
 
  return NextResponse.json({ ok: true, email: data.email, name: data.name, role: data.role, permissions: data.permissions });
  } catch {

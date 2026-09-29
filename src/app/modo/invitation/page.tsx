@@ -6,12 +6,6 @@ import { CheckCircle, Eye, EyeOff } from 'lucide-react';
 
 const VIOLET = '#7652CA';
 
-async function sha256(str: string): Promise<string> {
- const data = new TextEncoder().encode(str);
- const hash = await crypto.subtle.digest('SHA-256', data);
- return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
 type InviteData = { email: string; name: string; role: string; permissions: string[] };
 
 function InvitationForm() {
@@ -47,14 +41,13 @@ function InvitationForm() {
  if (pwd.length < 6) { setError('Minimum 6 caractères.'); return; }
  setSaving(true); setError('');
 
- const hashedPwd = await sha256(pwd);
  const id = `modo-${Date.now()}`;
 
  const res = await fetch('/api/admin/comptes', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify({
- email: invite!.email, password: hashedPwd, name: name || invite!.name,
+ email: invite!.email, password: pwd, name: name || invite!.name,
  role: invite!.role, permissions: invite!.permissions, id,
  _inviteToken: token,
  }),
