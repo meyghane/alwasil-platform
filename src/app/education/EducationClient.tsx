@@ -320,7 +320,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
  {inst.audience?.length > 0 && (
  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
  {inst.audience.map(a => {
- const ac = AUDIENCE_CONFIG[a];
+ const ac = AUDIENCE_CONFIG[a] ?? { label: a, icon: Users, color: '#543398', bg: '#faf3e0' };
  return (
  <span key={a} style={{
  fontSize: '0.7rem', fontWeight: 600,
