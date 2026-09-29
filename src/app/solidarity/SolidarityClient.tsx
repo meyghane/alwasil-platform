@@ -29,6 +29,24 @@ type SolidarityClientProps = {
  associations: Association[];
 };
 
+// Visuels relevés sur les pages officielles des organismes, jamais des photos
+// génériques présentées comme leurs locaux ou leurs activités.
+const ASSOCIATION_OFFICIAL_IMAGES: Record<string, string> = {
+ 'associationtahara.com': 'https://associationtahara.com/wp-content/uploads/2022/01/cropped-Tahara-150x150.png',
+ 'www.ipe08.com': 'https://irp.cdn-website.com/cfedd2f3/dms3rep/multi/opt/ipe_edition_corans_braille-1920w.jpg',
+ 'amb-bezons.com': 'https://i0.wp.com/amb-bezons.com/wp-content/uploads/2026/03/cropped-logo_mosquee_bezons_400.png?resize=150%2C150&ssl=1',
+ 'www.centre-annour-ivry.fr': 'https://www.centre-annour-ivry.fr/assets/images/logos/nav_logo.svg',
+};
+
+function associationImage(association: Association): string | undefined {
+ if (association.imageUrl?.startsWith('https://')) return association.imageUrl;
+ try {
+  return ASSOCIATION_OFFICIAL_IMAGES[new URL(association.url).hostname];
+ } catch {
+  return undefined;
+ }
+}
+
 // Map de photos Unsplash par thème
 const UNSPLASH_PHOTOS: Record<string, string> = {
  'hope solidarity hands': 'photo-1488521787991-ed7bbaae773c',
@@ -66,6 +84,7 @@ const CAGNOTTE_CATS: { key: CagnotteCategory | 'all'; label: string; icon: React
  { key: 'all', label: 'Tout', icon: <Globe size={11} strokeWidth={1.8} /> },
  { key: 'palestine', label: 'Palestine', icon: <Flag size={11} strokeWidth={1.8} /> },
  { key: 'urgence', label: 'Urgence', icon: <AlertTriangle size={11} strokeWidth={1.8} /> },
+ { key: 'zakat', label: 'Zakat', icon: <HandHeart size={11} strokeWidth={1.8} /> },
  { key: 'eau-puits', label: 'Eau & Puits',icon: <Droplets size={11} strokeWidth={1.8} /> },
  { key: 'orphelins', label: 'Orphelins', icon: <Baby size={11} strokeWidth={1.8} /> },
  { key: 'mosquee', label: 'Mosquées', icon: <Landmark size={11} strokeWidth={1.8} /> },
@@ -94,7 +113,7 @@ export default function SolidarityClient({
  useEffect(() => {
    const syncTab = () => {
      const requested = window.location.hash.slice(1);
-     if (['mosquee', 'orphelins', 'palestine'].includes(requested)) {
+     if (['mosquee', 'orphelins', 'palestine', 'zakat'].includes(requested)) {
        setTab('cagnottes');
        setCatFilter(requested as CagnotteCategory);
      }
@@ -431,7 +450,16 @@ export default function SolidarityClient({
  </div>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
  {filteredAssociations.map(a => (
- <div key={a.id} className="card" style={{ padding: '1.25rem' }}>
+ <div key={a.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
+ <div style={{ height: 148, backgroundColor: '#f3f0fa', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+ <span aria-hidden="true" style={{ fontSize: '2.5rem', fontWeight: 800, color: '#7652CA', opacity: 0.35 }}>{a.name.slice(0, 1).toLocaleUpperCase('fr-FR')}</span>
+ {associationImage(a) && (
+ // External official media is not stored or rehosted by Al-Wasil.
+ // eslint-disable-next-line @next/next/no-img-element
+ <img src={associationImage(a)} alt={`Visuel officiel de ${a.name}`} loading="lazy" referrerPolicy="no-referrer" onError={event => { event.currentTarget.style.display = 'none'; }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', backgroundColor: '#fff' }} />
+ )}
+ </div>
+ <div style={{ padding: '1.25rem' }}>
  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '0.75rem' }}>
  <div style={{ fontSize: '2rem', lineHeight: 1, flexShrink: 0 }}>{a.logoEmoji}</div>
  <div>
@@ -451,6 +479,7 @@ export default function SolidarityClient({
  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--primary-color)', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>
  <Globe size={13} /> Visiter le site <ExternalLink size={11} />
  </a>
+ </div>
  </div>
  ))}
  </div>

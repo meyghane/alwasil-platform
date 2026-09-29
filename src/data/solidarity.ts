@@ -45,6 +45,7 @@ export type Association = {
  description: string;
  domaine: AssociationDomaine;
  url: string;
+ imageUrl?: string;
  city?: string;
  department?: string;
  national: boolean;
@@ -91,7 +92,8 @@ export type CagnotteCategory =
  | 'education'
  | 'eau-puits'
  | 'orphelins'
- | 'urgence';
+ | 'urgence'
+ | 'zakat';
 
 export type InitiativeType =
  | 'maraude'
@@ -118,6 +120,7 @@ export const CAGNOTTE_CAT_LABELS: Record<CagnotteCategory, string> = {
  'eau-puits': ' Eau & Puits',
  'orphelins': ' Orphelins',
  'urgence': ' Urgence',
+ 'zakat': 'Zakat',
 };
 
 export const CAGNOTTE_CAT_COLORS: Record<CagnotteCategory, string> = {
@@ -129,6 +132,7 @@ export const CAGNOTTE_CAT_COLORS: Record<CagnotteCategory, string> = {
  'eau-puits': '#3b82f6',
  'orphelins': '#7652CA',
  'urgence': '#ef4444',
+ 'zakat': '#7652CA',
 };
 
 // ============================================================

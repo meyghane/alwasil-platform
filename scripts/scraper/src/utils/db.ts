@@ -27,7 +27,7 @@ export async function getExistingCagnotteUrls(): Promise<Set<string>> {
 }
 
 export type NewCagnotteRow = { title: string; organizer: string; category: string; country: string; description: string; sourceUrl: string };
-const CAGNOTTE_CATEGORIES = new Set(['palestine', 'afrique', 'mosquee', 'famille', 'education', 'eau-puits', 'orphelins', 'urgence']);
+const CAGNOTTE_CATEGORIES = new Set(['palestine', 'afrique', 'mosquee', 'famille', 'education', 'eau-puits', 'orphelins', 'urgence', 'zakat']);
 
 export async function insertCagnotte(row: NewCagnotteRow): Promise<string | null> {
   const previous = await db.select({ id: items.id }).from(items).where(and(eq(items.category, 'solidarity'), eq(items.sourceUrl, row.sourceUrl))).limit(1);

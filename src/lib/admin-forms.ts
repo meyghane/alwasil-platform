@@ -232,7 +232,7 @@ export const CATEGORY_FORMS: Record<string, CategoryForm> = {
  { key: 'organizer', label: 'Organisateur', type: 'text', required: true },
  { key: 'platform', label: 'Plateforme', type: 'select', required: true, options: [{ value: 'launchgood', label: 'LaunchGood' }, { value: 'helloasso', label: 'HelloAsso' }, { value: 'leetchi', label: 'Leetchi' }, { value: 'direct', label: 'Paiement direct' }] },
  { key: 'url', label: 'Lien de la cagnotte', type: 'url', required: true },
- { key: 'category', label: 'Catégorie', type: 'select', options: [{ value: 'gaza', label: 'Gaza' }, { value: 'orphelins', label: 'Orphelins' }, { value: 'maraude', label: 'Maraude' }, { value: 'sante', label: 'Santé' }, { value: 'education', label: 'Éducation' }, { value: 'famille', label: 'Famille en difficulté' }, { value: 'autre', label: 'Autre' }] },
+ { key: 'category', label: 'Catégorie', type: 'select', options: [{ value: 'gaza', label: 'Gaza' }, { value: 'zakat', label: 'Zakat' }, { value: 'orphelins', label: 'Orphelins' }, { value: 'maraude', label: 'Maraude' }, { value: 'sante', label: 'Santé' }, { value: 'education', label: 'Éducation' }, { value: 'famille', label: 'Famille en difficulté' }, { value: 'autre', label: 'Autre' }] },
  { key: 'goal', label: 'Objectif (€)', type: 'number' },
  { key: 'raised', label: 'Montant collecté (€)', type: 'number' },
  { key: 'currency', label: 'Devise', type: 'select', options: [{ value: 'EUR', label: 'EUR (€)' }, { value: 'USD', label: 'USD ($)' }] },
