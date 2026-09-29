@@ -7,6 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
  const routes = [
  { url: '/', priority: 1.0, changeFrequency: 'weekly' as const },
  { url: '/education', priority: 0.9, changeFrequency: 'weekly' as const },
+ { url: '/convertis', priority: 0.7, changeFrequency: 'monthly' as const },
  { url: '/events', priority: 0.9, changeFrequency: 'daily' as const },
  { url: '/solidarity', priority: 0.9, changeFrequency: 'weekly' as const },
  { url: '/jobs', priority: 0.9, changeFrequency: 'daily' as const },
@@ -14,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
  { url: '/librairies', priority: 0.8, changeFrequency: 'monthly' as const },
  { url: '/piscines', priority: 0.8, changeFrequency: 'monthly' as const },
  { url: '/hajj', priority: 0.9, changeFrequency: 'weekly' as const },
+ { url: '/lieux-priere', priority: 0.8, changeFrequency: 'weekly' as const },
  { url: '/guide', priority: 0.7, changeFrequency: 'monthly' as const },
  { url: '/blog', priority: 0.7, changeFrequency: 'weekly' as const },
  { url: '/contact', priority: 0.5, changeFrequency: 'monthly' as const },

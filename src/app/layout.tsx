@@ -6,7 +6,7 @@ import ChatBotWrapper from '@/components/ChatBotWrapper';
 import CookieConsent from '@/components/CookieConsent';
 import AudienceTracker from '@/components/AudienceTracker';
 
-const BASE_URL = 'https://alwasil-platform.vercel.app';
+const BASE_URL = 'https://al-wasil.fr';
 
 const JSON_LD_SCHEMA = {
   '@context': 'https://schema.org',
