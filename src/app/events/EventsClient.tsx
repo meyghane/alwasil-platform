@@ -184,7 +184,7 @@ export default function EventsClient({ events }: EventsClientProps) {
 
 function EventCard({ event }: { event: Event }) {
  const color = EVENT_CATEGORY_COLORS[event.category];
- const imageUrl = event.imageUrl ?? {
+ const fallbackImage = {
   conference: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80',
   maraude: 'https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=900&q=80',
   cours: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80',
@@ -194,7 +194,10 @@ function EventCard({ event }: { event: Event }) {
   webinaire: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=900&q=80',
   jeunesse: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?w=900&q=80',
   famille: 'https://images.unsplash.com/photo-1504159506876-f8338247a14a?w=900&q=80',
- }[event.category];
+ }[event.category] || 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=900&q=80';
+ // Neon peut renvoyer imageUrl vide : seule une URL non vide remplace
+ // l’illustration générique de la catégorie.
+ const imageUrl = event.imageUrl?.trim() || fallbackImage;
  const past = !isUpcoming(event.date);
  const d = new Date(event.date);
  const dayNum = d.toLocaleDateString('fr-FR', { day: 'numeric' });
