@@ -43,7 +43,6 @@ export const metadata: Metadata = {
  openGraph: {
  type: 'website',
  locale: 'fr_FR',
- url: BASE_URL,
  siteName: 'Al-Wasil',
  title: 'Al-Wasil - La plateforme de la communauté musulmane en France',
  description: 'Emploi voile accepté, librairies islamiques, piscines burkini, Hajj & Omra, psychologues, hijama, événements et solidarité.',
@@ -60,7 +59,6 @@ export const metadata: Metadata = {
  follow: true,
  googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
  },
- alternates: { canonical: BASE_URL },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

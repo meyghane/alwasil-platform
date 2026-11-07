@@ -11,6 +11,7 @@ import DeptFilter from '@/components/DeptFilter';
 import PageHeader from '@/components/PageHeader';
 
 type EducationClientProps = { instituts: Institut[] };
+const normalizeSearch = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').trim();
 
 const FORMAT_LABELS = {
  presentiel: 'Présentiel',
@@ -49,8 +50,9 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  });
 
  const filtered = instituts.filter(inst => {
- const q = search.toLowerCase();
- const matchSearch = !q || inst.name.toLowerCase().includes(q) || inst.city.toLowerCase().includes(q) || inst.tags.some(t => t.toLowerCase().includes(q));
+ const q = normalizeSearch(search);
+ const searchable = normalizeSearch([inst.name, inst.city, inst.address, inst.description, ...inst.tags, ...inst.courses.map(course => COURSE_LABELS[course])].join(' '));
+ const matchSearch = !q || searchable.includes(q);
  const matchCourse = selectedCourse === 'all' || inst.courses.includes(selectedCourse);
  const matchType = selectedType === 'all' || (selectedType === 'mosquee' ? inst.type === 'mosquee' : inst.type !== 'mosquee');
  const matchDept = selectedDept === 'Tout' || inst.department === selectedDept;
@@ -62,12 +64,27 @@ export default function EducationClient({ instituts }: EducationClientProps) {
  <PageHeader
  title="Apprentissage"
  titleAr="عِلْم"
- description="Répertoire des instituts, mosquées et professeurs pour l'étude de l'Islam et de la langue arabe."
+ description="Trouvez des cours d’arabe, de Coran, de tajwid et de sciences islamiques par ville, département, public et format."
  color="#7652CA"
  emoji=""
  />
 
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1000px' }}>
+
+ <p style={{ margin: '0 0 1.5rem', color: '#57534e', fontSize: '0.9rem', lineHeight: 1.65 }}>
+ Vous cherchez un cours près de chez vous ou à distance ? Filtrez par matière et département, puis contactez directement l’établissement pour confirmer les horaires, les niveaux et les inscriptions. <Link href="/blog/trouver-cours-arabe-islamique-ville" style={{ color: '#7652CA', fontWeight: 700 }}>Consulter le guide de recherche</Link>.
+ </p>
+
+ <div style={{ marginBottom: '1.75rem', padding: '1rem 1.1rem', border: '1px solid #e8e1f7', borderRadius: '0.75rem', background: '#fcfbff' }}>
+ <strong style={{ display: 'block', marginBottom: '0.6rem' }}>Programmes et inscriptions : sites officiels</strong>
+ <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem 1.1rem', lineHeight: 1.7 }}>
+ <a href="https://institut-alfiya.fr/cursus" target="_blank" rel="noopener noreferrer" style={{ color: '#7652CA', fontWeight: 700 }}>Institut Alfiya : cursus</a>
+ <a href="https://nadwi.fr/inscriptions-en-cours-pour-la-rentree-2026-27-module-langue-arabe-et-sciences-islamiques/" target="_blank" rel="noopener noreferrer" style={{ color: '#7652CA', fontWeight: 700 }}>Institut Nadwi : rentrée 2026/27</a>
+ <a href="https://www.grandemosqueedeparis.fr/ibnbadis" target="_blank" rel="noopener noreferrer" style={{ color: '#7652CA', fontWeight: 700 }}>Grande Mosquée de Paris : École Ibn Badis</a>
+ <a href="https://www.institut-anwar.fr/cours-darabe-gratuit/" target="_blank" rel="noopener noreferrer" style={{ color: '#7652CA', fontWeight: 700 }}>Institut Anwar : cours en ligne</a>
+ </div>
+ <small style={{ display: 'block', marginTop: '0.5rem', color: '#57534e' }}>Consultez les sites des organismes pour confirmer dates, inscriptions, formats et places disponibles.</small>
+ </div>
 
  {/* Search & Filters */}
  <div style={{ 
@@ -204,6 +221,13 @@ const AUDIENCE_CONFIG: Record<string, { label: string; icon: LucideIcon; color: 
 
 function InstitutCard({ inst }: { inst: Institut }) {
  const tc = TYPE_CONFIG[inst.type] ?? TYPE_CONFIG['institut'];
+ const isOnline = inst.type === 'en-ligne' || (inst.format.includes('distanciel') && !inst.format.includes('presentiel'));
+ const fallbackImage = isOnline
+  ? '/images/brand/student-library-v2.png'
+  : '/images/page-banners/education-v1.webp';
+ const approvedImage = !isOnline && inst.imageUrl && /^https:\/\//i.test(inst.imageUrl)
+  ? inst.imageUrl
+  : !isOnline && inst.imageUrl?.startsWith('/images/') ? inst.imageUrl : undefined;
 
  return (
  <div style={{
@@ -215,6 +239,12 @@ function InstitutCard({ inst }: { inst: Institut }) {
  flexDirection: 'column',
  boxShadow: '0 2px 8px rgba(8,8,8,0.05)',
  }}>
+ <InstitutCardImage
+  src={approvedImage || fallbackImage}
+  fallback={fallbackImage}
+  alt={approvedImage ? `Photo de ${inst.name}` : isOnline ? 'Illustration de formation en ligne' : 'Illustration de cours et d’apprentissage'}
+  illustrative={!approvedImage}
+ />
  {/* Header coloré */}
  <div style={{
  background: `linear-gradient(135deg, ${tc.color}18, ${tc.color}08)`,
@@ -373,5 +403,23 @@ function InstitutCard({ inst }: { inst: Institut }) {
  ) : null}
  </div>
  </div>
+ );
+}
+
+function InstitutCardImage({ src, fallback, alt, illustrative }: { src: string; fallback: string; alt: string; illustrative: boolean }) {
+ const [currentSrc, setCurrentSrc] = useState(src);
+ const isIllustration = illustrative || currentSrc === fallback;
+ return (
+  <div style={{ position: 'relative', height: 150, overflow: 'hidden', backgroundColor: '#f0ebfa' }}>
+   {/* eslint-disable-next-line @next/next/no-img-element */}
+   <img
+    src={currentSrc}
+    alt={isIllustration ? alt.replace(/^Photo de /, 'Illustration pour ') : alt}
+    loading="lazy"
+    onError={() => { if (currentSrc !== fallback) setCurrentSrc(fallback); }}
+    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 42%', display: 'block' }}
+   />
+   {isIllustration && <span style={{ position: 'absolute', right: 10, bottom: 10, padding: '3px 9px', borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.92)', color: '#080808', fontSize: '0.65rem', fontWeight: 700 }}>Illustration</span>}
+  </div>
  );
 }

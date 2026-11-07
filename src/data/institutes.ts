@@ -13,6 +13,7 @@ export type Institut = {
  department: string; // '75', '92', '93', '94', '77', '78', '91', '95'
  coords?: { lat: number; lng: number };
  website?: string;
+ imageUrl?: string; // Photo autorisée de l'établissement ; sinon illustration générique
  phone?: string;
  email?: string;
  courses: CourseType[];

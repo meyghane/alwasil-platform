@@ -14,7 +14,8 @@ export type ArticleBlock =
  | { type: 'callout'; icon: string; title: string; content: string }
  | { type: 'table'; headers: string[]; rows: string[][] }
  | { type: 'faq'; items: { q: string; a: string }[] }
- | { type: 'cta'; label: string; href: string; desc: string };
+ | { type: 'cta'; label: string; href: string; desc: string }
+ | { type: 'resources'; items: { title: string; href: string; description: string }[] };
 
 export type Article = {
  slug: string;
@@ -493,6 +494,72 @@ export const articles: Article[] = [
  ],
  },
  ],
+ },
+ {
+  slug: 'trouver-librairie-arabe-musulmane',
+  title: 'Librairie arabe ou musulmane : trouver les bons livres près de chez soi',
+  metaTitle: 'Librairie arabe et musulmane : trouver une boutique près de chez vous',
+  metaDescription: 'Trouvez une librairie arabe ou musulmane selon votre ville, les livres recherchés et le format. Coran, arabe, jeunesse : annuaire et liens vérifiés.',
+  category: 'Culture & livres',
+  categoryColor: '#7652CA',
+  date: '2026-11-05',
+  lastUpdated: '2026-11-05',
+  readTime: '4 min',
+  excerpt: 'Une méthode simple pour chercher des livres en arabe ou sur l’islam, comparer les boutiques en ligne et vérifier une librairie avant de s’y rendre.',
+  tags: ['librairie arabe', 'librairie musulmane', 'Coran', 'livres islamiques', 'Île-de-France'],
+  featured: true,
+  blocks: [
+   { type: 'intro', content: 'Vous cherchez une librairie arabe, musulmane ou coranique près de chez vous ? Commencez par préciser le type de livre, la langue et votre ville. L’annuaire Al-Wasil permet de parcourir les librairies référencées, de filtrer par spécialité et de consulter les liens disponibles.' },
+   { type: 'h2', content: 'Quel type de librairie recherchez-vous ?' },
+   { type: 'p', content: 'Les mots « librairie arabe » peuvent désigner une boutique de livres en langue arabe, une librairie spécialisée dans le Coran et les sciences islamiques, ou une librairie généraliste qui possède un rayon arabe. Vérifiez les spécialités indiquées et le catalogue officiel avant de commander.' },
+   { type: 'ul', items: ['Coran, traductions et tafsir : vérifiez les langues et éditions proposées.', 'Apprentissage de l’arabe : cherchez des manuels correspondant à votre niveau.', 'Livres pour enfants : regardez les âges et thèmes indiqués par l’éditeur ou la boutique.', 'Librairie près de chez vous : filtrez par département et confirmez l’adresse et les horaires directement auprès du commerce.'] },
+   { type: 'h2', content: 'Boutique en ligne ou magasin près de chez vous ?' },
+   { type: 'p', content: 'Une boutique en ligne permet de consulter le catalogue et les conditions de livraison depuis toute la France. Pour un magasin physique, les horaires, l’adresse et la disponibilité d’un titre peuvent changer : appelez ou consultez la page officielle avant de vous déplacer. Les informations affichées dans un annuaire sont un point de départ, pas une garantie de stock.' },
+   { type: 'resources', items: [
+     { title: 'Librairie Sana : catalogue en ligne', href: 'https://www.librairie-sana.com/', description: 'Site officiel avec des rubriques de livres autour du Coran, de l’arabe et de l’apprentissage. Vérifiez les références et disponibilités sur la boutique.' },
+     { title: 'Librairie du Savoir : boutique en ligne', href: 'https://www.librairie-le-savoir.com/', description: 'Boutique distincte, en ligne, proposant notamment des catégories Coran, tafsir, hadith, fiqh et méthodes d’arabe. Ce lien ne désigne pas la librairie physique homonyme de Bobigny.' },
+   ] },
+   { type: 'cta', label: 'Parcourir l’annuaire des librairies', href: '/librairies', desc: 'Filtrez par ville, département, spécialité et vente en ligne.' },
+   { type: 'faq', items: [
+    { q: 'Comment trouver une librairie musulmane dans mon département ?', a: 'Ouvrez l’annuaire Al-Wasil, choisissez votre département, puis recherchez une spécialité comme Coran, arabe ou livres pour enfants. Le répertoire s’enrichit progressivement : l’absence de résultat ne signifie pas qu’aucune librairie n’existe dans votre secteur.' },
+    { q: 'Comment vérifier qu’une librairie est ouverte ?', a: 'Consultez son site ou son compte officiel, puis confirmez les horaires et l’adresse avant de partir. Les horaires en ligne peuvent évoluer.' },
+    { q: 'Le site garantit-il qu’un livre est en stock ?', a: 'Non. L’annuaire oriente vers les librairies et leurs sites ; seul le vendeur peut confirmer le stock, le prix et le délai de livraison.' },
+   ] },
+  ],
+ },
+ {
+  slug: 'trouver-cours-arabe-islamique-ville',
+  title: 'Cours d’arabe et cours islamiques : chercher un institut selon sa ville',
+  metaTitle: 'Cours d’arabe près de chez vous : instituts, mosquées et cours en ligne',
+  metaDescription: 'Recherchez des cours d’arabe, Coran, tajwid et sciences islamiques par ville, département et format. Liens officiels et conseils pour vérifier les inscriptions.',
+  category: 'Apprentissage',
+  categoryColor: '#7652CA',
+  date: '2026-11-05',
+  lastUpdated: '2026-11-05',
+  readTime: '5 min',
+  excerpt: 'Comment trouver un cours d’arabe à Créteil, Versailles ou ailleurs : filtrez par matière et département, puis vérifiez les modalités auprès de l’institut.',
+  tags: ['cours arabe', 'institut islamique', 'Coran', 'sciences islamiques', 'Île-de-France'],
+  featured: true,
+  blocks: [
+   { type: 'intro', content: 'Pour trouver un cours d’arabe ou de sciences islamiques, partez de trois critères : la matière, le lieu ou format en ligne, et le niveau. L’annuaire Al-Wasil rassemble des instituts, mosquées et formations documentés ; contactez l’organisme pour confirmer le calendrier et les inscriptions en cours.' },
+   { type: 'h2', content: 'Chercher un cours par ville ou département' },
+   { type: 'ol', items: ['Choisissez la matière : langue arabe, Coran, tajwid, mémorisation ou sciences islamiques.', 'Sélectionnez le département correspondant à votre ville dans le filtre.', 'Comparez les formats présentiel, distanciel et hybride ainsi que les publics indiqués.', 'Ouvrez la fiche et vérifiez directement auprès de l’organisme le niveau, les horaires, les tarifs éventuels et les places disponibles.'] },
+   { type: 'p', content: 'Par exemple, pour une recherche « cours arabe Créteil », sélectionnez le Val-de-Marne (94) et la langue arabe. Pour Versailles, choisissez les Yvelines (78) ; pour Verneuil-sur-Seine, utilisez également le 78 et confirmez la distance avec l’établissement. La recherche ne signifie pas qu’un cours existe nécessairement dans chaque commune.' },
+   { type: 'h2', content: 'Quelques programmes à consulter sur leurs sites officiels' },
+   { type: 'p', content: 'Les liens ci-dessous permettent de vérifier directement les programmes et modalités publiés par les établissements. Les inscriptions, calendriers et disponibilités évoluent : fiez-vous à la page officielle la plus récente.' },
+   { type: 'resources', items: [
+    { title: 'Institut Alfiya : cursus', href: 'https://institut-alfiya.fr/cursus', description: 'Présentation officielle de parcours en langue arabe, sciences islamiques et Coran. Consultez la page d’inscription pour les modalités de l’année en cours.' },
+    { title: 'Institut Nadwi : annonce de rentrée 2026/27', href: 'https://nadwi.fr/inscriptions-en-cours-pour-la-rentree-2026-27-module-langue-arabe-et-sciences-islamiques/', description: 'Annonce officielle de modules de langue arabe et sciences islamiques ; vérifiez les inscriptions et le format sur le site de l’institut.' },
+    { title: 'Grande Mosquée de Paris : École Ibn Badis', href: 'https://www.grandemosqueedeparis.fr/ibnbadis', description: 'Présentation officielle des enseignements et formations, dont des cours de langue arabe et les activités de l’Institut Al-Ghazali.' },
+    { title: 'Institut Anwar : cours d’arabe en ligne', href: 'https://www.institut-anwar.fr/cours-darabe-gratuit/', description: 'Page officielle décrivant des cours en visioconférence et une prise de contact pour connaître les prochaines sessions.' },
+   ] },
+   { type: 'cta', label: 'Rechercher dans l’annuaire Apprentissage', href: '/education', desc: 'Filtrez les établissements par département, enseignement et format.' },
+   { type: 'faq', items: [
+    { q: 'Comment trouver des cours d’arabe à Créteil ?', a: 'Dans l’annuaire, sélectionnez le département 94 et recherchez « arabe » ou « langue arabe ». Contactez ensuite l’organisme indiqué pour vérifier l’adresse, le niveau et le calendrier.' },
+    { q: 'Puis-je suivre un cours à distance depuis une autre ville ?', a: 'Oui, certaines fiches indiquent un format distanciel ou hybride. Confirmez auprès de l’organisme que le cours est actuellement proposé en ligne et qu’il correspond à votre niveau.' },
+    { q: 'Les inscriptions sont-elles ouvertes ?', a: 'Les ouvertures et places changent selon les périodes. Consultez la page officielle d’inscription liée à l’établissement ; l’annuaire ne peut garantir une disponibilité en temps réel.' },
+   ] },
+  ],
  },
 ];
 

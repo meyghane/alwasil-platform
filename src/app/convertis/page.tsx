@@ -5,6 +5,8 @@ import PageHeader from '@/components/PageHeader';
 export const metadata = {
   title: 'Convertis | Al-Wasil',
   description: 'Ressources et premiers repères pour les personnes qui découvrent ou souhaitent mieux comprendre l’islam.',
+  alternates: { canonical: 'https://al-wasil.fr/convertis' },
+  openGraph: { title: 'Convertis | Al-Wasil', description: 'Premiers repères, ressources et lieux pour avancer accompagné.', url: 'https://al-wasil.fr/convertis', type: 'website' },
 };
 
 const CONVERTI_CARDS: Array<{ title: string; text: string; icon: LucideIcon; href: string }> = [

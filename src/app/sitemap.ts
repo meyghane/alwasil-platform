@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getHajjPackages } from '@/lib/db-queries';
+import { articles } from '@/data/blog-articles';
 
 const BASE_URL = 'https://al-wasil.fr';
 
@@ -25,10 +26,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
  ];
 
  const offers = await getHajjPackages();
- return [...routes, ...offers.map(offer => ({ url: `/hajj/offres/${encodeURIComponent(offer.id)}`, priority: 0.75, changeFrequency: 'weekly' as const, lastModified: offer.lastVerifiedAt }))].map(route => ({
- url: `${BASE_URL}${route.url}`,
- lastModified: 'lastModified' in route && (typeof route.lastModified === 'string' || route.lastModified instanceof Date) ? route.lastModified : new Date(),
- changeFrequency: route.changeFrequency,
- priority: route.priority,
- }));
+ const blogRoutes = articles.map(article => ({ url: `/blog/${article.slug}`, priority: 0.65, changeFrequency: 'monthly' as const, lastModified: article.lastUpdated }));
+ return [...routes, ...blogRoutes, ...offers.map(offer => ({ url: `/hajj/offres/${encodeURIComponent(offer.id)}`, priority: 0.75, changeFrequency: 'weekly' as const, lastModified: offer.lastVerifiedAt }))].map(route => {
+ const sitemapEntry = {
+  url: `${BASE_URL}${route.url}`,
+  changeFrequency: route.changeFrequency,
+  priority: route.priority,
+ };
+ return 'lastModified' in route && (typeof route.lastModified === 'string' || route.lastModified instanceof Date)
+  ? { ...sitemapEntry, lastModified: route.lastModified }
+  : sitemapEntry;
+ });
 }

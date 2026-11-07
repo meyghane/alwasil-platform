@@ -1,3 +1,12 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Mentions légales et confidentialité | Al-Wasil',
+  description: 'Mentions légales, politique de confidentialité et conditions d’utilisation du site Al-Wasil.',
+  alternates: { canonical: 'https://al-wasil.fr/legal' },
+  openGraph: { title: 'Mentions légales et confidentialité | Al-Wasil', description: 'Informations légales et règles de confidentialité du site.', url: 'https://al-wasil.fr/legal', type: 'website' },
+};
+
 export default function LegalPage() {
  return (
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '760px' }}>

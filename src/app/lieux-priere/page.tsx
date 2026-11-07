@@ -6,6 +6,8 @@ import { getPublicMosques } from '@/lib/public-places';
 export const metadata = {
   title: 'Lieux de prière en France | Al-Wasil',
   description: 'Mosquées et lieux de prière référencés en France, avec adresse et accès Google Maps.',
+  alternates: { canonical: 'https://al-wasil.fr/lieux-priere' },
+  openGraph: { title: 'Lieux de prière en France | Al-Wasil', description: 'Mosquées et salles de prière avec les informations disponibles.', url: 'https://al-wasil.fr/lieux-priere', type: 'website' },
 };
 
 export default async function LieuxPrierePage() {

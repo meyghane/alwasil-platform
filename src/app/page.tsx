@@ -18,6 +18,11 @@ import UpcomingEventsRail from '@/components/home/UpcomingEventsRail';
 import BackToSchool from '@/components/home/BackToSchool';
 import PrayerTimesBar from '@/components/PrayerTimesBar';
 
+export const metadata = {
+  alternates: { canonical: 'https://al-wasil.fr/' },
+  openGraph: { url: 'https://al-wasil.fr/' },
+};
+
 export const revalidate = 3600;
 
 // ── Types ─────────────────────────────────────────────────────────

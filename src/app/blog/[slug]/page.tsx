@@ -16,9 +16,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
  return {
  title: article.metaTitle,
  description: article.metaDescription,
+ alternates: { canonical: `https://al-wasil.fr/blog/${slug}` },
  openGraph: {
  title: article.metaTitle,
  description: article.metaDescription,
+  url: `https://al-wasil.fr/blog/${slug}`,
  type: 'article',
  publishedTime: article.date,
  modifiedTime: article.lastUpdated,
@@ -106,6 +108,17 @@ function renderBlock(block: ArticleBlock, i: number) {
  </div>
  ))}
  </div>
+ </div>
+ );
+ case 'resources':
+ return (
+ <div key={i} style={{ display: 'grid', gap: '0.75rem', margin: '1.5rem 0' }}>
+ {block.items.map((item, j) => (
+ <a key={j} href={item.href} target="_blank" rel="noopener noreferrer" style={{ display: 'block', padding: '1rem 1.1rem', border: '1px solid #e5e7eb', borderRadius: '10px', color: '#111827', textDecoration: 'none' }}>
+ <strong style={{ color: '#7652CA' }}>{item.title} <ExternalLink size={13} style={{ verticalAlign: 'middle' }} /></strong>
+ <span style={{ display: 'block', marginTop: '0.35rem', color: '#4b5563', fontSize: '0.9rem', lineHeight: 1.6 }}>{item.description}</span>
+ </a>
+ ))}
  </div>
  );
  case 'cta':

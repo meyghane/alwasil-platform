@@ -38,6 +38,7 @@ const SPECIALITE_FILTERS: { key: LibrairieSpecialite | 'all'; label: string; ico
 ];
 
 const ACCENT = '#7652CA'; // violet - couleur librairies
+const normalizeSearch = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').trim();
 
 export default function LibrairiesClient({ librairies }: LibrairiesClientProps) {
  const [search, setSearch] = useState('');
@@ -47,28 +48,41 @@ export default function LibrairiesClient({ librairies }: LibrairiesClientProps) 
  const [livraisonOnly, setLivraisonOnly] = useState(false);
 
  const filtered = librairies.filter(l => {
- const q = search.toLowerCase();
+ const q = normalizeSearch(search);
+ const searchable = normalizeSearch([l.name, l.ville, l.description, ...l.tags, ...l.langues, ...l.specialites.map(s => SPECIALITE_LABELS[s])].join(' '));
  return (typeFilter === 'all' || l.type === typeFilter) &&
  (specialiteFilter === 'all' || l.specialites.includes(specialiteFilter)) &&
  (deptFilter === 'Tout' || l.department === deptFilter) &&
  (!livraisonOnly || l.livraison) &&
- (!q || l.name.toLowerCase().includes(q) || l.ville.toLowerCase().includes(q) || l.tags.some(t => t.includes(q)));
+ (!q || searchable.includes(q));
  });
 
  const sorted = [...filtered].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 
  return (
  <div>
- <PageHeader title="Librairies" description="Librairies islamiques d'Île-de-France : livres, Corans, arabe, cadeaux." color="#7652CA" emoji="" />
+ <PageHeader title="Librairies arabes et musulmanes" description="Trouvez une librairie par ville, département et spécialité : Coran, livres islamiques, langue arabe et jeunesse." color="#7652CA" emoji="" />
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1100px' }}>
 
  {/* Bandeau info */}
  <div style={{ marginBottom: '1.5rem', padding: '0.875rem 1rem', backgroundColor: `${ACCENT}08`, borderRadius: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: `3px solid ${ACCENT}`, display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
  <span></span>
  <span>
- Cette liste couvre actuellement l&apos;Île-de-France. Les prochains batchs couvriront PACA, Rhône-Alpes, Grand-Est…
- Vous connaissez une librairie non listée ? <strong style={{ color: ACCENT, cursor: 'pointer' }}>Signalez-la</strong>
+ Le répertoire s&apos;enrichit progressivement. Vérifiez les horaires et la disponibilité auprès de chaque librairie avant de vous déplacer. <Link href="/blog/trouver-librairie-arabe-musulmane" style={{ color: ACCENT, fontWeight: 700 }}>Lire notre guide pour choisir et trouver une librairie</Link>.
  </span>
+ </div>
+
+ <p style={{ margin: '0 0 1.5rem', color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
+ Recherchez aussi par spécialité (arabe, Coran, tafsir, livres pour enfants), langue ou ville. Vous pouvez combiner ces mots avec le département et le format de vente.
+ </p>
+
+ <div style={{ marginBottom: '1.5rem', padding: '1rem 1.1rem', border: '1px solid #e8e1f7', borderRadius: '0.75rem', background: '#fcfbff' }}>
+ <strong style={{ display: 'block', marginBottom: '0.5rem' }}>Librairies en ligne à consulter</strong>
+ <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem 1.25rem' }}>
+ <a href="https://www.librairie-sana.com/" target="_blank" rel="noopener noreferrer" style={{ color: ACCENT, fontWeight: 700 }}>Librairie Sana : catalogue officiel</a>
+ <a href="https://www.librairie-le-savoir.com/" target="_blank" rel="noopener noreferrer" style={{ color: ACCENT, fontWeight: 700 }}>Librairie du Savoir : boutique en ligne</a>
+ </div>
+ <small style={{ display: 'block', marginTop: '0.5rem', color: 'var(--text-secondary)' }}>Ces liens désignent des boutiques en ligne ; vérifiez catalogue, stock et livraison auprès de chaque site.</small>
  </div>
 
  {/* Filters */}
