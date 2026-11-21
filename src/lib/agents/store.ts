@@ -1,18 +1,29 @@
 import { neon } from '@neondatabase/serverless';
 import { createHash } from 'node:crypto';
-import type { Source, RecordData, Assessment, RunReport } from './contracts';
+import type { Source, RecordData, Assessment, RunReport, AgentCategory } from './contracts';
 import { duplicateEvidence } from './policy';
 const client = () => neon(process.env.DATABASE_URL!);
 const categories: Record<string,string> = { mosquee: 'institute', institut: 'institute', evenement: 'event', association: 'solidarity', librairie: 'library', piscine: 'pool', hajj: 'hajj', cagnotte: 'solidarity', sante: 'health', emploi: 'job' };
 const subTypes: Record<string,string> = { evenement: 'event', hajj: 'package', emploi: 'job_offer' };
+const sourceCategory: Record<string,AgentCategory> = {
+  mosquee: 'mosquee', mosque: 'mosquee', institut: 'institut', institute: 'institut',
+  evenement: 'evenement', event: 'evenement', association: 'association', solidarity: 'association',
+  librairie: 'librairie', library: 'librairie', piscine: 'piscine', pool: 'piscine',
+  hajj: 'hajj', cagnotte: 'cagnotte', sante: 'sante', health: 'sante',
+  justice: 'justice', emploi: 'emploi', job: 'emploi',
+};
 export async function registeredSources(): Promise<Source[]> {
-  return await client()`SELECT id,url,category,departments,trust,official,evidence,enabled FROM agent_sources` as Source[];
+  const rows = await client()`SELECT id,url,category,departments,trust,official,evidence,enabled FROM agent_sources`;
+  return rows.flatMap(row => {
+    const category = sourceCategory[String(row.category).toLowerCase()];
+    return category ? [{ ...row, category } as Source] : [];
+  });
 }
 export async function recordSourceCheck(id: string, errorCode: string | null) {
   await client()`UPDATE agent_sources SET last_checked_at=now(),run_count=run_count+1,error_count=error_count+CASE WHEN ${errorCode}::text IS NULL THEN 0 ELSE 1 END,last_error_code=${errorCode} WHERE id=${id}::uuid`;
 }
 export async function saveAgentRecord(record: RecordData, assessment: Assessment, sql = client()) {
-  const existing = await sql`SELECT id,title,city,metadata FROM items WHERE category=${categories[record.category]}::category AND status IN ('pending','approved')`;
+  const existing = await sql`SELECT id,title,city,metadata FROM items WHERE category=${categories[record.category]}::category AND status IN ('pending','approved','expired')`;
   const duplicate = existing.find(row => {
     const prior = row.metadata?.agentRecord as RecordData | undefined;
     if (prior) return duplicateEvidence(record, prior).length > 0;
@@ -42,7 +53,8 @@ export async function rollbackInvisible(id: string, sql = client()) {
     SELECT changed.id,'publication_failed','agent:publication',to_jsonb(prior),to_jsonb(changed),'["public_visibility_failed"]'::jsonb FROM changed JOIN prior ON changed.id=prior.id`;
 }
 export async function saveAgentReport(report: RunReport) {
-  await client()`UPDATE agent_runs SET status=${report.errors.length ? 'attention' : 'complete'},report=${JSON.stringify(report)}::jsonb,completed_at=now() WHERE id=${report.id}::uuid`;
+  const status = report.errors.length || report.published === 0 ? 'attention' : 'complete';
+  await client()`UPDATE agent_runs SET status=${status},report=${JSON.stringify(report)}::jsonb,completed_at=now() WHERE id=${report.id}::uuid`;
 }
 export async function claimRun(key: string) {
   const rows = await client()`INSERT INTO agent_runs(run_key) VALUES (${key}) ON CONFLICT DO NOTHING RETURNING id`;

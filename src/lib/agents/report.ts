@@ -1,6 +1,7 @@
 import type { RunReport } from './contracts';
 export function formatAgentReport(run: RunReport): string {
   return [
+    ...(run.published === 0 ? [[ 'ALERTE ROUGE', String.fromCharCode(0x2014), '0 nouvelle fiche publique' ].join(' ')] : []),
     `Veille Al-Wasil · ${run.startedAt.slice(0,10)}`,
     `Zones explorées : ${run.zones.join(', ') || 'aucune'}`,
     `Catégories exécutées : ${run.categories.join(', ') || 'aucune'}`,

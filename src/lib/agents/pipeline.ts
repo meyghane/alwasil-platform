@@ -18,9 +18,14 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
   const started = Date.now();
   const report: RunReport = { id: runId, startedAt: now.toISOString(), zones: [], categories: [], sources: [], added: 0, rejectionReasons: [], found: 0, published: 0, corrected: 0, duplicates: 0, rejected: 0, archived: 0, deferred: 0, errors: [], quotaReached: false, uncovered: [], actions: [] };
   try {
-    const plan = discoverSources(await ports.sources(), AUTO_CATEGORIES, 3, Math.floor(now.getTime()/86400000));
+    const sourceRegistry = await ports.sources();
+    const plan = discoverSources(sourceRegistry, AUTO_CATEGORIES, 3, Math.floor(now.getTime()/86400000));
     report.uncovered = plan.uncovered; report.quotaReached = plan.quotaReached;
-    if (!plan.selected.length) report.actions.push('Enregistrer des sources officielles pour les catégories et zones demandées.');
+    report.actions.push(`Registre : ${sourceRegistry.length} source(s), ${sourceRegistry.filter(s => s.enabled && s.trust === 'trusted').length} fiable(s) activée(s), ${sourceRegistry.filter(s => s.trust === 'pending' || !s.enabled).length} en attente/désactivée(s), ${plan.selected.length} exécutée(s).`);
+    if (!plan.selected.length) {
+      report.actions.push(`ALERTE ROUGE : aucune source exécutée : ${plan.uncovered.join(' ; ')}`);
+      report.errors.push('Aucune source officielle activée et fiable ne couvre les zones du jour.');
+    }
     for (const source of plan.selected) {
       if (Date.now()-started>35000) { report.quotaReached=true; report.uncovered.push(`${source.category} : budget de temps atteint`); break; }
       report.zones = [...new Set([...report.zones, ...source.departments.filter(d => plan.plannedZones.includes(d as never))])];
@@ -48,6 +53,10 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
       finally { await ports.sourceChecked?.(source.id, sourceError); }
     }
     report.uncovered.push('Hajj/Omra, cagnottes, santé, droit : validation humaine ; emploi non demandé.');
+    if (report.published === 0 && plan.selected.length > 0) {
+      report.errors.push('Aucune nouvelle fiche publique vérifiée pendant ce lancement.');
+      report.actions.push(`Diagnostic : ${report.sources.length} source(s) exécutée(s), ${report.found} fiche(s) trouvée(s), ${report.duplicates} doublon(s), ${report.rejected} rejet(s), ${report.deferred} fiche(s) différée(s).`);
+    }
   } catch { report.errors.push('Registre de sources indisponible.'); }
   await ports.finish(report);
   return report;
