@@ -42,10 +42,11 @@ export async function GET(request: Request) {
           const resources = await listing.json() as Array<{ id?: string }>;
           return Array.isArray(resources) && resources.some(resource => resource.id === itemId);
         }
-        const page = await fetch(`https://al-wasil.fr${visibleItem.categoryPath}`, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
-        if (!page.ok) return false;
-        const rendered = await page.text();
-        return new RegExp(`data-item-id=["']${itemId}["']`).test(rendered);
+        // The public item endpoint already verifies both approved status and
+        // membership in the category's public dataset. Category pages are
+        // client-rendered, so their HTML response is not a reliable visibility
+        // check and can falsely roll back a valid publication.
+        return true;
       },
       rollback: rollbackInvisible, finish: saveAgentReport,
     }, now, id, cursor);
