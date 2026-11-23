@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache';
 import { runAgents } from '@/lib/agents/pipeline';
-import { registeredSources, saveAgentRecord, rollbackInvisible, saveAgentReport, claimRun, recordSourceCheck, existingRun } from '@/lib/agents/store';
+import { registeredSources, saveAgentRecord, rollbackInvisible, saveAgentReport, claimRun, recordSourceCheck, existingRun, lastDiscoveryCursor } from '@/lib/agents/store';
 import { fetchOfficialPage } from '@/lib/agents/security';
 import { formatAgentReport } from '@/lib/agents/report';
 import { deliverOnce } from '@/lib/delivery-ledger';
@@ -19,6 +19,7 @@ export async function GET(request: Request) {
       const status = await existingRun(key);
       return Response.json({ ok: status === 'complete', alreadyRun: true, status }, { status: status === 'complete' ? 200 : 409 });
     }
+    const cursor = await lastDiscoveryCursor();
     const report = await runAgents({
       sources: registeredSources, fetch: fetchOfficialPage, save: saveAgentRecord, sourceChecked: recordSourceCheck,
       async verifyPublic(itemId) {
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
         return response.ok && (await response.json()).id === itemId;
       },
       rollback: rollbackInvisible, finish: saveAgentReport,
-    }, now, id);
+    }, now, id, cursor);
     report.actions.push(...await reviewAgentFreshness());
     await saveAgentReport(report);
     const recipient = moderationChatId();

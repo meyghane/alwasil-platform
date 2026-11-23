@@ -7,9 +7,11 @@ export function assessRecord(record: RecordData, source: Source, duplicate = fal
   if (!source.enabled || source.trust === 'blocked') blocked.push('source désactivée ou problématique');
   if (!record.provenance.url || record.provenance.sourceId !== source.id || !record.provenance.contentHash) blocked.push('provenance absente');
   try { if (new URL(record.provenance.url).origin !== new URL(source.url).origin) blocked.push('source contradictoire'); } catch { blocked.push('URL invalide'); }
+  if (!record.relevanceEvidence?.excerpt || record.relevanceEvidence.url !== record.provenance.url || record.relevanceEvidence.excerpt.length < 12) blocked.push('preuve explicite de pertinence musulmane absente');
   if (/<script|javascript:|-----BEGIN .*PRIVATE KEY|\b(?:api[_-]?key|password|mot de passe)\s*[:=]/i.test(JSON.stringify(record))) blocked.push('contenu malveillant ou privé');
   if (blocked.length) return { decision: 'blocked', confidence: 'low', reasons: blocked };
   const missing = [!record.title && 'titre', !record.description || record.description.length < 80 ? 'description utile' : '', !record.city && 'ville', !record.department && 'département', !record.address && 'adresse ou lieu', !source.official && 'source non officielle', source.trust !== 'trusted' && 'source non validée', !source.evidence && 'preuve de fiabilité absente', duplicate && 'doublon probable'];
+  if (record.department && source.departments.length && !source.departments.includes(record.department)) missing.push('fiche située hors du territoire recherché');
   if (record.phone && !/^(?:33\d{9}|\d{8,15})$/.test(phone(record.phone))) missing.push('téléphone invalide');
   if (record.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(record.email)) missing.push('email invalide');
   const checked = Date.parse(record.provenance.fetchedAt);

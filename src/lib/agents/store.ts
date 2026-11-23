@@ -64,3 +64,8 @@ export async function existingRun(key: string) {
   const [run] = await client()`SELECT status FROM agent_runs WHERE run_key=${key}`;
   return run?.status || 'unknown';
 }
+export async function lastDiscoveryCursor(): Promise<number | undefined> {
+  const [row] = await client()`SELECT report->'cursor' AS cursor FROM agent_runs WHERE report->'cursor'->>'next' IS NOT NULL ORDER BY completed_at DESC NULLS LAST LIMIT 1`;
+  const next = Number(row?.cursor?.next);
+  return Number.isInteger(next) && next >= 0 ? next : undefined;
+}

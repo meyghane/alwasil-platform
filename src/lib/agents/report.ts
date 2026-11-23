@@ -8,6 +8,8 @@ export function formatAgentReport(run: RunReport): string {
     `Sources utilisées : ${run.sources.join(', ') || 'aucune'}`,
     `Fiches ajoutées : ${run.added}`,
     `Trouvées : ${run.found} · publiées : ${run.published} · corrigées : ${run.corrected}`,
+    `Contrôles mesurés : ${run.metrics?.groundingRequests ?? 0} recherches · ${run.metrics?.searchQueries ?? 0} requêtes · ${run.metrics?.pagesAttempted ?? 0} pages consultées (${run.metrics?.pagesFetched ?? 0} chargées) · ${run.metrics?.candidates ?? 0} candidates · ${run.metrics?.writes ?? 0} écritures · ${run.metrics?.visiblePublications ?? 0} visibles publiquement.`,
+    `Avancement territoires : ${run.cursor?.completedSlots ?? 0}/${run.cursor?.totalSlots ?? 0} créneaux · prochain curseur ${run.cursor?.next ?? 0}.`,
     `Doublons : ${run.duplicates} · rejetées : ${run.rejected} · archivées : ${run.archived} · en attente : ${run.deferred}`,
     `Quota atteint : ${run.quotaReached ? 'oui' : 'non'}`,
     `Erreurs : ${run.errors.join(' ; ') || 'aucune'}`,
