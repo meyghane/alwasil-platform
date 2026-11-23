@@ -1,5 +1,8 @@
-export const AUTO_CATEGORIES = ['mosquee', 'institut', 'evenement', 'association', 'librairie'] as const;
-export type AgentCategory = typeof AUTO_CATEGORIES[number] | 'piscine' | 'hajj' | 'cagnotte' | 'sante' | 'justice' | 'emploi';
+export const AUTO_CATEGORIES = ['mosquee', 'institut', 'evenement', 'association', 'librairie', 'piscine'] as const;
+// Search may cover these categories even when their publication adapter is
+// not yet eligible for automatic approval. Discovery never grants permission.
+export const DISCOVERY_CATEGORIES = [...AUTO_CATEGORIES, 'hajj', 'cagnotte', 'sante', 'justice'] as const;
+export type AgentCategory = typeof DISCOVERY_CATEGORIES[number] | 'emploi';
 export type Source = { id: string; url: string; category: AgentCategory; departments: string[]; trust: 'pending' | 'trusted' | 'blocked'; official: boolean; evidence: string; enabled: boolean };
 export type RecordData = {
   title: string; category: AgentCategory; subType: string; description: string;
@@ -8,6 +11,41 @@ export type RecordData = {
   registrationUrl?: string;
   tags: string[]; verifiedAt: string; image?: string; date?: string; organizer?: string;
   latitude?: number; longitude?: number; historicalIds?: string[]; commercial?: boolean;
+  poolType?: 'municipale' | 'privee' | 'associative';
+  healthSubtype?: 'psy' | 'hijama' | 'medical' | 'roqya';
+  qualification?: string;
+  qualificationUrl?: string;
+  adaptationEvidence?: { url: string; excerpt: string; reason: string };
+  campaignStatus?: 'active' | 'closed';
+  campaignDestination?: string;
+  campaignStatusEvidence?: { url: string; excerpt: string; checkedAt: string };
+  campaignRaised?: number;
+  campaignGoal?: number;
+  campaignBackers?: number;
+  campaignCurrency?: 'EUR' | 'USD';
+  campaignStatsCheckedAt?: string;
+  justiceSubtype?: 'avocat' | 'association' | 'permanence' | 'aide-juridique';
+  serviceArea?: string;
+  accessConditions?: string;
+  justiceQualification?: string;
+  justiceQualificationUrl?: string;
+  hajjOffer?: {
+    partnerId: string;
+    agencyName: string;
+    agencyCity: string;
+    departureCity: string;
+    type: 'hajj' | 'omra';
+    price: number;
+    currency: 'EUR';
+    duration: number;
+    dates: string;
+    includes: string[];
+    excludes?: string[];
+    airline?: string;
+    hotelMakkah?: string;
+    hotelMadinah?: string;
+    description: string;
+  };
   relevanceEvidence?: { url: string; excerpt: string; reason: string };
   provenance: { sourceId: string; url: string; fetchedAt: string; contentHash: string; fields: string[] };
 };

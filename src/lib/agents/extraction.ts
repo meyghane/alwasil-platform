@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import type { RecordData, Source } from './contracts';
+import type { AgentCategory, RecordData, Source } from './contracts';
 type JsonObject = Record<string, unknown>;
 const text = (value: unknown): string => typeof value === 'string' ? value.replace(/<[^>]*>/g, '').trim() : '';
 const object = (value: unknown): JsonObject => value && typeof value === 'object' && !Array.isArray(value) ? value as JsonObject : {};
@@ -15,7 +15,7 @@ function visibleText(html: string): string {
     .replace(/<!--([\s\S]*?)-->/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')).trim();
 }
 function explicitMuslimEvidence(value: string): string | undefined {
-  const match = value.match(/[^.!?]{0,110}\b(?:musulman(?:e|es)?|islam(?:ique|iques)?|mosqu(?:e|ée)|halal|ramadan|omra|hajj|coran(?:ique|iques)?)\b[^.!?]{0,150}/i);
+  const match = value.match(/[^.!?]{0,110}\b(?:musulman(?:e|es)?|islam(?:ique|iques)?|mosqu(?:e|ée)|halal|ramadan|omra|hajj|coran(?:ique|iques)?|burkini)\b[^.!?]{0,150}/i);
   return match?.[0]?.trim();
 }
 function absoluteHttps(value: unknown, base: string): string {
@@ -38,6 +38,37 @@ export function firstPartyEvidence(html: string, pageUrl: string): string | unde
     if (legal && contact && links.includes(host)) return `Le site contient des mentions d’identification légale et un contact public, avec un lien interne au domaine ${host}.`;
   } catch { /* Invalid page URL never passes first-party checks. */ }
   return undefined;
+}
+const pageTerms: Record<string, RegExp> = {
+  mosquee: /cours|enseignement|activit[eé]|contact|acc[eè]s|adresse/i,
+  institut: /cours|formation|programme|planning|mati[eè]re|contact/i,
+  evenement: /agenda|[eé]v[eé]nement|calendrier|inscription|rencontre/i,
+  association: /action|projet|activit[eé]|solidarit[eé]|association|contact/i,
+  librairie: /librairie|catalogue|boutique|livre|contact|adresse/i,
+  piscine: /r[eè]glement|tenue|piscine|conditions|acc[eè]s/i,
+  hajj: /hajj|omra|offre|s[eé]jour|voyage/i,
+  cagnotte: /collecte|don|campagne|helloasso/i,
+  sante: /soin|accompagnement|praticien|consultation|contact/i,
+  justice: /droit|juridique|permanence|contact/i,
+};
+/** One same-site page likely to contain category details, never an external redirect. */
+export function relatedOfficialPage(html: string, pageUrl: string, category: AgentCategory): string | undefined {
+  try {
+    const base = new URL(pageUrl);
+    const terms = pageTerms[category];
+    if (!terms) return undefined;
+    const candidates = [...html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
+      .map(match => {
+        try {
+          const target = new URL(decodeHtml(match[1]), base);
+          const label = `${match[2].replace(/<[^>]+>/g, ' ')} ${target.pathname}`.replace(/\s+/g, ' ');
+          if (target.protocol !== 'https:' || target.hostname !== base.hostname || target.username || target.password || target.origin !== base.origin || !terms.test(label)) return '';
+          target.hash = '';
+          return target.toString();
+        } catch { return ''; }
+      }).filter(Boolean);
+    return [...new Set(candidates)].find(url => url !== base.toString());
+  } catch { return undefined; }
 }
 // A trusted domain does not make every entity on its pages a place in this category.
 const schemaTypes: Record<string, string[]> = {
@@ -70,6 +101,8 @@ export function extractStructured(html: string, source: Source, fetchedAt: strin
       ? (corsicaCode >= 20000 && corsicaCode <= 20190 ? '2A' : corsicaCode >= 20200 && corsicaCode <= 20620 ? '2B' : '')
       : postalCode.slice(0,2);
     const title = text(node.name); const description = text(node.description);
+    const poolTypeValue = text(node.poolType || node.type || node.category || node.additionalType).toLocaleLowerCase('fr-FR');
+    const poolType: RecordData['poolType'] = /associat/.test(poolTypeValue) ? 'associative' : /priv[eé]/.test(poolTypeValue) ? 'privee' : /municip/.test(poolTypeValue) ? 'municipale' : undefined;
     const relevanceExcerpt = explicitMuslimEvidence([title, description, strings(node.keywords).join(', '), pageText].join(' '));
     return {
       title, description, category: source.category, subType: source.category,
@@ -83,6 +116,7 @@ export function extractStructured(html: string, source: Source, fetchedAt: strin
       date: text(node.startDate).slice(0,10) || undefined, organizer: text(object(node.organizer).name) || undefined,
       latitude: typeof geo.latitude === 'number' ? geo.latitude : undefined,
       longitude: typeof geo.longitude === 'number' ? geo.longitude : undefined,
+      poolType,
       relevanceEvidence: relevanceExcerpt ? { url: source.url, excerpt: relevanceExcerpt, reason: 'Mention explicite trouvée dans le contenu visible de la source.' } : undefined,
       provenance: { sourceId: source.id, url: source.url, fetchedAt, contentHash: createHash('sha256').update(html).digest('hex'), fields: Object.keys(node) },
     };
@@ -92,7 +126,8 @@ export function extractStructured(html: string, source: Source, fetchedAt: strin
   // Prose-only first-party pages are candidates too. We preserve only text that
   // can be read directly from the page; missing address/date/contact stay blank
   // and the quality gate will keep incomplete records out of publication.
-  const title = decodeHtml(html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] ||
+  const title = decodeHtml(html.match(/<meta\b[^>]*content=["']([^"']+)["'][^>]*(?:property|name)=["']og:title["'][^>]*>/i)?.[1] ||
+    html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] ||
     html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || '').replace(/<[^>]+>/g, '').trim();
   const metaTags = [...html.matchAll(/<meta\b[^>]*>/gi)].map(match => match[0]);
   const descriptionTag = metaTags.find(tag => /(?:name|property)=["'](?:description|og:description)["']/i.test(tag));
@@ -102,10 +137,15 @@ export function extractStructured(html: string, source: Source, fetchedAt: strin
 
   const email = pageText.match(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/)?.[0] || '';
   const phone = pageText.match(/(?:\+33|0)[1-9](?:[ .-]?\d{2}){4}/)?.[0].replace(/[ .-]/g, '') || '';
-  const addressMatch = pageText.match(/(?:adresse|nous trouver|localisation)\s*[:\-]?\s*([^.!?]{8,120})/i);
+  const addressMatch = pageText.match(/(?:adresse|nous trouver|localisation)\s*[:\-]?\s*([^.!?]{8,120})/i) ||
+    pageText.match(/\b\d{1,4}(?:\s?(?:bis|ter))?\s+(?:rue|avenue|boulevard|place|chemin|allée|impasse|route)\b[^.!?]{0,90}/i);
+  const postal = pageText.match(/\b(\d{5})\s+([A-ZÀ-Ÿ][\p{L}'’ -]{1,40})\b/u);
+  const postalCode = postal?.[1] || '';
+  const department = postalCode.startsWith('97') ? postalCode.slice(0,3) : postalCode.startsWith('20')
+    ? (Number(postalCode) <= 20190 ? '2A' : Number(postalCode) <= 20620 ? '2B' : '') : postalCode.slice(0,2);
   return [{
     title, description, category: source.category, subType: source.category,
-    commercial: source.category === 'librairie', city: '', department: '',
+    commercial: source.category === 'librairie', city: postal?.[2]?.trim() || '', department,
     address: addressMatch?.[1]?.trim() || '', phone, email,
     website: source.url, hours: [], courses: [], audience: [], format: [], tags: [],
     verifiedAt: fetchedAt,

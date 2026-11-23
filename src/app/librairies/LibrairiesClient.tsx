@@ -39,6 +39,12 @@ const SPECIALITE_FILTERS: { key: LibrairieSpecialite | 'all'; label: string; ico
 
 const ACCENT = '#7652CA'; // violet - couleur librairies
 const normalizeSearch = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').trim();
+const getMapsUrl = (lib: Librairie) => {
+ if (lib.maps && lib.maps !== '#') return lib.maps;
+ if (!lib.adresse) return null;
+ const query = [lib.name, lib.adresse, lib.ville, lib.department].filter(Boolean).join(', ');
+ return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+};
 
 export default function LibrairiesClient({ librairies }: LibrairiesClientProps) {
  const [search, setSearch] = useState('');
@@ -138,7 +144,7 @@ export default function LibrairiesClient({ librairies }: LibrairiesClientProps) 
  {/* Cards grid */}
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))', gap: '1.25rem' }}>
  {sorted.map(lib => (
- <div key={lib.id} className="card" style={{ padding: '1.25rem', borderTop: lib.featured ? `3px solid ${ACCENT}` : undefined }}>
+ <div key={lib.id} data-item-id={lib.id} className="card" style={{ padding: '1.25rem', borderTop: lib.featured ? `3px solid ${ACCENT}` : undefined }}>
  {/* Header */}
  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
  <div style={{ flex: 1 }}>
@@ -212,10 +218,10 @@ export default function LibrairiesClient({ librairies }: LibrairiesClientProps) 
  <Globe size={13} /> Site web <ExternalLink size={11} />
  </a>
  )}
- {lib.maps && lib.maps !== '#' && (
- <a href={lib.maps} target="_blank" rel="noopener noreferrer"
- style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', border: '1px solid var(--border-color)', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
- <MapPin size={13} />
+ {getMapsUrl(lib) && (
+ <a href={getMapsUrl(lib)!} target="_blank" rel="noopener noreferrer"
+ style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', border: '1px solid var(--border-color)', padding: '0.45rem 0.75rem', borderRadius: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
+ <MapPin size={13} /> Voir sur Google Maps <ExternalLink size={11} />
  </a>
  )}
  {lib.phone && (
@@ -231,7 +237,7 @@ export default function LibrairiesClient({ librairies }: LibrairiesClientProps) 
  </a>
  )}
  {!lib.website && !lib.phone && !lib.instagram && (
- <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>Coordonnées non disponibles - vérifiez Google Maps</span>
+ <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>Informations en ligne limitées</span>
  )}
  </div>
  </div>

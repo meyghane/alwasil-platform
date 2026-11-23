@@ -32,8 +32,8 @@ export function toLegacyEvent(event: Event) {
 }
 
 export function toLegacyCagnotte(cagnotte: Cagnotte) {
-  const goal = cagnotte.goal ?? 0;
-  const raised = cagnotte.raised ?? 0;
+  const goal = cagnotte.goal;
+  const raised = cagnotte.raised;
   return {
     id: cagnotte.id,
     titre: cagnotte.title,
@@ -46,12 +46,13 @@ export function toLegacyCagnotte(cagnotte: Cagnotte) {
     departement: '',
     date_debut: '',
     date_fin: '',
-    objectif: goal,
-    montant_collecte: raised,
-    nb_donateurs: cagnotte.backers ?? 0,
-    pourcentage: goal > 0 ? Math.round(raised / goal * 100) : 0,
-    is_active: cagnotte.daysLeft === undefined || cagnotte.daysLeft > 0,
+    ...(goal !== undefined ? { objectif: goal } : {}),
+    ...(raised !== undefined ? { montant_collecte: raised } : {}),
+    ...(cagnotte.backers !== undefined ? { nb_donateurs: cagnotte.backers } : {}),
+    ...(goal !== undefined && goal > 0 && raised !== undefined ? { pourcentage: Math.round(raised / goal * 100) } : {}),
+    // An unknown closing date is not proof that a campaign is still active.
+    is_active: cagnotte.isActive === true || cagnotte.campaignStatus === 'active',
     source: cagnotte.platform,
-    derniere_maj: '',
+    derniere_maj: cagnotte.statsCheckedAt || '',
   };
 }

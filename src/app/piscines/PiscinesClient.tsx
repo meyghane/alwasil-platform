@@ -98,7 +98,7 @@ export default function PiscinesClient({ piscines }: { piscines: PiscineSheet[] 
  {/* Cards - grille 3 colonnes */}
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
  {sorted.map(p => (
- <div key={p.id} style={{
+ <div key={p.id} data-item-id={p.id} style={{
  backgroundColor: 'white',
  borderRadius: '16px',
  border: '1px solid #e7e5e4',

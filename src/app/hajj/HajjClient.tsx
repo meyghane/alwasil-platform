@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plane, ExternalLink, Search, Star, MapPin, CheckCircle, XCircle, Phone, Globe, Users, BookOpen, Building2, Moon, Zap, type LucideIcon } from 'lucide-react';
+import { Plane, ExternalLink, Search, Star, CheckCircle, XCircle, Globe, Users, BookOpen, Moon, Zap, type LucideIcon } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import {
  VOYAGE_TYPE_LABELS, VOYAGE_TYPE_COLORS,
@@ -11,7 +11,7 @@ import {
 
 type HajjClientProps = { hajjAgences: HajjAgence[]; hajjPackages: HajjPackage[] };
 
-type Tab = 'packages' | 'agences' | 'guide';
+type Tab = 'packages' | 'guide';
 
 const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
  { key: 'packages', label: 'Trouver mon offre', icon: Plane },
@@ -49,11 +49,6 @@ function StarsDisplay({ count }: { count: number }) {
  {''.repeat(count)}{''.repeat(5 - count)}
  </span>
  );
-}
-
-function AgenceNameById({ id, agences }: { id: string; agences: HajjAgence[] }) {
- const agence = agences.find(a => a.id === id);
- return <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{agence?.name ?? ' - '}</span>;
 }
 
 function offerQualityScore(pkg: HajjPackage, agence: HajjAgence | undefined): number {
@@ -120,7 +115,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  return (
  <div>
- <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Explorez des offres vérifiables, puis bénéficiez d’un accompagnement pour contacter le professionnel adapté à votre projet." color="#7652CA" emoji="" />
+ <PageHeader title="Hajj & Omra" titleAr="الحج والعمرة" description="Comparez les offres disponibles et contactez Al-Wasil pour demander une mise en relation avec l’agence concernée." color="#7652CA" emoji="" />
  <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1200px' }}>
 
  {/* Tabs */}
@@ -202,7 +197,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  const typeColor = VOYAGE_TYPE_COLORS[pkg.type];
  const placesRatio = pkg.placesRestantes && pkg.places ? pkg.placesRestantes / pkg.places : 1;
  return (
- <div key={pkg.id} className="card" style={{ padding: 0, overflow: 'hidden', border: `1px solid ${typeColor}33`, borderTop: `3px solid ${typeColor}`, background: `linear-gradient(180deg, ${typeColor}08 0%, #ffffff 60%)` }}>
+ <div key={pkg.id} data-item-id={pkg.id} className="card" style={{ padding: 0, overflow: 'hidden', border: `1px solid ${typeColor}33`, borderTop: `3px solid ${typeColor}`, background: `linear-gradient(180deg, ${typeColor}08 0%, #ffffff 60%)` }}>
  {/* Top */}
  <div style={{ padding: '1.25rem 1.25rem 0.875rem' }}>
  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
@@ -221,7 +216,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
 
  <h3 style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.2rem', lineHeight: 1.2 }}><a href={`/hajj/offres/${encodeURIComponent(pkg.id)}`} style={{ color: 'inherit', textDecoration: 'none' }}>{pkg.name}</a></h3>
  <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
- Offre référencée et accompagnée par Al-Wasil
+ Mise en relation à demander auprès d’Al-Wasil
  </p>
  {/* Prix */}
  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.75rem' }}>
@@ -294,7 +289,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  )}
 
  <a href={`/contact?type=hajj-devis&offer_id=${encodeURIComponent(pkg.id)}&partner_id=${encodeURIComponent(pkg.agenceId)}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', backgroundColor: typeColor, color: 'white', padding: '0.6rem', borderRadius: '0.5rem', fontWeight: 700, fontSize: '0.88rem', textDecoration: 'none' }}>
- Demander un devis <ExternalLink size={13} />
+ Contacter Al-Wasil pour être mis en relation <ExternalLink size={13} />
  </a>
  </div>
  </div>
@@ -311,68 +306,12 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <section aria-labelledby="hajj-faq" style={{ marginTop: '2rem', maxWidth: '820px' }}>
   <h2 id="hajj-faq" style={{ fontSize: '1.35rem', marginBottom: '0.75rem' }}>Questions fréquentes</h2>
   {[
-   ['Al-Wasil vend-il directement les séjours ?', 'Non. Al-Wasil référence des offres documentées, vous aide à formuler votre demande et la transmet au professionnel concerné. Le contrat et le paiement sont ensuite conclus directement avec lui.'],
+   ['Al-Wasil vend-il directement les séjours ?', 'Non. Al-Wasil présente des offres et organise, sur demande, la mise en relation avec l’agence concernée. Le contrat et le paiement sont conclus avec l’agence.'],
+   ['Comment contacter une agence ?', 'Les coordonnées directes des agences ne sont pas affichées. Contactez Al-Wasil depuis l’offre qui vous intéresse ; Al-Wasil vous accompagnera pour organiser la mise en relation.'],
    ['Les prix et les places sont-ils définitifs ?', 'Non. Ils correspondent à la dernière information disponible au moment de la vérification. Le professionnel doit confirmer le prix, les places et les conditions avant toute réservation.'],
-   ['Que contient une demande de devis ?', 'Vos dates, votre ville de départ, le nombre de voyageurs, votre budget et vos besoins particuliers. Ces informations permettent au professionnel de répondre avec une formule adaptée.'],
+   ['Quelles informations transmettre à Al-Wasil ?', 'Indiquez vos dates souhaitées, votre ville de départ, le nombre de voyageurs, votre budget et vos besoins particuliers. Al-Wasil pourra ainsi préparer la mise en relation autour de l’offre choisie.'],
   ].map(([question, answer]) => <details key={question} style={{ background: 'white', border: '1px solid #e2d7f5', borderRadius: 10, padding: '0.8rem 1rem', marginBottom: '0.55rem' }}><summary style={{ cursor: 'pointer', fontWeight: 700 }}>{question}</summary><p style={{ color: 'var(--text-secondary)', lineHeight: 1.55, marginBottom: 0 }}>{answer}</p></details>)}
  </section>
- </>
- )}
-
- {/* ─── AGENCES ─── */}
- {tab === 'agences' && (
- <>
- <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.25rem' }}>
- {hajjAgences.map(a => (
- <div key={a.id} className="card" style={{ padding: '1.5rem' }}>
- <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '0.875rem' }}>
- <div style={{ width: '50px', height: '50px', borderRadius: '12px', backgroundColor: '#f0fff8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', flexShrink: 0 }}>
- {a.logoEmoji}
- </div>
- <div style={{ flex: 1 }}>
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
- <h3 style={{ fontWeight: 700, fontSize: '1rem' }}>{a.name}</h3>
- {a.agrée && <span style={{ backgroundColor: '#f0ebfa', color: '#543398', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}> Agréé</span>}
- </div>
- <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
- <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.78rem', color: '#f59e0b' }}>
- <Star size={13} fill="#f59e0b" />
- <strong style={{ color: 'var(--text-primary)' }}>{a.rating}</strong>
- <span style={{ color: 'var(--text-secondary)' }}>({a.reviews.toLocaleString('fr-FR')} avis)</span>
- </span>
- <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>depuis {a.since}</span>
- </div>
- <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
- <MapPin size={10} style={{ display: 'inline' }} /> {a.location}
- </p>
- </div>
- </div>
-
- <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', lineHeight: 1.55, marginBottom: '0.875rem' }}>{a.description}</p>
-
- <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
- {a.tags.map(tag => (
- <span key={tag} style={{ backgroundColor: '#f0fff8', color: '#7652CA', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.72rem' }}>#{tag}</span>
- ))}
- </div>
-
- <div style={{ display: 'flex', gap: '0.5rem' }}>
- {a.website && (
- <a href={a.website} target="_blank" rel="noopener noreferrer"
- style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem', backgroundColor: '#7652CA', color: 'white', padding: '0.5rem', borderRadius: '0.5rem', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
- <Globe size={14} /> Visiter <ExternalLink size={12} />
- </a>
- )}
- {a.phone && (
- <a href={`tel:${a.phone}`}
- style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', border: '1px solid var(--border-color)', padding: '0.5rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none' }}>
- <Phone size={14} />
- </a>
- )}
- </div>
- </div>
- ))}
- </div>
  </>
  )}
 
@@ -455,7 +394,7 @@ export default function HajjClient({ hajjAgences, hajjPackages }: HajjClientProp
  <ul style={{ paddingLeft: '1.2rem', margin: 0, display: 'grid', gap: '.65rem' }}>{section.items.map(item => <li key={item} style={{ fontSize: '.95rem', color: 'var(--text-secondary)', lineHeight: 1.65, paddingLeft: '.25rem' }}>{item}</li>)}</ul>
  </section>
  ))}
- <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '.86rem' }}>Al-Wasil facilite la recherche d’une offre et la mise en relation avec un professionnel. Les formalités, tarifs, visas, réservations et conditions finales relèvent de l’agence sélectionnée.</p>
+ <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, fontSize: '.86rem' }}>Al-Wasil présente des offres et organise la mise en relation à votre demande. Les formalités, tarifs, visas, réservations et conditions finales sont à confirmer avec l’agence sélectionnée.</p>
  </article>
  )}
  </div>

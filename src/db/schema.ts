@@ -9,6 +9,7 @@ export const categoryEnum = pgEnum('category', [
   'library',
   'pool',
   'hajj',
+  'justice',
 ]);
 
 export const statusEnum = pgEnum('status', ['pending', 'approved', 'rejected', 'expired']);

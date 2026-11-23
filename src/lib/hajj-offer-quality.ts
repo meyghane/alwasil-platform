@@ -26,7 +26,7 @@ export function assessHajjOfferReadiness(raw: Record<string, unknown>): HajjOffe
   const contact = value(raw, ['agencyEmail', 'agenceEmail', 'contactEmail', 'emailAgence', 'agencyPhone', 'agencePhone', 'contactPhone', 'phoneAgence', 'telephone']);
   const missing = [
     !agency || genericAgency ? 'agence identifiable' : '',
-    !contact ? 'email ou téléphone de l’agence' : '',
+    !contact && raw.agencyContactVerified !== true ? 'contact agence vérifié en interne' : '',
     !value(raw, ['sourceUrl', 'website', 'site_web', 'url']) ? 'source officielle' : '',
     !value(raw, ['city', 'ville', 'location']) ? 'ville' : '',
     !value(raw, ['departure', 'depart', 'ville_depart']) ? 'ville de départ' : '',

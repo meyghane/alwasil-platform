@@ -230,7 +230,7 @@ function InstitutCard({ inst }: { inst: Institut }) {
   : !isOnline && inst.imageUrl?.startsWith('/images/') ? inst.imageUrl : undefined;
 
  return (
- <div style={{
+ <div data-item-id={inst.id} style={{
  backgroundColor: 'white',
  borderRadius: '16px',
  border: '1px solid #e7e5e4',

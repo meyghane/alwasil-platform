@@ -21,7 +21,7 @@ const SUJET_OPTIONS: { value: string; label: string; redirectTo?: string }[] = [
  { value: 'librairie', label: 'Ajouter une librairie islamique', redirectTo: 'librairie' },
  { value: 'revendiquer-librairie', label: ' Je gère une librairie référencée', redirectTo: 'revendiquer-librairie' },
  { value: 'piscine', label: 'Ajouter un créneau burkini', redirectTo: 'piscine' },
- { value: 'hajj-devis', label: ' Demander un devis Hajj / Omra', redirectTo: 'hajj-devis' },
+ { value: 'hajj-devis', label: ' Mise en relation Hajj / Omra', redirectTo: 'hajj-devis' },
  // Corrections & questions
  { value: 'correction', label: ' Corriger une information erronée', redirectTo: 'correction' },
  { value: 'question-juridique', label: ' Proposer une question juridique', redirectTo: 'question-juridique' },
@@ -169,8 +169,8 @@ const FORM_CONFIG: Record<FormType, {
  ],
  },
  'hajj-devis': {
- title: 'Demander un devis Hajj / Omra', emoji: '', color: '#7652CA',
- description: 'Nous transmettons votre demande directement à l\'agence. Réponse sous 24–48h.',
+ title: 'Demander une mise en relation Hajj / Omra', emoji: '', color: '#7652CA',
+ description: 'Décrivez l’offre qui vous intéresse. Al-Wasil reçoit votre demande et vous accompagne pour organiser la mise en relation avec l’agence. Les coordonnées directes des agences ne sont pas affichées sur le site.',
  fields: [
  { name: 'nom', label: 'Nom complet', type: 'text', required: true },
  { name: 'email', label: 'Email', type: 'email', required: true },
@@ -180,7 +180,7 @@ const FORM_CONFIG: Record<FormType, {
  { name: 'budget', label: 'Budget indicatif / personne', type: 'select', options: ['< 1 500€', '1 500–3 000€', '3 000–6 000€', '6 000€+'], required: true },
  { name: 'depart', label: 'Ville de départ souhaitée', type: 'select', options: ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Autre'] },
  { name: 'message', label: 'Demandes particulières', type: 'textarea' },
- { name: 'consentFollowUp', label: 'J’accepte qu’Al‑Wasil et le partenaire sélectionné me recontactent au sujet de cette demande.', type: 'checkbox', required: true },
+ { name: 'consentFollowUp', label: 'J’accepte qu’Al‑Wasil me recontacte et transmette à l’agence sélectionnée les informations nécessaires pour organiser cette mise en relation.', type: 'checkbox', required: true },
  ],
  },
  avis: {

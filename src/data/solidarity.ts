@@ -21,6 +21,9 @@ export type Cagnotte = {
  featured?: boolean;
  verified: boolean; // vérifié par équipe Al-Wasil
  daysLeft?: number;
+ isActive?: boolean; // vrai uniquement si la page originale confirme un état actif
+ campaignStatus?: 'active' | 'closed';
+ statsCheckedAt?: string;
 };
 
 export type Initiative = {

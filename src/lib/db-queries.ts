@@ -23,14 +23,14 @@ import type {
 } from '@/data/solidarity';
 import type { HajjAgence, HajjPackage } from '@/data/hajj';
 
-type Category = 'event' | 'job' | 'solidarity' | 'institute' | 'health' | 'library' | 'pool' | 'hajj';
+type Category = 'event' | 'job' | 'solidarity' | 'institute' | 'health' | 'library' | 'pool' | 'hajj' | 'justice';
 
 // Le contenu original (tapé selon les types de src/data/*.ts) est conservé
 // intact dans metadata.raw à la migration - on le relit tel quel ici pour
 // que les composants existants n'aient rien à changer côté shape de données.
 // Volume actuel < 200 lignes : filtrer le subType en JS plutôt qu'en SQL
 // jsonb reste largement suffisant, à revoir si le volume grossit fortement.
-export async function getRaw<T>(category: Category, subType: string): Promise<T[]> {
+export async function getRaw<T>(category: Category, subType: string, strict = false): Promise<T[]> {
   try { const rows = await db
     .select({ id: items.id, metadata: items.metadata, title: items.title, description: items.description, city: items.city, department: items.department, sourceUrl: items.sourceUrl })
     .from(items)
@@ -53,7 +53,7 @@ export async function getRaw<T>(category: Category, subType: string): Promise<T[
       // Les imports peuvent conserver certains champs dans la colonne items
       // plutôt que dans metadata.raw. On les fusionne sans écraser les détails
       // déjà enrichis dans la fiche originale.
-      const publicRaw = Object.fromEntries(Object.entries(raw).filter(([key]) => !/^(metadata|source|sourceUrl|provenance|telegram_original|requires_enrichment|qualityScore|qualityBreakdown|verificationStatus|confidence|submittedBy|moderation)$/i.test(key)));
+      const publicRaw = Object.fromEntries(Object.entries(raw).filter(([key]) => !/^(metadata|source|sourceUrl|provenance|telegram_original|requires_enrichment|qualityScore|qualityBreakdown|verificationStatus|confidence|submittedBy|moderation|relevanceEvidence|adaptationEvidence|qualificationUrl|campaignStatusEvidence)$/i.test(key)));
       return withoutEmDashes({
         ...publicRaw,
         id: r.id,
@@ -63,7 +63,8 @@ export async function getRaw<T>(category: Category, subType: string): Promise<T[
         department: raw.department || r.department,
         ...(category === 'hajj' ? { sourceUrl: raw.sourceUrl || r.sourceUrl } : {}),
       } as T);
-    }); } catch {
+  }); } catch (error) {
+    if (strict) throw error;
     return [];
   }
 }
@@ -81,7 +82,16 @@ export const getPsyProfiles = () => getRaw<PraticienPsy>('health', 'psy');
 export const getHijamaProfiles = () => getRaw<PraticienHijama>('health', 'hijama');
 export const getMedicalProfiles = () => getRaw<PraticienMedical>('health', 'medical');
 export const getRoqyaProfiles = () => getRaw<PraticienRoqya>('health', 'roqya');
-export const getCagnottes = () => getRaw<Cagnotte>('solidarity', 'cagnotte');
+// Do not turn an unavailable justice enum/table into a convincing empty list.
+// The public API must surface a database failure as 503 so callers can tell it
+// apart from a category with no published resources.
+export const getLegalResources = () => getRaw<Record<string, unknown>>('justice', 'legal_resource', true);
+export async function getCagnottes() {
+  // A public fundraiser needs an explicit active state. Missing deadlines or
+  // counters are not evidence that a campaign is still running.
+  const rows = await getRaw<Cagnotte>('solidarity', 'cagnotte');
+  return rows.filter((row) => row.isActive === true || row.campaignStatus === 'active');
+}
 export async function getInitiatives() {
   // A past date is not evidence of a new occurrence; never generate one from prose.
   return getRaw<Initiative>('solidarity', 'initiative');
@@ -93,9 +103,9 @@ export const getAssociations = () => getRaw<Association>('solidarity', 'associat
 export async function getHajjAgences() {
   return getRaw<HajjAgence>('hajj', 'agence');
 }
-export async function getHajjPackages() {
+export async function getHajjPackages(strict = false) {
   try {
-    const rows = await getRaw<Record<string, unknown>>('hajj', 'package');
+    const rows = await getRaw<Record<string, unknown>>('hajj', 'package', strict);
     const verifiedPartners = await db.select().from(partners).where(eq(partners.status, 'verified'));
     return rows.filter(raw => assessHajjOfferReadiness(raw).eligible && raw.agencyContactVerified === true && verifiedPartners.some(partner => partner.id === (raw.partnerId || raw.partner_id) && partner.email && partner.sourceUrl && partner.verifiedAt)).map((raw, index) => {
       const title = String(raw.name || raw.title || `Offre Hajj/Omra ${index + 1}`);
@@ -143,5 +153,5 @@ export async function getHajjPackages() {
       } satisfies HajjPackage;
     });
   }
-  catch { return []; }
+  catch (error) { if (strict) throw error; return []; }
 }

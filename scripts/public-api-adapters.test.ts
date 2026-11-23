@@ -11,7 +11,7 @@ test('la réponse événements conserve les champs historiques', () => {
 
 test('la réponse cagnottes ne fabrique pas de montants', () => {
   const result = toLegacyCagnotte({ id: 'b', title: 'Collecte', organizer: 'Association', platform: 'helloasso', url: 'https://www.helloasso.com/test', description: '', category: 'urgence', currency: 'EUR', imageKeyword: 'solidarité', verified: false });
-  assert.equal(result.objectif, 0);
-  assert.equal(result.montant_collecte, 0);
-  assert.equal(result.pourcentage, 0);
+  assert.equal(result.objectif, undefined);
+  assert.equal(result.montant_collecte, undefined);
+  assert.equal(result.pourcentage, undefined);
 });

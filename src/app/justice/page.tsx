@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ShieldCheck, ExternalLink, Search, ChevronDown, ChevronUp, AlertTriangle, Scale, FileText, Phone } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
@@ -345,7 +345,8 @@ const LIEN_TYPE_COLORS: Record<string, string> = {
  officiel: '#3b82f6',
 };
 
-type MainTab = 'faq' | 'liens' | 'arcom';
+type MainTab = 'faq' | 'liens' | 'arcom' | 'ressources';
+type LegalResource = { id: string; name?: string; title?: string; description?: string; city?: string; serviceArea?: string; accessConditions?: string; sourceUrl?: string; website?: string; type?: string; justiceSubtype?: string };
 
 export default function JusticePage() {
  const [mainTab, setMainTab] = useState<MainTab>('faq');
@@ -353,6 +354,8 @@ export default function JusticePage() {
  const [search, setSearch] = useState('');
  const [openFaq, setOpenFaq] = useState<string | null>(null);
  const [lienType, setLienType] = useState<string>('all');
+ const [legalResources, setLegalResources] = useState<LegalResource[]>([]);
+ useEffect(() => { fetch('/api/justice', { cache: 'no-store' }).then(response => response.ok ? response.json() : []).then(data => setLegalResources(Array.isArray(data) ? data : [])).catch(() => setLegalResources([])); }, []);
 
  const filteredFaq = FAQ.filter(f => {
  const q = search.toLowerCase();
@@ -391,6 +394,7 @@ export default function JusticePage() {
  {([
  { key: 'faq' as MainTab, label: ` FAQ (${FAQ.length} questions)` },
  { key: 'liens' as MainTab, label: ` Liens utiles (${LIENS_UTILES.length})` },
+ { key: 'ressources' as MainTab, label: ` Ressources (${legalResources.length})` },
  { key: 'arcom' as MainTab, label: ' Signalement ARCOM' },
  ]).map(t => (
  <button key={t.key} onClick={() => { setMainTab(t.key); setSearch(''); }}
@@ -549,6 +553,24 @@ export default function JusticePage() {
  })}
  </div>
  </>
+ )}
+
+ {/* ─── GUIDE SIGNALEMENT ARCOM ─── */}
+ {mainTab === 'ressources' && (
+ <section aria-label="Ressources juridiques référencées">
+ <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>Répertoire de structures et permanences référencées à partir de leurs informations officielles. Ces fiches ne constituent pas un conseil juridique.</p>
+ <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+ {legalResources.filter(item => { const query = search.toLocaleLowerCase('fr-FR'); return !query || `${item.name || item.title || ''} ${item.description || ''} ${item.city || ''} ${item.serviceArea || ''}`.toLocaleLowerCase('fr-FR').includes(query); }).map(item => (
+ <article key={item.id} className="card" data-item-id={item.id} style={{ padding: '1.25rem' }}>
+ <h2 style={{ fontSize: '1rem', margin: '0 0 .5rem' }}>{item.name || item.title || 'Ressource juridique'}</h2>
+ <p style={{ color: 'var(--text-secondary)', lineHeight: 1.55 }}>{item.description}</p>
+ <p style={{ fontSize: '.85rem' }}>{[item.city, item.serviceArea, item.accessConditions].filter(Boolean).join(' · ')}</p>
+ {(item.sourceUrl || item.website) && <a href={String(item.sourceUrl || item.website)} target="_blank" rel="noopener noreferrer" style={{ color: '#7652CA', fontWeight: 600 }}>Consulter la source officielle <ExternalLink size={12} /></a>}
+ </article>
+ ))}
+ </div>
+ {legalResources.length === 0 && <p style={{ color: 'var(--text-secondary)' }}>Aucune ressource vérifiée n’est encore publiée dans cette rubrique.</p>}
+ </section>
  )}
 
  {/* ─── GUIDE SIGNALEMENT ARCOM ─── */}

@@ -10,12 +10,13 @@ import type { Source, RecordData, RunReport } from '../src/lib/agents/contracts'
 
 const now = new Date('2026-09-22T12:00:00Z');
 const zones = [...REGION_ZONES[Math.floor(now.getTime()/86400000)%REGION_ZONES.length]];
-const source: Source = { id:'test-source',url:'https://example.org/',category:'mosquee',departments:zones,trust:'trusted',official:true,evidence:'Preuve officielle de test, non destinée à la production.',enabled:true };
-const html = '<script type="application/ld+json">' + JSON.stringify({ '@type':'Mosque',name:'Mosquée de test',description:'Description suffisamment détaillée de cette fixture de test, sans représenter un établissement réel.',address:{ addressLocality:'Paris',postalCode:'75001',streetAddress:'Adresse de test' },telephone:'0123456789',openingHours:['Mo 10:00-18:00'] }) + '</script>';
+const source: Source = { id:'test-source',url:'https://example.org/',category:'mosquee',departments:['75',...zones],trust:'trusted',official:true,evidence:'Preuve officielle de test, non destinée à la production.',enabled:true };
+const html = '<script type="application/ld+json">' + JSON.stringify({ '@type':'Mosque',name:'Mosquée de test',description:'Description suffisamment détaillée de cette fixture de test pour la communauté musulmane, sans représenter un établissement réel.',address:{ addressLocality:'Paris',postalCode:'75001',streetAddress:'Adresse de test' },telephone:'0123456789',openingHours:['Mo 10:00-18:00'] }) + '</script>';
 const record: RecordData = extractStructured(html,source,now.toISOString())[0];
 test('découverte : rotation, catégories et quota explicites', () => {
   assert.notDeepEqual(discoverSources([],['mosquee'],3,0).plannedZones,discoverSources([],['mosquee'],3,1).plannedZones);
-  const plan=discoverSources([source, {...source,id:'second'}],['mosquee'],1,Math.floor(now.getTime()/86400000));
+  const discoverySource={...source,departments:zones};
+  const plan=discoverSources([discoverySource, {...discoverySource,id:'second'}],['mosquee'],1,Math.floor(now.getTime()/86400000));
   assert.equal(plan.selected.length,1); assert.equal(plan.quotaReached,true);
   assert.equal(discoverSources([source],['institut'],3,0).selected.length,0);
 });
@@ -64,11 +65,11 @@ test('archivage, restauration et rollback respectent la qualité', () => {
 });
 const ports = (overrides: Partial<AgentPorts> = {}): AgentPorts => ({ sources:async()=>[source],fetch:async()=>html,save:async()=>({id:'test',duplicate:false,published:true}),verifyPublic:async()=>true,rollback:async()=>{},finish:async()=>{},...overrides });
 test('pipeline publie puis confirme la récupération publique', async () => {
-  const report=await runAgents(ports(),now,'test-run'); assert.equal(report.published,1); assert.equal(report.found,1);
+  const report=await runAgents(ports(),now,'test-run',0); assert.equal(report.published,1); assert.equal(report.found,1);
 });
 test('erreur Vercel / visibilité : rollback et aucun faux publié', async () => {
   let rolledBack=false;
-  const report=await runAgents(ports({verifyPublic:async()=>{throw new Error('Vercel unavailable');},rollback:async()=>{rolledBack=true;}}),now,'test-run');
+  const report=await runAgents(ports({verifyPublic:async()=>{throw new Error('Vercel unavailable');},rollback:async()=>{rolledBack=true;}}),now,'test-run',0);
   assert.equal(report.published,0); assert.equal(report.deferred,1); assert.equal(rolledBack,true);
 });
 test('erreur Neon enregistrée sans faux résultat', async () => {

@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache';
 import { runAgents } from '@/lib/agents/pipeline';
-import { registeredSources, saveAgentRecord, rollbackInvisible, saveAgentReport, claimRun, recordSourceCheck, existingRun, lastDiscoveryCursor } from '@/lib/agents/store';
+import { registeredSources, saveAgentRecord, rollbackInvisible, saveAgentReport, claimRun, recordSourceCheck, existingRun, lastDiscoveryCursor, rememberQualifiedSource } from '@/lib/agents/store';
 import { fetchOfficialPage } from '@/lib/agents/security';
 import { formatAgentReport } from '@/lib/agents/report';
 import { deliverOnce } from '@/lib/delivery-ledger';
@@ -28,10 +28,24 @@ export async function GET(request: Request) {
     const cursor = await lastDiscoveryCursor();
     const report = await runAgents({
       sources: registeredSources, fetch: fetchOfficialPage, save: saveAgentRecord, sourceChecked: recordSourceCheck,
+      rememberSource: rememberQualifiedSource,
       async verifyPublic(itemId) {
-        for (const path of ['/', '/education', '/events', '/solidarity', '/librairies', '/piscines', '/lieux-priere', '/api/mosques', `/api/public/items/${itemId}`]) revalidatePath(path);
-        const response = await fetch(`https://al-wasil.fr/api/public/items/${itemId}`, { cache: 'no-store', signal: AbortSignal.timeout(5000) });
-        return response.ok && (await response.json()).id === itemId;
+        const apiUrl = `https://al-wasil.fr/api/public/items/${itemId}`;
+        for (const path of ['/', '/education', '/events', '/solidarity', '/librairies', '/piscines', '/lieux-priere', '/hajj', '/sante', '/justice', '/api/justice', '/api/mosques', `/api/public/items/${itemId}`]) revalidatePath(path);
+        const response = await fetch(apiUrl, { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+        if (!response.ok) return false;
+        const visibleItem = await response.json() as { id?: string; categoryPath?: string };
+        if (visibleItem.id !== itemId || !visibleItem.categoryPath) return false;
+        if (visibleItem.categoryPath === '/justice') {
+          const listing = await fetch('https://al-wasil.fr/api/justice', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+          if (!listing.ok) return false;
+          const resources = await listing.json() as Array<{ id?: string }>;
+          return Array.isArray(resources) && resources.some(resource => resource.id === itemId);
+        }
+        const page = await fetch(`https://al-wasil.fr${visibleItem.categoryPath}`, { cache: 'no-store', signal: AbortSignal.timeout(10000) });
+        if (!page.ok) return false;
+        const rendered = await page.text();
+        return new RegExp(`data-item-id=["']${itemId}["']`).test(rendered);
       },
       rollback: rollbackInvisible, finish: saveAgentReport,
     }, now, id, cursor);

@@ -103,43 +103,41 @@ export async function searchGroundedSources(
     'Retourne des citations vers les pages sources officielles et indique brièvement le fait explicite de pertinence qu’elles établissent.',
   ].join(' ');
 
-  const headers = { 'content-type': 'application/json', 'x-goog-api-key': apiKey };
-  const catalogResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models', {
-    headers, signal: AbortSignal.timeout(8000), cache: 'no-store',
-  });
-  if (!catalogResponse.ok) throw new Error(catalogResponse.status === 400 || catalogResponse.status === 403
-    ? `Clé Gemini ou accès Search refusé (HTTP ${catalogResponse.status})`
-    : `Catalogue de recherche indisponible (HTTP ${catalogResponse.status})`);
-  const catalog = await catalogResponse.json() as { models?: Array<{ name?: string; supportedGenerationMethods?: string[] }> };
-  const models = (catalog.models || [])
-    .filter(model => model.supportedGenerationMethods?.includes('generateContent'))
-    .map(model => (model.name || '').replace(/^models\//, ''));
-  const model = (process.env.GEMINI_MODEL && models.includes(process.env.GEMINI_MODEL) ? process.env.GEMINI_MODEL : undefined) ||
-    models.find(name => /flash/i.test(name) && !/image|audio|live|tts/i.test(name));
-  if (!model) throw new Error('Aucun modèle Gemini compatible avec generateContent');
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
-    method: 'POST', headers,
+  const response = await fetch('https://api.openai.com/v1/responses', {
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      tools: [{ google_search: {} }],
-      generationConfig: { temperature: 0, maxOutputTokens: 1800 },
+      model: process.env.OPENAI_MODEL || 'gpt-6.2-astra',
+      input: `${prompt}\nRetourne uniquement un objet JSON avec les URL officielles trouvées et les requêtes réellement exécutées.`,
+      tools: [{ type: 'web_search' }],
+      tool_choice: 'required',
+      include: ['web_search_call.action.sources'],
+      max_output_tokens: 1800,
     }),
-    signal: AbortSignal.timeout(20000), cache: 'no-store',
+    signal: AbortSignal.timeout(25000), cache: 'no-store',
   });
-  if (!response.ok) throw new Error(response.status === 400 || response.status === 403
-    ? `Clé Gemini ou accès Google Search refusé (HTTP ${response.status})`
-    : `Google Search grounding indisponible (HTTP ${response.status})`);
+  if (!response.ok) {
+    const status = response.status;
+    throw new Error(status === 401 ? 'Clé OpenAI absente ou refusée' : status === 429
+      ? 'Quota ou facturation OpenAI indisponible (HTTP 429)' : `Recherche OpenAI indisponible (HTTP ${status})`);
+  }
   const payload = await response.json() as {
-    candidates?: Array<{ groundingMetadata?: {
-      webSearchQueries?: string[];
-      groundingChunks?: Array<{ web?: { uri?: string } }>;
-    } }>;
+    output?: Array<{ type?: string; action?: { queries?: string[]; query?: string; sources?: Array<{ url?: string }> }; content?: Array<{ type?: string; text?: string; annotations?: Array<{ type?: string; url?: string }> }> }>;
   };
-  const grounding = payload.candidates?.[0]?.groundingMetadata;
-  const queries = Array.isArray(grounding?.webSearchQueries) ? grounding.webSearchQueries : [];
-  const urls = [...new Set((grounding?.groundingChunks || [])
-    .map(chunk => chunk.web?.uri)
-    .filter((url): url is string => typeof url === 'string' && isCandidateUrl(url)))].slice(0, 5);
+  const content = (payload.output || []).flatMap(item => item.content || []);
+  const text = content.filter(item => item.type === 'output_text').map(item => item.text || '').join('\n');
+  let parsed: { urls?: unknown; queries?: unknown } = {};
+  try { parsed = JSON.parse(text) as typeof parsed; } catch { /* Use cited URLs when JSON parsing fails. */ }
+  const citations = [
+    ...content.flatMap(item => item.annotations || []).map(annotation => annotation.url),
+    ...(payload.output || []).flatMap(item => item.action?.sources || []).map(source => source.url),
+  ].filter((url): url is string => typeof url === 'string');
+  const inlineUrls = [...text.matchAll(/https:\/\/[^\s"<>]+/g)].map(match => match[0].replace(/[),.]+$/, ''));
+  const rawUrls = Array.isArray(parsed.urls) ? parsed.urls.filter((url): url is string => typeof url === 'string') : [];
+  const urls = [...new Set([...rawUrls, ...citations, ...inlineUrls])].filter(isCandidateUrl).slice(0, 8);
+  const queries = [...new Set([
+    ...(Array.isArray(parsed.queries) ? parsed.queries.filter((query): query is string => typeof query === 'string') : []),
+    ...(payload.output || []).flatMap(item => [...(item.action?.queries || []), ...(item.action?.query ? [item.action.query] : [])]),
+  ])].slice(0, 10);
 
   return { urls, queries };
 }

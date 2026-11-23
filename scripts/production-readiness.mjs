@@ -2,7 +2,7 @@ import { neon } from '@neondatabase/serverless';
 import { readFile } from 'node:fs/promises';
 
 const sql = neon(process.env.DATABASE_URL);
-const migrations = ['0005_reports.sql', '0008_moderation_history.sql', '0009_moderation_undo.sql', '0010_audience_events.sql', '0011_lead_ticket_reference.sql', '0012_telegram_delivery.sql', '0013_partner_verification.sql', '0014_agents.sql', '0015_source_registry.sql', '0016_crm_privacy.sql'];
+const migrations = ['0005_reports.sql', '0008_moderation_history.sql', '0009_moderation_undo.sql', '0010_audience_events.sql', '0011_lead_ticket_reference.sql', '0012_telegram_delivery.sql', '0013_partner_verification.sql', '0014_agents.sql', '0015_source_registry.sql', '0016_crm_privacy.sql', '0017_justice_category.sql'];
 try {
   if (process.argv.includes('--apply')) {
     // Explicit additive migrations only. Do not use schema push on a shared DB.
@@ -18,6 +18,8 @@ try {
   const counts = await sql`select (select count(*)::int from partners) as partners, (select count(*)::int from offers) as offers, (select count(*)::int from leads) as leads, (select count(*)::int from leads where ticket_reference is null) as missing_tickets, (select count(*)::int from leads l where partner_id is not null and not exists (select 1 from partners p where p.id::text=l.partner_id)) as invalid_partner_links`;
   console.log(JSON.stringify({ missingSchema: missing, crm: counts[0] }));
   if (!missing.length) {
+    const [justiceCategory] = await sql`select exists(select 1 from pg_enum e join pg_type t on t.oid=e.enumtypid where t.typname='category' and e.enumlabel='justice') as installed`;
+    if (!justiceCategory?.installed) missing.push('category.justice');
     const [coverage] = await sql`SELECT (SELECT count(*)::int FROM agent_sources) AS agent_sources, (SELECT count(*)::int FROM agent_runs) AS agent_runs, (SELECT count(*)::int FROM items WHERE category='hajj' AND status='pending') AS hajj_pending, (SELECT count(*)::int FROM items WHERE category='hajj' AND status='expired') AS hajj_archived`;
     console.log(JSON.stringify({ coverage }));
   }

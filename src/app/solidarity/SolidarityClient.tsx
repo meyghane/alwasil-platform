@@ -230,7 +230,7 @@ export default function SolidarityClient({
  const pct = progressPct(c.raised, c.goal);
  const color = CAGNOTTE_CAT_COLORS[c.category];
  return (
- <div key={c.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
+ <div key={c.id} data-item-id={c.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
  <div style={{ position: 'relative', height: '180px', overflow: 'hidden' }}>
  <img src={getUnsplashUrl(c.imageKeyword)} alt={c.title}
  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -253,7 +253,7 @@ export default function SolidarityClient({
  <h3 style={{ fontSize: '1rem', fontWeight: 700, lineHeight: 1.3, marginBottom: '0.5rem' }}>{c.title}</h3>
  <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1rem' }}>{c.description}</p>
 
- {c.goal && (
+ {c.goal && c.raised !== undefined && (
  <div style={{ marginBottom: '1rem' }}>
  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '0.4rem' }}>
  <span style={{ fontWeight: 700, color }}>{formatAmount(c.raised, c.currency)} collectés</span>
@@ -264,8 +264,9 @@ export default function SolidarityClient({
  </div>
  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.3rem' }}>
  <span>{pct}% atteint</span>
- <span>{c.backers?.toLocaleString()} donateurs • {c.daysLeft}j restants</span>
+ <span>{typeof c.backers === 'number' && Number.isFinite(c.backers) ? `${c.backers.toLocaleString()} donateurs` : ''}{typeof c.daysLeft === 'number' && Number.isFinite(c.daysLeft) ? `${typeof c.backers === 'number' && Number.isFinite(c.backers) ? ' · ' : ''}${c.daysLeft}j restants` : ''}</span>
  </div>
+ {c.statsCheckedAt && <p style={{ fontSize: '.72rem', color: 'var(--text-secondary)', margin: '.25rem 0 0' }}>Données affichées selon le relevé du {new Date(c.statsCheckedAt).toLocaleDateString('fr-FR')}.</p>}
  </div>
  )}
 
@@ -297,7 +298,7 @@ export default function SolidarityClient({
  </div>
  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
  {filteredMaraudes.map(ini => (
- <div key={ini.id} className="card" style={{ padding: 0, display: 'flex', overflow: 'hidden' }}>
+ <div key={ini.id} data-item-id={ini.id} className="card" style={{ padding: 0, display: 'flex', overflow: 'hidden' }}>
  <div style={{ width: '130px', flexShrink: 0, overflow: 'hidden' }}>
  <img src={getUnsplashUrl(ini.imageKeyword, 280, 200)} alt={ini.title}
  style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -450,7 +451,7 @@ export default function SolidarityClient({
  </div>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
  {filteredAssociations.map(a => (
- <div key={a.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
+ <div key={a.id} data-item-id={a.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
  <div style={{ height: 148, backgroundColor: '#f3f0fa', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
  <span aria-hidden="true" style={{ fontSize: '2.5rem', fontWeight: 800, color: '#7652CA', opacity: 0.35 }}>{a.name.slice(0, 1).toLocaleUpperCase('fr-FR')}</span>
  {associationImage(a) && (

@@ -1,18 +1,19 @@
 import { randomUUID } from 'node:crypto';
 import { createHash } from 'node:crypto';
-import { AUTO_CATEGORIES, type Source, type RecordData, type RunReport } from './contracts';
+import { DISCOVERY_CATEGORIES, type Source, type RecordData, type RunReport } from './contracts';
 import { discoverSources, searchGroundedSources } from './discovery';
-import { extractStructured, firstPartyEvidence } from './extraction';
+import { extractStructured, firstPartyEvidence, relatedOfficialPage } from './extraction';
 import { assessRecord } from './policy';
 
 export type AgentPorts = {
   sources(): Promise<Source[]>;
   fetch(url: string): Promise<string>;
-  save(record: RecordData, assessment: ReturnType<typeof assessRecord>): Promise<{ id: string; duplicate: boolean; published: boolean }>;
+  save(record: RecordData, assessment: ReturnType<typeof assessRecord>): Promise<{ id: string; duplicate: boolean; published: boolean; blocked?: string }>;
   verifyPublic(id: string): Promise<boolean>;
   rollback(id: string): Promise<void>;
   finish(report: RunReport): Promise<void>;
   sourceChecked?(id: string, errorCode: string | null): Promise<void>;
+  rememberSource?(source: Source, department: string): Promise<string | null>;
 };
 
 export async function runAgents(ports: AgentPorts, now = new Date(), runId: string = randomUUID(), savedCursor?: number): Promise<RunReport> {
@@ -23,24 +24,27 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
   };
   try {
     const sourceRegistry = await ports.sources();
-    const plan = discoverSources(sourceRegistry, AUTO_CATEGORIES, 3, Math.floor(now.getTime()/86400000), savedCursor);
+    const plan = discoverSources(sourceRegistry, DISCOVERY_CATEGORIES, 3, Math.floor(now.getTime()/86400000), savedCursor);
     report.uncovered = []; report.quotaReached = false;
     report.cursor = { start: plan.startCursor, next: plan.nextCursor, completedSlots: 0, totalSlots: plan.totalSlots };
     report.actions.push(`Registre : ${sourceRegistry.length} source(s), ${sourceRegistry.filter(s => s.enabled && s.trust === 'trusted').length} fiable(s) activée(s), ${sourceRegistry.filter(s => s.trust === 'pending' || !s.enabled).length} en attente/désactivée(s), ${plan.slots.length} créneau(x) parcouru(s), ${plan.selected.length} source(s) enregistrée(s) exécutée(s).`);
-    const apiKey = process.env.GEMINI_API_KEY;
+    // Server-side web discovery uses the OpenAI Responses API only. Never
+    // forward credentials between providers; ChatGPT subscription access does
+    // not itself configure API usage or billing.
+    const apiKey = process.env.OPENAI_API_KEY;
     const usedUrls = new Set<string>();
     for (const slot of plan.slots) {
       if (Date.now()-started>44000) { report.quotaReached=true; report.uncovered.push(`${slot.category} · ${slot.territory} : budget de temps atteint`); break; }
       report.cursor.completedSlots++;
-      report.zones = [...new Set([...report.zones, ...slot.departments])];
-      report.categories = [...new Set([...report.categories, slot.category])];
       let source = slot.source;
       if (!source) {
         if (!apiKey) {
-          report.uncovered.push(`${slot.category} · ${slot.territory} : GEMINI_API_KEY absente, recherche web non lancée`);
+          report.uncovered.push(`${slot.category} · ${slot.territory} : OPENAI_API_KEY absente, recherche web non lancée`);
           continue;
         }
         try {
+          report.zones = [...new Set([...report.zones, ...slot.departments])];
+          report.categories = [...new Set([...report.categories, slot.category])];
           report.metrics.groundingRequests++;
           const search = await searchGroundedSources(slot.category, slot.territory, slot.departments, apiKey);
           report.metrics.searchQueries += search.queries.length;
@@ -65,7 +69,19 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
                 enabled: true,
               };
               report.sources.push(url);
+              const before = report.metrics.candidates;
               await processPage(discovered, html, now, started, ports, report);
+              if (report.metrics.candidates === before && Date.now()-started <= 35000) {
+                const related = relatedOfficialPage(html, url, slot.category);
+                if (related && !usedUrls.has(related)) {
+                  usedUrls.add(related);
+                  report.metrics.pagesAttempted++;
+                  const relatedHtml = await ports.fetch(related);
+                  report.metrics.pagesFetched++;
+                  await processPage({ ...discovered, url: related }, relatedHtml, now, started, ports, report);
+                  report.actions.push(`${slot.category} · page officielle liée consultée pour compléter l’extraction : ${new URL(related).hostname}${new URL(related).pathname}`);
+                }
+              }
             } catch {
               report.errors.push(`${slot.category} · page source inaccessible : ${new URL(url).hostname}`);
             }
@@ -80,6 +96,7 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
       }
       if (!source || usedUrls.has(source.url)) continue;
       usedUrls.add(source.url);
+      report.zones = [...new Set([...report.zones, ...slot.departments])];
       report.categories = [...new Set([...report.categories, source.category])];
       report.sources.push(source.url);
       let sourceError: string | null = null;
@@ -89,8 +106,21 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
         report.metrics.pagesFetched++;
         const before = report.metrics.candidates;
         await processPage(source, html, now, started, ports, report);
+        if (report.metrics.candidates === before && Date.now()-started <= 35000) {
+          const related = relatedOfficialPage(html, source.url, slot.category);
+          if (related && !usedUrls.has(related)) {
+            usedUrls.add(related);
+            report.metrics.pagesAttempted++;
+            try {
+              const relatedHtml = await ports.fetch(related);
+              report.metrics.pagesFetched++;
+              await processPage({ ...source, url: related }, relatedHtml, now, started, ports, report);
+              report.actions.push(`${slot.category} · page officielle liée consultée pour compléter l’extraction : ${new URL(related).hostname}${new URL(related).pathname}`);
+            } catch { report.uncovered.push(`${slot.category} · page interne officielle inaccessible, extraction de secours poursuivie`); }
+          }
+        }
         if (report.metrics.candidates === before) {
-          if (!apiKey) report.uncovered.push(`${slot.category} · ${slot.territory} : source enregistrée sans fiche exploitable et recherche de secours indisponible (clé absente)`);
+          if (!apiKey) report.uncovered.push(`${slot.category} · ${slot.territory} : source enregistrée sans fiche exploitable et recherche OpenAI indisponible (clé absente)`);
           else if (Date.now() - started <= 40000) {
             report.metrics.groundingRequests++;
             let search;
@@ -129,7 +159,7 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
       } catch { sourceError = 'source_or_storage_unavailable'; report.errors.push(`${source.category} : recherche ou enregistrement indisponible.`); }
       finally { await ports.sourceChecked?.(source.id, sourceError); }
     }
-    report.uncovered.push('Hajj/Omra, cagnottes, santé, droit : validation humaine ; emploi non demandé.');
+    report.uncovered.push('Hajj/Omra, cagnottes, santé et justice ne sont ajoutées que lorsque leurs champs de preuve et de qualité propres à la catégorie sont vérifiés ; aucun emploi n’est recherché.');
     report.cursor.next = (plan.startCursor + report.cursor.completedSlots) % Math.max(1, plan.totalSlots);
     if (report.published === 0) {
       report.errors.push('Aucune nouvelle fiche publique vérifiée pendant ce lancement.');
@@ -151,9 +181,32 @@ async function processPage(source: Source, html: string, now: Date, started: num
   for (const record of candidates) {
     if (report.found >= 50 || Date.now()-started>44000) { report.quotaReached = true; return; }
     report.found++;
-    const assessment = assessRecord(record, source, false, now);
+    let recordSource = source;
+    let recordData = record;
+    const discoveredSource = source.id.startsWith('web-');
+    if (discoveredSource) {
+      const department = record.department;
+      const onlineEvent = record.category === 'evenement' && /en ligne|online|webinaire|visioconférence/i.test(`${record.format.join(' ')} ${record.description}`);
+      if ((!department && !onlineEvent) || !ports.rememberSource) {
+        report.deferred++;
+        report.uncovered.push(`${record.category} · ${record.title} : source officielle trouvée, mais territoire précis ou enregistrement historisé indisponible`);
+        continue;
+      }
+      recordSource = { ...source, departments: department ? [department] : [] };
+    }
+    let assessment = assessRecord(recordData, recordSource, false, now);
     if (assessment.decision === 'blocked') { report.rejected++; report.rejectionReasons.push(...assessment.reasons); continue; }
-    const links = [...new Set([record.website, record.registrationUrl].filter((url): url is string => !!url && url !== source.url))];
+    if (discoveredSource && assessment.decision !== 'automatic') {
+      report.deferred++;
+      report.uncovered.push(`${record.category} · ${record.title} : source non inscrite, fiche incomplète ou garde-fou de publication non satisfait (${assessment.reasons.join(', ')})`);
+      continue;
+    }
+    const links = [...new Set([
+      recordData.website,
+      recordData.registrationUrl,
+      recordData.qualificationUrl,
+      recordData.adaptationEvidence?.url,
+    ].filter((url): url is string => !!url && url !== source.url))];
     let deadLink = false;
     for (const link of links) {
       report.metrics.pagesAttempted++;
@@ -161,7 +214,29 @@ async function processPage(source: Source, html: string, now: Date, started: num
       catch { deadLink = true; report.rejectionReasons.push(`Lien public inaccessible (${new URL(link).hostname})`); break; }
     }
     if (deadLink) { report.deferred++; continue; }
-    const saved = await ports.save(record, assessment);
+    if (discoveredSource) {
+      const department = recordData.department;
+      const qualified = await ports.rememberSource?.({ ...recordSource, departments: [department] }, department);
+      if (!qualified) {
+        report.deferred++;
+        report.uncovered.push(`${record.category} · ${record.title} : source non ajoutée au registre (source bloquée ou conflit de catégorie)`);
+        continue;
+      }
+      recordSource = { ...recordSource, id: qualified };
+      recordData = { ...recordData, provenance: { ...recordData.provenance, sourceId: qualified } };
+      assessment = assessRecord(recordData, recordSource, false, now);
+      if (assessment.decision !== 'automatic') {
+        report.deferred++;
+        report.uncovered.push(`${record.category} · ${record.title} : requalification refusée après inscription de la source`);
+        continue;
+      }
+    }
+    const saved = await ports.save(recordData, assessment);
+    if (saved.blocked) {
+      report.deferred++;
+      report.uncovered.push(`${record.category} · ${record.title} : ${saved.blocked}`);
+      continue;
+    }
     if (saved.duplicate) { report.duplicates++; continue; }
     report.metrics.writes++;
     report.added++;

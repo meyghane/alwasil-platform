@@ -204,7 +204,7 @@ function EventCard({ event }: { event: Event }) {
  const monthStr = d.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
 
  return (
- <div style={{
+ <div data-item-id={event.id} style={{
  backgroundColor: 'white',
  borderRadius: '16px',
  border: '1px solid #e7e5e4',

@@ -10,8 +10,8 @@ export async function getPublicMosques(): Promise<Mosquee[]> {
     has_courses:list(raw.courses).length>0,cours_types:list(raw.courses),cours_audience:list(raw.audience),cours_format:list(raw.format).join(', '),cours_description:text(raw.description),cours_verified:raw.verified===true,
   }));
 }
-export async function getPublicPools(): Promise<PiscineSheet[]> {
-  const records = await getRaw<Record<string,unknown>>('pool','piscine');
+export async function getPublicPools(strict = false): Promise<PiscineSheet[]> {
+  const records = await getRaw<Record<string,unknown>>('pool','piscine',strict);
   return records.filter(raw=>['municipale','privee','associative'].includes(text(raw.type))).map(raw=>({
     id:text(raw.id),name:text(raw.name || raw.title),type:raw.type as PiscineSheet['type'],adresse:text(raw.adresse || raw.address),ville:text(raw.ville || raw.city),department:text(raw.department),
     creneaux:Array.isArray(raw.creneaux) ? raw.creneaux.filter((entry): entry is { jour:string;horaire:string }=>!!entry && typeof entry==='object' && typeof entry.jour==='string' && typeof entry.horaire==='string') : [],tarif:text(raw.tarif),phone:text(raw.phone),website:text(raw.website),maps:text(raw.maps),description:text(raw.description),confirmed:raw.confirmed===true,
