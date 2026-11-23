@@ -13,7 +13,9 @@ export function normalizeEventDate(value: unknown): string | null {
   if (value instanceof Date && !Number.isNaN(value.getTime())) return value.toISOString().slice(0, 10);
   if (typeof value !== 'string') return null;
   const text = value.trim().toLowerCase();
-  let match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(text);
+  // Agent records may store a verified event start as an ISO timestamp while
+  // legacy pages expect a date-only value. Preserve its local calendar day.
+  let match = /^(\d{4})-(\d{1,2})-(\d{1,2})(?:t.*)?$/.exec(text);
   if (match) return validDate(Number(match[1]), Number(match[2]), Number(match[3]));
   match = /^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/.exec(text);
   if (match) return validDate(Number(match[3]), Number(match[2]), Number(match[1]));
