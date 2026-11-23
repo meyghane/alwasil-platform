@@ -44,14 +44,13 @@ export async function recordSourceCheck(id: string, errorCode: string | null) {
   await client()`UPDATE agent_sources SET last_checked_at=now(),run_count=run_count+1,error_count=error_count+CASE WHEN ${errorCode}::text IS NULL THEN 0 ELSE 1 END,last_error_code=${errorCode} WHERE id=${id}::uuid`;
 }
 export async function saveAgentRecord(record: RecordData, assessment: Assessment, sql = client()) {
-  const existing = await sql`SELECT id,title,city,metadata FROM items WHERE category=${categories[record.category]}::category AND status IN ('pending','approved','expired')`;
+  const existing = await sql`SELECT id,status,title,city,metadata FROM items WHERE category=${categories[record.category]}::category AND status IN ('pending','approved','expired')`;
   const duplicate = existing.find(row => {
     const prior = row.metadata?.agentRecord as RecordData | undefined;
     if (prior) return duplicateEvidence(record, prior).length > 0;
     const raw = row.metadata?.raw || {};
     return String(raw.name || raw.title || row.title || '').toLowerCase() === record.title.toLowerCase() && String(raw.city || row.city || '').toLowerCase() === record.city.toLowerCase();
   });
-  if (duplicate) return { id: String(duplicate.id), duplicate: true, published: false };
   let verifiedHajjPartner: { id: string; name: string; email: string; source_url: string; verified_at: Date | string } | undefined;
   if (record.category === 'hajj') {
     const offer = record.hajjOffer;
@@ -89,6 +88,22 @@ export async function saveAgentRecord(record: RecordData, assessment: Assessment
       description: record.hajjOffer.description,
     } : {}) };
   const metadata = { subType: itemSubtype || record.category, raw, agentRecord: record, agentIdentity: identity, autoPublished: status === 'approved', confidence: assessment.confidence, publicationReasons: assessment.reasons, requiresEnrichment: status !== 'approved', publishedAt: status === 'approved' ? new Date().toISOString() : null };
+  if (duplicate) {
+    const sameAgentRecord = duplicate.metadata?.agentIdentity === identity;
+    if (sameAgentRecord && assessment.decision === 'automatic' && duplicate.status === 'pending') {
+      const resumed = await sql`WITH prior AS (
+          SELECT * FROM items WHERE id=${duplicate.id}::uuid AND status='pending' FOR UPDATE
+        ), changed AS (
+          UPDATE items SET status='approved',title=${record.title},description=${record.description},city=${record.city},department=${record.department},date_start=${record.date || null}::timestamptz,source_url=${record.provenance.url},tags=${record.tags},metadata=prior.metadata || ${JSON.stringify(metadata)}::jsonb,last_verified_at=now(),next_review_at=now()+interval '30 days',updated_at=now()
+          FROM prior WHERE items.id=prior.id RETURNING items.*
+        ), logged AS (
+          INSERT INTO agent_item_history(item_id,action,actor,before_snapshot,after_snapshot,reasons)
+          SELECT changed.id,'auto_republished','agent:publication',to_jsonb(prior),to_jsonb(changed),${JSON.stringify(assessment.reasons)}::jsonb FROM changed JOIN prior ON prior.id=changed.id
+        ) SELECT id FROM changed`;
+      if (resumed[0]?.id) return { id: String(resumed[0].id), duplicate: false, published: true, updated: true };
+    }
+    return { id: String(duplicate.id), duplicate: true, published: false };
+  }
   const rows = await sql`WITH inserted AS (
     INSERT INTO items(category,status,title,description,city,department,date_start,source,source_url,tags,metadata,last_verified_at,next_review_at)
     VALUES (${categories[record.category]}::category,${status}::status,${record.title},${record.description},${record.city},${record.department},${record.date || null}::timestamptz,

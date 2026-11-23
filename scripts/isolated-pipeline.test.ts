@@ -28,8 +28,10 @@ test('recette PostgreSQL isolée : import, doublon, visibilité, livraison, red�
     const html='<script type="application/ld+json">'+JSON.stringify({'@type':'Mosque',name:'Fixture isolée, jamais publiée',description:'Description exclusivement synthétique pour vérifier la conservation de champs structurés dans une base de test avec pertinence de la communauté musulmane explicitement citée.',telephone:'0123456789',address:{addressLocality:'Ville de test',postalCode:'75001',streetAddress:'Adresse synthétique'}})+'</script>';
     let publishedId='';let sent=0;
     const ports={sources:async()=>[source],fetch:async()=>html,save:async(record:Parameters<typeof saveAgentRecord>[0],assessment:Parameters<typeof saveAgentRecord>[1])=>{const saved=await saveAgentRecord(record,assessment,sql);if(saved.id)publishedId=saved.id;return saved;},verifyPublic:async(id:string)=>(await sql`SELECT id FROM items WHERE id=${id}::uuid AND status='approved' AND is_spam=false`).length===1,rollback:(id:string)=>rollbackInvisible(id,sql),finish:async()=>{}};
-    const first=await runAgents(ports,now,'isolated-first',0);
-    assert.equal(first.added,1);assert.equal(first.published,1);assert.equal(first.sources.length,1);
+    const first=await runAgents({...ports,save:async(record:Parameters<typeof saveAgentRecord>[0],assessment:Parameters<typeof saveAgentRecord>[1])=>{const deferred=await saveAgentRecord(record,{...assessment,decision:'deferred',reasons:['visibilité publique à confirmer']},sql);if(deferred.id)publishedId=deferred.id;return deferred;}},now,'isolated-first',0);
+    assert.equal(first.added,1);assert.equal(first.published,0);assert.equal(first.sources.length,1);
+    const resumed=await runAgents(ports,now,'isolated-resumed',0);
+    assert.equal(resumed.corrected,1);assert.equal(resumed.published,1);
     const delivery={key:`review:test:${publishedId}`,itemId:publishedId,recipient:'isolated-test',source:'fixture',type:'review'};
     assert.equal(await deliverOnce(telegramStore(sql),delivery,async()=>{sent++;}),true);
     await pg.close();pg=new PGlite(directory);

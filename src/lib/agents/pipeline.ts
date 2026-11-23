@@ -8,7 +8,7 @@ import { assessRecord } from './policy';
 export type AgentPorts = {
   sources(): Promise<Source[]>;
   fetch(url: string): Promise<string>;
-  save(record: RecordData, assessment: ReturnType<typeof assessRecord>): Promise<{ id: string; duplicate: boolean; published: boolean; blocked?: string }>;
+  save(record: RecordData, assessment: ReturnType<typeof assessRecord>): Promise<{ id: string; duplicate: boolean; published: boolean; updated?: boolean; blocked?: string }>;
   verifyPublic(id: string): Promise<boolean>;
   rollback(id: string): Promise<void>;
   finish(report: RunReport): Promise<void>;
@@ -239,7 +239,8 @@ async function processPage(source: Source, html: string, now: Date, started: num
     }
     if (saved.duplicate) { report.duplicates++; continue; }
     report.metrics.writes++;
-    report.added++;
+    if (saved.updated) report.corrected++;
+    else report.added++;
     if (!saved.published) { report.deferred++; continue; }
     let visible = false;
     try { visible = await ports.verifyPublic(saved.id); } catch { /* Unconfirmed remains unconfirmed. */ }
