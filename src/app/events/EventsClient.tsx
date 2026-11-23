@@ -30,7 +30,8 @@ function formatDate(iso: string): string {
 }
 
 function isUpcoming(iso: string, endDate?: string): boolean {
- return new Date(`${endDate ?? iso}T23:59:59`) >= new Date();
+ const eventDay = (endDate ?? iso).match(/^\d{4}-\d{2}-\d{2}/)?.[0] ?? (endDate ?? iso);
+ return new Date(`${eventDay}T23:59:59`) >= new Date();
 }
 
 export default function EventsClient({ events }: EventsClientProps) {
