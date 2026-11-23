@@ -10,13 +10,21 @@ import { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
  const secret = req.headers.get('x-revalidate-secret');
+ const cronAuthorization = req.headers.get('authorization');
 
- if (!process.env.REVALIDATE_SECRET || secret !== process.env.REVALIDATE_SECRET) {
+ const authorizedByRevalidateSecret = Boolean(process.env.REVALIDATE_SECRET && secret === process.env.REVALIDATE_SECRET);
+ const authorizedByCronSecret = Boolean(process.env.CRON_SECRET && cronAuthorization === `Bearer ${process.env.CRON_SECRET}`);
+ if (!authorizedByRevalidateSecret && !authorizedByCronSecret) {
  return Response.json({ error: 'Unauthorized' }, { status: 401 });
  }
 
  const body = await req.json().catch(() => ({}));
  const paths = (body.paths as string[]) ?? ['/events', '/'];
+
+ const allowedPath = (path: string) => /^\/(?:$|api\/[a-z0-9/_-]+|[a-z0-9/_-]+)$/.test(path) && !path.includes('..');
+ if (!Array.isArray(paths) || paths.some(path => typeof path !== 'string' || !allowedPath(path))) {
+ return Response.json({ error: 'Invalid paths' }, { status: 400 });
+ }
 
  for (const path of paths) {
  revalidatePath(path);
