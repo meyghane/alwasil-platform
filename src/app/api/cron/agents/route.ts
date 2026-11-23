@@ -13,7 +13,13 @@ export async function GET(request: Request) {
   if (!process.env.CRON_SECRET || request.headers.get('authorization') !== `Bearer ${process.env.CRON_SECRET}`) return Response.json({ error: 'Non autorisé' }, { status: 401 });
   try {
     const now = new Date();
-    const key = `agents:${now.toISOString().slice(0,10)}`;
+    // Cron-secret-only manual launch, capped to one per Paris calendar day.
+    // This lets an operator run the just-deployed automation after the scheduled
+    // daily claim already exists, without deleting or rewriting the old run.
+    const manual = new URL(request.url).searchParams.get('manual') === '1';
+    const dateParts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now);
+    const date = `${dateParts.find(part => part.type === 'year')?.value}-${dateParts.find(part => part.type === 'month')?.value}-${dateParts.find(part => part.type === 'day')?.value}`;
+    const key = `agents:${date}${manual ? ':manual' : ''}`;
     const id = await claimRun(key);
     if (!id) {
       const status = await existingRun(key);

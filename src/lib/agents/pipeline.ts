@@ -71,8 +71,9 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
             }
           }
           continue;
-        } catch {
-          report.errors.push(`Recherche web indisponible · ${slot.category} · ${slot.territory}`);
+        } catch (error) {
+          const detail = error instanceof Error ? error.message.slice(0, 100) : 'erreur inconnue';
+          report.errors.push(`Recherche web indisponible · ${slot.category} · ${slot.territory} · ${detail}`);
           report.uncovered.push(`${slot.category} · ${slot.territory} : recherche de secours en échec`);
           continue;
         }
@@ -92,7 +93,14 @@ export async function runAgents(ports: AgentPorts, now = new Date(), runId: stri
           if (!apiKey) report.uncovered.push(`${slot.category} · ${slot.territory} : source enregistrée sans fiche exploitable et recherche de secours indisponible (clé absente)`);
           else if (Date.now() - started <= 40000) {
             report.metrics.groundingRequests++;
-            const search = await searchGroundedSources(slot.category, slot.territory, slot.departments, apiKey);
+            let search;
+            try { search = await searchGroundedSources(slot.category, slot.territory, slot.departments, apiKey); }
+            catch (error) {
+              const detail = error instanceof Error ? error.message.slice(0, 100) : 'erreur inconnue';
+              report.errors.push(`Recherche web indisponible · ${slot.category} · ${slot.territory} · ${detail}`);
+              report.uncovered.push(`${slot.category} · ${slot.territory} : recherche de complément bloquée (${detail})`);
+              continue;
+            }
             report.metrics.searchQueries += search.queries.length;
             report.actions.push(`Source enregistrée sans fiche exploitable · recherche web de complément · ${slot.category} · ${slot.territory} : ${search.queries.length} requête(s), ${search.urls.length} page(s).`);
             if (!search.urls.length) report.uncovered.push(`${slot.category} · ${slot.territory} : aucune page source trouvée après la source enregistrée.`);

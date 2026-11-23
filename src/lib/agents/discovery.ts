@@ -107,7 +107,9 @@ export async function searchGroundedSources(
   const catalogResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models', {
     headers, signal: AbortSignal.timeout(8000), cache: 'no-store',
   });
-  if (!catalogResponse.ok) throw new Error(`Catalogue de recherche indisponible (HTTP ${catalogResponse.status})`);
+  if (!catalogResponse.ok) throw new Error(catalogResponse.status === 400 || catalogResponse.status === 403
+    ? `Clé Gemini ou accès Search refusé (HTTP ${catalogResponse.status})`
+    : `Catalogue de recherche indisponible (HTTP ${catalogResponse.status})`);
   const catalog = await catalogResponse.json() as { models?: Array<{ name?: string; supportedGenerationMethods?: string[] }> };
   const models = (catalog.models || [])
     .filter(model => model.supportedGenerationMethods?.includes('generateContent'))
@@ -124,7 +126,9 @@ export async function searchGroundedSources(
     }),
     signal: AbortSignal.timeout(20000), cache: 'no-store',
   });
-  if (!response.ok) throw new Error(`Google Search grounding indisponible (HTTP ${response.status})`);
+  if (!response.ok) throw new Error(response.status === 400 || response.status === 403
+    ? `Clé Gemini ou accès Google Search refusé (HTTP ${response.status})`
+    : `Google Search grounding indisponible (HTTP ${response.status})`);
   const payload = await response.json() as {
     candidates?: Array<{ groundingMetadata?: {
       webSearchQueries?: string[];
