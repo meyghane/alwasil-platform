@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   openGraph: { title: 'Librairies arabes et musulmanes | Al-Wasil', description: 'Trouvez une librairie par ville, département et spécialité.', url: 'https://al-wasil.fr/librairies', type: 'website' },
 };
 
-export const revalidate = 3600;
+// Library records are added directly to Neon; render the current public set
+// on each request instead of leaving the directory behind a one-hour snapshot.
+export const dynamic = 'force-dynamic';
 
 export default async function LibrairiesPage() {
   const librairies = await getLibrairies();
