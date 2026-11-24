@@ -15,7 +15,8 @@ export const metadata: Metadata = {
   openGraph: { title: 'Solidarité musulmane | Al-Wasil', description: 'Initiatives, associations et collectes avec leurs modalités.', url: 'https://al-wasil.fr/solidarity', type: 'website' },
 };
 
-export const revalidate = 3600;
+// New associations and initiatives should appear immediately after publication.
+export const dynamic = 'force-dynamic';
 
 export default async function SolidarityPage() {
   const [cagnottes, initiatives, visiteMalades, voyagesHumanitaires, associations] =

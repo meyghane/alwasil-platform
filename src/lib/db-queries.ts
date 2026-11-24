@@ -129,7 +129,23 @@ export async function getInitiatives() {
 export const getVisiteMalades = () => getRaw<VisiteMalade>('solidarity', 'visite_malade');
 export const getVoyagesHumanitaires = () =>
   getRaw<VoyageHumanitaire>('solidarity', 'voyage_humanitaire');
-export const getAssociations = () => getRaw<Association>('solidarity', 'association');
+export async function getAssociations(): Promise<Association[]> {
+  const rows = await getRaw<Record<string, unknown>>('solidarity', 'association');
+  const domains: Association['domaine'][] = ['humanitaire', 'social', 'education', 'sante', 'droits', 'jeunesse'];
+  return rows.map((row) => ({
+    id: String(row.id || ''),
+    name: String(row.name || row.title || ''),
+    description: String(row.description || ''),
+    domaine: domains.includes(row.domaine as Association['domaine']) ? row.domaine as Association['domaine'] : 'social',
+    url: String(row.url || row.website || row.sourceUrl || ''),
+    imageUrl: typeof row.imageUrl === 'string' ? row.imageUrl : undefined,
+    city: typeof row.city === 'string' ? row.city : typeof row.ville === 'string' ? row.ville : undefined,
+    department: typeof row.department === 'string' ? row.department : typeof row.departement === 'string' ? row.departement : undefined,
+    national: row.national === true,
+    logoEmoji: typeof row.logoEmoji === 'string' ? row.logoEmoji : '',
+    tags: Array.isArray(row.tags) ? row.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+  }));
+}
 export async function getHajjAgences() {
   return getRaw<HajjAgence>('hajj', 'agence');
 }
