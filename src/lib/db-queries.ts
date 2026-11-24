@@ -75,7 +75,37 @@ export async function getEvents() {
   return rows;
 }
 export const getInstituts = () => getRaw<Institut>('institute', 'institut');
-export const getLibrairies = () => getRaw<Librairie>('library', 'librairie');
+export async function getLibrairies(): Promise<Librairie[]> {
+  const rows = await getRaw<Record<string, unknown>>('library', 'librairie');
+  const specialties: Array<[RegExp, Librairie['specialites'][number]]> = [
+    [/coran|tafs[iî]r/i, 'coran-tafsir'], [/hadith/i, 'hadith'], [/fiqh|jurisprudence/i, 'fiqh'],
+    [/arabe/i, 'arabe'], [/jeunesse|enfant/i, 'enfants'], [/histoire|biographie/i, 'histoire-islam'],
+    [/spiritualit[eé]|foi|croyance/i, 'spiritualite'], [/fran[cç]ais/i, 'livres-francais'],
+    [/v[eê]tement/i, 'vetements'], [/accessoire/i, 'accessoires'], [/parfum|huile/i, 'parfums-huiles'],
+  ];
+  return rows.map((row) => {
+    const formats = Array.isArray(row.format) ? row.format.filter((value): value is string => typeof value === 'string') : [];
+    const tags = Array.isArray(row.tags) ? row.tags.filter((value): value is string => typeof value === 'string') : [];
+    const evidenceText = [row.description, ...tags].filter((value): value is string => typeof value === 'string').join(' ');
+    const specialites = specialties.filter(([pattern]) => pattern.test(evidenceText)).map(([, value]) => value);
+    const hours = Array.isArray(row.hours) ? row.hours.filter((value): value is string => typeof value === 'string').join('\n') : '';
+    const address = typeof row.address === 'string' ? row.address : typeof row.adresse === 'string' ? row.adresse : '';
+    const city = typeof row.ville === 'string' ? row.ville : typeof row.city === 'string' ? row.city : '';
+    const online = formats.some((value) => /en ligne|vente en ligne|boutique en ligne/i.test(value));
+    const physical = formats.some((value) => /boutique|retrait en boutique|physique/i.test(value));
+    return {
+      id: String(row.id || ''), name: String(row.name || row.title || ''),
+      type: online && physical ? 'mixte' : online ? 'en-ligne' : 'physique',
+      description: String(row.description || ''), adresse: address, ville: city,
+      department: String(row.department || ''), horaires: String(row.horaires || hours),
+      phone: typeof row.phone === 'string' ? row.phone : undefined,
+      website: typeof row.website === 'string' ? row.website : undefined,
+      maps: typeof row.maps === 'string' ? row.maps : undefined,
+      specialites, langues: Array.isArray(row.langues) ? row.langues.filter((value): value is string => typeof value === 'string') : [],
+      tags, online, livraison: row.livraison === true, featured: row.featured === true,
+    } satisfies Librairie;
+  });
+}
 export const getJobOffers = () => getRaw<JobOffer>('job', 'job_offer');
 export const getTalentProfiles = () => getRaw<TalentProfile>('job', 'talent_profile');
 export const getPsyProfiles = () => getRaw<PraticienPsy>('health', 'psy');
